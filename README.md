@@ -1,10 +1,6 @@
-## Searchkit Starter App
+## Collections UI
 
-Used to start new applications which use Searchkit. Based off the popular create-react-app. If you dont know about `create-react-app`, please read their [readme](https://github.com/facebookincubator/create-react-app/blob/master/README.md) and install create-react-app on your machine 
+this is an interface that sources elastic search and provides IIIF manifests
 
-##  Install instructions
-
-- git clone git@github.com:searchkit/searchkit-starter-app.git
-- cd searchkit-starter-app
-- yarn
-- npm start
+See [manifest-metadata-processor](https://github.com/ub-leipzig/manifest-metadata-processor) for
+the tooling to create JSON documents for elastic search from manifest metadata.
