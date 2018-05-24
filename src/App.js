@@ -1,87 +1,121 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import extend from 'lodash/extend'
-import { SearchkitManager,SearchkitProvider,
-  SearchBox, RefinementListFilter, Pagination,
-  HierarchicalMenuFilter, HitsStats, SortingSelector, NoHits,
-  ResetFilters, RangeFilter, NumericRefinementListFilter,
-  ViewSwitcherHits, ViewSwitcherToggle, DynamicRangeFilter,
-  InputFilter, GroupedSelectedFilters,
-  Layout, TopBar, LayoutBody, LayoutResults,
-  ActionBar, ActionBarRow, SideBar } from 'searchkit'
+import {
+    ActionBar,
+    ActionBarRow,
+    GroupedSelectedFilters,
+    HitsStats,
+    Layout,
+    LayoutBody,
+    LayoutResults,
+    NoHits,
+    Pagination,
+    ResetFilters,
+    SearchBox,
+    SearchkitManager,
+    SearchkitProvider,
+    SideBar,
+    SortingSelector,
+    TopBar,
+    ViewSwitcherHits,
+    ViewSwitcherToggle
+} from 'searchkit'
 import './index.css'
 
-const host = "http://localhost:9100/m"
-const searchkit = new SearchkitManager(host)
+const host = "http://localhost:9100/m";
+const searchkit = new SearchkitManager(host);
 
-const ManifestsListItem = (props)=> {
-  const {bemBlocks, result} = props
-  let url = "http://workspaces.ub.uni-leipzig.de:9001/#?c=0&m=0&s=0&cv=0&manifest=" + result._source.metadataMap["@id"]
-  const source = extend({}, result._source, result.highlight)
-  return (
-    <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
-      <div className={bemBlocks.item("poster")}>
-        <img alt="presentation" data-qa="poster" src={result._source.metadataMap["@id"]}/>
-      </div>
-      <div className={bemBlocks.item("details")}>
-        <a href={url} target="_blank"><h2 className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html:source.metadataMap.Title}}></h2></a>
-        <h3 className={bemBlocks.item("subtitle")}>{source.metadataMap.Date}</h3>
-      </div>
-    </div>
-  )
-}
+const ManifestsListItem = (props) => {
+    const {bemBlocks, result} = props;
+    let imageServiceBase = "https://iiif.ub.uni-leipzig.de/fcgi-bin/iipsrv.fcgi?iiif=/j2k/";
+    const source = extend({}, result._source, result.highlight);
+    const pathname = new URL(result._source.metadataMap["@id"]).pathname;
+    const splitPath = pathname.split("/");
+    const viewId = splitPath[1].padStart(10, '0');
+    // const url = "http://workspaces.ub.uni-leipzig.de:9001/#?c=0&m=0&s=0&cv=0&manifest=" +
+    //     result._source.metadataMap["@id"];
+    const url = "https://digital.ub.uni-leipzig.de/object/viewid/" + viewId;
+    const firstId = viewId.substring(0, 4).padStart(4, '0');
+    const secondId = viewId.substring(5, 8).padStart(4, '0');
+    const thumbnail = imageServiceBase + firstId + "/" + secondId + "/" + viewId +
+        "/00000001.jpx/full/90,/0/default.jpg";
+    return (
+        <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
+            <div className={bemBlocks.item("poster")}>
+                <img alt="presentation" data-qa="poster" src={thumbnail}/>
+            </div>
+            <div className={bemBlocks.item("details")}>
+                <a href={url} target="_blank">
+                    <h2 className={bemBlocks.item("title")}
+                        dangerouslySetInnerHTML={{__html: source.metadataMap.Title}}></h2></a>
+                <h3 className={bemBlocks.item("subtitle")}>Author: {source.metadataMap.Author}</h3>
+                <h3 className={bemBlocks.item(
+                    "subtitle")}>Date: {source.metadataMap.Date} {source.metadataMap['Date of publication']}</h3>
+            </div>
+        </div>
+    )
+};
 
 class App extends Component {
-  render() {
-    return (
-      <SearchkitProvider searchkit={searchkit}>
-        <Layout>
-          <TopBar>
-            <div className="my-logo">UBL</div>
-            <SearchBox autofocus={true} searchOnChange={true}
-              queryFields={["metadataMap.Date", "metadataMap.Title"]}
-            />
-          </TopBar>
+    render() {
+        return (
+            <SearchkitProvider searchkit={searchkit}>
+                <Layout>
+                    <TopBar>
+                        <div className="my-logo">UBL</div>
+                        <SearchBox autofocus={true} searchOnChange={true}
+                                   queryFields={["metadataMap.Date", "metadataMap.Title", "metadataMap.Author",
+                                       "metadataMap.Date of publication",
+                                       "metadataMap.Collection", "metadataMap.Objekttitel", " metadataMap.Part of",
+                                       "metadataMap.Place", "metadataMap.Place of publication",
+                                       "metadataMap.Publisher", "metadataMap.Sprache", "metadataMap.URN"]}
+                        />
+                    </TopBar>
 
-        <LayoutBody>
+                    <LayoutBody>
 
-          <SideBar>
-          </SideBar>
-          <LayoutResults>
-            <ActionBar>
+                        <SideBar>
+                        </SideBar>
+                        <LayoutResults>
+                            <ActionBar>
 
-              <ActionBarRow>
-                <HitsStats translations={{
-                  "hitstats.results_found":"{hitCount} results found"
-                }}/>
-                <ViewSwitcherToggle/>
-                <SortingSelector options={[
-                  {label:"Relevance", field:"_score", order:"desc"},
-                ]}/>
-              </ActionBarRow>
+                                <ActionBarRow>
+                                    <HitsStats translations={{
+                                        "hitstats.results_found": "{hitCount} results found"
+                                    }}/>
+                                    <ViewSwitcherToggle/>
+                                    <SortingSelector options={[
+                                        {label: "Relevance", field: "_score", order: "desc"},
+                                    ]}/>
+                                </ActionBarRow>
 
-              <ActionBarRow>
-                <GroupedSelectedFilters/>
-                <ResetFilters/>
-              </ActionBarRow>
+                                <ActionBarRow>
+                                    <GroupedSelectedFilters/>
+                                    <ResetFilters/>
+                                </ActionBarRow>
 
-            </ActionBar>
-            <ViewSwitcherHits
-                hitsPerPage={12} highlightFields={["metadataMap.Title"]}
-                sourceFilter={["metadataMap.Title", "metadataMap.@id","metadataMap.Date"]}
-                hitComponents={[
-                  {key:"list", title:"List", itemComponent:ManifestsListItem}
-                ]}
-                scrollTo="body"
-            />
-            <NoHits suggestionsField={"metadataMap.Title"}/>
-            <Pagination showNumbers={true}/>
-          </LayoutResults>
+                            </ActionBar>
+                            <ViewSwitcherHits
+                                hitsPerPage={12} highlightFields={["metadataMap.Title"]}
+                                sourceFilter={["metadataMap.Title", "metadataMap.@id", "metadataMap.Date",
+                                    "metadataMap.Author", "metadataMap.Date of publication",
+                                    "metadataMap.Collection", "metadataMap.Objekttitel", " metadataMap.Part of",
+                                    "metadataMap.Place", "metadataMap.Place of publication",
+                                    "metadataMap.Publisher", "metadataMap.Sprache", "metadataMap.URN"]}
+                                hitComponents={[
+                                    {key: "list", title: "List", itemComponent: ManifestsListItem}
+                                ]}
+                                scrollTo="body"
+                            />
+                            <NoHits suggestionsField={"metadataMap.Title"}/>
+                            <Pagination showNumbers={true}/>
+                        </LayoutResults>
 
-          </LayoutBody>
-        </Layout>
-      </SearchkitProvider>
-    );
-  }
+                    </LayoutBody>
+                </Layout>
+            </SearchkitProvider>
+        );
+    }
 }
 
 export default App;
