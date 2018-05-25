@@ -1,9 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import Ubl from './modules/ubl';
+import Orp from './modules/orp';
 import './index.css';
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+ReactDOM.render((
+    <BrowserRouter>
+        <Switch>
+            <Route exact path='/' component={Ubl}/>
+            <Route path='/orp' component={Orp}/>
+        </Switch>
+    </BrowserRouter>
+), document.getElementById('root'))
+

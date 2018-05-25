@@ -20,14 +20,14 @@ import {
     ViewSwitcherHits,
     ViewSwitcherToggle
 } from 'searchkit'
-import './index.css'
+import '../index.css'
 
 const host = "http://localhost:9100/m";
 const searchkit = new SearchkitManager(host);
 
 const ManifestsListItem = (props) => {
     const {bemBlocks, result} = props;
-    let imageServiceBase = "https://iiif.ub.uni-leipzig.de/fcgi-bin/iipsrv.fcgi?iiif=/j2k/";
+    let imageServiceBase = "https://iiif.ub.uni-leipzig.de/iiif/j2k/";
     const source = extend({}, result._source, result.highlight);
     const pathname = new URL(result._source.metadataMap["@id"]).pathname;
     const splitPath = pathname.split("/");
@@ -56,7 +56,7 @@ const ManifestsListItem = (props) => {
     )
 };
 
-class App extends Component {
+class Ubl extends Component {
     render() {
         return (
             <SearchkitProvider searchkit={searchkit}>
@@ -118,4 +118,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default Ubl;
