@@ -24,7 +24,7 @@ import {
 } from 'searchkit'
 import '../index.css'
 
-const host = "http://localhost:9100/m6"
+const host = "http://workspaces.ub.uni-leipzig.de:9100/m"
 const searchkit = new SearchkitManager(host)
 
 const ManifestsListItem = (props) => {
