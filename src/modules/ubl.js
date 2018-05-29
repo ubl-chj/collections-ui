@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import extend from 'lodash/extend'
+import '../env';
 import {
   ActionBar,
   ActionBarRow,
@@ -24,23 +25,22 @@ import {
 } from 'searchkit'
 import '../index.css'
 
-const host = "http://workspaces.ub.uni-leipzig.de:9100/m"
-const searchkit = new SearchkitManager(host)
+const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_UBL_INDEX;
+const searchkit = new SearchkitManager(host);
 
 const ManifestsListItem = (props) => {
-  const {bemBlocks, result} = props
-  let imageServiceBase = "https://iiif.ub.uni-leipzig.de/iiif/j2k/"
-  const source = extend({}, result._source, result.highlight)
-  const pathname = new URL(result._source.metadataMap["@id"]).pathname
-  const splitPath = pathname.split("/")
-  const viewId = splitPath[1].padStart(10, '0')
+  const {bemBlocks, result} = props;
+  const source = extend({}, result._source, result.highlight);
+  const pathname = new URL(result._source.metadataMap["@id"]).pathname;
+  const splitPath = pathname.split("/");
+  const viewId = splitPath[1].padStart(10, '0');
   // const url = "http://workspaces.ub.uni-leipzig.de:9001/#?c=0&m=0&s=0&cv=0&manifest=" +
   //     result._source.metadataMap["@id"];
-  const url = "https://digital.ub.uni-leipzig.de/object/viewid/" + viewId
-  const firstId = viewId.substring(0, 4).padStart(4, '0')
-  const secondId = viewId.substring(5, 8).padStart(4, '0')
-  const thumbnail = imageServiceBase + firstId + "/" + secondId + "/" + viewId +
-    "/00000001.jpx/full/90,/0/default.jpg"
+  const url = "https://digital.ub.uni-leipzig.de/object/viewid/" + viewId;
+  const firstId = viewId.substring(0, 4).padStart(4, '0');
+  const secondId = viewId.substring(5, 8).padStart(4, '0');
+  const thumbnail = process.env.REACT_APP_UBL_IMAGE_SERVICE_BASE + firstId + "/" + secondId + "/" + viewId +
+    "/00000001.jpx/full/90,/0/default.jpg";
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <div className={bemBlocks.item("poster")}>

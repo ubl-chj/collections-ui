@@ -25,15 +25,14 @@ import {
 } from 'searchkit'
 import '../index.css'
 
-const host = "http://workspaces.ub.uni-leipzig.de:9100/vp"
-const searchkit = new SearchkitManager(host)
+const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_ORP_INDEX;
+const searchkit = new SearchkitManager(host);
 
 const ManifestsListItem = (props) => {
-  const baseURI = "http://workspaces.ub.uni-leipzig.de"
-  const {bemBlocks, result} = props
-  const source = extend({}, result._source, result.highlight)
-  const manifestUri = baseURI + ":9095/dynamo?type=meta&v1="
-  const viewerIRI = baseURI + ":9001/#?c=0&m=0&s=0&cv=0&manifest="
+  const {bemBlocks, result} = props;
+  const source = extend({}, result._source, result.highlight);
+  const manifestUri = process.env.REACT_APP_DYNAMO_BASE + "/dynamo?type=meta&v1=";
+  const viewerIRI = process.env.REACT_APP_VIEWER_BASE + "/#?c=0&m=0&s=0&cv=0&manifest=";
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <div className={bemBlocks.item("poster")}>

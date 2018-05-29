@@ -6,9 +6,11 @@
     "react-scripts": "^1.0.14"
   },
   "dependencies": {
+    "dotenv": "^5.0.1",
     "npm": "^6.1.0",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
+    "react-global-configuration": "^1.2.1",
     "react-router-dom": "^4.2.0",
     "searchkit": "beta"
   },
