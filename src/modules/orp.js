@@ -36,7 +36,7 @@ const ManifestsListItem = (props) => {
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <div className={bemBlocks.item("poster")}>
-        <img alt="presentation" data-qa="poster"
+        <img alt={source.imageIndex} data-qa="poster"
              src={source.imageServiceIRI + "/full/90,/0/default.jpg"}/>
       </div>
       <div className={bemBlocks.item("details")}>
@@ -52,6 +52,26 @@ const ManifestsListItem = (props) => {
            target="_blank">
           <h2 className={bemBlocks.item("subtitle")}
               dangerouslySetInnerHTML={{__html: source.metadataMap.tag3}}></h2></a>
+          <a href={viewerIRI + encodeURIComponent(manifestUri + source.metadataMap.tag4 + "&v2=")}
+             target="_blank">
+              <h2 className={bemBlocks.item("subtitle")}
+                  dangerouslySetInnerHTML={{__html: source.metadataMap.tag4}}></h2></a>
+          <a href={viewerIRI + encodeURIComponent(manifestUri + source.metadataMap.tag5 + "&v2=")}
+             target="_blank">
+              <h2 className={bemBlocks.item("subtitle")}
+                  dangerouslySetInnerHTML={{__html: source.metadataMap.tag5}}></h2></a>
+          <a href={viewerIRI + encodeURIComponent(manifestUri + source.metadataMap.tag6 + "&v2=")}
+             target="_blank">
+              <h2 className={bemBlocks.item("subtitle")}
+                  dangerouslySetInnerHTML={{__html: source.metadataMap.tag6}}></h2></a>
+          <a href={viewerIRI + encodeURIComponent(manifestUri + source.metadataMap.tag7 + "&v2=")}
+             target="_blank">
+              <h2 className={bemBlocks.item("subtitle")}
+                  dangerouslySetInnerHTML={{__html: source.metadataMap.tag7}}></h2></a>
+          <a href={viewerIRI + encodeURIComponent(manifestUri + source.metadataMap.tag8 + "&v2=")}
+             target="_blank">
+              <h2 className={bemBlocks.item("subtitle")}
+                  dangerouslySetInnerHTML={{__html: source.metadataMap.tag8}}></h2></a>
       </div>
     </div>
   )
@@ -84,7 +104,7 @@ class Orp extends Component {
                   }}/>
                   <ViewSwitcherToggle/>
                   <SortingSelector options={[
-                    {label: "Relevance", field: "_score", order: "desc"},
+                    {label: "Index", field: "imageIndex", order: "asc"},
                   ]}/>
                 </ActionBarRow>
 
