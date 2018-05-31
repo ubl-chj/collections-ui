@@ -25,42 +25,38 @@ import {
 } from 'searchkit'
 import '../index.css'
 
-const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_UBL_INDEX;
+const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_EC_INDEX;
 const searchkit = new SearchkitManager(host);
 
 const ManifestsListItem = (props) => {
   const {bemBlocks, result} = props;
   const source = extend({}, result._source, result.highlight);
-  const pathname = new URL(result._source.metadataMap["@id"]).pathname;
+  const pathname = new URL(result._source["@id"]).pathname;
   const splitPath = pathname.split("/");
-  const viewId = splitPath[1].padStart(10, '0');
-  // const url = "http://workspaces.ub.uni-leipzig.de:9001/#?c=0&m=0&s=0&cv=0&manifest=" +
-  //     result._source.metadataMap["@id"];
-  const url = "https://digital.ub.uni-leipzig.de/object/viewid/" + viewId;
-  const firstId = viewId.substring(0, 4).padStart(4, '0');
-  const secondId = viewId.substring(5, 8).padStart(4, '0');
-  const thumbnail = process.env.REACT_APP_UBL_IMAGE_SERVICE_BASE + firstId + "/" + secondId + "/" + viewId +
-    "/00000001.jpx/full/90,/0/default.jpg";
+  const nameParts = splitPath[3].split("-")
+  const thumbnail = process.env.REACT_APP_EC_IMAGE_SERVICE_BASE + nameParts[0] + "/" + splitPath[3] + "/" + splitPath[3] + "_" + "001r.jp2" +
+    "/full/90,/0/default.jpg";
+  const url = "https://www.e-codices.unifr.ch/en/" + nameParts[0] + "/" + nameParts[1]
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <div className={bemBlocks.item("poster")}>
-        <img alt="presentation" data-qa="poster" src={thumbnail}/>
+        <object data ={thumbnail} type="image/jpg">
+          <img alt="e-codices" src="https://www.e-codices.unifr.ch/img/frontend/logo-nav.png" />
+        </object>
       </div>
       <div className={bemBlocks.item("details")}>
         <a href={url} target="_blank">
           <h2 className={bemBlocks.item("title")}
-              dangerouslySetInnerHTML={{__html: source.metadataMap.Title}}></h2></a>
-        <h3 className={bemBlocks.item("subtitle")}>Author: {source.metadataMap.Author}</h3>
+              dangerouslySetInnerHTML={{__html: source.Title}}></h2></a>
+        <h3 className={bemBlocks.item("subtitle")}>Date of Origin: {source['Date of Origin (English)']}</h3>
         <h3 className={bemBlocks.item(
-          "subtitle")}>Date: {source.metadataMap.Date} {source.metadataMap['Date of publication']}</h3>
-        <h3 className={bemBlocks.item(
-          "subtitle")}>Place: {source.metadataMap.Place}</h3>
+          "subtitle")} dangerouslySetInnerHTML={{__html:source['Summary (English)']}}></h3>
       </div>
     </div>
   )
 }
 
-class Ubl extends Component {
+class Ec extends Component {
   render () {
     return (
       <SearchkitProvider searchkit={searchkit}>
@@ -68,11 +64,12 @@ class Ubl extends Component {
           <TopBar>
             <div className="my-logo">UBL</div>
             <SearchBox autofocus={true} searchOnChange={true}
-                       queryFields={["metadataMap.Date", "metadataMap.Title", "metadataMap.Author",
-                         "metadataMap.Date of publication",
-                         "metadataMap.Collection", "metadataMap.Objekttitel", " metadataMap.Part of",
-                         "metadataMap.Place", "metadataMap.Place of publication",
-                         "metadataMap.Publisher", "metadataMap.Sprache", "metadataMap.URN"]}
+                       queryFields={["Century", "Collection Name", "DOI",
+                         "Dimensions", "Document Type", "Location",
+                         "Material", "Number of Pages",
+                         "Shelfmark", "Summary (English)", "Text Language",
+                         "Persons", "Place of Origin (English)",
+                         "Title", "Title (English)"]}
             />
           </TopBar>
 
@@ -80,7 +77,7 @@ class Ubl extends Component {
 
             <SideBar>
               <RefinementListFilter id="tag1" title="Collection"
-                                    field="metadataMap.Collection.keyword" orderKey="_term"
+                                    field="Collection Name.keyword" orderKey="_term"
                                     operator="AND"/>
             </SideBar>
             <LayoutResults>
@@ -101,21 +98,20 @@ class Ubl extends Component {
                 </ActionBarRow>
 
               </ActionBar>
-              <RangeFilter field="metadataMap.DateRange.raw" id="date" min={1641} max={1975}
-                           showHistogram={true} title="Date Selector"/>
               <ViewSwitcherHits
-                hitsPerPage={12} highlightFields={["metadataMap.Title"]}
-                sourceFilter={["metadataMap.Title", "metadataMap.@id", "metadataMap.Date",
-                  "metadataMap.Author", "metadataMap.Date of publication",
-                  "metadataMap.Collection", "metadataMap.Objekttitel", " metadataMap.Part of",
-                  "metadataMap.Place", "metadataMap.Place of publication",
-                  "metadataMap.Publisher", "metadataMap.Sprache", "metadataMap.URN"]}
+                hitsPerPage={12} highlightFields={["Century", "Collection Name", "DOI",
+                "Date of Origin (English)",
+                "Dimensions", "Document Type", "Location",
+                "Material", "Number of Pages",
+                "Persons", "Place of Origin (English)",
+                "Shelfmark", "Summary (English)", "Text Language",
+                "Title", "Title (English)"]}
                 hitComponents={[
                   {key: "list", title: "List", itemComponent: ManifestsListItem}
                 ]}
                 scrollTo="body"
               />
-              <NoHits suggestionsField={"metadataMap.Title"}/>
+              <NoHits suggestionsField={"Title"}/>
               <Pagination showNumbers={true}/>
             </LayoutResults>
 
@@ -126,4 +122,4 @@ class Ubl extends Component {
   }
 }
 
-export default Ubl
+export default Ec
