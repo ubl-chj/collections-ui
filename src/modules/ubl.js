@@ -36,6 +36,7 @@ const ManifestsListItem = (props) => {
   const viewId = splitPath[1].padStart(10, '0');
   // const url = "http://workspaces.ub.uni-leipzig.de:9001/#?c=0&m=0&s=0&cv=0&manifest=" +
   //     result._source.metadataMap["@id"];
+  const katalogBase = "https://katalog.ub.uni-leipzig.de/Search/Results?lookfor=record_id:";
   const url = "https://digital.ub.uni-leipzig.de/object/viewid/" + viewId;
   const firstId = viewId.substring(0, 4).padStart(4, '0');
   const secondId = viewId.substring(5, 8).padStart(4, '0');
@@ -50,11 +51,24 @@ const ManifestsListItem = (props) => {
         <a href={url} target="_blank">
           <h2 className={bemBlocks.item("title")}
               dangerouslySetInnerHTML={{__html: source.metadataMap.Title}}></h2></a>
-        <h3 className={bemBlocks.item("subtitle")}>Author: {source.metadataMap.Author}</h3>
-        <h3 className={bemBlocks.item(
-          "subtitle")}>Date: {source.metadataMap.Date} {source.metadataMap['Date of publication']}</h3>
-        <h3 className={bemBlocks.item(
-          "subtitle")}>Place: {source.metadataMap.Place}</h3>
+        <table>
+          <thead>
+          <th/>
+           <th/>
+          </thead>
+          <tbody>
+          <tr>
+              <td>Author:</td><td>{source.metadataMap.Author}</td>
+          </tr>
+          <tr>
+              <td>Date: </td><td>{source.metadataMap.Date} {source.metadataMap['Date of publication']}</td>
+          </tr>
+          <tr>
+              <td>Katalog URI: </td><td><a href={katalogBase + source.metadataMap['swb-ppn']}
+                                           target="_blank"> {source.metadataMap['swb-ppn']}</a></td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   )
@@ -72,7 +86,7 @@ class Ubl extends Component {
                          "metadataMap.Date of publication",
                          "metadataMap.Collection", "metadataMap.Objekttitel", " metadataMap.Part of",
                          "metadataMap.Place", "metadataMap.Place of publication",
-                         "metadataMap.Publisher", "metadataMap.Sprache", "metadataMap.URN"]}
+                         "metadataMap.Publisher", "metadataMap.Sprache", "metadataMap.URN", "metadataMap.swb-ppn"]}
             />
           </TopBar>
 
@@ -101,7 +115,7 @@ class Ubl extends Component {
                 </ActionBarRow>
 
               </ActionBar>
-              <RangeFilter field="metadataMap.DateRange.raw" id="date" min={1641} max={1975}
+              <RangeFilter field="metadataMap.Date.raw" id="date" min={1641} max={1975}
                            showHistogram={true} title="Date Selector"/>
               <ViewSwitcherHits
                 hitsPerPage={12} highlightFields={["metadataMap.Title"]}
@@ -109,7 +123,7 @@ class Ubl extends Component {
                   "metadataMap.Author", "metadataMap.Date of publication",
                   "metadataMap.Collection", "metadataMap.Objekttitel", " metadataMap.Part of",
                   "metadataMap.Place", "metadataMap.Place of publication",
-                  "metadataMap.Publisher", "metadataMap.Sprache", "metadataMap.URN"]}
+                  "metadataMap.Publisher", "metadataMap.Sprache", "metadataMap.URN", "metadataMap.swb-ppn"]}
                 hitComponents={[
                   {key: "list", title: "List", itemComponent: ManifestsListItem}
                 ]}

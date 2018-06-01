@@ -33,17 +33,17 @@ const ManifestsListItem = (props) => {
   const source = extend({}, result._source, result.highlight);
   const manifestUri = process.env.REACT_APP_DYNAMO_BASE + "/dynamo?type=meta&v1=";
   const viewerIRI = process.env.REACT_APP_VIEWER_BASE + "/#?c=0&m=0&s=0&cv=0&manifest=";
+  const thumbnail = result._source.imageServiceIRI + "/full/90,/0/default.jpg";
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <div className={bemBlocks.item("poster")}>
-        <img alt={source.imageIndex} data-qa="poster"
-             src={source.imageServiceIRI + "/full/90,/0/default.jpg"}/>
+          <object data ={thumbnail} type="image/jpg"><h2>{source.imageIndex}</h2>/>
+          </object>
       </div>
       <div className={bemBlocks.item("details")}>
         <a href={viewerIRI + encodeURIComponent(manifestUri + source.metadataMap.tag1 + "&v2=")}
-           target="_blank">
-          <h2 className={bemBlocks.item("subtitle")}
-              dangerouslySetInnerHTML={{__html: source.metadataMap.tag1}}></h2></a>
+           target="_blank">{source.metadataMap.tag1}
+          <h2 className={bemBlocks.item("subtitle")}>{source.metadataMap.tag1}</h2></a>
         <a href={viewerIRI + encodeURIComponent(manifestUri + source.metadataMap.tag2 + "&v2=")}
            target="_blank">
           <h2 className={bemBlocks.item("subtitle")}

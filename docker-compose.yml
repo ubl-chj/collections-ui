@@ -2,7 +2,7 @@ version: "3"
 
 services:
  collections-ui:
-    image: ubleipzig/collections-ui:0.1.0
+    image: ubleipzig/collections-ui:0.2.0
     container_name: collections-ui
     ports:
       - "9002:3000"

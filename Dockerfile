@@ -7,7 +7,7 @@ WORKDIR /srv/uv
 
 # Download and Install uv-webapp (master)
 RUN git clone https://github.com/ub-leipzig/collections-ui.git ./
-
+COPY .env .env
 ##Install
 RUN npm install
 RUN yarn

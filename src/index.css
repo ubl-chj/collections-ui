@@ -20,3 +20,12 @@ body {
     color: #24292e;
     background-color: #fff;
 }
+
+table{
+    table-layout: fixed;
+    width: 400px;
+}
+
+th, td {
+    width: 200px;
+}
