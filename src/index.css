@@ -29,3 +29,10 @@ table{
 th, td {
     width: 200px;
 }
+
+.sk-hits-list-hit__subtitle, .sk-hits-list-hit__tags {
+    line-height: 20px;
+    font-size: 14px;
+    color: #000000;
+    font-weight: 300
+}

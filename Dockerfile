@@ -9,8 +9,10 @@ WORKDIR /srv/uv
 RUN git clone https://github.com/ub-leipzig/collections-ui.git ./
 COPY .env .env
 ##Install
+RUN npm i npm@latest -g
 RUN npm install
 RUN yarn
+
 
 # Copy default.json configuration into the image
 #COPY cfg/* config/

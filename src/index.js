@@ -5,6 +5,7 @@ import Ubl from './modules/ubl';
 import Orp from './modules/orp';
 import Ec from './modules/ec';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render((
     <BrowserRouter>

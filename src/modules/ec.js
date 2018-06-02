@@ -11,7 +11,6 @@ import {
   LayoutResults,
   NoHits,
   Pagination,
-  RangeFilter,
   RefinementListFilter,
   ResetFilters,
   SearchBox,
@@ -34,8 +33,7 @@ const ManifestsListItem = (props) => {
   const pathname = new URL(result._source["@id"]).pathname;
   const splitPath = pathname.split("/");
   const nameParts = splitPath[3].split("-")
-  const thumbnail = process.env.REACT_APP_EC_IMAGE_SERVICE_BASE + nameParts[0] + "/" + splitPath[3] + "/" + splitPath[3] + "_" + "001r.jp2" +
-    "/full/90,/0/default.jpg";
+  const thumbnail = process.env.REACT_APP_EC_IMAGE_SERVICE_BASE + nameParts[0] + "/" + splitPath[3] + "/" + splitPath[3] + "_001r.jp2/full/90,/0/default.jpg";
   const url = "https://www.e-codices.unifr.ch/en/" + nameParts[0] + "/" + nameParts[1]
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
