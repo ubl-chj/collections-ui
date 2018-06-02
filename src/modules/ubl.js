@@ -31,11 +31,11 @@ const searchkit = new SearchkitManager(host);
 const ManifestsListItem = (props) => {
     const {bemBlocks, result} = props;
     const source = extend({}, result._source, result.highlight);
-    const pathname = new URL(result._source.metadataMap["@id"]).pathname;
+    const pathname = new URL(result._source["@id"]).pathname;
     const splitPath = pathname.split("/");
     const viewId = splitPath[1].padStart(10, '0');
     // const url = "http://workspaces.ub.uni-leipzig.de:9001/#?c=0&m=0&s=0&cv=0&manifest=" +
-    //     result._source.metadataMap["@id"];
+    //     result._source["@id"];
     const katalogBase = "https://katalog.ub.uni-leipzig.de/Search/Results?lookfor=record_id:";
     const url = "https://digital.ub.uni-leipzig.de/object/viewid/" + viewId;
     const firstId = viewId.substring(0, 4).padStart(4, '0');
@@ -45,32 +45,26 @@ const ManifestsListItem = (props) => {
     return (
         <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
             <div className={bemBlocks.item("poster")}>
-                <img alt="presentation" data-qa="poster" src={thumbnail}/>
+                <img class="thumbnail" alt="presentation" data-qa="poster" src={thumbnail}/>
             </div>
             <div className={bemBlocks.item("details")}>
                 <a href={url} target="_blank">
                     <h2 className={bemBlocks.item("title")}
-                        dangerouslySetInnerHTML={{__html: source.metadataMap.Title}}></h2></a>
+                        dangerouslySetInnerHTML={{__html: source.Title}}></h2></a>
                 <table>
-                    <thead>
-                    <tr>
-                        <th/>
-                        <th/>
-                    </tr>
-                    </thead>
-                    <tbody>
+                      <tbody>
                     <tr>
                         <td>Author:</td>
-                        <td>{source.metadataMap.Author}</td>
+                        <td>{source.Author}</td>
                     </tr>
                     <tr>
                         <td>Date:</td>
-                        <td>{source.metadataMap.Date} {source.metadataMap['Date of publication']}</td>
+                        <td>{source.Date} {source['Date of publication']} {source['Datierung']} {source['datiert']}</td>
                     </tr>
                     <tr>
                         <td>Katalog URI:</td>
-                        <td><a href={katalogBase + source.metadataMap['swb-ppn']}
-                               target="_blank"> {source.metadataMap['swb-ppn']}</a></td>
+                        <td><a href={katalogBase + source['Source PPN (SWB)']}
+                               target="_blank"> {source['Source PPN (SWB)']}</a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -87,12 +81,12 @@ class Ubl extends Component {
                     <TopBar>
                         <div className="my-logo">UBL</div>
                         <SearchBox autofocus={true} searchOnChange={true}
-                                   queryFields={["metadataMap.Date", "metadataMap.Title", "metadataMap.Author",
-                                       "metadataMap.Date of publication",
-                                       "metadataMap.Collection", "metadataMap.Objekttitel", " metadataMap.Part of",
-                                       "metadataMap.Place", "metadataMap.Place of publication",
-                                       "metadataMap.Publisher", "metadataMap.Sprache", "metadataMap.URN",
-                                       "metadataMap.swb-ppn"]}
+                                   queryFields={["Date", "Title", "Author",
+                                       "Date of publication",
+                                       "Collection", "Objekttitel", "Part of",
+                                       "Place", "Place of publication",
+                                       "Publisher", "Sprache", "URN",
+                                       "Source PPN (SWB)"]}
                         />
                     </TopBar>
 
@@ -100,7 +94,7 @@ class Ubl extends Component {
 
                         <SideBar>
                             <RefinementListFilter id="tag1" title="Collection"
-                                                  field="metadataMap.Collection.keyword" orderKey="_term"
+                                                  field="Collection.keyword" orderKey="_term"
                                                   operator="AND"/>
                         </SideBar>
                         <LayoutResults>
@@ -110,9 +104,9 @@ class Ubl extends Component {
                                         "hitstats.results_found": "{hitCount} results found"
                                     }}/>
                                     <ViewSwitcherToggle/>
-                                    <SortingSelector options={[
-                                        {label: "Relevance", field: "_score", order: "desc"},
-                                    ]}/>
+                                  <SortingSelector options={[
+                                    {label: "Index", field: "Date of publication.raw", order: "asc"},
+                                  ]}/>
                                 </ActionBarRow>
 
                                 <ActionBarRow>
@@ -121,22 +115,24 @@ class Ubl extends Component {
                                 </ActionBarRow>
 
                             </ActionBar>
-                            <RangeFilter field="metadataMap.Date.raw" id="date" min={1641} max={1975}
+                            <div className="ex1">
+                            <RangeFilter field="Date of publication.raw" id="date" min={1470} max={1975}
                                          showHistogram={true} title="Date Selector"/>
+                            </div>
                             <ViewSwitcherHits
-                                hitsPerPage={12} highlightFields={["metadataMap.Title"]}
-                                sourceFilter={["metadataMap.Title", "metadataMap.@id", "metadataMap.Date",
-                                    "metadataMap.Author", "metadataMap.Date of publication",
-                                    "metadataMap.Collection", "metadataMap.Objekttitel", " metadataMap.Part of",
-                                    "metadataMap.Place", "metadataMap.Place of publication",
-                                    "metadataMap.Publisher", "metadataMap.Sprache", "metadataMap.URN",
-                                    "metadataMap.swb-ppn"]}
+                                hitsPerPage={12} highlightFields={["Title"]}
+                                sourceFilter={["Title", "@id", "Date",
+                                    "Author", "Date of publication", "Datierung","datiert",
+                                    "Collection", "Objekttitel", " Part of",
+                                    "Place", "Place of publication",
+                                    "Publisher", "Sprache", "URN",
+                                    "Source PPN (SWB)"]}
                                 hitComponents={[
                                     {key: "list", title: "List", itemComponent: ManifestsListItem}
                                 ]}
                                 scrollTo="body"
                             />
-                            <NoHits suggestionsField={"metadataMap.Title"}/>
+                            <NoHits suggestionsField={"Title"}/>
                             <Pagination showNumbers={true}/>
                         </LayoutResults>
 

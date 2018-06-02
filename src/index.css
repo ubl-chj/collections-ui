@@ -23,16 +23,56 @@ body {
 
 table{
     table-layout: fixed;
-    width: 400px;
+    max-width: 600px;
+    width: 100%;
 }
 
 th, td {
-    width: 200px;
+    border: 1px solid gray;
+    overflow: hidden;
+    max-width: 300px;
 }
+
 
 .sk-hits-list-hit__subtitle, .sk-hits-list-hit__tags {
     line-height: 20px;
     font-size: 14px;
     color: #000000;
     font-weight: 300
+}
+
+.sk-hits-list__item {
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0
+}
+
+.sk-hits-list-hit__poster {
+    width: 200px;
+    -ms-flex: 0 0 200px;
+    flex: 0 0 200px;
+    padding: 10px;
+}
+
+.sk-top-bar__content {
+    display: -ms-flexbox;
+    display: flex;
+    margin: 0 auto;
+    padding: 0 15px;
+    /* width: 100%; */
+}
+
+.ex1 {
+    width: 500px;
+    margin: 20px;
+}
+
+.thumbnail:hover {
+    position:relative;
+    top:-25px;
+    left:-35px;
+    width:500px;
+    height:auto;
+    display:block;
+    z-index:999;
 }
