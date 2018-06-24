@@ -1,0 +1,123 @@
+{
+  "took": 14,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 1,
+    "max_score": null,
+    "hits": [
+      {
+        "_index": "t6",
+        "_type": "_doc",
+        "_id": "1",
+        "_score": null,
+        "_source": {
+          "metadata": {
+            "URN": "urn:nbn:de:bsz:15-0011-194180",
+            "Source PPN (SWB)": "04123491X",
+            "Place of publication": "Leipzig",
+            "Title": "Die Entstehung des Christentums",
+            "Collection": "Leipziger Verlage",
+            "Author": "Kalthoff, Albert",
+            "Publisher": "Diederichs",
+            "Date of publication": "1904"
+          },
+          "iiifService": "https://iiif.ub.uni-leipzig.de/iiif/j2k/0000/0098/0000009857/00000017.jpx",
+          "imageIndex": 17
+        },
+        "sort": [
+          "Die Entstehung des Christentums",
+          17
+        ],
+        "inner_hits": {
+          "contentList": {
+            "hits": {
+              "total": 3,
+              "max_score": 4.3588185,
+              "hits": [
+                {
+                  "_index": "t6",
+                  "_type": "_doc",
+                  "_id": "1",
+                  "_nested": {
+                    "field": "contentList",
+                    "offset": 126
+                  },
+                  "_score": 4.3588185,
+                  "_source": {
+                    "objectId": "word_1_127",
+                    "chars": "Jesus",
+                    "region": "1176,1109,91,37"
+                  }
+                },
+                {
+                  "_index": "t6",
+                  "_type": "_doc",
+                  "_id": "1",
+                  "_nested": {
+                    "field": "contentList",
+                    "offset": 102
+                  },
+                  "_score": 4.3588185,
+                  "_source": {
+                    "objectId": "word_1_103",
+                    "chars": "Jesus",
+                    "region": "448,1002,90,36"
+                  }
+                },
+                {
+                  "_index": "t6",
+                  "_type": "_doc",
+                  "_id": "1",
+                  "_nested": {
+                    "field": "contentList",
+                    "offset": 14
+                  },
+                  "_score": 4.3588185,
+                  "_source": {
+                    "objectId": "word_1_15",
+                    "chars": "Jesus",
+                    "region": "886,411,92,37"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "aggregations": {
+    "tag12": {
+      "doc_count": 1,
+      "metadata.Collection.keyword": {
+        "doc_count_error_upper_bound": 0,
+        "sum_other_doc_count": 0,
+        "buckets": [
+          {
+            "key": "Leipziger Verlage",
+            "doc_count": 1
+          }
+        ]
+      },
+      "metadata.Collection.keyword_count": {
+        "value": 1
+      }
+    }
+  },
+  "suggest": {
+    "suggestions": [
+      {
+        "text": "Jesus",
+        "offset": 0,
+        "length": 5,
+        "options": []
+      }
+    ]
+  }
+}
