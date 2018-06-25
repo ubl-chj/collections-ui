@@ -27,6 +27,7 @@ import '../index.css'
 const host = process.env.REACT_APP_ELASTICSEARCH_LOCALHOST + process.env.REACT_APP_ATOMIC_INDEX
 const searchkit = new SearchkitManager(host)
 const generatorUrl = process.env.REACT_APP_GENERATOR_BASE
+const osdUrl = process.env.REACT_APP_OSD_BASE
 
 const ManifestHitsGridItem = (props) => {
   const {bemBlocks, result} = props
@@ -110,7 +111,7 @@ const ManifestsListItem = (props) => {
     <ul className="list-group">
     {InnerHits(innerHits).map((hit) =>
       <li className="list-group-item" key={hit.objectId}>
-        {hit.chars} : <a href={source.iiifService + "/" + hit.region + "/full/0/default.jpg"} target="_blank">{hit.region}</a>
+        <a href={osdUrl + "?image=" + source.iiifService + "&region=" + hit.region} target="_blank">{hit.chars}</a>
       </li>
     )}
   </ul>)
@@ -166,7 +167,6 @@ class Atomic extends Component {
           </TopBar>
 
           <LayoutBody>
-
             <SideBar>
               <RefinementListFilter id="tag1" title="Collection"
                                     field="metadata.Collection.keyword" orderKey="_term"
@@ -188,12 +188,10 @@ class Atomic extends Component {
                     }
                   ]}/>
                 </ActionBarRow>
-
                 <ActionBarRow>
                   <GroupedSelectedFilters/>
                   <ResetFilters/>
                 </ActionBarRow>
-
               </ActionBar>
               <ViewSwitcherHits
                 hitsPerPage={50} highlightFields={["metadata.Title"]}

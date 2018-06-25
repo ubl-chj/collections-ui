@@ -6,3 +6,5 @@ services:
     container_name: collections-ui
     ports:
       - "9002:3000"
+    volumes:
+      - ./.env:/srv/uv/.env

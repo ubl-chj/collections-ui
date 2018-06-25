@@ -33,12 +33,12 @@ const ManifestsListItem = (props) => {
     const source = extend({}, result._source, result.highlight);
     const manifestUri = process.env.REACT_APP_DYNAMO_BASE + "/dynamo?type=meta&v1=";
     const viewerIRI = process.env.REACT_APP_VIEWER_BASE + "/#?c=0&m=0&s=0&cv=0&manifest=";
-    const thumbnail = result._source.imageServiceIRI + "/full/90,/0/default.jpg";
+    const thumbnail = source.imageServiceIRI + "/full/90,/0/default.jpg";
+    const url = source.imageServiceIRI + "/full/full/0/default.jpg";
     return (
         <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
             <div className={bemBlocks.item("poster")}>
-                <object data={thumbnail} type="image/jpg"><h2>{source.imageIndex}</h2>
-                </object>
+              <a href={url} target="_blank"><img className="thumbnail" alt="presentation" data-qa="poster" src={thumbnail}/></a>
             </div>
             <div className={bemBlocks.item("details")}>
             <Container fluid>
