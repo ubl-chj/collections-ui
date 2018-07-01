@@ -6,37 +6,67 @@ import '../osd.css'
 
 let image = null
 let region = null
+let abstractRegion = null
 let coordinates = []
 
 if (window.location.search && window.location.search.includes("image")) {
   const params = new URLSearchParams(window.location.search)
   image = params.get('image')
   if (params.get('region')) {
-    region = params.get('region').split(',')
+    if (!params.get('region').startsWith('pct:')) {
+      region = params.get('region').split(',')
+    } else {
+      abstractRegion = params.get('region').substring(4).split(',')
+    }
   }
 }
 
+const setAbstractRegion = (imageWidth, imageHeight)=> {
+  const aspectRatio = imageHeight/imageWidth;
+  let x;
+  let y;
+  let w;
+  let h;
+  x = abstractRegion[0]
+  y = abstractRegion[1]
+  w = abstractRegion[2]
+  h = abstractRegion[3]
+  x = x/100;
+  y = y/100 * aspectRatio;
+  w = w/100;
+  h = h/100 * aspectRatio;
+  coordinates.push(x,y,w,h)
+  console.log(x,y,w,h)
+}
+
+const setRegion = (imageWidth, imageHeight)=> {
+  const aspectRatio = imageHeight/imageWidth;
+  let x;
+  let y;
+  let w;
+  let h;
+  x = region[0]
+  y = region[1]
+  w = region[2]
+  h = region[3]
+  x = x/imageWidth;
+  y = y/imageHeight * aspectRatio;
+  w = w/imageWidth;
+  h = h/imageHeight;
+  coordinates.push(x,y,w,h)
+  console.log(x,y,w,h)
+}
 const getCoordinates = (image)=>
   axios.get(image + "/info.json").then(function (response) {
-    let x;
-    let y;
-    let w;
-    let h;
-    x = region[0]
-    y = region[1]
-    w = region[2]
-    h = region[3]
     const imageWidth = response.data.width
     const imageHeight = response.data.height
     console.log(imageWidth)
     console.log(imageHeight)
-    const aspectRatio = imageHeight/imageWidth;
-    x = x/imageWidth;
-    y = y/imageHeight * aspectRatio;
-    w = w/imageWidth;
-    h = h/imageHeight;
-    coordinates.push(x,y,w,h)
-    console.log(x,y,w,h)
+    if (region) {
+      setRegion(imageWidth, imageHeight)
+    } else if (abstractRegion) {
+      setAbstractRegion(imageWidth, imageHeight)
+    }
   }).catch(function (error) {
     console.log(error)
   });
