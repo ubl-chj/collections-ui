@@ -1,0 +1,24 @@
+@import "filter-item.scss";
+@import "../vars.scss";
+
+.viewer-menu-list {
+
+  &__header {
+    margin-bottom: 5px;
+    font-weight: $viewer-bold-weight;
+    font-size: $viewer-heading-font-size;
+  }
+
+  &__options {
+
+  }
+
+  &__items {
+
+  }
+
+  &-option {
+    @include filter-option;
+  }
+
+}

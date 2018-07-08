@@ -1,0 +1,12 @@
+@import "../vars.scss";
+
+.viewer-pagination-select {
+}
+
+.viewer-pagination-navigation {
+
+  .viewer-toggle-option:first-child,
+  .viewer-toggle-option:last-child {
+    flex: 4;
+  }
+}

@@ -1,0 +1,19 @@
+@import "../vars.scss";
+
+.viewer-reset-filters {
+  text-align:center;
+  border-radius:$viewer-border-radius;
+  padding:10px 20px;
+  cursor:pointer;
+  color: $viewer-active-bg-color;
+
+  &.is-disabled {
+    cursor:default;
+    color:$viewer-disabled-text-color;
+  }
+
+  &__text {
+    font-size:$viewer-list-secondary-font-size;
+  }
+
+}

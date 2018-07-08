@@ -1,0 +1,32 @@
+@import "filter-item.scss";
+@import "../vars.scss";
+
+.viewer-hierarchical-menu {
+
+  &-list {
+
+    &.is-disabled {
+      display:none;
+    }
+
+    &__header {
+      margin-bottom:5px;
+      font-weight:$viewer-bold-weight;
+      font-size:$viewer-heading-font-size;
+      color: $viewer-title-color;
+    }
+
+    &__root {
+      margin-left:-10px;
+    }
+
+    &__hierarchical-options {
+      margin-left:10px;
+    }
+  }
+
+  &-option {
+    @include filter-option;
+  }
+
+}

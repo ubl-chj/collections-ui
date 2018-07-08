@@ -1,27 +1,46 @@
 {
-  "name": "collections-ui",
-  "version": "0.1.0",
-  "private": true,
-  "devDependencies": {
-    "react-scripts": "^1.1.4"
-  },
-  "dependencies": {
-    "bootstrap": "^4.1.1",
-    "dotenv": "^5.0.1",
-    "npm": "^6.1.0",
-    "openseadragon": "^2.3.1",
-    "prop-types": "^15.6.1",
-    "query-string": "^6.1.0",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
-    "react-router-dom": "^4.2.2",
-    "reactstrap": "^6.0.1",
-    "searchkit": "^2.3.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
+    "private": true,
+    "name": "collections-ui",
+    "keywords": [
+        "elasticsearch",
+        "elastic search",
+        "react",
+        "ui components",
+        "search",
+        "library",
+        "client-side",
+        "widgets",
+        "react components",
+        "react-component"
+    ],
+    "homepage": "https://github.com/ubl-chj/collections-ui",
+    "bugs": {
+        "url": "https://github.com/ubl-chj/collections-ui/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ubl-chj/collections-ui.git"
+    },
+    "scripts": {
+        "lerna": "lerna"
+    },
+    "authors": [
+      {
+        "name": "Christopher Johnson",
+        "email": "chjohnson39@gmail.com"
+      }
+    ],
+    "contributors": [
+        {
+            "name": "",
+            "email": ""
+        }
+    ],
+    "license": "Apache-2.0",
+    "dependencies": {
+        "mocha": "^5.2.0"
+    },
+    "devDependencies": {
+        "lerna": "^2.11.0"
+    }
 }

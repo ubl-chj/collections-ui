@@ -1,0 +1,55 @@
+@import "../vars.scss";
+
+.viewer-tag-cloud {
+  text-align: justify;
+  word-wrap: break-word;
+  line-height: 16px;
+  font-size: 10px;
+
+  &.is-disabled {
+    display:none;
+  }
+
+  &-option {
+    display: inline;
+    cursor:pointer;
+    font-weight: $viewer-light-weight;
+    color: $viewer-list-text-color;
+    padding:4px 2px;
+    border-right:none;
+    text-decoration: none;
+
+    &__text, &__count {
+      display: inline;
+    }
+
+    &:before {
+      content: ' ';
+      display: inline;
+    }
+
+    &:after {
+      content: ' ';
+      display: inline;
+    }
+
+    &__count {
+      &:before {
+        content: ' (';
+      }
+      &:after {
+        content: ')';
+      }
+    }
+
+    &.is-active &__text {
+      color: $viewer-action-active-color;
+      font-weight: $viewer-medium-weight;
+    }
+
+    &.is-disabled {
+      cursor: initial;
+      color: $viewer-disabled-text-color;
+    }
+  }
+}

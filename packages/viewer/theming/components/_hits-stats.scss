@@ -1,0 +1,8 @@
+@import "../vars.scss";
+
+.viewer-hits-stats {
+  &__info {
+    font-size:$viewer-text-font-size;
+    color:$viewer-text-secondary-color;
+  }
+}
