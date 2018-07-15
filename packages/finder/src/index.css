@@ -1,5 +1,5 @@
 @import url('theme.css');
-@import url('../node_modules/viewer/release/theme.css');
+@import url('../node_modules/ubl-viewer/release/theme.css');
 
 .my-logo {
   color:white;
@@ -84,3 +84,9 @@ th, td {
     display:block;
     z-index:999;
 }
+
+.btn-primary-outline {
+  background-color: transparent;
+  border-color: #ccc;
+}
+

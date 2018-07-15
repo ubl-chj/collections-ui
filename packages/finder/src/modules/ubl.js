@@ -43,7 +43,7 @@ const ManifestsListItem = (props) => {
   const thumbnail = process.env.REACT_APP_UBL_IMAGE_SERVICE_BASE + firstId + "/" + secondId + "/" + viewId + "/00000001.jpx/full/90,/0/default.jpg"
   return (<div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <div className={bemBlocks.item("poster")}>
-        <img class="thumbnail" alt="presentation" data-qa="poster" src={thumbnail}/>
+        <img className="thumbnail" alt="presentation" data-qa="poster" src={thumbnail}/>
       </div>
       <div className={bemBlocks.item("details")}>
         <a href={url} target="_blank">

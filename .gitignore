@@ -1,12 +1,11 @@
 node_modules
 packages/viewer/release
 lib
-
+build/
 # testing
+
 /coverage
 
-# production
-/build
 
 # misc
 .DS_Store
@@ -14,6 +13,6 @@ lib
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
+lerna-debug.log
 .idea
 out

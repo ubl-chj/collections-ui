@@ -1,4 +1,3 @@
 #!/bin/bash
-
-# Execute `npm` with any arguments suppled by CMD
-exec npm "$@"
+cd /srv/collections-ui/packages/finder
+exec serve "$@"

@@ -10,6 +10,7 @@
   "dependencies": {
     "bootstrap": "^4.1.1",
     "dotenv": "^5.0.1",
+    "manifesto.js": "^2.2.30",
     "npm": "^6.1.0",
     "openseadragon": "^2.3.1",
     "prop-types": "^15.6.1",
@@ -20,7 +21,7 @@
     "react-router-dom": "^4.2.2",
     "reactstrap": "^6.0.1",
     "searchkit": "^2.3.0",
-    "viewer": "latest"
+    "ubl-viewer": "file:../ubl-viewer"
   },
   "scripts": {
     "start": "react-scripts start",

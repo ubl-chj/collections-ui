@@ -25,10 +25,10 @@
         "lerna": "lerna"
     },
     "authors": [
-      {
-        "name": "Christopher Johnson",
-        "email": "chjohnson39@gmail.com"
-      }
+        {
+            "name": "Christopher Johnson",
+            "email": "chjohnson39@gmail.com"
+        }
     ],
     "contributors": [
         {

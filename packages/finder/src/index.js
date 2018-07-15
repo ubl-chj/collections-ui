@@ -5,7 +5,8 @@ import Ubl from './modules/ubl';
 import Orp from './modules/orp';
 import Ec from './modules/ec';
 import Atomic from './modules/atomic';
-import OSD from './modules/osd';
+import OsdViewer from './modules/osd-viewer';
+import OsdComponent from './modules/osd-component';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -16,7 +17,8 @@ ReactDOM.render((
             <Route path='/orp' component={Orp}/>
             <Route path='/ec' component={Ec}/>
             <Route path='/atomic' component={Atomic}/>
-            <Route path='/osd' component={OSD}/>
+            <Route path='/osd' component={OsdViewer}/>
+            <Route path='/component' component={OsdComponent}/>
         </Switch>
     </BrowserRouter>
 ), document.getElementById('container'))
