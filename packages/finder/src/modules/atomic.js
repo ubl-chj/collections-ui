@@ -43,7 +43,7 @@ class Atomic extends Component {
       <SearchkitProvider searchkit={searchkit}>
         <Layout>
           <TopBar>
-            <div className="my-logo">UBL</div>
+            <div className="my-logo"><a className="my-logo" href="/" target="_blank">UBL</a></div>
             <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
           </TopBar>
           <LayoutBody>

@@ -6,7 +6,6 @@ import {
   ViewerManager,
   Layout,
   TopBar,
-  SideBar,
   ActionBar,
   LayoutBody
 } from 'ubl-viewer'
@@ -22,7 +21,7 @@ let image = null
 let region = null
 let abstractRegion = null
 let coordinates = []
-const host = "http://localhost"
+let document = null
 let viewer;
 
 if (window.location.search && window.location.search.includes("image")) {
@@ -35,14 +34,15 @@ if (window.location.search && window.location.search.includes("image")) {
       abstractRegion = params.get('region').substring(4).split(',')
     }
   }
-  viewer = new ViewerManager(host)
+  const document = image + "/info.json"
+  viewer = new ViewerManager(document)
 } else if (window.location.search && window.location.search.includes("manifest")
   && window.location.search.includes("index")) {
   const params = new URLSearchParams(window.location.search)
-  manifest = params.get('manifest')
+  document = params.get('manifest')
   index = params.get('index')
   count = params.get('count')
-  viewer = new ViewerManager(manifest)
+  viewer = new ViewerManager(document)
 }
 
 const setAbstractRegion = (imageWidth, imageHeight)=> {
@@ -103,12 +103,10 @@ class OsdViewer extends Component {
           <div className="my-logo-sm">UBL</div>
         </TopBar>
         <ActionBar>
-          <Controls index={index} manifest={manifest} document={viewer.document}/>
+          <Controls index={index} manifest={document} document={viewer.document}/>
         </ActionBar>
         <LayoutBody>
           <div className="openseadragon" id="osd-viewer"/>
-        <SideBar>
-        </SideBar>
         </LayoutBody>
       </Layout>
       </ViewerProvider>
@@ -120,8 +118,8 @@ class OsdViewer extends Component {
       this.getCoordinates(image).then(data => {
         OpenSeaDragon(OsdViewer.defaultConfig())
       })
-    } else if (manifest) {
-        manifesto.loadManifest(manifest).then(function(manifest) {
+    } else if (document) {
+        manifesto.loadManifest(document).then(function(manifest) {
           manifest = manifesto.create(manifest);
           const sequence = manifest.getSequenceByIndex(0);
           const canvas = sequence.getCanvasByIndex(parseInt(index) - 1);

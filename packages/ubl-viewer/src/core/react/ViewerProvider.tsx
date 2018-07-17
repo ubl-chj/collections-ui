@@ -22,10 +22,13 @@ export class ViewerProvider extends React.Component<ViewerProps,any> {
     this.props.viewer.setupListeners()
   }
 
-  componentDidMount(){}
+  componentDidMount(){
+    this.props.viewer.completeRegistration()
+  }
 
   componentWillUnmount(){
     const {viewer} = this.props
+    viewer.guidGenerator.reset()
   }
 
   getChildContext(){

@@ -1,6 +1,8 @@
 import {VERSION} from "./ViewerVersion"
 import {DocumentRequest} from "./DocumentRequest"
 import {AxiosManifestTransport, ManifestTransport} from "./transport";
+import {AccessorManager} from "./AccessorManager";
+import {EventEmitter, GuidGenerator} from "./support";
 
 const defaults = require("lodash/defaults")
 
@@ -11,6 +13,7 @@ export interface ViewerOptions {
   searchOnLoad?: boolean
   httpHeaders?: Object
   basicAuth?: string
+  transport?:ManifestTransport
   searchUrlPath?: string
   timeout?: number
   withCredentials?: boolean
@@ -23,13 +26,21 @@ export interface InitialState {
 }
 
 export class ViewerManager {
+  accessors:AccessorManager
   documentUri: string
   document:any
+  emitter:EventEmitter
+  documentEmitter:EventEmitter
+  private registrationCompleted:Promise<any>
+  completeRegistration:Function
+  guidGenerator:GuidGenerator
   state:any
   transport:ManifestTransport
   currentDocumentRequest:DocumentRequest
   options: ViewerOptions
   error: any
+  loading:boolean
+  initialLoading:boolean
   VERSION = VERSION
   static VERSION = VERSION
 
@@ -41,6 +52,9 @@ export class ViewerManager {
     })
     this.documentUri = documentUri
     this.document = initialState.document
+    this.emitter = new EventEmitter()
+    this.documentEmitter = new EventEmitter()
+    this.guidGenerator = new GuidGenerator()
     this.state = initialState.state || {}
     this.transport = new AxiosManifestTransport(documentUri, {
       headers:this.options.httpHeaders,
@@ -49,10 +63,35 @@ export class ViewerManager {
       timeout: this.options.timeout,
       withCredentials: this.options.withCredentials
     })
+    this.registrationCompleted = new Promise((resolve)=>{
+      this.completeRegistration = resolve
+    })
+    this.accessors = new AccessorManager()
+  }
+
+  guid(prefix){
+    return this.guidGenerator.guid(prefix)
   }
 
   setupListeners() {
-    this.setDocument(this._get())
+    this.getRemoteManifest()
+  }
+
+  addAccessor(accessor){
+    accessor.setViewerManager(this)
+    return this.accessors.add(accessor)
+  }
+
+  removeAccessor(accessor){
+    this.accessors.remove(accessor)
+  }
+
+  getRemoteManifest() {
+    this.registrationCompleted.then(()=> {
+      this._get()
+    }).catch((e)=> {
+      console.error(e.stack)
+    })
   }
 
   getDocumentAndState(){
@@ -63,16 +102,25 @@ export class ViewerManager {
   }
 
   _get() {
+    this.state = this.accessors.getState()
+    if(this.document) {
+      return Promise.resolve(this.getDocumentAndState())
+    }
+    this.loading = true
+    this.emitter.trigger()
     this.currentDocumentRequest = new DocumentRequest(
       this.transport, this.documentUri, this)
     return this.currentDocumentRequest.run()
       .then(()=> {
-        return Promise.resolve(this.getDocumentAndState())
+        return this.getDocumentAndState()
       })
   }
 
   setDocument(document){
     this.document = document
+    this.accessors.setResults(document)
+    this.onResponseChange()
+    this.documentEmitter.trigger(this.document)
   }
 
   setError(error){
@@ -80,4 +128,11 @@ export class ViewerManager {
     console.error(this.error)
     this.document = null
    }
+
+  onResponseChange(){
+    this.loading = false
+    this.initialLoading = false
+    this.emitter.trigger()
+  }
+
 }
