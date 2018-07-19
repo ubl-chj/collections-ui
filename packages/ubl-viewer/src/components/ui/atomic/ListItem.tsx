@@ -3,7 +3,7 @@ const extend = require("lodash/extend")
 
 export const ListItem = (props) => {
   const generatorUrl = process.env.REACT_APP_GENERATOR_BASE
-  const osdUrl = process.env.REACT_APP_OSD_BASE
+  const osdUrl = process.env.REACT_APP_OSD_COMPONENT_BASE
   const viewerUrl = process.env.REACT_APP_UBL_IMAGE_VIEWER_BASE
   const constManifestUrl = generatorUrl + "?type=atomic&index=" + process.env.REACT_APP_ATOMIC_INDEX + "&q="
   const {bemBlocks, result} = props
@@ -15,7 +15,7 @@ export const ListItem = (props) => {
   const viewId = splitPath[5]
   const viewer = viewerUrl + viewId
   const query = "{\"query\":{\"multi_match\":{\"query\":\"" + viewId + "\",\"type\":\"cross_fields\",\"operator\":\"and\"}},\"size\":500}"
-  const manifestView = osdUrl + "?index=" + source.imageIndex + "&manifest=" + encodeURIComponent(constManifestUrl + query)
+  const manifestView = osdUrl + "?manifest=" + encodeURIComponent(constManifestUrl + query)
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <div className={bemBlocks.item("poster")}>

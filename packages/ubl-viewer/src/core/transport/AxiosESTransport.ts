@@ -11,7 +11,7 @@ export interface ESTransportOptions {
 }
 
 export class AxiosManifestTransport extends ManifestTransport{
-  static timeout: number = 5000
+  static timeout: number = 20000
   axios: AxiosInstance
   options: ESTransportOptions
 

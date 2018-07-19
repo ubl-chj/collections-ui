@@ -3,6 +3,7 @@ const extend = require("lodash/extend")
 
 export const GridItem = (props) => {
   const osdUrl = process.env.REACT_APP_OSD_BASE
+  const osdComponentUrl = process.env.REACT_APP_OSD_COMPONENT_BASE
   const viewerUrl = process.env.REACT_APP_UBL_IMAGE_VIEWER_BASE
   const {bemBlocks, result} = props
   const source = extend({}, result._source, result.highlight)
