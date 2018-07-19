@@ -1,14 +1,15 @@
 import React, {Component} from 'react'
 import {
-  Controls,
-  ViewerProvider,
-  ViewerManager,
-  Layout,
-  TopBar,
   ActionBar,
-  LayoutBody,
+  Controls,
   DocumentViewSwitcher,
-  ManifestItem
+  Layout,
+  LayoutBody,
+  ManifestItem,
+  Metadata,
+  TopBar,
+  ViewerManager,
+  ViewerProvider
 } from 'ubl-viewer'
 import '../index.css'
 
@@ -16,7 +17,7 @@ let manifest = null
 let image = null
 let region = null
 let abstractRegion = null
-let viewer;
+let viewer
 
 if (window.location.search && window.location.search.includes("image")) {
   const params = new URLSearchParams(window.location.search)
@@ -38,22 +39,21 @@ if (window.location.search && window.location.search.includes("image")) {
 
 class OsdServer extends Component {
   render () {
-    return (
-      <ViewerProvider viewer={viewer}>
+    return (<ViewerProvider viewer={viewer}>
         <Layout>
           <TopBar>
             <div className="my-logo-sm">UBL</div>
           </TopBar>
           <ActionBar>
-            <Controls manifest={manifest}/>
+            <Metadata scrollTo="body"/>
           </ActionBar>
           <LayoutBody>
-            <DocumentViewSwitcher viewer={viewer} hitComponents={[
-                {key: "grid", title: "Grid", itemComponent: ManifestItem, defaultOption: true}]} scrollTo="body"/>,
+            <DocumentViewSwitcher
+              viewerComponents={[{key: "grid", title: "Grid", itemComponent: ManifestItem, defaultOption: true}]}
+              scrollTo="body"/>
           </LayoutBody>
         </Layout>
-      </ViewerProvider>
-    )
+      </ViewerProvider>)
   }
 }
 

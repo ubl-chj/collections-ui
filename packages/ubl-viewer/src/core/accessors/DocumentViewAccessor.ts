@@ -1,7 +1,6 @@
 const head = require("lodash/head")
 const find = require("lodash/find")
 
-
 import {StatefulAccessor} from "./StatefulAccessor"
 import {ValueState} from "../state"
 

@@ -110,3 +110,11 @@ th, td {
   border-color: #ccc;
 }
 
+.btn-group, .btn-group-vertical {
+  float: right;
+  width: 24%;
+  text-align: right;
+  padding-right: 10px;
+  font-size: 16px;
+}
+

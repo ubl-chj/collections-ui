@@ -1,14 +1,15 @@
 import * as React from "react";
-const OpenSeaDragon = require('openseadragon')
-import {ViewerComponent} from "../../../core"
+import {ViewerComponent, ViewerManager} from "../../../core"
 import axios from 'axios'
-import {ViewerManager} from "../../../core";
+
+const OpenSeaDragon = require('openseadragon')
 
 const defaults = require("lodash/defaults")
 
 export interface OsdComponentProps {
   id?: string,
   image?: string,
+  images?: Array<string>
   document?: Object
   region?: string
   viewer?: ViewerManager
@@ -18,6 +19,7 @@ export interface OsdComponentProps {
 export class OsdComponent extends ViewerComponent<OsdComponentProps, any> {
   defaultProps: Object
   osd: Object
+
   constructor(props) {
     super(props)
   }
@@ -28,19 +30,14 @@ export class OsdComponent extends ViewerComponent<OsdComponentProps, any> {
     )
   }
 
-  getImagesFromDocument() {
-    let {document} = this.props
-    const images = []
-
-  }
-
   initSeaDragon() {
     let self = this
-    let image = "https://iiif.ub.uni-leipzig.de/iiif/j2k/0000/0081/0000008110/00000006.jpx"
-    this.getCoordinates(image).then(() => {
+    let firstImage = this.props.images[0]
+    this.getCoordinates(firstImage).then(() => {
       self.viewer = OpenSeaDragon({
-        sequenceMode: false,
-        showReferenceStrip: false,
+        sequenceMode: true,
+        showReferenceStrip: true,
+        referenceStripScroll: 'vertical',
         showNavigator: true,
         id: 'osd-viewer',
         visibilityRatio: 0.5,
@@ -54,12 +51,13 @@ export class OsdComponent extends ViewerComponent<OsdComponentProps, any> {
         fullPageButton: 'full-page',
         previousButton: 'sidebar-previous',
         nextButton: 'sidebar-next',
-        tileSources: ["https://iiif.ub.uni-leipzig.de/iiif/j2k/0000/0081/0000008110/00000006.jpx/info.json"]
+        tileSources: [this.props.images]
       })
     })
   }
 
   componentDidMount() {
+
   }
 
   shouldComponentUpdate() {
@@ -68,11 +66,14 @@ export class OsdComponent extends ViewerComponent<OsdComponentProps, any> {
 
   componentWillMount() {
     super.componentWillMount()
-    this.initSeaDragon()
+    if (this.props.images) {
+      console.log(this.props.images)
+      this.initSeaDragon()
+    }
   }
 
   getCoordinates = (image) =>
-    axios.get(image + "/info.json").then(function (response) {
+    axios.get(image).then(function (response) {
       const imageWidth = response.data.width
       const imageHeight = response.data.height
       console.log(imageWidth)

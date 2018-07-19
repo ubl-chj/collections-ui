@@ -11,6 +11,7 @@ export interface ViewerComponentProps {
   translations?:Object
   viewer?:ViewerManager
   key?:string
+  viewerComponents?:Array<Object>
 }
 
 export class ViewerComponent<P extends ViewerComponentProps,S> extends React.Component<P,S> {

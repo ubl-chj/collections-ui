@@ -22,6 +22,14 @@ $ lerna run build
 $ lerna run start
 ```
 
+## Environment
+see the `packages/finder/.env` file for a reference implementation
+
+## Docker Compose
+```bash
+docker-compose up
+```
+
 See [manifest-metadata-processor](https://github.com/ub-leipzig/manifest-metadata-processor) for
 the tooling to create JSON documents for elastic search from manifest metadata.
 

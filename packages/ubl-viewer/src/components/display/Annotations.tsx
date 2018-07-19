@@ -11,7 +11,6 @@ import {
   block
 } from "../../core"
 
-const map = require("lodash/map")
 const defaults = require("lodash/defaults")
 
 export interface AnnotationItemProps {
@@ -99,7 +98,6 @@ export class Annotations extends ViewerComponent<AnnotationsProps, any> {
 
   render() {
     let document:Object = this.getDocument()
-    //let hasHits = hits.length > 0
 
     if (!this.isInitialLoading()) {
       const {listComponent, mod, className, itemComponent} = this.props
