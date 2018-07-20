@@ -3,7 +3,9 @@ import React, {Component} from 'react'
 import {
   ActionBar,
   ActionBarRow,
+  BoolShould,
   CheckboxFilter,
+  ExistsQuery,
   GroupedSelectedFilters,
   HitsStats,
   Layout,
@@ -18,29 +20,28 @@ import {
   SearchkitProvider,
   SideBar,
   SortingSelector,
+  TagCloud,
   TermQuery,
   TopBar,
   ViewSwitcherHits,
   ViewSwitcherToggle
 } from 'searchkit'
 
-import {
-  GridItem,
-  ListItem
-} from 'ubl-viewer'
+import {GridItem, ListItem} from 'ubl-viewer'
 
 import '../index.css'
+
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_ATOMIC_INDEX
 const searchkit = new SearchkitManager(host)
-const queryFields = ["iiifService", "structureMap.1.@id", "structureMap.1.label", "metadata.Date", "metadata.Title",
-  "metadata.Author", "metadata.Date of publication", "metadata.Call number", "metadata.Collection", "metadata.Objekttitel",
-  "metadata.Part of", "metadata.Place", "metadata.Place of publication", "metadata.Publisher", "metadata.Sprache",
-  "metadata.URN", "metadata.Source PPN (SWB)"]
+const queryFields = ["iiifService", "structureMap.1.@id", "structureMap.1.label", "metadata.Date", "metadata.Title", "metadata.Author", "metadata.Date of publication", "metadata.Call number", "metadata.Collection", "metadata.Objekttitel", "metadata.Part of", "metadata.Place", "metadata.Place of publication", "metadata.Publisher", "metadata.Sprache", "metadata.URN", "metadata.Source PPN (SWB)"]
+
+searchkit.addDefaultQuery((query) => {
+  return query.addQuery(TermQuery("imageIndex", '00000001'))
+})
 
 class Atomic extends Component {
   render () {
-    return (
-      <SearchkitProvider searchkit={searchkit}>
+    return (<SearchkitProvider searchkit={searchkit}>
         <Layout>
           <TopBar>
             <div className="my-logo"><a className="my-logo" href="/" target="_blank">UBL</a></div>
@@ -48,6 +49,8 @@ class Atomic extends Component {
           </TopBar>
           <LayoutBody>
             <SideBar>
+              <RefinementListFilter field="metadata.Sprache.keyword" title="Language" id="language"
+                listComponent={TagCloud}/>
               <RefinementListFilter id="tag1" title="Collection" field="metadata.Collection.keyword" orderKey="_term"
                 operator="AND"/>
             </SideBar>
@@ -56,30 +59,32 @@ class Atomic extends Component {
                 <ActionBarRow>
                   <HitsStats translations={{"hitstats.results_found": "{hitCount} results found"}}/>
                   <ViewSwitcherToggle/>
-                  <SortingSelector options={[{label: "Index", key: "index", fields: [
-                    {field: "metadata.Title.keyword", options: {order: "asc"}},
-                      {field: "imageIndex", options: {order: "asc"}}]
+                  <SortingSelector options={[{
+                    label: "Index",
+                    key: "index",
+                    fields: [{field: "metadata.Title.keyword", options: {order: "asc"}}, {
+                      field: "imageIndex",
+                      options: {order: "asc"}
+                    }]
                   }]}/>
-                </ActionBarRow>
-                <ActionBarRow>
-                  <CheckboxFilter id="single-image" title="First Image" label="Select First Image" filter={TermQuery("imageIndex", '00000001')} />
                 </ActionBarRow>
                 <ActionBarRow>
                   <GroupedSelectedFilters/>
                   <ResetFilters/>
                 </ActionBarRow>
               </ActionBar>
-              <ViewSwitcherHits hitsPerPage={50} highlightFields={["metadata.Title"]}
-                hitComponents={[
-                  {key: "grid", title: "Grid", itemComponent: GridItem, defaultOption: true},
-                  {key: "list", title: "List", itemComponent: ListItem}]} scrollTo="body"/>,
+              <ViewSwitcherHits hitsPerPage={50} highlightFields={["metadata.Title"]} hitComponents={[{
+                key: "grid",
+                title: "Grid",
+                itemComponent: GridItem,
+                defaultOption: true
+              }, {key: "list", title: "List", itemComponent: ListItem}]} scrollTo="body"/>,
               <NoHits suggestionsField={"metadata.Title"}/>
               <Pagination showNumbers={true}/>
             </LayoutResults>
           </LayoutBody>
         </Layout>
-      </SearchkitProvider>
-    )
+      </SearchkitProvider>)
   }
 }
 

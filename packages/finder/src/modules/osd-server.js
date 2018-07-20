@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {
   ActionBar,
-  Controls,
   DocumentViewSwitcher,
   Layout,
   LayoutBody,
@@ -45,12 +44,11 @@ class OsdServer extends Component {
             <div className="my-logo-sm">UBL</div>
           </TopBar>
           <ActionBar>
-            <Metadata scrollTo="body"/>
+            <Metadata key="metadata"/>
           </ActionBar>
           <LayoutBody>
             <DocumentViewSwitcher
-              viewerComponents={[{key: "grid", title: "Grid", itemComponent: ManifestItem, defaultOption: true}]}
-              scrollTo="body"/>
+              viewerComponents={[{key: "grid", title: "Grid", itemComponent: ManifestItem, defaultOption: true}]}/>
           </LayoutBody>
         </Layout>
       </ViewerProvider>)

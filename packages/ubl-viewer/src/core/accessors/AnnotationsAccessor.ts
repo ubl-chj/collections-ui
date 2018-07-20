@@ -7,17 +7,11 @@ export interface AnnotationsOptions{
 
 export class AnnotationsAccessor extends Accessor {
 
-  constructor(public options:AnnotationsOptions){
+  constructor(){
     super()
   }
 
   setResults(results){
     super.setDocument(results)
-  }
-
-  getScrollSelector(){
-    return (this.options.scrollTo == true) ?
-      "body" :
-      this.options.scrollTo.toString();
   }
 }

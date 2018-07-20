@@ -50,7 +50,7 @@ const ManifestHitsGridItem = (props) => {
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <div className={bemBlocks.item("poster")}>
-        <a href={url} target="_blank"><img className={bemBlocks.item("poster")} alt="presentation" data-qa="poster"
+        <a href={url} target="_blank"><img onError={(e)=>{e.target.src="https://www.e-codices.unifr.ch/img/frontend/logo-nav.png"}} className={bemBlocks.item("poster")} alt="presentation" data-qa="poster"
           src={thumbnail} width="180"/></a>
       </div>
       <div><a href={viewer + encodeURIComponent(query)}
@@ -75,7 +75,7 @@ const ManifestsListItem = (props) => {
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <div className={bemBlocks.item("poster")}>
-        <a href={url} target="_blank"><img className="thumbnail" alt="presentation" data-qa="poster"
+        <a href={url} target="_blank"><img onError={(e)=>{e.target.src="https://upload.wikimedia.org/wikipedia/commons/9/9a/VisualEditor_icon_page-not-found-ltr.svg"}} className="thumbnail" alt="presentation" data-qa="poster"
           src={thumbnail}/></a>
       </div>
       <div className={bemBlocks.item("details")}>

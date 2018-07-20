@@ -217,6 +217,14 @@
   content: "\e080";
 }
 
+.glyphicon-menu-hamburger:before {
+  content: "\e236";
+}
+
+.glyphicon-info-sign:before {
+  content:"\e086";
+}
+
 #overlay-rotation-bounding-box {
   opacity:    0.4;
   background-color: #e6e4ce;
@@ -604,3 +612,57 @@ body {
   font-size: 16px;
 }
 
+.bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  left: 36px;
+  top: 36px;
+}
+
+.right .bm-burger-button {
+  left: initial;
+  right: 36px;
+}
+
+.bm-cross-button {
+  top: 33px;
+  height: 24px;
+  width: 24px;
+}
+
+.bm-cross {
+  background: #000;
+}
+
+.bm-menu {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 33px;
+  width: 100%;
+  background-color: #efefef;
+  border-right: 1px solid lightgray;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 2px;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.bm-menu-wrap[style] {
+  position: fixed;
+  right: 0;
+  z-index: 1100;
+  width: 30% !important;
+  height: 100%;
+  transition: all 0.5s;
+}
+
+.sub-title {
+  border-bottom: 2px solid #ccc;
+  color: #666;
+  font-weight: bold;
+  margin: 10px 20px 5px 20px;
+  padding: 0 5px 5px 0;
+}

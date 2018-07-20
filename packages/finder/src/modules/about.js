@@ -3,7 +3,6 @@ import extend from 'lodash/extend'
 import {
   ActionBar,
   ActionBarRow,
-  CheckboxFilter,
   GroupedSelectedFilters,
   HitsStats,
   Layout,
@@ -18,7 +17,6 @@ import {
   SearchkitProvider,
   SideBar,
   SortingSelector,
-  TermQuery,
   TopBar,
   ViewSwitcherHits,
   ViewSwitcherToggle
@@ -39,11 +37,6 @@ const CollectionsListItem = (props) => {
   const source = extend({}, result._source, result.highlight)
   const thumbnail = source.imageServiceIRI + "/full/90,/0/default.jpg"
   const url = osdUrl + "?image=" + source.imageServiceIRI
-  let tag4 = source.metadataMap.tag4 || ''
-  let tag5 = source.metadataMap.tag5 || ''
-  let tag6 = source.metadataMap.tag6 || ''
-  let tag7 = source.metadataMap.tag7 || ''
-  let tag8 = source.metadataMap.tag8 || ''
 
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">

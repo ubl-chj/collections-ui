@@ -91,7 +91,7 @@ export class Annotations extends ViewerComponent<AnnotationsProps, any> {
 
   componentWillMount() {
     super.componentWillMount()
-    this.annotationsAccessor = new AnnotationsAccessor({ scrollTo:this.props.scrollTo })
+    this.annotationsAccessor = new AnnotationsAccessor()
     this.viewer.addAccessor(this.annotationsAccessor)
   }
 

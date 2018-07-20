@@ -37,7 +37,7 @@ export class OsdComponent extends ViewerComponent<OsdComponentProps, any> {
       self.viewer = OpenSeaDragon({
         sequenceMode: true,
         showReferenceStrip: true,
-        referenceStripScroll: 'vertical',
+        referenceStripScroll: 'horizontal',
         showNavigator: true,
         id: 'osd-viewer',
         visibilityRatio: 0.5,
@@ -67,7 +67,6 @@ export class OsdComponent extends ViewerComponent<OsdComponentProps, any> {
   componentWillMount() {
     super.componentWillMount()
     if (this.props.images) {
-      console.log(this.props.images)
       this.initSeaDragon()
     }
   }

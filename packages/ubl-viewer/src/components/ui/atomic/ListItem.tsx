@@ -39,7 +39,7 @@ export const ListItem = (props) => {
             <td>{source.metadata.Date} {source.metadata['Date of publication']} {source.metadata['Datierung']} {source.metadata['datiert']}</td>
           </tr>
           <tr>
-            <td>Composite Manifest:</td>
+            <td>Elastic Manifest:</td>
             <td><a href={constManifestUrl + query} target="_blank">{viewId}</a></td>
           </tr>
           <tr>
