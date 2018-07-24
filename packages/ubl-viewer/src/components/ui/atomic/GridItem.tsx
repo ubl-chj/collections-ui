@@ -13,7 +13,12 @@ export const GridItem = (props) => {
   const splitPath = pathname.split("/")
   const viewId = splitPath[5]
   const viewer = viewerUrl + viewId
-  const titleString = source.metadata.Title.substr(0, 50) + "... : " + source.imageIndex
+  let titleString;
+  if (source.metadata.Title.length >= 80) {
+    titleString = source.metadata.Title.substr(0, 80) + "... "
+  } else {
+    titleString = source.metadata.Title
+  }
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <div className={bemBlocks.item("poster")}>

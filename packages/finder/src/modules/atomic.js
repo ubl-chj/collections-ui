@@ -51,8 +51,10 @@ class Atomic extends Component {
             <SideBar>
               <RefinementListFilter field="metadata.Sprache.keyword" title="Language" id="language"
                 listComponent={TagCloud}/>
-              <RefinementListFilter id="tag1" title="Collection" field="metadata.Collection.keyword" orderKey="_term"
-                operator="AND"/>
+              <RefinementListFilter id="collection" title="Collection" field="metadata.Collection.keyword" orderKey="_term"
+                operator="AND" listComponent={TagCloud}/>
+              <RefinementListFilter id="place" title="Place" field="metadata.Place.keyword" orderKey="_term"
+                operator="AND" listComponent={TagCloud}/>
             </SideBar>
             <LayoutResults>
               <ActionBar>
