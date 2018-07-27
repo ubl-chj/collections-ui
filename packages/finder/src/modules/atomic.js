@@ -3,9 +3,6 @@ import React, {Component} from 'react'
 import {
   ActionBar,
   ActionBarRow,
-  BoolShould,
-  CheckboxFilter,
-  ExistsQuery,
   GroupedSelectedFilters,
   HitsStats,
   Layout,
@@ -13,6 +10,7 @@ import {
   LayoutResults,
   NoHits,
   Pagination,
+  Panel,
   RefinementListFilter,
   ResetFilters,
   SearchBox,
@@ -49,11 +47,11 @@ class Atomic extends Component {
           </TopBar>
           <LayoutBody>
             <SideBar>
-              <RefinementListFilter field="metadata.Sprache.keyword" title="Language" id="language"
+              <RefinementListFilter containerComponent={<Panel collapsable={true} defaultCollapsed={false}/>} field="metadata.Sprache.keyword" title="Language" id="language"
                 listComponent={TagCloud}/>
-              <RefinementListFilter id="collection" title="Collection" field="metadata.Collection.keyword" orderKey="_term"
+              <RefinementListFilter containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>} id="collection" title="Collection" field="metadata.Collection.keyword" orderKey="_term"
                 operator="AND" listComponent={TagCloud}/>
-              <RefinementListFilter id="place" title="Place" field="metadata.Place.keyword" orderKey="_term"
+              <RefinementListFilter containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>} id="place" title="Place" field="metadata.Place.keyword" orderKey="_term"
                 operator="AND" listComponent={TagCloud}/>
             </SideBar>
             <LayoutResults>

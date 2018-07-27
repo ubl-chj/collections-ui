@@ -1,5 +1,5 @@
 node_modules
-packages/viewer/release
+packages/ubl-viewer/release
 lib
 build/
 # testing
@@ -16,3 +16,4 @@ yarn-error.log*
 lerna-debug.log
 .idea
 out
+**/package-lock.json

@@ -1,8 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-//const copyrightBanner = require("fs").readFileSync("../../COPYRIGHT", "utf-8")
-const autoprefixer = require('autoprefixer')
 
 module.exports = {
   entry: {
