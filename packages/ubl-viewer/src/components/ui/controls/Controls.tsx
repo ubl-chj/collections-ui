@@ -1,5 +1,4 @@
 import * as React from "react";
-const manifesto = require('manifesto.js')
 
 export const Controls = () => {
   return (<div>
