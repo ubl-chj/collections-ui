@@ -1,0 +1,14 @@
+@import "~bootstrap/scss/bootstrap";
+
+.modal-container {
+  position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute;
+}
+
+.modal-open {
+  overflow:hidden;
+  overflow-y: scroll !important;
+  padding-right: 0 !important;
+}

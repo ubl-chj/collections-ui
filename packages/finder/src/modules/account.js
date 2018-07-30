@@ -1,11 +1,11 @@
 import React from 'react';
 
-import AuthUserContext from '../components/AuthUserContext';
-import withAuthorization from '../components/withAuthorization';
+import {AuthUserContext, withAuthorization}  from '../components/core';
+
 
 const AccountPage = () =>
   <AuthUserContext.Consumer>
-    {authUser =>
+    {(authUser) =>
       <div>
         <h1>Account: {authUser.email}</h1>
       </div>

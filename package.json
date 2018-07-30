@@ -41,6 +41,10 @@
         "mocha": "^5.2.0"
     },
     "devDependencies": {
+        "babel-eslint": "^8.2.6",
+        "eslint": "^5.2.0",
+        "eslint-plugin-babel": "^5.1.0",
+        "eslint-plugin-react": "^7.10.0",
         "lerna": "^2.11.0"
     }
 }

@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
-import {Layout, LayoutBody, LayoutResults, TopBar} from "searchkit"
+import {Layout, LayoutBody, LayoutResults, TopBar} from 'searchkit'
 import styles from '../assets/app.css'
 import '../assets/firebaseui-styling.global.css'
-import AuthUserContext from '../components/AuthUserContext';
+import {AuthUserContext} from '../components/core/AuthUserContext';
 
 const SignInPage = ({ history }) =>
   <div>
@@ -19,11 +19,11 @@ const baseUrl = process.env.REACT_APP_BASEURL
 
 const config = {
   apiKey: firebaseApi_key,
-  authDomain: "collections-ui-1532736515660.firebaseapp.com",
-  databaseURL: "https://collections-ui-1532736515660.firebaseio.com",
-  projectId: "collections-ui-1532736515660",
-  storageBucket: "",
-  messagingSenderId: "851210977979"
+  authDomain: 'collections-ui-1532736515660.firebaseapp.com',
+  databaseURL: 'https://collections-ui-1532736515660.firebaseio.com',
+  projectId: 'collections-ui-1532736515660',
+  storageBucket: '',
+  messagingSenderId: '851210977979'
 };
 
 if (!firebase.apps.length) {
@@ -47,14 +47,14 @@ class SignInForm extends Component {
   render () {
     return (<Layout>
         <TopBar>
-          <div className="my-logo"><a className="my-logo" href="/" target="_blank">UBL</a></div>
+          <div className='my-logo'><a className='my-logo' href='/' target='_blank'>UBL</a></div>
         </TopBar>
         <LayoutBody>
           <LayoutResults>
             <AuthUserContext.Consumer>
-              {authUser => authUser
+              {(authUser) => authUser
                 ? <div><p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p>
-                <a onClick={() => firebase.auth().signOut()}>Sign-out</a></div>
+                <a role="button" onClick={() => firebase.auth().signOut()}>Sign-out</a></div>
                 : <StyledFirebaseAuth className={styles.firebaseUi} uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
               }
             </AuthUserContext.Consumer>

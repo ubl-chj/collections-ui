@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import OpenSeaDragon from 'openseadragon'
+import openSeaDragon from 'openseadragon'
 import {
   Controls,
   ViewerProvider,
@@ -24,7 +24,7 @@ let coordinates = []
 let document = null
 let viewer;
 
-if (window.location.search && window.location.search.includes("image")) {
+if (window.location.search && window.location.search.includes('image')) {
   const params = new URLSearchParams(window.location.search)
   image = params.get('image')
   if (params.get('region')) {
@@ -34,10 +34,10 @@ if (window.location.search && window.location.search.includes("image")) {
       abstractRegion = params.get('region').substring(4).split(',')
     }
   }
-  const document = image + "/info.json"
+  const document = image + '/info.json'
   viewer = new ViewerManager(document)
-} else if (window.location.search && window.location.search.includes("manifest")
-  && window.location.search.includes("index")) {
+} else if (window.location.search && window.location.search.includes('manifest')
+  && window.location.search.includes('index')) {
   const params = new URLSearchParams(window.location.search)
   document = params.get('manifest')
   index = params.get('index')
@@ -83,7 +83,7 @@ class OsdViewer extends Component {
       fullPageButton: 'full-page',
       previousButton: 'sidebar-previous',
       nextButton: 'sidebar-next',
-      tileSources: [image + "/info.json"],
+      tileSources: [image + '/info.json'],
       overlays: [{
         id: 'overlay-rotation-bounding-box',
         x: coordinates[0],
@@ -100,13 +100,13 @@ class OsdViewer extends Component {
       <ViewerProvider viewer={viewer}>
       <Layout>
         <TopBar>
-          <div className="my-logo-sm">UBL</div>
+          <div className='my-logo-sm'>UBL</div>
         </TopBar>
         <ActionBar>
           <Controls index={index} manifest={document} document={viewer.document}/>
         </ActionBar>
         <LayoutBody>
-          <div className="openseadragon" id="osd-viewer"/>
+          <div className='openseadragon' id='osd-viewer'/>
         </LayoutBody>
       </Layout>
       </ViewerProvider>
@@ -115,14 +115,14 @@ class OsdViewer extends Component {
 
   initSeaDragon(){
     if (image) {
-      this.getCoordinates(image).then(data => {
-        OpenSeaDragon(OsdViewer.defaultConfig())
+      this.getCoordinates(image).then((data) => {
+        openSeaDragon(OsdViewer.defaultConfig())
       })
     } else if (document) {
         manifesto.loadManifest(document).then(function(manifest) {
           manifest = manifesto.create(manifest);
           const sequence = manifest.getSequenceByIndex(0);
-          const canvas = sequence.getCanvasByIndex(parseInt(index) - 1);
+          const canvas = sequence.getCanvasByIndex(parseInt(index, 10) - 1);
           const images = canvas.getImages();
           count = sequence.getCanvases().length
           const annotation = images[0];
@@ -130,8 +130,8 @@ class OsdViewer extends Component {
           const profile = manifesto.ServiceProfile.iiif2ImageLevel1();
           const service = resource.getService(profile);
           image = service.id;
-        }).then(image => {
-            OpenSeaDragon(OsdViewer.defaultConfig())
+        }).then((image) => {
+            openSeaDragon(OsdViewer.defaultConfig())
           })
     }
   }
@@ -140,12 +140,8 @@ class OsdViewer extends Component {
     this.initSeaDragon()
   }
 
-  componentWillMount() {
-    // sets the initial state
-  }
-
   getCoordinates = (image)=>
-    axios.get(image + "/info.json").then(function (response) {
+    axios.get(image + '/info.json').then(function (response) {
       const imageWidth = response.data.width
       const imageHeight = response.data.height
       console.log(imageWidth)

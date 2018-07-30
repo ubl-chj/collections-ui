@@ -6,11 +6,11 @@ const firebaseApi_key = process.env.REACT_APP_FIREBASE_KEY
 
 const config = {
   apiKey: firebaseApi_key,
-  authDomain: "collections-ui-1532736515660.firebaseapp.com",
-  databaseURL: "https://collections-ui-1532736515660.firebaseio.com",
-  projectId: "collections-ui-1532736515660",
-  storageBucket: "",
-  messagingSenderId: "851210977979"
+  authDomain: 'collections-ui-1532736515660.firebaseapp.com',
+  databaseURL: 'https://collections-ui-1532736515660.firebaseio.com',
+  projectId: 'collections-ui-1532736515660',
+  storageBucket: '',
+  messagingSenderId: '851210977979'
 };
 
 if (!firebase.apps.length) {

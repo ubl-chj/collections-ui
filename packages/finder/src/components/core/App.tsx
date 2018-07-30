@@ -1,16 +1,17 @@
-import React from 'react'
-import withAuthentication from './withAuthentication';
+import * as React from "react";
+
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
-import Landing from '../modules/landing'
-import Home from '../modules/account'
-import Ubl from '../modules/ubl'
-import Orp from '../modules/orp'
-import Ec from '../modules/ec'
-import Atomic from '../modules/atomic'
-import OsdViewer from '../modules/osd-viewer'
-import OsdServer from '../modules/osd-server'
-import SignInPage from '../modules/login'
-import * as routes from '../constants/routes';
+import Landing from '../../modules/landing'
+import Home from '../../modules/account'
+import Ubl from '../../modules/ubl'
+import Orp from '../../modules/orp'
+import Ec from '../../modules/ec'
+import Atomic from '../../modules/atomic'
+import OsdViewer from '../../modules/osd-viewer'
+import OsdServer from '../../modules/osd-server'
+import SignInPage from '../../modules/login'
+import * as routes from '../../constants/routes';
+import {withAuthentication} from "./withAuthentication";
 
 const App = () =>
   <BrowserRouter>

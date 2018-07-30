@@ -1,11 +1,13 @@
-import React from 'react';
+import * as React from "react";
 
-import AuthUserContext from './AuthUserContext';
-import { firebase } from '../firebase';
+import {AuthUserContext} from './AuthUserContext';
+import { firebase } from '../../firebase';
 
-const withAuthentication = (Component) =>
-  class WithAuthentication extends React.Component {
-    constructor(props) {
+export const withAuthentication = (Component) =>
+  class WithAuthentication extends React.Component<any> {
+    state: { authUser: Object }
+
+      constructor(props) {
       super(props);
 
       this.state = {
@@ -32,4 +34,4 @@ const withAuthentication = (Component) =>
     }
   }
 
-export default withAuthentication;
+
