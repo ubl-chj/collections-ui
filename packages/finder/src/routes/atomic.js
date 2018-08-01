@@ -25,9 +25,10 @@ import {
   ViewSwitcherToggle
 } from 'searchkit'
 
-import {AuthUserModal, AuthUserProfile, GridItem, ListItem} from '../components/ui'
-
+import {AuthUserProfile, AuthUserTooltip, GridItem, ListItem} from '../components/ui'
+import * as routes from '../constants/routes';
 import '../assets/index.css'
+import ReactTooltip from 'react-tooltip'
 
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_ATOMIC_INDEX
 const searchkit = new SearchkitManager(host)
@@ -57,23 +58,28 @@ class Atomic extends Component {
   }
 
   render () {
+    const t = Boolean(true)
     return (<SearchkitProvider searchkit={searchkit}>
       <Layout>
         <TopBar>
-          <div className="my-logo"><a className="my-logo" href="/" target="_blank">UBL</a></div>
+          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>UBL</a></div>
           <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
-          <AuthUserModal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}/>
-          <AuthUserProfile toggle={this.toggle}/>
+          <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
+            <AuthUserProfile/>
+          </div>
+          <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light' effect='solid'>
+            <AuthUserTooltip/>
+          </ReactTooltip>
         </TopBar>
         <LayoutBody>
           <SideBar>
             <RefinementListFilter containerComponent={<Panel collapsable={true} defaultCollapsed={false}/>}
-              field="metadata.Sprache.keyword" title="Language" id="language" listComponent={TagCloud}/>
+              field='metadata.Sprache.keyword' title='Language' id='language' listComponent={TagCloud}/>
             <RefinementListFilter containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
-              id="collection" title="Collection" field="metadata.Collection.keyword" orderKey="_term" operator="AND"
+              id='collection' title='Collection' field='metadata.Collection.keyword' orderKey='_term' operator='AND'
               listComponent={TagCloud}/>
-            <RefinementListFilter containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>} id="place"
-              title="Place" field="metadata.Place.keyword" orderKey="_term" operator="AND" listComponent={TagCloud}/>
+            <RefinementListFilter containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>} id='place'
+              title='Place' field='metadata.Place.keyword' orderKey='_term' operator='AND' listComponent={TagCloud}/>
           </SideBar>
           <LayoutResults>
             <ActionBar>
@@ -91,7 +97,7 @@ class Atomic extends Component {
             </ActionBar>
             <ViewSwitcherHits hitsPerPage={50} highlightFields={['metadata.Title']} hitComponents={[{
               key: 'grid', title: 'Grid', itemComponent: GridItem, defaultOption: true
-            }, {key: 'list', title: 'List', itemComponent: ListItem}]} scrollTo="body"/>,
+            }, {key: 'list', title: 'List', itemComponent: ListItem}]} scrollTo='body'/>,
             <NoHits suggestionsField={'metadata.Title'}/>
             <Pagination showNumbers={true}/>
           </LayoutResults>

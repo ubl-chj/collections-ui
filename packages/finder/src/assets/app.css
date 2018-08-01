@@ -102,6 +102,7 @@
 .gb_yb {
   display: inline-block;
   vertical-align: top;
+  padding: 15px;
 }
 
 .gb_Bb {
@@ -116,3 +117,18 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+.gb_Ng {
+  margin-left: 0!important;
+  margin-right: 0!important;
+  text-align: right;
+  padding-right: 10px;
+  padding-left: 20px;
+}
+
+.profile {
+}
+
+
+
+

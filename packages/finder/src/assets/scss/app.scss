@@ -12,3 +12,65 @@
   overflow-y: scroll !important;
   padding-right: 0 !important;
 }
+
+.extraClass {
+  font-size: 20px !important;
+  pointer-events: auto !important;
+  &:hover {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+.gb_tb {
+  border-radius: 3px;
+  display: inline-block;
+  font-size: 13px;
+  left: -999em;
+  opacity: 1 !important;
+  padding: 8px 21px;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+  visibility: hidden;
+  z-index: 999;
+  outline: none;
+  transform: translateZ(0);
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 44px;
+  margin: 20px;
+  white-space: nowrap;
+}
+
+.__react_component_tooltip.show {
+  border-radius: 3px;
+  opacity: 1 !important;
+  top: 44px;
+  left: 79% !important;
+  width: 20%;
+  right: 0;
+  visibility: visible;
+  position: absolute !important;
+  display: inline-block !important;
+  white-space: nowrap;
+  pointer-events: auto !important;
+}
+
+.__react_component_tooltip.place-bottom:after {
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  top: -6px;
+  left: 90% !important;
+}
+
+.__react_component_tooltip.place-bottom:before {
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  top: -6px;
+  left: 90% !important;
+}
+
+.__react_component_tooltip.type-light.border.place-bottom:before {
+  border-bottom: none !important
+}

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import extend from 'lodash/extend'
+import * as routes from '../constants/routes';
 
 import {
   ActionBar,
@@ -24,6 +25,8 @@ import {
   ViewSwitcherToggle
 } from 'searchkit'
 import '../assets/index.css'
+import {AuthUserProfile, AuthUserTooltip} from '../components/ui'
+import ReactTooltip from 'react-tooltip'
 
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_UBL_INDEX
 const searchkit = new SearchkitManager(host)
@@ -70,12 +73,20 @@ const ManifestsListItem = (props) => {
 }
 
 class Ubl extends Component {
+
   render () {
+    const t = Boolean(true)
     return (<SearchkitProvider searchkit={searchkit}>
         <Layout>
           <TopBar>
-            <div className='my-logo'><a className='my-logo' href='/' target='_blank'>UBL</a></div>
+            <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>UBL</a></div>
             <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
+            <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
+              <AuthUserProfile/>
+            </div>
+            <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light' effect='solid'>
+              <AuthUserTooltip/>
+            </ReactTooltip>
           </TopBar>
           <LayoutBody>
             <SideBar>

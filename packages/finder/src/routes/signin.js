@@ -7,6 +7,7 @@ import {Layout, LayoutBody, LayoutResults, TopBar} from 'searchkit'
 import styles from '../assets/app.css'
 import '../assets/firebaseui-styling.global.css'
 import {AuthUserContext} from '../components/core/AuthUserContext';
+import * as routes from '../constants/routes';
 
 const SignInPage = ({ history }) =>
   <div>
@@ -47,7 +48,7 @@ class SignInForm extends Component {
   render () {
     return (<Layout>
         <TopBar>
-          <div className='my-logo'><a className='my-logo' href='/' target='_blank'>UBL</a></div>
+          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>UBL</a></div>
         </TopBar>
         <LayoutBody>
           <LayoutResults>

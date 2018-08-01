@@ -23,13 +23,13 @@ import {
 } from 'searchkit'
 
 import '../assets/index.css'
-import {AuthUserModal, AuthUserProfile} from '../components/ui'
-
+import {AuthUserTooltip, AuthUserProfile} from '../components/ui'
+import * as routes from '../constants/routes';
+import ReactTooltip from 'react-tooltip'
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + 'a1'
 
 const searchkit = new SearchkitManager(host)
-const queryFields = ['imageServiceIRI', 'metadataMap.tag1', 'metadataMap.tag2', 'metadataMap.tag3', 'metadataMap.tag4',
-  'metadataMap.tag5', 'metadataMap.tag6', 'metadataMap.tag7', 'metadataMap.tag8']
+const queryFields = ['imageServiceIRI', 'metadataMap.tag1', 'metadataMap.tag2', 'metadataMap.tag3', 'metadataMap.tag4', 'metadataMap.tag5', 'metadataMap.tag6', 'metadataMap.tag7', 'metadataMap.tag8']
 
 const CollectionsListItem = (props) => {
   const osdUrl = process.env.REACT_APP_OSD_BASE
@@ -37,19 +37,27 @@ const CollectionsListItem = (props) => {
   const source = extend({}, result._source, result.highlight)
   const thumbnail = source.imageServiceIRI + '/full/90,/0/default.jpg'
   const url = osdUrl + '?image=' + source.imageServiceIRI
-
-  return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa="hit">
+  const updated = new Date(source.metadataMap.tag3).toDateString();
+  return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
     <div className={bemBlocks.item('poster')}>
-      <a href={url} target="_blank" rel="noopener noreferrer"><img className="thumbnail" alt="presentation"
-        data-qa="poster" src={thumbnail}/></a>
+      <a href={url} target='_blank' rel='noopener noreferrer'><img className='thumbnail' alt='presentation'
+        data-qa='poster' src={thumbnail}/></a>
     </div>
     <div className={bemBlocks.item('details')}>
       <table>
         <tbody>
         <tr>
           <td>Collection:</td>
-          <td><a href={source.metadataMap.tag2} target="_blank" rel="noopener noreferrer">{source.metadataMap.tag1}</a>
+          <td><a href={source.metadataMap.tag2} target='_blank' rel='noopener noreferrer'>{source.metadataMap.tag1}</a>
           </td>
+        </tr>
+        <tr>
+          <td>Last Updated:</td>
+          <td>{updated}</td>
+        </tr>
+        <tr>
+          <td>Total Documents:</td>
+          <td>{source.metadataMap.tag4}</td>
         </tr>
         </tbody>
       </table>
@@ -74,19 +82,24 @@ class Landing extends Component {
   }
 
   render () {
+    const t = Boolean(true)
     return (<SearchkitProvider searchkit={searchkit}>
       <Layout>
         <TopBar>
-          <div className="my-logo"><a className="my-logo" href="/" target="_blank" rel="noopener noreferrer">UBL</a>
+          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank' rel='noopener noreferrer'>UBL</a>
           </div>
           <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
-          <AuthUserModal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}/>
-          <AuthUserProfile toggle={this.toggle}/>
+          <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
+          <AuthUserProfile/>
+          </div>
+          <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light' effect='solid'>
+            <AuthUserTooltip/>
+          </ReactTooltip>
         </TopBar>
         <LayoutBody>
           <SideBar>
-            <RefinementListFilter id="tag1" title="Collection" field="metadataMap.tag1.keyword" orderKey="_term"
-              operator="AND"/>
+            <RefinementListFilter id='tag1' title='Collection' field='metadataMap.tag1.keyword' orderKey='_term'
+              operator='AND'/>
           </SideBar>
           <LayoutResults>
             <ActionBar>
@@ -101,7 +114,7 @@ class Landing extends Component {
               </ActionBarRow>
             </ActionBar>
             <ViewSwitcherHits hitsPerPage={50} highlightFields={['metadataMap.tag1']}
-              hitComponents={[{key: 'list', title: 'List', itemComponent: CollectionsListItem}]} scrollTo="body"/>
+              hitComponents={[{key: 'list', title: 'List', itemComponent: CollectionsListItem}]} scrollTo='body'/>
             <NoHits suggestionsField={'metadataMap.tag1'}/>
             <Pagination showNumbers={true}/>
           </LayoutResults>

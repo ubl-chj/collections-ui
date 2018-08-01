@@ -9,6 +9,14 @@
   line-height: 16px;
 }
 
+.my-logo-thin {
+  color: white;
+  -ms-flex: 0 0 250px;
+  flex: 0 0 250px;
+  margin-right: 15px;
+  line-height: 33px;
+  float: left;
+}
 .my-logo a:link {
   text-decoration: none;
   color: white;

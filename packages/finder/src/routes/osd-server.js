@@ -11,7 +11,9 @@ import {
   ViewerProvider
 } from 'ubl-viewer'
 import '../assets/index.css'
-import {AuthUserModal, AuthUserProfile} from '../components/ui'
+import {AuthUserProfile, AuthUserTooltip} from '../components/ui'
+import * as routes from '../constants/routes';
+import ReactTooltip from 'react-tooltip'
 
 let manifest = null
 let image = null
@@ -53,10 +55,17 @@ class OsdServer extends Component {
     })
   }
   render () {
+    const t = Boolean(true)
     return (<ViewerProvider viewer={viewer}>
         <Layout>
           <TopBar>
-            <div className='my-logo-sm'>UBL</div>
+            <div className='my-logo-thin'><a className='my-logo' href={routes.LANDING} target='_blank'>UBL</a></div>
+            <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
+              <AuthUserProfile/>
+            </div>
+            <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light' effect='solid'>
+              <AuthUserTooltip/>
+            </ReactTooltip>
           </TopBar>
           <ActionBar>
             <Metadata key='metadata'/>

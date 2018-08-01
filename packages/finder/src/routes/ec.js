@@ -22,10 +22,11 @@ import {
   ViewSwitcherHits,
   ViewSwitcherToggle
 } from 'searchkit'
-
+import * as routes from '../constants/routes';
 import '../assets/index.css'
 import {TagCloud} from 'searchkit/lib/index'
-import {AuthUserModal, AuthUserProfile} from '../components/ui'
+import {AuthUserProfile, AuthUserTooltip} from '../components/ui'
+import ReactTooltip from 'react-tooltip'
 
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_EC_INDEX
 const searchkit = new SearchkitManager(host)
@@ -40,14 +41,14 @@ const ECListItem = (props) => {
   const thumbnail = result._source['thumbnail'] + '/full/90,/0/default.jpg'
   const thumbUrl = osdUrl + '?image=' + result._source['thumbnail']
   const url = result._source['related']
-  return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa="hit">
+  return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
     <div className={bemBlocks.item('poster')}>
-      <a href={thumbUrl} target="_blank" rel="noopener noreferrer"><img onError={(e) => {
+      <a href={thumbUrl} target='_blank' rel='noopener noreferrer'><img onError={(e) => {
         e.target.src = 'https://www.e-codices.unifr.ch/img/frontend/logo-nav.png'
-      }} alt="e-codices" src={thumbnail}/></a>
+      }} alt='e-codices' src={thumbnail}/></a>
     </div>
     <div className={bemBlocks.item('details')}>
-      <a href={url} target="_blank" rel="noopener noreferrer">
+      <a href={url} target='_blank' rel='noopener noreferrer'>
         <h2 className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: source.title}}/>
       </a>
       <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={createTitle(source)}/>
@@ -75,14 +76,14 @@ export const ECGridItem = (props) => {
   } else {
     titleString = source.title
   }
-  return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa="hit">
+  return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
     <div className={bemBlocks.item('poster')}>
-      <a href={thumbUrl} target="_blank" rel="noopener noreferrer"><img width="140" onError={(e) => {
+      <a href={thumbUrl} target='_blank' rel='noopener noreferrer'><img width='140' onError={(e) => {
         e.target.src = 'https://www.e-codices.unifr.ch/img/frontend/logo-nav.png'
-      }} alt="e-codices" src={thumbnail}/></a>
+      }} alt='e-codices' src={thumbnail}/></a>
     </div>
-    <a href={url} target="_blank" rel="noopener noreferrer">
-      <div data-qa="title" className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: titleString}}/>
+    <a href={url} target='_blank' rel='noopener noreferrer'>
+      <div data-qa='title' className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: titleString}}/>
     </a>
   </div>)
 }
@@ -103,20 +104,25 @@ class Ec extends Component {
     })
   }
   render () {
+    const t = Boolean(true)
     return (<SearchkitProvider searchkit={searchkit}>
       <Layout>
         <TopBar>
-          <div className="my-logo"><a className="my-logo" href="/" target="_blank">UBL</a></div>
+          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>UBL</a></div>
           <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
-          <AuthUserModal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}/>
-          <AuthUserProfile toggle={this.toggle}/>
+          <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
+            <AuthUserProfile/>
+          </div>
+          <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light' effect='solid'>
+            <AuthUserTooltip/>
+          </ReactTooltip>
         </TopBar>
         <LayoutBody>
           <SideBar>
-            <RefinementListFilter field="Text Language.keyword" title="Language" id="language"
+            <RefinementListFilter field='Text Language.keyword' title='Language' id='language'
               listComponent={TagCloud}/>
-            <RefinementListFilter id="tag1" title="Collection" field="Collection Name.keyword" orderKey="_term"
-              operator="AND"/>
+            <RefinementListFilter id='tag1' title='Collection' field='Collection Name.keyword' orderKey='_term'
+              operator='AND'/>
           </SideBar>
           <LayoutResults>
             <ActionBar>
@@ -136,7 +142,7 @@ class Ec extends Component {
               key: 'grid', title: 'Grid', itemComponent: ECGridItem
             }, {
               key: 'list', title: 'List', itemComponent: ECListItem, defaultOption: true
-            }]} scrollTo="body"/>
+            }]} scrollTo='body'/>
             <NoHits translations={{
               'NoHits.NoResultsFound': 'No works found were found for {query}',
               'NoHits.DidYouMean': 'Search for {suggestion}',

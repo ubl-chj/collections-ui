@@ -245,20 +245,19 @@ body {
 
   &__top-bar {
     background: $viewer-primary-theme-color;
-    height:33px;
+    height:50px;
     top: 0;
     left:0;
     right:0;
     width: 100%;
     padding:10px 0;
     z-index:100;
-    display:flex;
     box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
   }
 
   &__body {
     position: absolute;
-    top: 66px;
+    top: 83px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -314,9 +313,7 @@ body {
 
 .viewer-top-bar {
   &__content {
-    display:flex;
     margin:0 auto;
-    padding:0 15px;
     width:100%;
   }
 }
@@ -598,6 +595,10 @@ body {
   .viewer-select select {
     width: 100%
   }
+}
+
+.window-manifest-title {
+  display: flex;
 }
 
 .window-manifest-title h2 {

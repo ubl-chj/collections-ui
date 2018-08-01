@@ -23,6 +23,9 @@ import {
   ViewSwitcherToggle
 } from 'searchkit'
 import '../assets/index.css'
+import {AuthUserProfile, AuthUserTooltip} from '../components/ui'
+import ReactTooltip from 'react-tooltip'
+import * as routes from '../constants/routes';
 
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_ORP_INDEX
 const searchkit = new SearchkitManager(host)
@@ -45,14 +48,14 @@ const ManifestHitsGridItem = (props) => {
   const query = getQuery(source.metadataMap.tag3 + ' ' + tag4 + ' ' + tag5 + ' ' + tag6 + ' ' + tag7 + ' ' + tag8)
   const titleString = source.metadataMap.tag3 + ' ' + source.metadataMap.tag5 + ' ' + source.metadataMap.tag7 + ' ' + source.metadataMap.tag8
   const finalTitle = titleString.substr(0, 50) + '...: ' + source.imageIndex
-  return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa="hit">
+  return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
     <div className={bemBlocks.item('poster')}>
-      <a href={url} target="_blank" rel="noopener noreferrer"><img onError={(e) => {
+      <a href={url} target='_blank' rel='noopener noreferrer'><img onError={(e) => {
         e.target.src = 'https://www.e-codices.unifr.ch/img/frontend/logo-nav.png'
-      }} className={bemBlocks.item('poster')} alt="presentation" data-qa="poster" src={thumbnail} width="180"/></a>
+      }} className={bemBlocks.item('poster')} alt='presentation' data-qa='poster' src={thumbnail} width='180'/></a>
     </div>
-    <div><a href={viewer + encodeURIComponent(query)} target="_blank" rel="noopener noreferrer">
-      <div data-qa="title" className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: finalTitle}}/>
+    <div><a href={viewer + encodeURIComponent(query)} target='_blank' rel='noopener noreferrer'>
+      <div data-qa='title' className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: finalTitle}}/>
     </a></div>
   </div>)
 }
@@ -70,11 +73,11 @@ const ManifestsListItem = (props) => {
   let tag8 = source.metadataMap.tag8 || ''
   const query = getQuery(source.metadataMap.tag3 + ' ' + tag4 + ' ' + tag5 + ' ' + tag6 + ' ' + tag7 + ' ' + tag8)
 
-  return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa="hit">
+  return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
     <div className={bemBlocks.item('poster')}>
-      <a href={url} target="_blank" rel="noopener noreferrer"><img onError={(e) => {
+      <a href={url} target='_blank' rel='noopener noreferrer'><img onError={(e) => {
         e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/9/9a/VisualEditor_icon_page-not-found-ltr.svg'
-      }} className="thumbnail" alt="presentation" data-qa="poster" src={thumbnail}/></a>
+      }} className='thumbnail' alt='presentation' data-qa='poster' src={thumbnail}/></a>
     </div>
     <div className={bemBlocks.item('details')}>
       <table>
@@ -93,8 +96,8 @@ const ManifestsListItem = (props) => {
         </tr>
         <tr>
           <td>Composite Manifest:</td>
-          <td><a href={viewerIRI + encodeURIComponent(query)} target="_blank"
-            rel="noopener noreferrer">{source.metadataMap.tag3} {source.metadataMap.tag5} {source.metadataMap.tag7} {source.metadataMap.tag8}</a>
+          <td><a href={viewerIRI + encodeURIComponent(query)} target='_blank'
+            rel='noopener noreferrer'>{source.metadataMap.tag3} {source.metadataMap.tag5} {source.metadataMap.tag7} {source.metadataMap.tag8}</a>
           </td>
         </tr>
         </tbody>
@@ -118,23 +121,28 @@ const getQuery = (params) => {
 class Orp extends Component {
 
   render () {
+    const t = Boolean(true)
     return (<SearchkitProvider searchkit={searchkit}>
       <Layout>
         <TopBar>
-          <div className="my-logo"><a className="my-logo" href="/" target="_blank">UBL</a></div>
+          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>UBL</a></div>
           <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
+          <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
+            <AuthUserProfile/>
+          </div>
+          <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light' effect='solid'>
+            <AuthUserTooltip/>
+          </ReactTooltip>
         </TopBar>
         <LayoutBody>
           <SideBar>
-            <RefinementListFilter id="tag1" title="Collection" field="metadataMap.tag1.keyword" orderKey="_term"
-              operator="AND"/>
+            <RefinementListFilter id='tag1' title='Collection' field='metadataMap.tag1.keyword' orderKey='_term'
+              operator='AND'/>
           </SideBar>
           <LayoutResults>
             <ActionBar>
               <ActionBarRow>
-                <HitsStats translations={{
-                  'hitstats.results_found': '{hitCount} results found'
-                }}/>
+                <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
                 <ViewSwitcherToggle/>
                 <SortingSelector options={[{label: 'Index', field: 'imageIndex', order: 'asc'},]}/>
               </ActionBarRow>
@@ -143,14 +151,14 @@ class Orp extends Component {
                 <ResetFilters/>
               </ActionBarRow>
             </ActionBar>
-            <div className="ex1">
-              <RangeFilter field="metadataMap.tag3.raw" id="date" min={1641} max={1975} showHistogram={true}
-                title="Date Selector"/>
+            <div className='ex1'>
+              <RangeFilter field='metadataMap.tag3.raw' id='date' min={1641} max={1975} showHistogram={true}
+                title='Date Selector'/>
             </div>
             <ViewSwitcherHits hitsPerPage={50} highlightFields={['metadataMap.tag1']}
               hitComponents={[{key: 'list', title: 'List', itemComponent: ManifestsListItem}, {
                 key: 'grid', title: 'Grid', itemComponent: ManifestHitsGridItem
-              }]} scrollTo="body"/>
+              }]} scrollTo='body'/>
             <NoHits suggestionsField={'metadataMap.tag1'}/>
             <Pagination showNumbers={true}/>
           </LayoutResults>
