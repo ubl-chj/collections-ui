@@ -14,7 +14,7 @@ export const ListItem = (props) => {
   const splitPath = pathname.split("/")
   const viewId = splitPath[5]
   const viewer = viewerUrl + viewId
-  const query = "{\"query\":{\"multi_match\":{\"query\":\"" + viewId + "\",\"type\":\"cross_fields\",\"operator\":\"and\"}},\"size\":500}"
+  const query = "{\"query\":{\"multi_match\":{\"query\":\"" + source.metadata.URN + "\",\"type\":\"cross_fields\",\"operator\":\"and\"}},\"size\":500}"
   const manifestView = osdUrl + "?manifest=" + encodeURIComponent(constManifestUrl + query)
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
@@ -40,11 +40,11 @@ export const ListItem = (props) => {
           </tr>
           <tr>
             <td>Elastic Manifest:</td>
-            <td><a href={constManifestUrl + query} target="_blank">{viewId}</a></td>
+            <td><a href={constManifestUrl + query} target="_blank">{source.metadata.URN}</a></td>
           </tr>
           <tr>
             <td>View:</td>
-            <td><a href={manifestView} target="_blank">{viewId}</a></td>
+            <td><a href={manifestView} target="_blank">{source.metadata.URN}</a></td>
           </tr>
           </tbody>
         </table>

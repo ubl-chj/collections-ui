@@ -1,0 +1,32 @@
+import * as React from "react";
+import {AuthUserContext} from "../../core";
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap'
+import * as routes from '../../../constants/routes';
+
+const firebase = require("firebase");
+
+export const AuthUserModal = (props) => {
+  const {isOpen, toggle, className} = props
+  return (
+    <Modal isOpen={isOpen} toggle={toggle} className={className}>
+      <ModalHeader toggle={toggle}>Profile</ModalHeader>
+      <ModalBody>
+        <AuthUserContext.Consumer>
+          {(authUser) => authUser ? <div>
+            <img className="account-image-profile" src={firebase.auth().currentUser.photoURL}
+              alt="Account's profile image" aria-hidden="true"/>
+            <div className="gb_yb">
+              <div className="gb_Bb">{firebase.auth().currentUser.displayName}</div>
+              <div className="gb_Db">{firebase.auth().currentUser.email}</div>
+              <a className="btn btn-outline-secondary" href={routes.ACCOUNT}>Account</a>
+            </div>
+          </div> : null}
+        </AuthUserContext.Consumer>
+      </ModalBody>
+      <ModalFooter>
+        <a role="button" className="btn btn-outline-secondary"
+          onClick={() => firebase.auth().signOut()}>Sign-out</a>
+        <Button color="secondary" onClick={toggle}>Cancel</Button>
+      </ModalFooter>
+    </Modal>)
+}

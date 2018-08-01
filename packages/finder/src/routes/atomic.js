@@ -25,9 +25,9 @@ import {
   ViewSwitcherToggle
 } from 'searchkit'
 
-import {GridItem, ListItem} from '../components/ui'
+import {AuthUserModal, AuthUserProfile, GridItem, ListItem} from '../components/ui'
 
-import '../index.css'
+import '../assets/index.css'
 
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_ATOMIC_INDEX
 const searchkit = new SearchkitManager(host)
@@ -41,12 +41,29 @@ searchkit.addDefaultQuery((query) => {
 })
 
 class Atomic extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      modal: false
+    }
+
+    this.toggle = this.toggle.bind(this)
+  }
+
+  toggle () {
+    this.setState({
+      modal: !this.state.modal
+    })
+  }
+
   render () {
     return (<SearchkitProvider searchkit={searchkit}>
       <Layout>
         <TopBar>
           <div className="my-logo"><a className="my-logo" href="/" target="_blank">UBL</a></div>
           <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
+          <AuthUserModal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}/>
+          <AuthUserProfile toggle={this.toggle}/>
         </TopBar>
         <LayoutBody>
           <SideBar>
@@ -63,11 +80,9 @@ class Atomic extends Component {
               <ActionBarRow>
                 <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
                 <ViewSwitcherToggle/>
-                <SortingSelector options={[{
-                  label: 'Index', key: 'index', fields: [{field: 'metadata.Title.keyword', options: {order: 'asc'}}, {
-                    field: 'imageIndex', options: {order: 'asc'}
-                  }]
-                }]}/>
+                <SortingSelector options={[{label: 'Date', field: 'metadata.Date of publication.keyword', order: 'asc'},
+                  {label: 'Title', field: 'metadata.Title.keyword', order: 'asc'},
+                  {label: 'Author', field: 'metadata.Author.keyword', order: 'asc'}]}/>
               </ActionBarRow>
               <ActionBarRow>
                 <GroupedSelectedFilters/>

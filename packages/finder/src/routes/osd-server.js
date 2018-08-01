@@ -10,7 +10,8 @@ import {
   ViewerManager,
   ViewerProvider
 } from 'ubl-viewer'
-import '../index.css'
+import '../assets/index.css'
+import {AuthUserModal, AuthUserProfile} from '../components/ui'
 
 let manifest = null
 let image = null
@@ -37,6 +38,20 @@ if (window.location.search && window.location.search.includes('image')) {
 }
 
 class OsdServer extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      modal: false
+    }
+
+    this.toggle = this.toggle.bind(this)
+  }
+
+  toggle () {
+    this.setState({
+      modal: !this.state.modal
+    })
+  }
   render () {
     return (<ViewerProvider viewer={viewer}>
         <Layout>

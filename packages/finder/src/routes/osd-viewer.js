@@ -11,7 +11,7 @@ import {
 } from 'ubl-viewer'
 
 import axios from 'axios'
-import '../index.css'
+import '../assets/index.css'
 const manifesto = require('manifesto.js')
 
 let manifest = null
@@ -90,7 +90,7 @@ class OsdViewer extends Component {
         y: coordinates[1],
         width: coordinates[2],
         height: coordinates[3],
-        rotationMode: OpenSeaDragon.OverlayRotationMode.BOUNDING_BOX
+        rotationMode: openSeaDragon.OverlayRotationMode.BOUNDING_BOX
       }]
     }
   }

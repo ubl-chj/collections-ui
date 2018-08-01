@@ -22,13 +22,12 @@ import {
   ViewSwitcherHits,
   ViewSwitcherToggle
 } from 'searchkit'
-import '../index.css'
+import '../assets/index.css'
 
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_ORP_INDEX
 const searchkit = new SearchkitManager(host)
 const osdUrl = process.env.REACT_APP_OSD_BASE
-const queryFields = ['imageServiceIRI', 'metadataMap.tag1', 'metadataMap.tag2', 'metadataMap.tag3', 'metadataMap.tag4',
-  'metadataMap.tag5', 'metadataMap.tag6', 'metadataMap.tag7', 'metadataMap.tag8']
+const queryFields = ['imageServiceIRI', 'metadataMap.tag1', 'metadataMap.tag2', 'metadataMap.tag3', 'metadataMap.tag4', 'metadataMap.tag5', 'metadataMap.tag6', 'metadataMap.tag7', 'metadataMap.tag8']
 const generatorUrl = process.env.REACT_APP_GENERATOR_BASE
 const constManifestUrl = generatorUrl + '?type=orp&index=' + process.env.REACT_APP_ORP_INDEX + '&q='
 
@@ -47,15 +46,15 @@ const ManifestHitsGridItem = (props) => {
   const titleString = source.metadataMap.tag3 + ' ' + source.metadataMap.tag5 + ' ' + source.metadataMap.tag7 + ' ' + source.metadataMap.tag8
   const finalTitle = titleString.substr(0, 50) + '...: ' + source.imageIndex
   return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa="hit">
-      <div className={bemBlocks.item('poster')}>
-        <a href={url} target="_blank" rel="noopener noreferrer"><img onError={(e) => {
-          e.target.src = 'https://www.e-codices.unifr.ch/img/frontend/logo-nav.png'
-        }} className={bemBlocks.item('poster')} alt="presentation" data-qa="poster" src={thumbnail} width="180"/></a>
-      </div>
-      <div><a href={viewer + encodeURIComponent(query)} target="_blank" rel="noopener noreferrer">
-        <div data-qa="title" className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: finalTitle}}/>
-      </a></div>
-    </div>)
+    <div className={bemBlocks.item('poster')}>
+      <a href={url} target="_blank" rel="noopener noreferrer"><img onError={(e) => {
+        e.target.src = 'https://www.e-codices.unifr.ch/img/frontend/logo-nav.png'
+      }} className={bemBlocks.item('poster')} alt="presentation" data-qa="poster" src={thumbnail} width="180"/></a>
+    </div>
+    <div><a href={viewer + encodeURIComponent(query)} target="_blank" rel="noopener noreferrer">
+      <div data-qa="title" className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: finalTitle}}/>
+    </a></div>
+  </div>)
 }
 
 const ManifestsListItem = (props) => {
@@ -94,8 +93,8 @@ const ManifestsListItem = (props) => {
         </tr>
         <tr>
           <td>Composite Manifest:</td>
-          <td><a href={viewerIRI + encodeURIComponent(query)}
-            target="_blank" rel="noopener noreferrer">{source.metadataMap.tag3} {source.metadataMap.tag5} {source.metadataMap.tag7} {source.metadataMap.tag8}</a>
+          <td><a href={viewerIRI + encodeURIComponent(query)} target="_blank"
+            rel="noopener noreferrer">{source.metadataMap.tag3} {source.metadataMap.tag5} {source.metadataMap.tag7} {source.metadataMap.tag8}</a>
           </td>
         </tr>
         </tbody>
@@ -150,9 +149,7 @@ class Orp extends Component {
             </div>
             <ViewSwitcherHits hitsPerPage={50} highlightFields={['metadataMap.tag1']}
               hitComponents={[{key: 'list', title: 'List', itemComponent: ManifestsListItem}, {
-                key: 'grid',
-                title: 'Grid',
-                itemComponent: ManifestHitsGridItem
+                key: 'grid', title: 'Grid', itemComponent: ManifestHitsGridItem
               }]} scrollTo="body"/>
             <NoHits suggestionsField={'metadataMap.tag1'}/>
             <Pagination showNumbers={true}/>

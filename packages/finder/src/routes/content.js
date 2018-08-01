@@ -22,7 +22,7 @@ import {
   ViewSwitcherHits,
   ViewSwitcherToggle
 } from 'searchkit'
-import '../index.css'
+import '../assets/index.css'
 
 const host = process.env.REACT_APP_ELASTICSEARCH_LOCALHOST + process.env.REACT_APP_ATOMIC_INDEX
 const searchkit = new SearchkitManager(host)

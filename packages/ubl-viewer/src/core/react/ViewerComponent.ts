@@ -41,7 +41,7 @@ export class ViewerComponent<P extends ViewerComponentProps,S> extends React.Com
     super(props)
   }
 
-  defineBEMBlocks() {
+  static defineBEMBlocks() {
     return null;
   }
 
@@ -50,16 +50,16 @@ export class ViewerComponent<P extends ViewerComponentProps,S> extends React.Com
   }
 
   get bemBlocks(): any {
-    return mapValues(this.defineBEMBlocks(), (cssClass) => {
+    return mapValues(ViewerComponent.defineBEMBlocks(), (cssClass) => {
       return block(cssClass).el
     })
   }
-  _getSearchkit(){
+  _getViewer(){
     return this.props.viewer || this.context["viewer"]
   }
   componentWillMount(){
     var _this = this;
-    this.viewer = this._getSearchkit()
+    this.viewer = this._getViewer()
     if(this.viewer){
       this.accessor  = this.defineAccessor()
       if(this.accessor){

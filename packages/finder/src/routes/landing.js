@@ -21,10 +21,9 @@ import {
   ViewSwitcherHits,
   ViewSwitcherToggle
 } from 'searchkit'
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap'
-import '../index.css'
-import {AuthUserContext} from '../components/core'
-import firebase from 'firebase/app'
+
+import '../assets/index.css'
+import {AuthUserModal, AuthUserProfile} from '../components/ui'
 
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + 'a1'
 
@@ -78,34 +77,11 @@ class Landing extends Component {
     return (<SearchkitProvider searchkit={searchkit}>
       <Layout>
         <TopBar>
-          <div className="my-logo"><a className="my-logo" href="/" target="_blank" rel="noopener noreferrer">UBL</a></div>
+          <div className="my-logo"><a className="my-logo" href="/" target="_blank" rel="noopener noreferrer">UBL</a>
+          </div>
           <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
-          <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-            <ModalHeader toggle={this.toggle}>Profile</ModalHeader>
-            <ModalBody>
-              <AuthUserContext.Consumer>
-                {(authUser) => authUser ? <div>
-                  <img className="account-image-profile" src={firebase.auth().currentUser.photoURL}
-                    alt="Account's profile image" aria-hidden="true"/>
-                  <div className="gb_yb">
-                    <div className="gb_Bb">{firebase.auth().currentUser.displayName}</div>
-                    <div className="gb_Db">{firebase.auth().currentUser.email}</div>
-                    <a className="btn btn-outline-secondary" href="/account">Account</a>
-                  </div>
-                </div> : null}
-              </AuthUserContext.Consumer>
-            </ModalBody>
-            <ModalFooter>
-              <a role="button" className="btn btn-outline-secondary" onClick={() => firebase.auth().signOut()}>Sign-out</a>
-              <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-            </ModalFooter>
-          </Modal>
-          <AuthUserContext.Consumer>
-            {(authUser) => authUser ?
-              <div><a role="dialog" onClick={this.toggle}><img className="account-image" src={firebase.auth().currentUser.photoURL}
-                alt="Account's profile image" aria-hidden="true"/></a>
-              </div> : <div><a className="btn btn-outline-secondary" href="/login">Login</a></div>}
-          </AuthUserContext.Consumer>
+          <AuthUserModal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}/>
+          <AuthUserProfile toggle={this.toggle}/>
         </TopBar>
         <LayoutBody>
           <SideBar>
@@ -115,9 +91,7 @@ class Landing extends Component {
           <LayoutResults>
             <ActionBar>
               <ActionBarRow>
-                <HitsStats translations={{
-                  'hitstats.results_found': '{hitCount} results found'
-                }}/>
+                <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
                 <ViewSwitcherToggle/>
                 <SortingSelector options={[{label: 'Index', field: 'imageIndex', order: 'asc'},]}/>
               </ActionBarRow>

@@ -14,61 +14,87 @@ export interface OsdComponentProps {
   region?: string
   viewer?: ViewerManager
   defaultProps?: Object
+  world?: Object
 }
 
-export class OsdComponent extends ViewerComponent<OsdComponentProps, any> {
-  defaultProps: Object
-  osd: Object
-
+export class OsdRef extends React.Component {
   constructor(props) {
     super(props)
   }
 
+  getWorld() {
+    return this;
+  }
+
+  render() {
+    return(<div/>)
+  }
+
+  componentDidMount() {
+    console.log(this.getWorld())
+  }
+}
+
+export class OsdComponent extends ViewerComponent<OsdComponentProps, any> {
+  defaultProps: Object
+  world: any
+  osd: any
+
+  constructor(props) {
+    super(props)
+    this.osd = React.createRef();
+  }
+
   render() {
     return (
-      <div className="openseadragon" id="osd-viewer"/>
+      <div>
+      <div ref={this.osd} className="openseadragon" id="osd"/>
+        <OsdRef ref={this.osd}/>
+      </div>
     )
   }
 
+  defaultOsdProps() {
+    return {
+      sequenceMode: true,
+      showReferenceStrip: true,
+      referenceStripScroll: 'horizontal',
+      showNavigator: true,
+      id: 'osd',
+      visibilityRatio: 0.5,
+      constrainDuringPan: false,
+      defaultZoomLevel: 0,
+      minZoomLevel: 0,
+      maxZoomLevel: 10,
+      zoomInButton: 'zoom-in',
+      zoomOutButton: 'zoom-out',
+      homeButton: 'reset',
+      fullPageButton: 'full-page',
+      previousButton: 'sidebar-previous',
+      nextButton: 'sidebar-next',
+      tileSources: [this.getImages()]
+    };
+  }
+
+  getImages() {
+    return this.props.images
+  }
+
   initSeaDragon() {
-    let self = this
-    let firstImage = this.props.images[0]
+     let firstImage = this.props.images[0]
     this.getCoordinates(firstImage).then(() => {
-      self.viewer = OpenSeaDragon({
-        sequenceMode: true,
-        showReferenceStrip: true,
-        referenceStripScroll: 'horizontal',
-        showNavigator: true,
-        id: 'osd-viewer',
-        visibilityRatio: 0.5,
-        constrainDuringPan: false,
-        defaultZoomLevel: 0,
-        minZoomLevel: 0,
-        maxZoomLevel: 10,
-        zoomInButton: 'zoom-in',
-        zoomOutButton: 'zoom-out',
-        homeButton: 'reset',
-        fullPageButton: 'full-page',
-        previousButton: 'sidebar-previous',
-        nextButton: 'sidebar-next',
-        tileSources: [this.props.images]
-      })
+      this.viewer = OpenSeaDragon(this.defaultOsdProps())
     })
   }
 
   componentDidMount() {
-
-  }
-
-  shouldComponentUpdate() {
-    return false
-  }
-
-  componentWillMount() {
-    super.componentWillMount()
     if (this.props.images) {
       this.initSeaDragon()
     }
+   }
+
+  shouldComponentUpdate() {
+    return false
   }
 
   getCoordinates = (image) =>
