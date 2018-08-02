@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  nghttpx:
+    image: ubleipzig/nghttpx:1.31.1
+    container_name: nghttpx
+    environment:
+      KEY_FILE: /etc/nghttpx/ssl/iiif.cloud.key
+      CERT_FILE: /etc/nghttpx/ssl/iiif.cloud.crt
+    ports:
+    - "80:80"
+    - "443:443"
+    volumes:
+    - ./etc:/etc
+    networks:
+    - collectionsui_default
+
+networks:
+  collectionsui_default:
+    external: true

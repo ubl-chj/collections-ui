@@ -6,5 +6,4 @@ services:
     container_name: collections-ui
     ports:
       - "9002:5000"
-    volumes:
-      - ./packages/finder/.env:/srv/collections-ui/packages/finder/.env
+
