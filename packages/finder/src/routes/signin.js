@@ -8,6 +8,7 @@ import styles from '../assets/app.css'
 import '../assets/firebaseui-styling.global.css'
 import {AuthUserContext} from '../components/core/AuthUserContext';
 import * as routes from '../constants/routes';
+import * as domain from '../constants/domain'
 
 const SignInPage = ({ history }) =>
   <div>
@@ -16,7 +17,7 @@ const SignInPage = ({ history }) =>
   </div>
 
 const firebaseApi_key = process.env.REACT_APP_FIREBASE_KEY
-const baseUrl = process.env.REACT_APP_BASEURL
+
 
 const config = {
   apiKey: firebaseApi_key,
@@ -32,30 +33,27 @@ if (!firebase.apps.length) {
 }
 
 const uiConfig = {
-  signInSuccessUrl: baseUrl,
+  signInSuccessUrl: '/account',
   signInFlow: 'popup',
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
     firebase.auth.GithubAuthProvider.PROVIDER_ID
-  ],
-  callbacks: {
-    signInSuccessWithAuthResult: (authResult, redirectUrl) => true,
-  },
+  ]
 }
 
 class SignInForm extends Component {
   render () {
+    const t = Boolean(true)
     return (<Layout>
         <TopBar>
-          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>UBL</a></div>
+          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>{domain.LOGO_TEXT}</a></div>
         </TopBar>
         <LayoutBody>
           <LayoutResults>
             <AuthUserContext.Consumer>
               {(authUser) => authUser
-                ? <div><p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p>
-                <a role="button" onClick={() => firebase.auth().signOut()}>Sign-out</a></div>
+                ? null
                 : <StyledFirebaseAuth className={styles.firebaseUi} uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
               }
             </AuthUserContext.Consumer>
@@ -64,6 +62,8 @@ class SignInForm extends Component {
       </Layout>)
   }
 }
+
+const authCondition = (authUser) => !!authUser
 
 export default withRouter(SignInPage);
 

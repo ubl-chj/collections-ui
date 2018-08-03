@@ -11,9 +11,8 @@ import {
   ViewerProvider
 } from 'ubl-viewer'
 import '../assets/index.css'
-import {AuthUserProfile, AuthUserTooltip} from '../components/ui'
 import * as routes from '../constants/routes';
-import ReactTooltip from 'react-tooltip'
+import * as domain from '../constants/domain';
 
 let manifest = null
 let image = null
@@ -59,7 +58,7 @@ class OsdServer extends Component {
     return (<ViewerProvider viewer={viewer}>
         <Layout>
           <TopBar>
-            <div className='my-logo-thin'><a className='my-logo' href={routes.LANDING} target='_blank'>UBL</a></div>
+            <div className='my-logo-thin'><a className='my-logo' href={routes.LANDING} target='_blank'>{domain.LOGO_TEXT}</a></div>
             <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
               <AuthUserProfile/>
             </div>

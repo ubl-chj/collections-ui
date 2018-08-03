@@ -23,9 +23,13 @@ import {
   ViewSwitcherToggle
 } from 'searchkit'
 import '../assets/index.css'
+import * as domain from '../constants/domain';
 
 const host = process.env.REACT_APP_ELASTICSEARCH_LOCALHOST + process.env.REACT_APP_ATOMIC_INDEX
-const searchkit = new SearchkitManager(host)
+const options = {
+  timeout: 20000
+}
+const searchkit = new SearchkitManager(host, options)
 const generatorUrl = process.env.REACT_APP_GENERATOR_BASE
 const osdUrl = process.env.REACT_APP_OSD_BASE
 
@@ -161,7 +165,7 @@ class Atomic extends Component {
       <SearchkitProvider searchkit={searchkit}>
         <Layout>
           <TopBar>
-            <div className='my-logo'>UBL</div>
+            <div className='my-logo'>{domain.LOGO_TEXT}</div>
             <SearchBox queryBuilder={queryBuilder} autofocus={true} searchOnChange={true}
             />
           </TopBar>

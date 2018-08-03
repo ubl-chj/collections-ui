@@ -26,9 +26,13 @@ import '../assets/index.css'
 import {AuthUserProfile, AuthUserTooltip} from '../components/ui'
 import ReactTooltip from 'react-tooltip'
 import * as routes from '../constants/routes';
+import * as domain from '../constants/domain';
 
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_ORP_INDEX
-const searchkit = new SearchkitManager(host)
+const options = {
+  timeout: 20000
+}
+const searchkit = new SearchkitManager(host, options)
 const osdUrl = process.env.REACT_APP_OSD_BASE
 const queryFields = ['imageServiceIRI', 'metadataMap.tag1', 'metadataMap.tag2', 'metadataMap.tag3', 'metadataMap.tag4', 'metadataMap.tag5', 'metadataMap.tag6', 'metadataMap.tag7', 'metadataMap.tag8']
 const generatorUrl = process.env.REACT_APP_GENERATOR_BASE
@@ -125,7 +129,7 @@ class Orp extends Component {
     return (<SearchkitProvider searchkit={searchkit}>
       <Layout>
         <TopBar>
-          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>UBL</a></div>
+          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>{domain.LOGO_TEXT}</a></div>
           <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
           <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
             <AuthUserProfile/>

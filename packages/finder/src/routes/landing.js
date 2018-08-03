@@ -26,9 +26,14 @@ import '../assets/index.css'
 import {AuthUserTooltip, AuthUserProfile} from '../components/ui'
 import * as routes from '../constants/routes';
 import ReactTooltip from 'react-tooltip'
+import * as domain from '../constants/domain';
+
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + 'a1'
 
-const searchkit = new SearchkitManager(host)
+const options = {
+  timeout: 20000
+}
+const searchkit = new SearchkitManager(host, options)
 const queryFields = ['imageServiceIRI', 'metadataMap.tag1', 'metadataMap.tag2', 'metadataMap.tag3', 'metadataMap.tag4', 'metadataMap.tag5', 'metadataMap.tag6', 'metadataMap.tag7', 'metadataMap.tag8']
 
 const CollectionsListItem = (props) => {
@@ -86,7 +91,7 @@ class Landing extends Component {
     return (<SearchkitProvider searchkit={searchkit}>
       <Layout>
         <TopBar>
-          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank' rel='noopener noreferrer'>UBL</a>
+          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank' rel='noopener noreferrer'>{domain.LOGO_TEXT}</a>
           </div>
           <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
           <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>

@@ -27,9 +27,13 @@ import '../assets/index.css'
 import {TagCloud} from 'searchkit/lib/index'
 import {AuthUserProfile, AuthUserTooltip} from '../components/ui'
 import ReactTooltip from 'react-tooltip'
+import * as domain from '../constants/domain';
 
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_EC_INDEX
-const searchkit = new SearchkitManager(host)
+const options = {
+  timeout: 20000
+}
+const searchkit = new SearchkitManager(host, options)
 const queryFields = ['Century', 'Collection Name', 'DOI', 'Dimensions', 'Document Type', 'Location', 'Material',
   'Number of Pages', 'Shelfmark', 'Summary (English)', 'Text Language', 'Persons', 'Place of Origin (English)',
   'title', 'Title (English).trigram', 'related', 'thumbnail']
@@ -108,7 +112,7 @@ class Ec extends Component {
     return (<SearchkitProvider searchkit={searchkit}>
       <Layout>
         <TopBar>
-          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>UBL</a></div>
+          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>{domain.LOGO_TEXT}</a></div>
           <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
           <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
             <AuthUserProfile/>

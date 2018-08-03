@@ -29,9 +29,13 @@ import {AuthUserProfile, AuthUserTooltip, GridItem, ListItem} from '../component
 import * as routes from '../constants/routes';
 import '../assets/index.css'
 import ReactTooltip from 'react-tooltip'
+import * as domain from '../constants/domain';
 
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_ATOMIC_INDEX
-const searchkit = new SearchkitManager(host)
+const options = {
+  timeout: 20000
+}
+const searchkit = new SearchkitManager(host, options)
 const queryFields = ['iiifService', 'structureMap.1.@id', 'structureMap.1.label', 'metadata.Date', 'metadata.Title',
   'metadata.Author', 'metadata.Date of publication', 'metadata.Call number', 'metadata.Collection',
   'metadata.Objekttitel', 'metadata.Part of', 'metadata.Place', 'metadata.Place of publication',
@@ -59,10 +63,11 @@ class Atomic extends Component {
 
   render () {
     const t = Boolean(true)
-    return (<SearchkitProvider searchkit={searchkit}>
+    return (
+      <SearchkitProvider searchkit={searchkit}>
       <Layout>
         <TopBar>
-          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>UBL</a></div>
+          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>{domain.LOGO_TEXT}</a></div>
           <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
           <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
             <AuthUserProfile/>

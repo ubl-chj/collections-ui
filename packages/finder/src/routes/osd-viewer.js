@@ -13,8 +13,9 @@ import {
 import axios from 'axios'
 import '../assets/index.css'
 const manifesto = require('manifesto.js')
+import * as domain from '../constants/domain';
+import * as routes from '../constants/routes'
 
-let manifest = null
 let index = null
 let count = null
 let image = null
@@ -100,7 +101,7 @@ class OsdViewer extends Component {
       <ViewerProvider viewer={viewer}>
       <Layout>
         <TopBar>
-          <div className='my-logo-sm'>UBL</div>
+          <div className='my-logo-thin'><a className='my-logo' href={routes.LANDING} target='_blank'>{domain.LOGO_TEXT}</a></div>
         </TopBar>
         <ActionBar>
           <Controls index={index} manifest={document} document={viewer.document}/>
