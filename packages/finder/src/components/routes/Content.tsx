@@ -1,6 +1,4 @@
-import React, {Component} from 'react'
-import extend from 'lodash/extend'
-import '../env'
+import * as React from 'react'
 import {
   ActionBar,
   ActionBarRow,
@@ -21,10 +19,10 @@ import {
   TopBar,
   ViewSwitcherHits,
   ViewSwitcherToggle
-} from 'searchkit'
-import '../assets/index.css'
-import * as domain from '../constants/domain';
-
+} from 'searchkit-fork'
+import '../../assets/index.css'
+import {Routes, Domain} from '../../constants'
+const extend = require('lodash/extend')
 const host = process.env.REACT_APP_ELASTICSEARCH_LOCALHOST + process.env.REACT_APP_ATOMIC_INDEX
 const options = {
   timeout: 20000
@@ -46,8 +44,11 @@ const ManifestHitsGridItem = (props) => {
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
       <div className={bemBlocks.item('poster')}>
-        <a href={url} target='_blank' rel='noopener noreferrer'><img className={bemBlocks.item('poster')} alt='presentation'
-                                           data-qa='poster' src={thumbnail} width='140'/></a>
+        <a href={url} target='_blank' rel='noopener noreferrer'>
+          <img className={bemBlocks.item('poster')}
+            alt='presentation'
+            data-qa='poster' src={thumbnail}
+            width='140'/></a>
       </div>
       <a href={viewerUrl} target='_blank' rel='noopener noreferrer'>
         <div data-qa='title' className={bemBlocks.item('title')}
@@ -159,13 +160,13 @@ const ManifestsListItem = (props) => {
   )
 }
 
-class Atomic extends Component {
+class Atomic extends React.Component {
   render () {
     return (
       <SearchkitProvider searchkit={searchkit}>
         <Layout>
           <TopBar>
-            <div className='my-logo'>{domain.LOGO_TEXT}</div>
+            <div className='my-logo'><a className='my-logo' href={Routes.LANDING} target='_blank'>{Domain.LOGO_TEXT}</a></div>
             <SearchBox queryBuilder={queryBuilder} autofocus={true} searchOnChange={true}
             />
           </TopBar>

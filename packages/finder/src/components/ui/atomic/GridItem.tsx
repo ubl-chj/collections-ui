@@ -7,7 +7,7 @@ export const GridItem = (props) => {
   const viewerUrl = process.env.REACT_APP_UBL_IMAGE_VIEWER_BASE
   const {bemBlocks, result} = props
   const source = extend({}, result._source, result.highlight)
-  const thumbnail = source.iiifService + "/full/pct:25/0/default.jpg"
+  const thumbnail = source.iiifService + "/full/90,/0/default.jpg"
   const url = osdUrl + "?image=" + source.iiifService
   const pathname = new URL(source.iiifService).pathname
   const splitPath = pathname.split("/")

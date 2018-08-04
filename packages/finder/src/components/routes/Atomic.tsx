@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import * as React from 'react'
 
 import {
   ActionBar,
@@ -17,20 +17,18 @@ import {
   SearchkitManager,
   SearchkitProvider,
   SideBar,
-  SortingSelector,
+  SortingSelector, Tabs,
   TagCloud,
   TermQuery,
   TopBar,
   ViewSwitcherHits,
   ViewSwitcherToggle
-} from 'searchkit'
+} from 'searchkit-fork'
+import {AuthUserProfile, AuthUserTooltip, GridItem, ListItem} from '../ui/index'
+import {Routes, Domain} from '../../constants'
+import '../../assets/index.css'
 
-import {AuthUserProfile, AuthUserTooltip, GridItem, ListItem} from '../components/ui'
-import * as routes from '../constants/routes';
-import '../assets/index.css'
-import ReactTooltip from 'react-tooltip'
-import * as domain from '../constants/domain';
-
+const ReactTooltip = require('react-tooltip')
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_ATOMIC_INDEX
 const options = {
   timeout: 20000
@@ -45,29 +43,14 @@ searchkit.addDefaultQuery((query) => {
   return query.addQuery(TermQuery('imageIndex', '00000001'))
 })
 
-class Atomic extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      modal: false
-    }
-
-    this.toggle = this.toggle.bind(this)
-  }
-
-  toggle () {
-    this.setState({
-      modal: !this.state.modal
-    })
-  }
-
+export class Atomic extends React.Component {
   render () {
     const t = Boolean(true)
     return (
       <SearchkitProvider searchkit={searchkit}>
       <Layout>
         <TopBar>
-          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>{domain.LOGO_TEXT}</a></div>
+          <div className='my-logo'><a className='my-logo' href={Routes.LANDING} target='_blank'>{Domain.LOGO_TEXT}</a></div>
           <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
           <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
             <AuthUserProfile/>
@@ -100,9 +83,12 @@ class Atomic extends Component {
                 <ResetFilters/>
               </ActionBarRow>
             </ActionBar>
-            <ViewSwitcherHits hitsPerPage={50} highlightFields={['metadata.Title']} hitComponents={[{
-              key: 'grid', title: 'Grid', itemComponent: GridItem, defaultOption: true
-            }, {key: 'list', title: 'List', itemComponent: ListItem}]} scrollTo='body'/>,
+            <ViewSwitcherHits hitsPerPage={50} highlightFields={['metadata.Title']}
+              hitComponents={[
+                {key: 'grid', title: 'Grid', itemComponent: GridItem, defaultOption: true},
+                {key: 'list', title: 'List', itemComponent: ListItem}
+                ]}
+              scrollTo='body'/>,
             <NoHits suggestionsField={'metadata.Title'}/>
             <Pagination showNumbers={true}/>
           </LayoutResults>
@@ -111,5 +97,3 @@ class Atomic extends Component {
     </SearchkitProvider>)
   }
 }
-
-export default Atomic

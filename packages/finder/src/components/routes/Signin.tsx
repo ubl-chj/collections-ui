@@ -1,19 +1,19 @@
-import React, {Component} from 'react'
-import firebase from 'firebase/app';
+import * as React from 'react'
+
 import 'firebase/auth';
 import {withRouter} from 'react-router-dom';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
-import {Layout, LayoutBody, LayoutResults, TopBar} from 'searchkit'
-import styles from '../assets/app.css'
-import '../assets/firebaseui-styling.global.css'
-import {AuthUserContext} from '../components/core/AuthUserContext';
-import * as routes from '../constants/routes';
-import * as domain from '../constants/domain'
+import {Layout, LayoutBody, LayoutResults, TopBar} from 'searchkit-fork'
+import '../../assets/firebaseui-styling.global.css'
+import {AuthUserContext} from '../core';
+import {Routes, Domain} from '../../constants'
 
-const SignInPage = ({ history }) =>
+const styles = require('../../assets/app.css')
+const firebase = require("firebase/app");
+const SignInPage = () =>
   <div>
     <h1>SignIn</h1>
-    <SignInForm history={history} />
+    <SignInForm/>
   </div>
 
 const firebaseApi_key = process.env.REACT_APP_FIREBASE_KEY
@@ -42,12 +42,12 @@ const uiConfig = {
   ]
 }
 
-class SignInForm extends Component {
+export class SignInForm extends React.Component {
   render () {
     const t = Boolean(true)
     return (<Layout>
         <TopBar>
-          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>{domain.LOGO_TEXT}</a></div>
+          <div className='my-logo'><a className='my-logo' href={Routes.LANDING} target='_blank'>{Domain.LOGO_TEXT}</a></div>
         </TopBar>
         <LayoutBody>
           <LayoutResults>
@@ -67,6 +67,3 @@ const authCondition = (authUser) => !!authUser
 
 export default withRouter(SignInPage);
 
-export {
-  SignInForm,
-};

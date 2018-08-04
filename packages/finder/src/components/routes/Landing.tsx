@@ -1,5 +1,4 @@
-import React, {Component} from 'react'
-import extend from 'lodash/extend'
+import * as React from 'react'
 import {
   ActionBar,
   ActionBarRow,
@@ -20,14 +19,13 @@ import {
   TopBar,
   ViewSwitcherHits,
   ViewSwitcherToggle
-} from 'searchkit'
+} from 'searchkit-fork'
 
-import '../assets/index.css'
-import {AuthUserTooltip, AuthUserProfile} from '../components/ui'
-import * as routes from '../constants/routes';
-import ReactTooltip from 'react-tooltip'
-import * as domain from '../constants/domain';
-
+import '../../assets/index.css'
+import {AuthUserTooltip, AuthUserProfile} from '../ui'
+import {Routes, Domain} from '../../constants'
+const extend = require('lodash/extend')
+const ReactTooltip = require('react-tooltip')
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + 'a1'
 
 const options = {
@@ -35,6 +33,10 @@ const options = {
 }
 const searchkit = new SearchkitManager(host, options)
 const queryFields = ['imageServiceIRI', 'metadataMap.tag1', 'metadataMap.tag2', 'metadataMap.tag3', 'metadataMap.tag4', 'metadataMap.tag5', 'metadataMap.tag6', 'metadataMap.tag7', 'metadataMap.tag8']
+
+const handleMissingImage = (target) => {
+  return target.src = 'https://upload.wikimedia.org/wikipedia/commons/9/9a/VisualEditor_icon_page-not-found-ltr.svg'
+}
 
 const CollectionsListItem = (props) => {
   const osdUrl = process.env.REACT_APP_OSD_BASE
@@ -45,8 +47,11 @@ const CollectionsListItem = (props) => {
   const updated = new Date(source.metadataMap.tag3).toDateString();
   return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
     <div className={bemBlocks.item('poster')}>
-      <a href={url} target='_blank' rel='noopener noreferrer'><img className='thumbnail' alt='presentation'
-        data-qa='poster' src={thumbnail}/></a>
+      <a href={url} target='_blank' rel='noopener noreferrer'>
+        <img onError={(e) => {handleMissingImage(e.target as HTMLImageElement)}}
+          className='thumbnail' alt='presentation'
+        data-qa='poster' src={thumbnail}/>
+      </a>
     </div>
     <div className={bemBlocks.item('details')}>
       <table>
@@ -70,28 +75,13 @@ const CollectionsListItem = (props) => {
   </div>)
 }
 
-class Landing extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      modal: false
-    }
-
-    this.toggle = this.toggle.bind(this)
-  }
-
-  toggle () {
-    this.setState({
-      modal: !this.state.modal
-    })
-  }
-
+export class Landing extends React.Component {
   render () {
     const t = Boolean(true)
     return (<SearchkitProvider searchkit={searchkit}>
       <Layout>
         <TopBar>
-          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank' rel='noopener noreferrer'>{domain.LOGO_TEXT}</a>
+          <div className='my-logo'><a className='my-logo' href={Routes.LANDING} target='_blank' rel='noopener noreferrer'>{Domain.LOGO_TEXT}</a>
           </div>
           <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
           <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
@@ -128,5 +118,3 @@ class Landing extends Component {
     </SearchkitProvider>)
   }
 }
-
-export default Landing

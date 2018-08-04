@@ -1,5 +1,4 @@
-import React, {Component} from 'react'
-import openSeaDragon from 'openseadragon'
+import * as React from 'react'
 import {
   Controls,
   ViewerProvider,
@@ -9,12 +8,11 @@ import {
   ActionBar,
   LayoutBody
 } from 'ubl-viewer'
-
-import axios from 'axios'
-import '../assets/index.css'
+import '../../assets/index.css'
+import {Routes, Domain} from '../../constants'
 const manifesto = require('manifesto.js')
-import * as domain from '../constants/domain';
-import * as routes from '../constants/routes'
+const axios = require('axios')
+const openSeaDragon = require('openseadragon')
 
 let index = null
 let count = null
@@ -66,7 +64,7 @@ const setRegion = (imageWidth, imageHeight)=> {
   console.log(x,y,w,h)
 }
 
-class OsdViewer extends Component {
+export class Previewer extends React.Component {
   static defaultConfig () {
     return {
       sequenceMode: false,
@@ -101,10 +99,10 @@ class OsdViewer extends Component {
       <ViewerProvider viewer={viewer}>
       <Layout>
         <TopBar>
-          <div className='my-logo-thin'><a className='my-logo' href={routes.LANDING} target='_blank'>{domain.LOGO_TEXT}</a></div>
+          <div className='my-logo-thin'><a className='my-logo' href={Routes.LANDING} target='_blank'>{Domain.LOGO_TEXT}</a></div>
         </TopBar>
         <ActionBar>
-          <Controls index={index} manifest={document} document={viewer.document}/>
+          <Controls/>
         </ActionBar>
         <LayoutBody>
           <div className='openseadragon' id='osd-viewer'/>
@@ -116,8 +114,8 @@ class OsdViewer extends Component {
 
   initSeaDragon(){
     if (image) {
-      this.getCoordinates(image).then((data) => {
-        openSeaDragon(OsdViewer.defaultConfig())
+      this.getCoordinates(image).then(() => {
+        openSeaDragon(Previewer.defaultConfig())
       })
     } else if (document) {
         manifesto.loadManifest(document).then(function(manifest) {
@@ -131,8 +129,8 @@ class OsdViewer extends Component {
           const profile = manifesto.ServiceProfile.iiif2ImageLevel1();
           const service = resource.getService(profile);
           image = service.id;
-        }).then((image) => {
-            openSeaDragon(OsdViewer.defaultConfig())
+        }).then(() => {
+            openSeaDragon(Previewer.defaultConfig())
           })
     }
   }
@@ -158,4 +156,3 @@ class OsdViewer extends Component {
 }
 
 
-export default OsdViewer

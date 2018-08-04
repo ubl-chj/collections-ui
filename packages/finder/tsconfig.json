@@ -2,7 +2,7 @@
   "compilerOptions": {
     "declaration": true,
     "module": "commonjs",
-    "target": "es5",
+    "target": "es2017",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "outDir": "lib",
@@ -14,7 +14,7 @@
     "allowSyntheticDefaultImports":false,
     "jsx": "react",
     "lib":[
-      "es5", "es2015", "dom"
+      "es5", "es2015", "es2017", "dom"
     ],
     "types":[
       "jest", "node"

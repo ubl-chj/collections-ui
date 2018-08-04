@@ -1,8 +1,6 @@
-import React, {Component} from 'react'
-import extend from 'lodash/extend'
-import * as routes from '../constants/routes';
-import * as domain from '../constants/domain';
-
+import * as React from 'react'
+import ReactTooltip from 'react-tooltip'
+import {Routes, Domain} from '../../constants'
 import {
   ActionBar,
   ActionBarRow,
@@ -24,11 +22,12 @@ import {
   TopBar,
   ViewSwitcherHits,
   ViewSwitcherToggle
-} from 'searchkit'
-import '../assets/index.css'
-import {AuthUserProfile, AuthUserTooltip} from '../components/ui'
-import ReactTooltip from 'react-tooltip'
+} from 'searchkit-fork'
+import '../../assets/index.css'
+import {AuthUserProfile, AuthUserTooltip} from '../ui'
 
+const extend = require('lodash/extend')
+const ReactTooltip = require('react-tooltip')
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_UBL_INDEX
 const options = {
   timeout: 20000
@@ -76,14 +75,14 @@ const ManifestsListItem = (props) => {
     </div>)
 }
 
-class Ubl extends Component {
+export class Ubl extends React.Component {
 
   render () {
     const t = Boolean(true)
     return (<SearchkitProvider searchkit={searchkit}>
         <Layout>
           <TopBar>
-            <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>{domain.LOGO_TEXT}</a></div>
+            <div className='my-logo'><a className='my-logo' href={Routes.LANDING} target='_blank'>{Domain.LOGO_TEXT}</a></div>
             <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
             <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
               <AuthUserProfile/>
@@ -126,5 +125,3 @@ class Ubl extends Component {
       </SearchkitProvider>)
   }
 }
-
-export default Ubl

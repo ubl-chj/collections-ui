@@ -1,17 +1,13 @@
-import React from 'react'
-
-import {AuthUserContext, withAuthorization} from '../components/core'
+import * as React from 'react'
 import {
   ActionBar, Layout, LayoutBody, LayoutResults, SearchBox, SearchkitManager, SearchkitProvider, SideBar, TopBar
-} from 'searchkit'
-import * as routes from '../constants/routes'
-import firebase from 'firebase'
-import {AuthUserProfile, AuthUserTooltip} from '../components/ui'
-import ReactTooltip from 'react-tooltip'
-import * as domain from '../constants/domain';
-
+} from 'searchkit-fork'
+import {AuthUserContext, withAuthorization} from '../core'
+import {AuthUserProfile, AuthUserTooltip} from '../ui/index'
+import {Routes, Domain} from '../../constants';
+const firebase = require("firebase/app");
+const ReactTooltip = require('react-tooltip')
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_ATOMIC_INDEX
-
 const options = {
   timeout: 20000
 }
@@ -23,7 +19,7 @@ const t = Boolean(true)
 const AccountPage = () => <SearchkitProvider searchkit={searchkit}>
   <Layout>
     <TopBar>
-      <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>{domain.LOGO_TEXT}</a></div>
+      <div className='my-logo'><a className='my-logo' href={Routes.LANDING} target='_blank'>{Domain.LOGO_TEXT}</a></div>
       <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
       <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
         <AuthUserProfile/>

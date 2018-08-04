@@ -1,9 +1,9 @@
 import * as React from "react";
 import {AuthUserContext} from "../../core";
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap'
-import * as routes from '../../../constants/routes';
+import {Routes} from '../../../constants/Routes'
 
-const firebase = require("firebase");
+const firebase = require("firebase/app");
 
 export const AuthUserModal = (props) => {
   const {isOpen, toggle, className} = props
@@ -18,7 +18,7 @@ export const AuthUserModal = (props) => {
             <div className="gb_yb">
               <div className="gb_Bb">{firebase.auth().currentUser.displayName}</div>
               <div className="gb_Db">{firebase.auth().currentUser.email}</div>
-              <a className="btn btn-outline-secondary" href={routes.ACCOUNT}>Account</a>
+              <a className="btn btn-outline-secondary" href={Routes.ACCOUNT}>Account</a>
             </div>
           </div> : null}
         </AuthUserContext.Consumer>

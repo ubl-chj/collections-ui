@@ -1,9 +1,9 @@
 import * as React from "react";
 import {AuthUserContext} from "../../core";
 import { Container, Row, Col } from 'reactstrap';
-import * as routes from '../../../constants/routes';
+import {Routes} from '../../../constants/Routes'
 
-const firebase = require("firebase");
+const firebase = require("firebase/app");
 
 export const AuthUserProfile = (props) => {
   const {dataFor} = props
@@ -18,7 +18,7 @@ export const AuthUserProfile = (props) => {
             src={notFoundImageUri} alt="Account's profile image"
             aria-hidden="true" />
         }</a></div>:
-        <div className="gb_Ng"><a className="btn btn-outline-secondary float-right" href={routes.SIGN_IN}>Login</a></div>}
+        <div className="gb_Ng"><a className="btn btn-outline-secondary float-right" href={Routes.SIGN_IN}>Login</a></div>}
     </AuthUserContext.Consumer>
   )
 }

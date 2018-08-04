@@ -1,7 +1,7 @@
 import * as React from "react";
 import {AuthUserContext} from "../../core";
-import * as routes from '../../../constants/routes';
-const firebase = require("firebase");
+import {Routes} from '../../../constants/Routes'
+const firebase = require("firebase/app");
 
 export const AuthUserTooltip = (props) => {
   const {} = props
@@ -18,7 +18,7 @@ export const AuthUserTooltip = (props) => {
             <div className="gb_yb">
               <div className="gb_Bb">{firebase.auth().currentUser.displayName}</div>
               <div className="gb_Db">{firebase.auth().currentUser.email}</div>
-              <a role="button" className="btn btn-outline-secondary" href={routes.ACCOUNT}>Account</a>
+              <a role="button" className="btn btn-outline-secondary" href={Routes.ACCOUNT}>Account</a>
               <a role="button" className="btn btn-outline-secondary"
                 onClick={() => firebase.auth().signOut()}>Sign-out</a>
             </div>

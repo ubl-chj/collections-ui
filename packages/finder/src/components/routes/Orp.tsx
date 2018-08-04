@@ -1,5 +1,4 @@
-import React, {Component} from 'react'
-import extend from 'lodash/extend'
+import * as React from 'react'
 import {
   ActionBar,
   ActionBarRow,
@@ -21,13 +20,12 @@ import {
   TopBar,
   ViewSwitcherHits,
   ViewSwitcherToggle
-} from 'searchkit'
-import '../assets/index.css'
-import {AuthUserProfile, AuthUserTooltip} from '../components/ui'
-import ReactTooltip from 'react-tooltip'
-import * as routes from '../constants/routes';
-import * as domain from '../constants/domain';
-
+} from 'searchkit-fork'
+import '../../assets/index.css'
+import {AuthUserProfile, AuthUserTooltip} from '../ui'
+import {Routes, Domain} from '../../constants';
+const extend = require('lodash/extend')
+const ReactTooltip = require('react-tooltip')
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_ORP_INDEX
 const options = {
   timeout: 20000
@@ -37,6 +35,10 @@ const osdUrl = process.env.REACT_APP_OSD_BASE
 const queryFields = ['imageServiceIRI', 'metadataMap.tag1', 'metadataMap.tag2', 'metadataMap.tag3', 'metadataMap.tag4', 'metadataMap.tag5', 'metadataMap.tag6', 'metadataMap.tag7', 'metadataMap.tag8']
 const generatorUrl = process.env.REACT_APP_GENERATOR_BASE
 const constManifestUrl = generatorUrl + '?type=orp&index=' + process.env.REACT_APP_ORP_INDEX + '&q='
+
+const handleMissingImage = (target) => {
+  return target.src = 'https://upload.wikimedia.org/wikipedia/commons/9/9a/VisualEditor_icon_page-not-found-ltr.svg'
+}
 
 const ManifestHitsGridItem = (props) => {
   const {bemBlocks, result} = props
@@ -54,9 +56,13 @@ const ManifestHitsGridItem = (props) => {
   const finalTitle = titleString.substr(0, 50) + '...: ' + source.imageIndex
   return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
     <div className={bemBlocks.item('poster')}>
-      <a href={url} target='_blank' rel='noopener noreferrer'><img onError={(e) => {
-        e.target.src = 'https://www.e-codices.unifr.ch/img/frontend/logo-nav.png'
-      }} className={bemBlocks.item('poster')} alt='presentation' data-qa='poster' src={thumbnail} width='180'/></a>
+      <a href={url} target='_blank' rel='noopener noreferrer'>
+        <img onError={(e) => {handleMissingImage(e.target as HTMLImageElement)}}
+          className={bemBlocks.item('poster')}
+          alt='presentation'
+          data-qa='poster'
+          src={thumbnail} width='180'/>
+      </a>
     </div>
     <div><a href={viewer + encodeURIComponent(query)} target='_blank' rel='noopener noreferrer'>
       <div data-qa='title' className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: finalTitle}}/>
@@ -80,7 +86,7 @@ const ManifestsListItem = (props) => {
   return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
     <div className={bemBlocks.item('poster')}>
       <a href={url} target='_blank' rel='noopener noreferrer'><img onError={(e) => {
-        e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/9/9a/VisualEditor_icon_page-not-found-ltr.svg'
+        handleMissingImage(e.target as HTMLImageElement)
       }} className='thumbnail' alt='presentation' data-qa='poster' src={thumbnail}/></a>
     </div>
     <div className={bemBlocks.item('details')}>
@@ -122,14 +128,14 @@ const getQuery = (params) => {
   return constManifestUrl + query
 }
 
-class Orp extends Component {
+export class Orp extends React.Component {
 
   render () {
     const t = Boolean(true)
     return (<SearchkitProvider searchkit={searchkit}>
       <Layout>
         <TopBar>
-          <div className='my-logo'><a className='my-logo' href={routes.LANDING} target='_blank'>{domain.LOGO_TEXT}</a></div>
+          <div className='my-logo'><a className='my-logo' href={Routes.LANDING} target='_blank'>{Domain.LOGO_TEXT}</a></div>
           <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
           <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
             <AuthUserProfile/>
@@ -171,5 +177,3 @@ class Orp extends Component {
     </SearchkitProvider>)
   }
 }
-
-export default Orp

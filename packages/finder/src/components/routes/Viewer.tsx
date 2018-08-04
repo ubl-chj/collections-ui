@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import * as React from 'react'
 import {
   ActionBar,
   DocumentViewSwitcher,
@@ -10,10 +10,10 @@ import {
   ViewerManager,
   ViewerProvider
 } from 'ubl-viewer'
-import '../assets/index.css'
-import * as routes from '../constants/routes';
-import * as domain from '../constants/domain';
-
+import {AuthUserProfile, AuthUserTooltip} from '../ui'
+import '../../assets/index.css'
+import {Routes, Domain} from '../../constants'
+const ReactTooltip = require('react-tooltip')
 let manifest = null
 let image = null
 let region = null
@@ -38,27 +38,13 @@ if (window.location.search && window.location.search.includes('image')) {
   viewer = new ViewerManager(manifest)
 }
 
-class OsdServer extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      modal: false
-    }
-
-    this.toggle = this.toggle.bind(this)
-  }
-
-  toggle () {
-    this.setState({
-      modal: !this.state.modal
-    })
-  }
+export class Viewer extends React.Component {
   render () {
     const t = Boolean(true)
     return (<ViewerProvider viewer={viewer}>
         <Layout>
           <TopBar>
-            <div className='my-logo-thin'><a className='my-logo' href={routes.LANDING} target='_blank'>{domain.LOGO_TEXT}</a></div>
+            <div className='my-logo-thin'><a className='my-logo' href={Routes.LANDING} target='_blank'>{Domain.LOGO_TEXT}</a></div>
             <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
               <AuthUserProfile/>
             </div>
@@ -78,5 +64,3 @@ class OsdServer extends Component {
   }
 }
 
-
-export default OsdServer
