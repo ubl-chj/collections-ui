@@ -5,6 +5,6 @@ export const MetadataItem = (props) => {
   const {label, value} = props
 
   return (<li className="list-group-item">{label}:<br/>
-      {value}</li>
+      <div dangerouslySetInnerHTML={{__html: value}}/></li>
   )
 }

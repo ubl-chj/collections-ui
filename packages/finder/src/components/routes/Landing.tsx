@@ -101,7 +101,7 @@ export class Landing extends React.Component {
               <ActionBarRow>
                 <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
                 <ViewSwitcherToggle/>
-                <SortingSelector options={[{label: 'Index', field: 'imageIndex', order: 'asc'},]}/>
+                <SortingSelector options={[{label: 'Collection', field: 'metadataMap.tag1.keyword', order: 'asc'},]}/>
               </ActionBarRow>
               <ActionBarRow>
                 <GroupedSelectedFilters/>
