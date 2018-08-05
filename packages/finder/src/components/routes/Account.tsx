@@ -1,4 +1,5 @@
 import * as React from 'react'
+import {Link} from 'react-router-dom'
 import {
   ActionBar, Layout, LayoutBody, LayoutResults, SearchBox, SearchkitManager, SearchkitProvider, SideBar, TopBar
 } from 'searchkit-fork'
@@ -19,7 +20,9 @@ const t = Boolean(true)
 const AccountPage = () => <SearchkitProvider searchkit={searchkit}>
   <Layout>
     <TopBar>
-      <div className='my-logo'><a className='my-logo' href={Routes.LANDING} target='_blank'>{Domain.LOGO_TEXT}</a></div>
+      <div className='my-logo'>
+        <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
+      </div>
       <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
       <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
         <AuthUserProfile/>

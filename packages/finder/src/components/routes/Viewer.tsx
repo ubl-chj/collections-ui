@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import {
   ActionBar,
   DocumentViewSwitcher,
@@ -44,7 +45,9 @@ export class Viewer extends React.Component {
     return (<ViewerProvider viewer={viewer}>
         <Layout>
           <TopBar>
-            <div className='my-logo-thin'><a className='my-logo' href={Routes.LANDING} target='_blank'>{Domain.LOGO_TEXT}</a></div>
+            <div className='my-logo-thin'>
+              <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
+            </div>
             <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
               <AuthUserProfile/>
             </div>

@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 import {
   Controls,
   ViewerProvider,
@@ -99,7 +100,9 @@ export class Previewer extends React.Component {
       <ViewerProvider viewer={viewer}>
       <Layout>
         <TopBar>
-          <div className='my-logo-thin'><a className='my-logo' href={Routes.LANDING} target='_blank'>{Domain.LOGO_TEXT}</a></div>
+          <div className='my-logo-thin'>
+            <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
+          </div>
         </TopBar>
         <ActionBar>
           <Controls/>

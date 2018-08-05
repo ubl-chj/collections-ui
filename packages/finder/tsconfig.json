@@ -8,16 +8,17 @@
     "outDir": "lib",
     "sourceMap": true,
     "moduleResolution": "node",
-    "noEmitOnError": true,
+    "noEmitOnError": false,
     "noUnusedParameters":true,
     "noImplicitUseStrict":true,
-    "allowSyntheticDefaultImports":false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports":true,
     "jsx": "react",
     "lib":[
       "es5", "es2015", "es2017", "dom"
     ],
-    "types":[
-      "jest", "node"
+    "typeRoots": [
+      "node_modules/@types"
     ]
   },
 

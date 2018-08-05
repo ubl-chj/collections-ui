@@ -1,0 +1,58 @@
+{
+  "indexName": "t4",
+  "queryFields": [
+    "iiifService",
+    "structureMap.1.@id",
+    "structureMap.1.label",
+    "metadata.Date",
+    "metadata.Title",
+    "metadata.Author",
+    "metadata.Date of publication",
+    "metadata.Call number",
+    "metadata.Collection",
+    "metadata.Objekttitel",
+    "metadata.Part of",
+    "metadata.Place",
+    "metadata.Place of publication",
+    "metadata.Publisher",
+    "metadata.Sprache",
+    "metadata.URN",
+    "metadata.Source PPN (SWB)"
+  ],
+  "listItem": "ListItem",
+  "gridItem": "GridItem",
+  "refinementListFilterDef1": {
+    "field": "metadata.Sprache.keyword",
+    "title": "Language",
+    "id": "language"
+  },
+  "refinementListFilterDef2": {
+    "field": "metadata.Collection.keyword",
+    "title": "Collection",
+    "id": "collection"
+  },
+  "refinementListFilterDef3": {
+    "field": "metadata.Place.keyword",
+    "title": "Place",
+    "id": "place"
+  },
+  "sortingSelectorOptions": [
+    {
+      "label": "Date",
+      "field": "metadata.Date of publication.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Title",
+      "field": "metadata.Title.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Author",
+      "field": "metadata.Author.keyword",
+      "order": "asc"
+    }
+  ],
+  "highlightFields": ["metadata.Title"],
+  "suggestionField": "metadata.Title"
+}

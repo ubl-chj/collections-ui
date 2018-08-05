@@ -1,7 +1,8 @@
 import * as React from "react";
+
 const extend = require("lodash/extend")
 
-export const ListItem = (props) => {
+const ListItem = (props) => {
   const generatorUrl = process.env.REACT_APP_GENERATOR_BASE
   const osdUrl = process.env.REACT_APP_OSD_BASE
   const osdComponentUrl = process.env.REACT_APP_OSD_COMPONENT_BASE
@@ -20,11 +21,13 @@ export const ListItem = (props) => {
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
       <div className={bemBlocks.item("poster")}>
-        <a href={url} target="_blank"><img className="thumbnail" alt="presentation" data-qa="poster" src={thumbnail}/></a>
+        <a href={url} target="_blank"><img className="thumbnail" alt="presentation" data-qa="poster"
+          src={thumbnail}/></a>
       </div>
       <div className={bemBlocks.item("details")}>
         <a href={viewer} target="_blank">
-          <h2 className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html: source.metadata.Title}}/></a>
+          <h2 className={bemBlocks.item("title")}
+            dangerouslySetInnerHTML={{__html: source.metadata.Title}}/></a>
         <table>
           <tbody>
           <tr>
@@ -53,3 +56,5 @@ export const ListItem = (props) => {
     </div>
   )
 }
+
+export default ListItem

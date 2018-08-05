@@ -1,7 +1,8 @@
 import * as React from "react";
+import {Link} from 'react-router-dom'
 import {AuthUserContext} from "../../core";
-import { Container, Row, Col } from 'reactstrap';
-import {Routes} from '../../../constants/Routes'
+import {Container, Row, Col} from 'reactstrap';
+import {Domain, Routes} from '../../../constants'
 
 const firebase = require("firebase/app");
 
@@ -18,7 +19,9 @@ export const AuthUserProfile = (props) => {
             src={notFoundImageUri} alt="Account's profile image"
             aria-hidden="true" />
         }</a></div>:
-        <div className="gb_Ng"><a className="btn btn-outline-secondary float-right" href={Routes.SIGN_IN}>Login</a></div>}
+        <div className="gb_Ng">
+          <Link className='btn btn-outline-secondary float-right' to={Routes.SIGN_IN}>{Domain.LOGIN_TEXT}</Link>
+        </div>}
     </AuthUserContext.Consumer>
   )
 }

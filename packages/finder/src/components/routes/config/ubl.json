@@ -1,0 +1,64 @@
+{
+  "indexName": "m3",
+  "queryFields": [
+    "@id",
+    "Date",
+    "Title",
+    "Author",
+    "Date of publication",
+    "Collection",
+    "Objekttitel",
+    "Part of",
+    "Place",
+    "Place of publication",
+    "Publisher",
+    "Sprache",
+    "URN",
+    "Source PPN (SWB)"
+  ],
+  "listItem": "UblListItem",
+  "gridItem": "UblGridItem",
+  "refinementListFilterDef1": {
+    "field": "Sprache.keyword",
+    "title": "Language",
+    "id": "language"
+  },
+  "refinementListFilterDef2": {
+    "field": "Collection.keyword",
+    "title": "Collection",
+    "id": "collection"
+  },
+  "refinementListFilterDef3": {
+    "field": "Place.keyword",
+    "title": "Place",
+    "id": "place"
+  },
+  "hasRangeFilter": true,
+  "rangeFilter": {
+    "field": "Date of publication.raw",
+    "id": "date",
+    "min": 1470,
+    "max": 1975
+  },
+  "sortingSelectorOptions": [
+    {
+      "label": "Date",
+      "field": "Date of publication.raw",
+      "order": "asc"
+    },
+    {
+      "label": "Title",
+      "field": "Title.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Author",
+      "field": "Author.keyword",
+      "order": "asc"
+    }
+  ],
+  "highlightFields": ["Title"],
+  "suggestionField": "Title"
+}
+
+

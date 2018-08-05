@@ -1,13 +1,13 @@
 import * as React from "react";
 
 import {AuthUserContext} from './AuthUserContext';
-import { firebase } from '../../firebase';
+import {firebase} from '../../firebase';
 
 export const withAuthentication = (Component) =>
   class WithAuthentication extends React.Component<any> {
     state: { authUser: Object }
 
-      constructor(props) {
+    constructor(props) {
       super(props);
 
       this.state = {
@@ -18,17 +18,17 @@ export const withAuthentication = (Component) =>
     componentDidMount() {
       firebase.auth.onAuthStateChanged(authUser => {
         authUser
-          ? this.setState({ authUser })
-          : this.setState({ authUser: null });
+          ? this.setState({authUser})
+          : this.setState({authUser: null});
       });
     }
 
     render() {
-      const { authUser } = this.state;
+      const {authUser} = this.state;
 
       return (
         <AuthUserContext.Provider value={authUser}>
-          <Component />
+          <Component/>
         </AuthUserContext.Provider>
       );
     }

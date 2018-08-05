@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 import {
   ActionBar,
   ActionBarRow,
@@ -58,7 +59,8 @@ const CollectionsListItem = (props) => {
         <tbody>
         <tr>
           <td>Collection:</td>
-          <td><a href={source.metadataMap.tag2} target='_blank' rel='noopener noreferrer'>{source.metadataMap.tag1}</a>
+          <td>
+            <Link to={source.metadataMap.tag2}>{source.metadataMap.tag1}</Link>
           </td>
         </tr>
         <tr>
@@ -81,7 +83,8 @@ export class Landing extends React.Component {
     return (<SearchkitProvider searchkit={searchkit}>
       <Layout>
         <TopBar>
-          <div className='my-logo'><a className='my-logo' href={Routes.LANDING} target='_blank' rel='noopener noreferrer'>{Domain.LOGO_TEXT}</a>
+          <div className='my-logo'>
+            <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
           </div>
           <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
           <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>

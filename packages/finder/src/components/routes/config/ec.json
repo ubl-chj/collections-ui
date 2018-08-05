@@ -1,0 +1,62 @@
+{
+  "indexName": "ec7",
+  "queryFields": [
+    "Century",
+    "Collection Name",
+    "DOI",
+    "Dimensions",
+    "Document Type",
+    "Location",
+    "Material",
+    "Number of Pages",
+    "Shelfmark",
+    "Summary (English)",
+    "Text Language",
+    "Persons",
+    "Place of Origin (English)",
+    "title",
+    "Title (English).trigram",
+    "related",
+    "thumbnail"
+  ],
+  "listItem": "EcListItem",
+  "gridItem": "EcGridItem",
+  "refinementListFilterDef1": {
+    "field": "Text Language.keyword",
+    "title": "Language",
+    "id": "language"
+  },
+  "refinementListFilterDef2": {
+    "field": "Collection Name.keyword",
+    "title": "Collection",
+    "id": "collection"
+  },
+  "refinementListFilterDef3": {
+    "field": "Location.keyword",
+    "title": "Location",
+    "id": "place"
+  },
+  "sortingSelectorOptions": [
+    {
+      "label": "Relevance",
+      "field": "_score",
+      "order": "asc"
+    },
+    {
+      "label": "Century",
+      "field": "Century.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Persons",
+      "field": "Persons.keyword",
+      "order": "asc"
+    }
+  ],
+  "highlightFields": [
+    "title",
+    "Summary (English)"
+  ],
+  "suggestionField": "Title (English).trigram"
+}
+

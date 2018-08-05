@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 import {
   ActionBar,
   ActionBarRow,
@@ -166,9 +167,10 @@ class Atomic extends React.Component {
       <SearchkitProvider searchkit={searchkit}>
         <Layout>
           <TopBar>
-            <div className='my-logo'><a className='my-logo' href={Routes.LANDING} target='_blank'>{Domain.LOGO_TEXT}</a></div>
-            <SearchBox queryBuilder={queryBuilder} autofocus={true} searchOnChange={true}
-            />
+            <div className='my-logo'>
+              <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
+            </div>
+            <SearchBox queryBuilder={queryBuilder} autofocus={true} searchOnChange={true}/>
           </TopBar>
 
           <LayoutBody>
