@@ -95,6 +95,8 @@ class Collection extends React.Component {
                   </div>
                   <SearchBox autofocus={true} searchOnChange={true}
                     queryFields={config.routeConfig.queryFields}/>
+                  <div>
+                  </div>
                   <div data-tip='authUserProfile' data-for='authUserProfile'
                     data-event='click focus'>
                     <AuthUserProfile/>
@@ -159,7 +161,7 @@ class Collection extends React.Component {
                         title: 'List',
                         itemComponent: listItem()
                       }
-                    ]} scrollTo='body'/>,
+                    ]} scrollTo='body'/>
                     <NoHits suggestionsField={config.routeConfig.suggestionField}/>
                     <Pagination showNumbers={true}/>
                   </LayoutResults>

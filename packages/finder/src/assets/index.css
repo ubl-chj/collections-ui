@@ -68,6 +68,9 @@ th, td {
     overflow: hidden;
 }
 
+.sk-hits-list-hit {
+  width: 100%;
+}
 
 .sk-hits-list-hit__subtitle, .sk-hits-list-hit__tags {
     line-height: 20px;

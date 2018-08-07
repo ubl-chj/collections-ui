@@ -6,6 +6,7 @@ import {
 import {AuthUserContext, withAuthorization} from '../core'
 import {AuthUserProfile, AuthUserTooltip} from '../ui/index'
 import {Routes, Domain} from '../../constants';
+import {ListFavorites} from '../ui'
 const firebase = require("firebase/app");
 const ReactTooltip = require('react-tooltip')
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_ATOMIC_INDEX
@@ -39,8 +40,9 @@ const AccountPage = () => <SearchkitProvider searchkit={searchkit}>
         <ActionBar>
           <AuthUserContext.Consumer>
             {(authUser) => <div>
-              <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p>
-              <h1>Account: {authUser.email}</h1>
+              <p>Welcome {firebase.auth().currentUser.displayName}!</p>
+              <h2>My Workspace</h2>
+              <ListFavorites authUser={authUser}/>
             </div>}
           </AuthUserContext.Consumer>
         </ActionBar>

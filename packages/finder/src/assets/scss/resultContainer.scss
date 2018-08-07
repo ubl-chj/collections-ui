@@ -1,0 +1,113 @@
+$actionButtonSize: 38px;
+$actionButtonMargin: 4px;
+$swift-ease-out-duration: 0.4s !default;
+$swift-ease-out-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !default;
+$swift-ease-out: all $swift-ease-out-duration $swift-ease-out-timing-function !default;
+
+.result-item-actions {
+  min-width: 0px;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  margin-right: $actionButtonMargin;
+  display: flex;
+  align-items: flex-start;
+  transition: transform .3s cubic-bezier(.23,1,.32,1), opacity .2s;
+  transform: translate(-4px, 0);
+  float:right;
+  html[dir="rtl"] & {
+    right: auto;
+    left: 0;
+  }
+  > .md-button {
+    opacity: .6;
+    &:hover,
+    &:focus {
+      opacity: 1;
+    }
+  }
+  // action buttons
+  .md-icon-button {
+    background-color: transparent;
+    margin: 0;
+    display: inline-flex;
+    justify-content: center;
+    &:hover,
+    &:focus {
+      &:not([disabled]) {
+        box-shadow: none;
+        background-color: transparent !important;
+      }
+    }
+  }
+
+  .pin-button {
+    md-icon {
+      transition: $swift-ease-out;
+      transform: rotate3d(0, 0, 1, -25deg);
+      opacity: 0;
+    }
+    &.pinned {
+
+      &:hover,
+      &:focus {
+        color: $dark;
+      }
+
+      md-icon {
+        transform: rotate3d(0, 0, 1, 25deg);
+        opacity: 1;
+      }
+    }
+  }
+  .unpin-button {
+    md-icon {
+      transition: $swift-ease-out;
+      transform: rotate3d(0, 0, 1, 25deg);
+      opacity: 0;
+    }
+    &.unpinned {
+      md-icon {
+        transform: rotate3d(0, 0, 1, 0deg);
+        opacity: 1;
+      }
+    }
+  }
+
+  // more options button
+  .more-options-button {
+    position: relative;
+    prm-icon {
+      md-icon {
+        -webkit-transition: $swift-ease-out;
+        -moz-transition: $swift-ease-out;
+        -ms-transition: $swift-ease-out;
+        -o-transition: $swift-ease-out;
+        transition: $swift-ease-out;
+        position: relative;
+      }
+      &.open-icon {
+        md-icon {
+          transform: rotate3d(0, 0, 1, 0deg);
+          opacity: 1;
+          top: -2px;
+          .item-expanded & {
+            transform: rotate3d(0, 0, 1, -135deg);
+            opacity: 0;
+          }
+        }
+      }
+      &.close-icon {
+        position: absolute;
+        left: -($actionButtonMargin);
+        top: 0;
+        right: 0;
+      }
+    }
+  }
+}
+
+.layout-row {
+  -ms-flex-direction: row;
+  flex-direction: row;
+}

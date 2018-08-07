@@ -1,47 +1,48 @@
 const path = require('path')
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const eslintFormatter = require('react-dev-utils/eslintFormatter');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
+  mode: 'production',
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true // set to true if you want JS source maps
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ]
+  },
   entry: {
-    "ignore":['./theming/index.ts'],
-    "bundle":['./src/index.ts']
+    'ignore':['./theming/index.ts'],
+    'bundle':['./src/index.ts']
   },
   output: {
     path: path.join(__dirname, 'release'),
     filename: '[name].js',
-    library:["Viewer"],
-    libraryTarget:"umd",
+    library:['Viewer'],
+    libraryTarget:'umd',
     publicPath: ''
   },
   resolve: {
-    extensions:[".js", ".ts", ".tsx", ".webpack.js", ".web.js", ".scss"]
+    extensions:['.js', '.ts', '.tsx', '.webpack.js', '.web.js', '.scss']
   },
 
   plugins: [
   //  new webpack.BannerPlugin({banner:copyrightBanner, entryOnly:true}),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new ExtractTextPlugin("theme.css", {allChunks:true}),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
       },
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      mangle: {
-        except: ['require', 'export', '$super']
-      },
-      compress: {
-        warnings: false,
-        sequences: true,
-        dead_code: true,
-        conditionals: true,
-        booleans: true,
-        unused: true,
-        if_return: true,
-        join_vars: true,
-        drop_console: true
-      }
+    new MiniCssExtractPlugin({
+      filename: 'theme.css',
+      chunkFilename: '[id].[hash].css',
     })
   ],
   externals: {
@@ -61,41 +62,25 @@ module.exports = {
     }
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.tsx?$/,
         loaders: ['ts-loader'],
         include: [path.join(__dirname, 'src'),path.join(__dirname, 'theming')]
       },
       {
-        test: /\.scss$/,
-        loader: ExtractTextPlugin.extract({
-          fallback:"style-loader",
-          use:[
-            {
-              loader:"css-loader",
-              options: {
-                sourceMap:true,
-                minimize:true,
-                importLoaders:2
-              }
-            },
-            {
-              loader:"postcss-loader"
-            },
-            {
-              loader:"sass-loader",
-              options:{sourceMap:true}
-            }
-          ]
-
-        }),
-        include: path.join(__dirname, 'theming')
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
       },
       {
         test: /\.(jpg|png|svg)$/,
         loaders: [
-            'file-loader?name=[path][name].[ext]'
+          'file-loader?name=[path][name].[ext]'
         ],
         include: path.join(__dirname, 'theming')
       }

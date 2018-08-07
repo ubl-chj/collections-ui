@@ -47,10 +47,7 @@ export class OsdComponent extends ViewerComponent<OsdComponentProps, any> {
 
   render() {
     return (
-      <div>
       <div ref={this.osd} className="openseadragon" id="osd"/>
-        <OsdRef ref={this.osd}/>
-      </div>
     )
   }
 
@@ -90,6 +87,9 @@ export class OsdComponent extends ViewerComponent<OsdComponentProps, any> {
   componentDidMount() {
     if (this.props.images) {
       this.initSeaDragon()
+    }
+    if (this.osd.current.world) {
+      console.log(this.osd.current.world.getHomeBounds())
     }
    }
 

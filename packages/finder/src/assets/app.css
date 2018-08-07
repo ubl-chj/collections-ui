@@ -126,9 +126,12 @@
   padding-left: 20px;
 }
 
-.profile {
+.glyphicon-star:before {
+  content: "\e006";
 }
 
-
+.glyphicon-star-empty:before {
+  content:"\e007";
+}
 
 

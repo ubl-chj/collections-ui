@@ -1,5 +1,9 @@
 import * as React from "react";
+import {FavoriteItem} from './FavoriteItem'
+import {AuthUserContext} from "../core";
+import {LayoutResults} from "searchkit-fork";
 const extend = require("lodash/extend")
+const firebase = require("firebase/app");
 
 const handleMissingImage = (target) => {
   return target.src = 'https://www.e-codices.unifr.ch/img/frontend/logo-nav.png'
@@ -20,11 +24,15 @@ const ECListItem = (props) => {
   return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
     <div className={bemBlocks.item('poster')}>
       <a href={thumbUrl} target='_blank' rel='noopener noreferrer'>
-        <img onError={(e) => {handleMissingImage(e.target as HTMLImageElement)}}
-          alt='e-codices' src={thumbnail}/>
+        <img onError={(e) => {
+          handleMissingImage(e.target as HTMLImageElement)
+        }} alt='e-codices' src={thumbnail}/>
       </a>
     </div>
     <div className={bemBlocks.item('details')}>
+      <AuthUserContext.Consumer>
+      {(authUser) =>  authUser ? <FavoriteItem authUser={firebase.auth().currentUser} result={result}/>: null}
+      </AuthUserContext.Consumer>
       <a href={url} target='_blank' rel='noopener noreferrer'>
         <h2 className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: source.title}}/>
       </a>
