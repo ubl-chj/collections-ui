@@ -1,14 +1,16 @@
-import {AuthUserContext} from "../core";
 import * as React from "react";
+import {Thumbnail} from './Thumbnail'
 
 const firebase = require("firebase/app");
+const viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE + '?manifest='
 
 export class ListFavorite extends React.Component<any, any> {
   favorite: {
     result: {
       _source: {
         title: string
-      }
+      },
+      _index: string
     }
   }
   state: {
@@ -44,43 +46,67 @@ export class ListFavorite extends React.Component<any, any> {
     return target.src = 'https://www.e-codices.unifr.ch/img/frontend/logo-nav.png'
   }
 
-  static createTitle(source) {
-    const title = source['Title (English)']
+  static createTitle(title) {
     return {__html: '<b>Title:</b> ' + title}
+  }
+
+  createAuthor = (source, bemBlocks) => {
+    if (source['Author(s) of the Record']) {
+      return <h3 className={bemBlocks.item('subtitle')}><b>Author:</b> {source['Author(s) of the Record']}</h3>
+    }
+  }
+
+  //TODO Harmonize the metadata labels before indexing
+  static renderFavoriteContent(result) {
+    switch (result._index) {
+      case process.env.REACT_APP_EC_INDEX:
+        return (
+          <div>
+            <a href={result._source['related']} target='_blank' rel='noopener noreferrer'>
+              <h2 className='sk-hits-list-hit__title'
+                dangerouslySetInnerHTML={{__html: result._source.title}}/>
+            </a>
+            <h3 className='sk-hits-list-hit__subtitle'
+              dangerouslySetInnerHTML={ListFavorite.createTitle(result._source['Title (English)'])}/>
+            <h3 className='sk-hits-list-hit__subtitle'><b>Date of
+              Origin:</b> {result._source['Date of Origin (English)']}</h3>
+            <h3 className='sk-hits-list-hit__subtitle'
+              dangerouslySetInnerHTML={{__html: result._source['Summary (English)']}}/>
+          </div>);
+      case process.env.REACT_APP_UC_INDEX:
+        const UcviewUrl = viewerUrl + result._source['Manifest']
+        return (
+          <div>
+            <a href={UcviewUrl} target='_blank' rel='noopener noreferrer'>
+              <h2 className='sk-hits-list-hit__title'
+                dangerouslySetInnerHTML={{__html: result._source.Title}}/>
+            </a>
+            <h3 className='sk-hits-list-hit__subtitle'><b>Subject:</b> {result._source['Subject(s)']}</h3>
+            <h3 className='sk-hits-list-hit__subtitle'
+              dangerouslySetInnerHTML={{__html: result._source['Abstract']}}/>
+          </div>);
+      default:
+        return 'Item Metadata Display Not Defined';
+    }
   }
 
   render() {
     const {error, isFavorite} = this.state
     const result = this.favorite.result
     const osdUrl = process.env.REACT_APP_OSD_BASE
-    const thumbnail = result._source['thumbnail'] + '/full/90,/0/default.jpg'
-    const thumbUrl = osdUrl + '?image=' + result._source['thumbnail']
-    const url = result._source['related']
+    const imageSource = result._source['thumbnail'] + '/full/90,/0/default.jpg'
+    const imageLink = osdUrl + '?image=' + result._source['thumbnail']
     if (error) {
       return <div>Error: {error}</div>;
     } else {
       return (isFavorite ?
         <div className='sk-hits-list-hit sk-hits-list__item'>
-          <div className='sk-hits-list-hit__poster'>
-            <a href={thumbUrl} target='_blank' rel='noopener noreferrer'>
-              <img onError={(e) => {
-                this.handleMissingImage(e.target as HTMLImageElement)
-              }} alt='e-codices' src={thumbnail}/>
-            </a>
-          </div>
+          <Thumbnail imageWidth={140} className="sk-hits-list-hit__poster" imageSource={imageSource}
+            imageLink={imageLink}/>
           <div className='sk-hits-list-hit__details'>
-                <ListFavoriteItem authUser={this.authUser} result={result}
-                  unsetFavorite={this.unsetFavorite.bind(this)}/>
-            <a href={url} target='_blank' rel='noopener noreferrer'>
-              <h2 className='sk-hits-list-hit__title'
-                dangerouslySetInnerHTML={{__html: result._source.title}}/>
-            </a>
-            <h3 className='sk-hits-list-hit__subtitle'
-              dangerouslySetInnerHTML={ListFavorite.createTitle(result._source)}/>
-            <h3 className='sk-hits-list-hit__subtitle'><b>Date of
-              Origin:</b> {result._source['Date of Origin (English)']}</h3>
-            <h3 className='sk-hits-list-hit__subtitle'
-              dangerouslySetInnerHTML={{__html: result._source['Summary (English)']}}/>
+            <ListFavoriteItem authUser={this.authUser} result={result}
+              unsetFavorite={this.unsetFavorite.bind(this)}/>
+            {ListFavorite.renderFavoriteContent(result)}
           </div>
         </div> : null)
     }

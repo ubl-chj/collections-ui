@@ -1,13 +1,8 @@
 import * as React from "react";
-import {FavoriteItem} from './FavoriteItem'
+import {FavoriteButton, Thumbnail} from '../ui'
 import {AuthUserContext} from "../core";
-import {LayoutResults} from "searchkit-fork";
 const extend = require("lodash/extend")
 const firebase = require("firebase/app");
-
-const handleMissingImage = (target) => {
-  return target.src = 'https://www.e-codices.unifr.ch/img/frontend/logo-nav.png'
-}
 
 function createTitle(source) {
   const title = source['Title (English)']
@@ -18,20 +13,14 @@ const ECListItem = (props) => {
   const osdUrl = process.env.REACT_APP_OSD_BASE
   const {bemBlocks, result} = props
   const source = extend({}, result._source, result.highlight)
-  const thumbnail = result._source['thumbnail'] + '/full/90,/0/default.jpg'
-  const thumbUrl = osdUrl + '?image=' + result._source['thumbnail']
+  const imageSource = result._source['thumbnail'] + '/full/90,/0/default.jpg'
+  const imageLink = osdUrl + '?image=' + result._source['thumbnail']
   const url = result._source['related']
   return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-    <div className={bemBlocks.item('poster')}>
-      <a href={thumbUrl} target='_blank' rel='noopener noreferrer'>
-        <img onError={(e) => {
-          handleMissingImage(e.target as HTMLImageElement)
-        }} alt='e-codices' src={thumbnail}/>
-      </a>
-    </div>
+    <Thumbnail imageWidth={140} imageSource={imageSource} imageLink={imageLink} className={bemBlocks.item('poster')}/>
     <div className={bemBlocks.item('details')}>
       <AuthUserContext.Consumer>
-      {(authUser) =>  authUser ? <FavoriteItem authUser={firebase.auth().currentUser} result={result}/>: null}
+      {(authUser) =>  authUser ? <FavoriteButton authUser={firebase.auth().currentUser} result={result}/>: null}
       </AuthUserContext.Consumer>
       <a href={url} target='_blank' rel='noopener noreferrer'>
         <h2 className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: source.title}}/>

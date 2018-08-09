@@ -54,6 +54,27 @@ export class ListFavorites extends React.Component<any, any> {
     this.getFavorites()
   }
 
+  buildFavoritesList(favorites) {
+    const favs = favorites.sort(function(a, b) {
+        const sortA = a.result.timestamp
+        const sortB = b.result.timestamp
+        if (sortA < sortB) {
+          return -1;
+        }
+        if (sortA > sortB) {
+          return 1;
+        }
+      return 0;
+    })
+    return favs.map(function (favorite) {
+      return (
+        <AuthUserContext.Consumer>
+          {(authUser) => authUser ?
+            <ListFavorite key={favorite.key} favorite={favorite} authUser={authUser}/>: null}
+        </AuthUserContext.Consumer>)
+    })
+  }
+
   render() {
     const {error, isLoaded, favorites} = this.state
     if (error) {
@@ -62,13 +83,7 @@ export class ListFavorites extends React.Component<any, any> {
       return <div>Loading...</div>;
     } else {
       return (
-        <div>{favorites.map(function (favorite) {
-          return (
-            <AuthUserContext.Consumer>
-              {(authUser) => authUser ?
-            <ListFavorite key={favorite.key} favorite={favorite} authUser={authUser}/>: null}
-            </AuthUserContext.Consumer>)
-        })}
+        <div>{this.buildFavoritesList(favorites)}
         </div>
       )
     }

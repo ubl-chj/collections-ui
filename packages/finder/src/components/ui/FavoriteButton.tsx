@@ -2,7 +2,7 @@ import * as React from "react";
 
 const firebase = require("firebase/app");
 
-export class FavoriteItem extends React.Component<any, any> {
+export class FavoriteButton extends React.Component<any, any> {
   state: {
     error: null
     favorite: string
@@ -58,6 +58,7 @@ export class FavoriteItem extends React.Component<any, any> {
   }
 
   static writeFavorite(authUserUid, result) {
+    result['timestamp'] = new Date().getTime()
     firebase.database().ref('/users/' + authUserUid + '/favorites/' + result._id).set({
       result
     });
@@ -79,12 +80,12 @@ export class FavoriteItem extends React.Component<any, any> {
           (<button type="button" className="btn btn-primary-outline btn-xs">
             <a id={this.result._id}>
               <i className="glyphicon glyphicon-star" onClick={() => {
-            FavoriteItem.removeFavorite(this.authUser.uid, this.result);
+            FavoriteButton.removeFavorite(this.authUser.uid, this.result);
             this.unsetFavorite()
             }}/></a></button>)
           : (<button type="button" className="btn btn-primary-outline btn-xs"><a id={this.result._id}>
             <i className="glyphicon glyphicon-star-empty" onClick={() => {
-            FavoriteItem.writeFavorite(this.authUser.uid, this.result);
+            FavoriteButton.writeFavorite(this.authUser.uid, this.result);
             this.setFavorite(this.result)
           }}/></a></button>)
         }

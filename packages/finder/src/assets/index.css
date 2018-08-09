@@ -92,6 +92,15 @@ th, td {
     padding: 10px;
 }
 
+.sk-hits-grid-hit {
+  padding: 10px;
+  max-width: 250px;
+  flex-flow: column nowrap;
+  align-content: center;
+  align-items: normal;
+  flex: 190px 0;
+}
+
 .sk-top-bar__content {
     display: -ms-flexbox;
     display: flex;

@@ -1,8 +1,11 @@
 import * as React from "react";
+import {FavoriteButton, Thumbnail} from "../ui";
+import {AuthUserContext} from "../core";
+const firebase = require("firebase/app");
 
 const extend = require("lodash/extend")
 
-const ListItem = (props) => {
+const AtomicListItem = (props) => {
   const generatorUrl = process.env.REACT_APP_GENERATOR_BASE
   const osdUrl = process.env.REACT_APP_OSD_BASE
   const osdComponentUrl = process.env.REACT_APP_OSD_COMPONENT_BASE
@@ -10,8 +13,8 @@ const ListItem = (props) => {
   const constManifestUrl = generatorUrl + "?type=atomic&index=" + process.env.REACT_APP_ATOMIC_INDEX + "&q="
   const {bemBlocks, result} = props
   const source = extend({}, result._source, result.highlight)
-  const thumbnail = source.iiifService + "/full/90,/0/default.jpg"
-  const url = osdUrl + "?image=" + source.iiifService
+  const imageSource = source.iiifService + "/full/90,/0/default.jpg"
+  const imageLink = osdUrl + "?image=" + source.iiifService
   const pathname = new URL(source.iiifService).pathname
   const splitPath = pathname.split("/")
   const viewId = splitPath[5]
@@ -20,11 +23,11 @@ const ListItem = (props) => {
   const manifestView = osdComponentUrl + "?manifest=" + encodeURIComponent(constManifestUrl + query)
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
-      <div className={bemBlocks.item("poster")}>
-        <a href={url} target="_blank"><img className="thumbnail" alt="presentation" data-qa="poster"
-          src={thumbnail}/></a>
-      </div>
+      <Thumbnail imageWidth={140} imageSource={imageSource} imageLink={imageLink} className={bemBlocks.item('poster')}/>
       <div className={bemBlocks.item("details")}>
+        <AuthUserContext.Consumer>
+          {(authUser) =>  authUser ? <FavoriteButton authUser={firebase.auth().currentUser} result={result}/>: null}
+        </AuthUserContext.Consumer>
         <a href={viewer} target="_blank">
           <h2 className={bemBlocks.item("title")}
             dangerouslySetInnerHTML={{__html: source.metadata.Title}}/></a>
@@ -57,4 +60,4 @@ const ListItem = (props) => {
   )
 }
 
-export default ListItem
+export default AtomicListItem

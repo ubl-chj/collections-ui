@@ -1,0 +1,59 @@
+{
+  "indexName": "a1",
+  "queryFields": [
+    "imageServiceIRI",
+    "metadataMap.tag1",
+    "metadataMap.tag2",
+    "metadataMap.tag3",
+    "metadataMap.tag4",
+    "metadataMap.tag5",
+    "metadataMap.tag6",
+    "metadataMap.tag7",
+    "metadataMap.tag8"
+  ],
+  "listItem": "CollectionsListItem",
+  "gridItem": "OrpGridItem",
+  "refinementListFilterDef1": {
+    "field": "metadataMap.tag1.keyword",
+    "title": "Collection",
+    "id": "tag1"
+  },
+  "refinementListFilterDef2": {
+    "field": "metadataMap.tag2.keyword",
+    "title": "SubCollection",
+    "id": "subCollection"
+  },
+  "refinementListFilterDef3": {
+    "field": "metadataMap.tag7.keyword",
+    "title": "Fakultät",
+    "id": "faculty"
+  },
+  "hasRangeFilter": true,
+  "rangeFilter": {
+    "field": "metadataMap.tag3.raw",
+    "id": "date",
+    "min": 1641,
+    "max": 1975
+  },
+  "sortingSelectorOptions": [
+    {
+      "label": "Index",
+      "field": "imageIndex",
+      "order": "asc"
+    },
+    {
+      "label": "Collection",
+      "field": "metadataMap.tag1.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "SubCollection",
+      "field": "metadataMap.tag2.keyword",
+      "order": "asc"
+    }
+  ],
+  "highlightFields": [
+    "metadataMap.tag1"
+  ],
+  "suggestionField": "metadataMap.tag1"
+}

@@ -1,9 +1,8 @@
 import * as React from "react";
+import {FavoriteButton, Thumbnail} from "../ui";
+import {AuthUserContext} from "../core";
+const firebase = require("firebase/app");
 const extend = require("lodash/extend")
-
-const handleMissingImage = (target) => {
-  return target.src = 'https://upload.wikimedia.org/wikipedia/commons/9/9a/VisualEditor_icon_page-not-found-ltr.svg'
-}
 
 const getAuthor = (source, bemBlocks) => {
   if (source['Author(s) of the Record']) {
@@ -22,17 +21,15 @@ const UcListItem = (props) => {
   const viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE
   const {bemBlocks, result} = props
   const source = extend({}, result._source, result.highlight)
-  const thumbnail = result._source['thumbnail'] + '/full/90,/0/default.jpg'
-  const thumbUrl = osdUrl + '?image=' + result._source['thumbnail']
+  const imageSource = result._source['thumbnail'] + '/full/90,/0/default.jpg'
+  const imageLink = osdUrl + '?image=' + result._source['thumbnail']
   const viewUrl = viewerUrl + '?manifest=' + result._source['Manifest']
   return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-    <div className={bemBlocks.item('poster')}>
-      <a href={thumbUrl} target='_blank' rel='noopener noreferrer'>
-        <img onError={(e) => {handleMissingImage(e.target as HTMLImageElement)}}
-          alt='uc' src={thumbnail}/>
-      </a>
-    </div>
+    <Thumbnail imageWidth={140} imageSource={imageSource} imageLink={imageLink} className={bemBlocks.item('poster')}/>
     <div className={bemBlocks.item('details')}>
+      <AuthUserContext.Consumer>
+        {(authUser) =>  authUser ? <FavoriteButton authUser={firebase.auth().currentUser} result={result}/>: null}
+      </AuthUserContext.Consumer>
       <a href={viewUrl} target='_blank' rel='noopener noreferrer'>
         <h2 className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: source['Title']}}/>
       </a>

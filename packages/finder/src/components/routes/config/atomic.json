@@ -19,8 +19,8 @@
     "metadata.URN",
     "metadata.Source PPN (SWB)"
   ],
-  "listItem": "ListItem",
-  "gridItem": "GridItem",
+  "listItem": "AtomicListItem",
+  "gridItem": "AtomicGridItem",
   "refinementListFilterDef1": {
     "field": "metadata.Sprache.keyword",
     "title": "Language",
