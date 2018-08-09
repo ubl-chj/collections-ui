@@ -7,7 +7,7 @@ export const CollectionsListItem = (props) => {
   const osdUrl = process.env.REACT_APP_OSD_BASE
   const {bemBlocks, result} = props
   const source = extend({}, result._source, result.highlight)
-  const imageSource = source.imageServiceIRI + '/full/90,/0/default.jpg'
+  const imageSource = source.imageServiceIRI + '/full/248,300/0/default.jpg'
   const imageLink = osdUrl + '?image=' + source.imageServiceIRI
   const updated = new Date(source.metadataMap.tag3).toDateString();
   return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>

@@ -1,0 +1,64 @@
+{
+  "indexName": "gt2",
+  "queryFields": [
+    "Artist",
+    "Birthplace",
+    "Culture & Date",
+    "Dimensions ",
+    "Gallery Label (created)",
+    "Inscription ",
+    "Markings",
+    "Medium",
+    "Object Number",
+    "Place Created",
+    "Place Depicted",
+    "Place Found",
+    "Signed",
+    "id",
+    "related",
+    "thumbnail",
+    "thumbnail",
+    "title",
+    "within"
+  ],
+  "listItem": "GettyListItem",
+  "gridItem": "GettyGridItem",
+  "refinementListFilterDef1": {
+    "field": "Place Created.keyword",
+    "title": "Place",
+    "id": "place"
+  },
+  "refinementListFilterDef2": {
+    "field": "Object Type.keyword",
+    "title": "Object Type",
+    "id": "type"
+  },
+  "refinementListFilterDef3": {
+    "field": "Medium.keyword",
+    "title": "Medium",
+    "id": "medium"
+  },
+  "sortingSelectorOptions": [
+    {
+      "label": "Title",
+      "field": "title.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Artist",
+      "field": "Artist.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Object Number",
+      "field": "Object Number.keyword",
+      "order": "asc"
+    }
+  ],
+  "highlightFields": [
+    "title",
+    "Inscription"
+  ],
+  "suggestionField": "title"
+}
+

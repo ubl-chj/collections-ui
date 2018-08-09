@@ -74,16 +74,28 @@ export class ListFavorite extends React.Component<any, any> {
               dangerouslySetInnerHTML={{__html: result._source['Summary (English)']}}/>
           </div>);
       case process.env.REACT_APP_UC_INDEX:
-        const UcviewUrl = viewerUrl + result._source['Manifest']
+        const ucViewUrl = viewerUrl + result._source['Manifest']
         return (
           <div>
-            <a href={UcviewUrl} target='_blank' rel='noopener noreferrer'>
+            <a href={ucViewUrl} target='_blank' rel='noopener noreferrer'>
               <h2 className='sk-hits-list-hit__title'
                 dangerouslySetInnerHTML={{__html: result._source.Title}}/>
             </a>
             <h3 className='sk-hits-list-hit__subtitle'><b>Subject:</b> {result._source['Subject(s)']}</h3>
             <h3 className='sk-hits-list-hit__subtitle'
               dangerouslySetInnerHTML={{__html: result._source['Abstract']}}/>
+          </div>);
+      case process.env.REACT_APP_GETTY_INDEX:
+        const gettyViewUrl = viewerUrl + result._source['id']
+        return (
+          <div>
+            <a href={gettyViewUrl} target='_blank' rel='noopener noreferrer'>
+              <h2 className='sk-hits-list-hit__title'
+                dangerouslySetInnerHTML={{__html: result._source.title}}/>
+            </a>
+            <h3 className='sk-hits-list-hit__subtitle'><b>Object Type:</b> {result._source['Object Type']}</h3>
+            <h3 className='sk-hits-list-hit__subtitle'
+              dangerouslySetInnerHTML={{__html: result._source['Inscription']}}/>
           </div>);
       default:
         return 'Item Metadata Display Not Defined';
@@ -93,9 +105,18 @@ export class ListFavorite extends React.Component<any, any> {
   render() {
     const {error, isFavorite} = this.state
     const result = this.favorite.result
-    const osdUrl = process.env.REACT_APP_OSD_BASE
-    const imageSource = result._source['thumbnail'] + '/full/90,/0/default.jpg'
-    const imageLink = osdUrl + '?image=' + result._source['thumbnail']
+    const previewUrl = process.env.REACT_APP_OSD_BASE
+    let imageSource
+    let imageLink
+    const thumbnail = result._source['thumbnail']
+    if (this.favorite.result._index ===  process.env.REACT_APP_GETTY_INDEX) {
+      const imageBase = thumbnail.split('/full')[0]
+      imageSource = thumbnail
+      imageLink = previewUrl + '?image=' + imageBase
+    } else {
+      imageSource = thumbnail + '/full/90,/0/default.jpg'
+      imageLink = previewUrl + '?image=' + result._source['thumbnail']
+    }
     if (error) {
       return <div>Error: {error}</div>;
     } else {
