@@ -4,8 +4,6 @@ import axios from 'axios'
 
 const OpenSeaDragon = require('openseadragon')
 
-const defaults = require("lodash/defaults")
-
 export interface OsdComponentProps {
   id?: string,
   image?: string,
@@ -17,27 +15,8 @@ export interface OsdComponentProps {
   world?: Object
 }
 
-export class OsdRef extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  getWorld() {
-    return this;
-  }
-
-  render() {
-    return(<div/>)
-  }
-
-  componentDidMount() {
-    console.log(this.getWorld())
-  }
-}
-
 export class OsdComponent extends ViewerComponent<OsdComponentProps, any> {
   defaultProps: Object
-  world: any
   osd: any
 
   constructor(props) {
@@ -88,9 +67,6 @@ export class OsdComponent extends ViewerComponent<OsdComponentProps, any> {
     if (this.props.images) {
       this.initSeaDragon()
     }
-    if (this.osd.current.world) {
-      console.log(this.osd.current.world.getHomeBounds())
-    }
    }
 
   shouldComponentUpdate() {
@@ -101,8 +77,6 @@ export class OsdComponent extends ViewerComponent<OsdComponentProps, any> {
     axios.get(image).then(function (response) {
       const imageWidth = response.data.width
       const imageHeight = response.data.height
-      console.log(imageWidth)
-      console.log(imageHeight)
     }).catch(function (error) {
       console.log(error)
     });

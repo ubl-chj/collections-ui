@@ -1,0 +1,15 @@
+{
+  "@context": [
+    "http://iiif.io/api/presentation/2/context.json",
+    "http://schema.org"
+  ],
+  "metadata": [
+    {
+      "schema:Number": "4325"
+    },
+    {
+      "label": "Kitodo",
+      "value": "4325"
+    }
+  ]
+}

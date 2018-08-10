@@ -53,8 +53,6 @@ class Collection extends React.Component {
   }
 
   addComponent = async type => {
-    console.log(`Loading ${type} component...`);
-
     import(`../items/${type}` )
       .then(component =>
         this.setState({
@@ -68,7 +66,6 @@ class Collection extends React.Component {
 
   async componentDidMount() {
     const {items} = this.props
-    console.log(this.props)
     items.map(async type => await this.addComponent(type));
   }
 

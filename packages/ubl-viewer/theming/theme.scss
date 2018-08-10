@@ -621,6 +621,19 @@ body {
   top: 36px;
 }
 
+.btn-group {
+  width: auto !important;
+  float: right;
+  font-size: 16px;
+  text-align: right;
+  padding-right: 30px !important;
+}
+
+.bm-cross-button {
+  top: 5px !important;
+  right: 15px !important;
+}
+
 .right .bm-burger-button {
   left: initial;
   right: 36px;
