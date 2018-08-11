@@ -5,18 +5,30 @@ const firebase = require("firebase/app");
 const extend = require("lodash/extend")
 
 const getAuthor = (source, bemBlocks) => {
-  if (source['Artist']) {
-    return <h3 className={bemBlocks.item('subtitle')}><b>Artist:</b> {source['Artist']}</h3>
+  if (source['People']) {
+    return <h3 className={bemBlocks.item('subtitle')}><b>Artist:</b> {source['People']}</h3>
   }
 }
 
-const getSubject = (source, bemBlocks) => {
-  if (source['Subject(s)']) {
-    return <h3 className={bemBlocks.item('subtitle')}><b>Object Type:</b> {source['Object Type']}</h3>
+const getTechnique = (source, bemBlocks) => {
+  if (source['Technique']) {
+    return <h3 className={bemBlocks.item('subtitle')}><b>Classification:</b> {source['Technique']}</h3>
   }
 }
 
-export class GettyListItem extends React.Component<any, any, any> {
+const getMedium = (source, bemBlocks) => {
+  if (source['Medium']) {
+    return <h3 className={bemBlocks.item('subtitle')}><b>Medium:</b> {source['Medium']}</h3>
+  }
+}
+
+const getDate = (source, bemBlocks) => {
+  if (source['Date']) {
+    return <h3 className={bemBlocks.item('subtitle')}><b>Date:</b> {source['Date']}</h3>
+  }
+}
+
+export class HarvardListItem extends React.Component<any, any, any> {
   props: any
   constructor(props) {
     super(props)
@@ -28,10 +40,9 @@ export class GettyListItem extends React.Component<any, any, any> {
     const viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE
     const {bemBlocks, result} = this.props
     const source = extend({}, result._source, result.highlight)
-    const thumbnail = result._source['thumbnail']
-    const imageBase = thumbnail.split('/full')[0]
-    const imageLink = previewUrl + '?image=' + imageBase
-    const viewUrl = viewerUrl + '?manifest=' + result._source['id']
+    const thumbnail = result._source['thumbnail'] + "/full/90,/0/default.jpg"
+    const imageLink = previewUrl + '?image=' + result._source['thumbnail']
+    const viewUrl = viewerUrl + '?manifest=' + result._source['manifest']
     return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
       <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink}
         className={bemBlocks.item('poster')}/>
@@ -45,14 +56,13 @@ export class GettyListItem extends React.Component<any, any, any> {
             dangerouslySetInnerHTML={{__html: source['title']}}/>
         </a>
         {getAuthor(source, bemBlocks)}
-        {getSubject(source, bemBlocks)}
-        <h3 className={bemBlocks.item('subtitle')}>
-          <b>Date:</b> {source['Culture & Date']} {source['Culture & Date']}</h3>
-        <h3 className={bemBlocks.item('subtitle')}
-          dangerouslySetInnerHTML={{__html: source['Inscription']}}/>
+        {getTechnique(source, bemBlocks)}
+        {getDate(source, bemBlocks)}
+        {getMedium(source, bemBlocks)}
+        <h3 className={bemBlocks.item('subtitle')}><b>Classification:</b> {source['Classification']}</h3>
       </div>
     </div>)
   }
 }
 
-export default GettyListItem
+export default HarvardListItem

@@ -1,0 +1,55 @@
+{
+  "indexName": "sct2",
+  "queryFields": [
+    "viewer",
+    "thumbnail",
+    "Description",
+    "Part reference",
+    "Title",
+    "title",
+    "Shelfmark",
+    "collection",
+    "subCollection",
+    "manifest"
+  ],
+  "listItem": "SctListItem",
+  "gridItem": "SctGridItem",
+  "refinementListFilterDef1": {
+    "field": "collection.keyword",
+    "title": "Collection",
+    "id": "collection"
+  },
+  "refinementListFilterDef2": {
+    "field": "subCollection.keyword",
+    "title": "SubCollection",
+    "id": "subcollection"
+  },
+  "refinementListFilterDef3": {
+    "field": "Part reference.keyword",
+    "title": "Part reference",
+    "id": "part"
+  },
+  "sortingSelectorOptions": [
+    {
+      "label": "Title",
+      "field": "Title.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Shelfmark",
+      "field": "Shelfmark.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Collection",
+      "field": "collection.keyword",
+      "order": "asc"
+    }
+  ],
+  "highlightFields": [
+    "Title",
+    "Description"
+  ],
+  "suggestionField": "Title"
+}
+

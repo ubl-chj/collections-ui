@@ -4,19 +4,13 @@ import {AuthUserContext} from "../core";
 const firebase = require("firebase/app");
 const extend = require("lodash/extend")
 
-const getAuthor = (source, bemBlocks) => {
-  if (source['Author(s) of the Record']) {
-    return <h3 className={bemBlocks.item('subtitle')}><b>Author:</b> {source['Author(s) of the Record']}</h3>
+const getPart = (source, bemBlocks) => {
+  if (source['Part reference']) {
+    return <h3 className={bemBlocks.item('subtitle')}><b>Part:</b> {source['Part reference']}</h3>
   }
 }
 
-const getSubject = (source, bemBlocks) => {
-  if (source['Subject(s)']) {
-    return <h3 className={bemBlocks.item('subtitle')}><b>Subject:</b> {source['Subject(s)']}</h3>
-  }
-}
-
-export class UcListItem extends React.Component<any, any, any> {
+export class SctListItem extends React.Component<any, any, any> {
   props: any
   constructor(props) {
     super(props)
@@ -30,7 +24,7 @@ export class UcListItem extends React.Component<any, any, any> {
     const source = extend({}, result._source, result.highlight)
     const imageSource = result._source['thumbnail'] + '/full/90,/0/default.jpg'
     const imageLink = osdUrl + '?image=' + result._source['thumbnail']
-    const viewUrl = viewerUrl + '?manifest=' + result._source['Manifest']
+    const viewUrl = viewerUrl + '?manifest=' + result._source['manifest']
     return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
       <Thumbnail imageWidth={140} imageSource={imageSource} imageLink={imageLink}
         className={bemBlocks.item('poster')}/>
@@ -43,15 +37,12 @@ export class UcListItem extends React.Component<any, any, any> {
           <h2 className={bemBlocks.item('title')}
             dangerouslySetInnerHTML={{__html: source['Title']}}/>
         </a>
-        {getAuthor(source, bemBlocks)}
-        {getSubject(source, bemBlocks)}
-        <h3 className={bemBlocks.item('subtitle')}>
-          <b>Date:</b> {source['Date of Creation']} {source['Date of Publication']}</h3>
         <h3 className={bemBlocks.item('subtitle')}
-          dangerouslySetInnerHTML={{__html: source['Abstract']}}/>
+          dangerouslySetInnerHTML={{__html: source['Description']}}/>
+        {getPart(source, bemBlocks)}
       </div>
     </div>)
   }
 }
 
-export default UcListItem
+export default SctListItem

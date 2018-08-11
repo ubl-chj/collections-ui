@@ -2,7 +2,7 @@ import * as React from "react";
 import {Thumbnail, Title} from "../ui";
 const extend = require("lodash/extend")
 
-export class GettyGridItem extends React.Component<any, any, any> {
+export class HarvardGridItem extends React.Component<any, any, any> {
   props: any
   constructor(props) {
     super(props)
@@ -14,10 +14,9 @@ export class GettyGridItem extends React.Component<any, any, any> {
     const viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE
     const {bemBlocks, result} = this.props
     const source = extend({}, result._source, result.highlight)
-    const thumbnail = result._source['thumbnail']
-    const imageBase = thumbnail.split('/full')[0]
-    const imageLink = previewUrl + '?image=' + imageBase
-    const viewUrl = viewerUrl + '?manifest=' + result._source['id']
+    const thumbnail = result._source['thumbnail'] + "/full/90,/0/default.jpg"
+    const imageLink = previewUrl + '?image=' + result._source['thumbnail']
+    const viewUrl = viewerUrl + '?manifest=' + result._source['manifest']
     let titleString
     if (source.title.length >= 80) {
       titleString = source.title.substr(0, 80) + '... '
@@ -32,4 +31,4 @@ export class GettyGridItem extends React.Component<any, any, any> {
   }
 }
 
-export default GettyGridItem
+export default HarvardGridItem

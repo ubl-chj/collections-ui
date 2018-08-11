@@ -1,5 +1,5 @@
 export enum Domain {
-  LOGO_TEXT = 'UBL',
+  LOGO_TEXT = 'IIIF Collections',
   LOGIN_TEXT = 'Login',
   ACCOUNT_TEXT = 'Account'
 }

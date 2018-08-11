@@ -1,0 +1,56 @@
+{
+  "indexName": "hvd1",
+  "queryFields": [
+    "Medium",
+    "Classification",
+    "Credit Line",
+    "Dimensions ",
+    "Object Number",
+    "title",
+    "Technique",
+    "Provenance",
+    "People",
+    "Date",
+    "manifest"
+  ],
+  "listItem": "HarvardListItem",
+  "gridItem": "HarvardGridItem",
+  "refinementListFilterDef1": {
+    "field": "Classification.keyword",
+    "title": "Classification",
+    "id": "classification"
+  },
+  "refinementListFilterDef2": {
+    "field": "Medium.keyword",
+    "title": "Medium",
+    "id": "medium"
+  },
+  "refinementListFilterDef3": {
+    "field": "Technique.keyword",
+    "title": "Technique",
+    "id": "technique"
+  },
+  "sortingSelectorOptions": [
+    {
+      "label": "Title",
+      "field": "title.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Date",
+      "field": "Date.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Technique",
+      "field": "Technique.keyword",
+      "order": "asc"
+    }
+  ],
+  "highlightFields": [
+    "title",
+    "Inscription"
+  ],
+  "suggestionField": "title"
+}
+
