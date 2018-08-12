@@ -43,15 +43,6 @@ const searchkit = (config) => {
 class Collection extends React.Component {
   state: { components: [] }
   props: any;
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      components: []
-    }
-  }
-
   addComponent = async type => {
     import(`../items/${type}` )
       .then(component =>
@@ -63,6 +54,14 @@ class Collection extends React.Component {
         console.log(error);
       });
   };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      components: []
+    }
+  }
 
   async componentDidMount() {
     const {items} = this.props
@@ -90,44 +89,31 @@ class Collection extends React.Component {
                   <div className='my-logo'>
                     <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
                   </div>
-                  <SearchBox autofocus={true} searchOnChange={true}
-                    queryFields={config.routeConfig.queryFields}/>
-                  <div>
-                  </div>
-                  <div data-tip='authUserProfile' data-for='authUserProfile'
-                    data-event='click focus'>
+                  <SearchBox autofocus={true} searchOnChange={true} queryFields={config.routeConfig.queryFields}/>
+                  <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
                     <AuthUserProfile/>
                   </div>
-                  <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click'
-                    border={t} place='bottom' type='light' effect='solid'>
+                  <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light'
+                    effect='solid'>
                     <AuthUserTooltip/>
                   </ReactTooltip>
                 </TopBar>
                 <LayoutBody>
                   <SideBar>
-                    <RefinementListFilter
-                      containerComponent={<Panel collapsable={true} defaultCollapsed={false}/>}
-                      field={config.routeConfig.refinementListFilterDef1.field}
-                      title={config.routeConfig.refinementListFilterDef1.title}
+                    <RefinementListFilter containerComponent={<Panel collapsable={true} defaultCollapsed={false}/>}
+                      field={config.routeConfig.refinementListFilterDef1.field} title={config.routeConfig.refinementListFilterDef1.title}
                       id={config.routeConfig.refinementListFilterDef1.id} listComponent={TagCloud}/>
-                    <RefinementListFilter
-                      containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
-                      field={config.routeConfig.refinementListFilterDef2.field}
-                      title={config.routeConfig.refinementListFilterDef2.title}
-                      id={config.routeConfig.refinementListFilterDef2.id} orderKey='_term'
-                      operator='AND' listComponent={TagCloud}/>
-                    <RefinementListFilter
-                      containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
-                      field={config.routeConfig.refinementListFilterDef3.field}
-                      title={config.routeConfig.refinementListFilterDef3.title}
-                      id={config.routeConfig.refinementListFilterDef3.id} orderKey='_term'
-                      operator='AND' listComponent={TagCloud}/>
+                    <RefinementListFilter containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
+                      field={config.routeConfig.refinementListFilterDef2.field} title={config.routeConfig.refinementListFilterDef2.title}
+                      id={config.routeConfig.refinementListFilterDef2.id} orderKey='_term' operator='AND' listComponent={TagCloud}/>
+                    <RefinementListFilter containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
+                      field={config.routeConfig.refinementListFilterDef3.field} title={config.routeConfig.refinementListFilterDef3.title}
+                      id={config.routeConfig.refinementListFilterDef3.id} orderKey='_term' operator='AND' listComponent={TagCloud}/>
                   </SideBar>
                   <LayoutResults>
                     <ActionBar>
                       <ActionBarRow>
-                        <HitsStats
-                          translations={{'hitstats.results_found': '{hitCount} results found'}}/>
+                        <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
                         <ViewSwitcherToggle/>
                         <SortingSelector options={config.routeConfig.sortingSelectorOptions}/>
                       </ActionBarRow>
@@ -138,15 +124,12 @@ class Collection extends React.Component {
                     </ActionBar>
                     {config.routeConfig.hasRangeFilter ?
                       <div className='ex1'>
-                        <RangeFilter field={config.routeConfig.rangeFilter.field}
-                          id={config.routeConfig.rangeFilter.id}
-                          min={config.routeConfig.rangeFilter.min}
-                          max={config.routeConfig.rangeFilter.max} showHistogram={true}
+                        <RangeFilter field={config.routeConfig.rangeFilter.field} id={config.routeConfig.rangeFilter.id}
+                          min={config.routeConfig.rangeFilter.min} max={config.routeConfig.rangeFilter.max} showHistogram={true}
                           title='Date Selector'/>
                       </div> : null
                     }
-                    <ViewSwitcherHits hitsPerPage={50}
-                      highlightFields={config.routeConfig.highlightFields} hitComponents={[
+                    <ViewSwitcherHits hitsPerPage={50} highlightFields={config.routeConfig.highlightFields} hitComponents={[
                       {
                         key: 'grid',
                         title: 'Grid',

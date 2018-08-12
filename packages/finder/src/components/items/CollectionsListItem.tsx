@@ -1,10 +1,12 @@
 import * as React from "react";
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {Thumbnail} from "../ui";
+
 const extend = require('lodash/extend')
 
 export class CollectionsListItem extends React.Component<any, any, any> {
   props: any
+
   constructor(props) {
     super(props)
     this.props = props
@@ -18,8 +20,7 @@ export class CollectionsListItem extends React.Component<any, any, any> {
     const imageLink = osdUrl + '?image=' + source.imageServiceIRI
     const updated = new Date(source.metadataMap.tag3).toDateString();
     return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-      <Thumbnail imageWidth={100} imageSource={imageSource} imageLink={imageLink}
-        className={bemBlocks.item('poster')}/>
+      <Thumbnail imageWidth={100} imageSource={imageSource} imageLink={imageLink} className={bemBlocks.item('poster')}/>
       <div className={bemBlocks.item('details')}>
         <table>
           <tbody>

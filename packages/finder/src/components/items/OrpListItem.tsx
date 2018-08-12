@@ -1,6 +1,7 @@
 import * as React from "react";
 import {FavoriteButton, Thumbnail} from "../ui";
 import {AuthUserContext} from "../core";
+
 const extend = require("lodash/extend")
 const firebase = require("firebase/app");
 const osdUrl = process.env.REACT_APP_OSD_BASE
@@ -20,6 +21,7 @@ const getQuery = (params) => {
 
 export class OrpListItem extends React.Component<any, any, any> {
   props: any
+
   constructor(props) {
     super(props)
     this.props = props
@@ -39,8 +41,7 @@ export class OrpListItem extends React.Component<any, any, any> {
     const query = getQuery(source.metadataMap.tag3 + ' ' + tag4 + ' ' + tag5 + ' ' + tag6 + ' ' + tag7 + ' ' + tag8)
 
     return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-      <Thumbnail imageWidth={140} imageSource={imageSource} imageLink={imageLink}
-        className={bemBlocks.item('poster')}/>
+      <Thumbnail imageWidth={140} imageSource={imageSource} imageLink={imageLink} className={bemBlocks.item('poster')}/>
       <div className={bemBlocks.item('details')}>
         <AuthUserContext.Consumer>
           {(authUser) => authUser ?

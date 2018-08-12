@@ -1,11 +1,10 @@
 import * as React from 'react'
-import {Link} from 'react-router-dom'
-import {withRouter} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import {Layout, LayoutBody, LayoutResults, TopBar} from 'searchkit-fork'
 import '../../assets/firebaseui-styling.global.css'
 import {AuthUserContext} from '../core';
-import {Routes, Domain} from '../../constants'
+import {Domain, Routes} from '../../constants'
 
 const styles = require('../../assets/app.css')
 const firebase = require("firebase/app");
@@ -36,24 +35,24 @@ const uiConfig = {
 }
 
 export class SignIn extends React.Component {
-  render () {
+  render() {
     return (<Layout>
-        <TopBar>
-          <div className='my-logo'>
-            <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
-          </div>
-        </TopBar>
-        <LayoutBody>
-          <LayoutResults>
-            <AuthUserContext.Consumer>
-              {(authUser) => authUser
-                ? null
-                : <StyledFirebaseAuth className={styles.firebaseUi} uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
-              }
-            </AuthUserContext.Consumer>
-          </LayoutResults>
-        </LayoutBody>
-      </Layout>)
+      <TopBar>
+        <div className='my-logo'>
+          <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
+        </div>
+      </TopBar>
+      <LayoutBody>
+        <LayoutResults>
+          <AuthUserContext.Consumer>
+            {(authUser) => authUser
+              ? null
+              : <StyledFirebaseAuth className={styles.firebaseUi} uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
+            }
+          </AuthUserContext.Consumer>
+        </LayoutResults>
+      </LayoutBody>
+    </Layout>)
   }
 }
 

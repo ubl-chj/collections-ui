@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {
   ActionBar,
   ActionBarRow,
@@ -22,7 +22,8 @@ import {
   ViewSwitcherToggle
 } from 'searchkit-fork'
 import '../../assets/index.css'
-import {Routes, Domain} from '../../constants'
+import {Domain, Routes} from '../../constants'
+
 const extend = require('lodash/extend')
 const host = process.env.REACT_APP_ELASTICSEARCH_LOCALHOST + process.env.REACT_APP_ATOMIC_INDEX
 const options = {
@@ -46,14 +47,10 @@ const ManifestHitsGridItem = (props) => {
     <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
       <div className={bemBlocks.item('poster')}>
         <a href={url} target='_blank' rel='noopener noreferrer'>
-          <img className={bemBlocks.item('poster')}
-            alt='presentation'
-            data-qa='poster' src={thumbnail}
-            width='140'/></a>
+          <img className={bemBlocks.item('poster')} alt='presentation' data-qa='poster' src={thumbnail} width='140'/></a>
       </div>
       <a href={viewerUrl} target='_blank' rel='noopener noreferrer'>
-        <div data-qa='title' className={bemBlocks.item('title')}
-             dangerouslySetInnerHTML={{__html: titleString}}/>
+        <div data-qa='title' className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: titleString}}/>
       </a>
     </div>
   )
@@ -94,7 +91,7 @@ const queryBuilder = (queryString) => {
 const InnerHits = (innerHits) => {
   const content = []
   if (innerHits.contentList != null) {
-    innerHits.contentList.hits.hits.forEach(function(hit) {
+    innerHits.contentList.hits.hits.forEach(function (hit) {
       content.push(hit._source)
     })
   }
@@ -117,7 +114,8 @@ const ManifestsListItem = (props) => {
     <ul className='list-group'>
       {InnerHits(innerHits).map((hit) =>
         <li className='list-group-item' key={hit.objectId}>
-          <a href={osdUrl + '?image=' + source.iiifService + '&region=' + hit.region} target='_blank' rel='noopener noreferrer'>{hit.chars}</a>
+          <a href={osdUrl + '?image=' + source.iiifService + '&region=' + hit.region} target='_blank'
+            rel='noopener noreferrer'>{hit.chars}</a>
         </li>
       )}
     </ul>)
@@ -125,13 +123,11 @@ const ManifestsListItem = (props) => {
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
       <div className={bemBlocks.item('poster')}>
-        <a href={url} target='_blank'><img className='thumbnail' alt='presentation' data-qa='poster'
-                                           src={thumbnail}/></a>
+        <a href={url} target='_blank'><img className='thumbnail' alt='presentation' data-qa='poster' src={thumbnail}/></a>
       </div>
       <div className={bemBlocks.item('details')}>
         <a href={viewerUrl} target='_blank'>
-          <h2 className={bemBlocks.item('title')}
-              dangerouslySetInnerHTML={{__html: source.metadata.Title}}/></a>
+          <h2 className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: source.metadata.Title}}/></a>
         <table>
           <tbody>
           <tr>
@@ -162,7 +158,7 @@ const ManifestsListItem = (props) => {
 }
 
 class Atomic extends React.Component {
-  render () {
+  render() {
     return (
       <SearchkitProvider searchkit={searchkit}>
         <Layout>
@@ -172,12 +168,9 @@ class Atomic extends React.Component {
             </div>
             <SearchBox queryBuilder={queryBuilder} autofocus={true} searchOnChange={true}/>
           </TopBar>
-
           <LayoutBody>
             <SideBar>
-              <RefinementListFilter id='tag1' title='Collection'
-                                    field='metadata.Collection.keyword' orderKey='_term'
-                                    operator='AND'/>
+              <RefinementListFilter id='tag1' title='Collection' field='metadata.Collection.keyword' orderKey='_term' operator='AND'/>
             </SideBar>
             <LayoutResults>
               <ActionBar>
@@ -200,25 +193,21 @@ class Atomic extends React.Component {
                   <ResetFilters/>
                 </ActionBarRow>
               </ActionBar>
-              <ViewSwitcherHits
-                hitsPerPage={50} highlightFields={['metadata.Title']}
+              <ViewSwitcherHits hitsPerPage={50} highlightFields={['metadata.Title']}
                 sourceFilter={['iiifService', 'imageIndex', 'metadata.Title', 'metadata.Date',
                   'metadata.Author', 'metadata.Date of publication', 'metadata.Datierung', 'metadata.datiert',
                   'metadata.Collection', 'metadata.Objekttitel', 'metadata.Part of',
                   'metadata.Place', 'metadata.Place of publication',
                   'metadata.Publisher', 'metadata.Sprache', 'metadata.URN',
-                  'metadata.Source PPN (SWB)']}
-                hitComponents={[
-                  {
-                    key: 'grid',
-                    title: 'Grid',
-                    itemComponent: ManifestHitsGridItem,
-                    defaultOption: true
-                  },
-                  {key: 'list', title: 'List', itemComponent: ManifestsListItem}
-                ]}
-                scrollTo='body'
-              />
+                  'metadata.Source PPN (SWB)']} hitComponents={[
+                {
+                  key: 'grid',
+                  title: 'Grid',
+                  itemComponent: ManifestHitsGridItem,
+                  defaultOption: true
+                },
+                {key: 'list', title: 'List', itemComponent: ManifestsListItem}
+              ]} scrollTo='body'/>
               <NoHits suggestionsField={'metadata.Title'}/>
               <Pagination showNumbers={true}/>
             </LayoutResults>

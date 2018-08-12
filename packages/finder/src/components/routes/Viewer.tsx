@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {
   ActionBar,
   DocumentViewSwitcher,
@@ -13,7 +13,8 @@ import {
 } from 'ubl-viewer'
 import {AuthUserProfile, AuthUserTooltip} from '../ui'
 import '../../assets/index.css'
-import {Routes, Domain} from '../../constants'
+import {Domain, Routes} from '../../constants'
+
 const ReactTooltip = require('react-tooltip')
 let manifest = null
 let image = null
@@ -40,30 +41,30 @@ if (window.location.search && window.location.search.includes('image')) {
 }
 
 export class Viewer extends React.Component {
-  render () {
+  render() {
     const t = Boolean(true)
     return (<ViewerProvider viewer={viewer}>
-        <Layout>
-          <TopBar>
-            <div className='my-logo-thin'>
-              <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
-            </div>
-            <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
-              <AuthUserProfile/>
-            </div>
-            <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light' effect='solid'>
-              <AuthUserTooltip/>
-            </ReactTooltip>
-          </TopBar>
-          <ActionBar>
-            <Metadata key='metadata'/>
-          </ActionBar>
-          <LayoutBody>
-            <DocumentViewSwitcher
-              viewerComponents={[{key: 'grid', title: 'Grid', itemComponent: ManifestItem, defaultOption: true}]}/>
-          </LayoutBody>
-        </Layout>
-      </ViewerProvider>)
+      <Layout>
+        <TopBar>
+          <div className='my-logo-thin'>
+            <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
+          </div>
+          <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
+            <AuthUserProfile/>
+          </div>
+          <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light'
+            effect='solid'>
+            <AuthUserTooltip/>
+          </ReactTooltip>
+        </TopBar>
+        <ActionBar>
+          <Metadata key='metadata'/>
+        </ActionBar>
+        <LayoutBody>
+          <DocumentViewSwitcher viewerComponents={[{key: 'grid', title: 'Grid', itemComponent: ManifestItem, defaultOption: true}]}/>
+        </LayoutBody>
+      </Layout>
+    </ViewerProvider>)
   }
 }
 

@@ -2,6 +2,7 @@
   "indexName": "t4",
   "queryFields": [
     "iiifService",
+    "imageIndex",
     "structureMap.1.@id",
     "structureMap.1.label",
     "metadata.Date",
@@ -38,8 +39,8 @@
   },
   "sortingSelectorOptions": [
     {
-      "label": "Date",
-      "field": "metadata.Date of publication.keyword",
+      "label": "Index",
+      "field": "imageIndex",
       "order": "asc"
     },
     {
@@ -53,6 +54,8 @@
       "order": "asc"
     }
   ],
-  "highlightFields": ["metadata.Title"],
+  "highlightFields": [
+    "metadata.Title"
+  ],
   "suggestionField": "metadata.Title"
 }

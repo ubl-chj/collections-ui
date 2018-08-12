@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {CollectionsListItem} from '../items'
 import {
   ActionBar,
@@ -23,8 +23,9 @@ import {
   ViewSwitcherToggle
 } from 'searchkit-fork'
 import '../../assets/index.css'
-import {AuthUserTooltip, AuthUserProfile} from '../ui'
-import {Routes, Domain} from '../../constants'
+import {AuthUserProfile, AuthUserTooltip} from '../ui'
+import {Domain, Routes} from '../../constants'
+
 const ReactTooltip = require('react-tooltip')
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + 'a1'
 const config = require('./config/landing.json')
@@ -34,7 +35,7 @@ const options = {
 const searchkit = new SearchkitManager(host, options)
 
 export class Landing extends React.Component {
-  render () {
+  render() {
     const t = Boolean(true)
     return (<SearchkitProvider searchkit={searchkit}>
       <Layout>
@@ -44,16 +45,16 @@ export class Landing extends React.Component {
           </div>
           <SearchBox autofocus={true} searchOnChange={true} queryFields={config.queryFields}/>
           <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
-          <AuthUserProfile/>
+            <AuthUserProfile/>
           </div>
-          <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light' effect='solid'>
+          <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light'
+            effect='solid'>
             <AuthUserTooltip/>
           </ReactTooltip>
         </TopBar>
         <LayoutBody>
           <SideBar>
-            <RefinementListFilter id='tag1' title='Collection' field='metadataMap.tag1.keyword' orderKey='_term'
-              operator='AND'/>
+            <RefinementListFilter id='tag1' title='Collection' field='metadataMap.tag1.keyword' orderKey='_term' operator='AND'/>
           </SideBar>
           <LayoutResults>
             <ActionBar>

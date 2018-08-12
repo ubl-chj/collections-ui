@@ -1,13 +1,17 @@
 import * as React from "react";
 import {Thumbnail, Title} from "../ui";
+import {StructuredData} from "../core/StructuredData";
+
 const extend = require("lodash/extend")
 
 export class GettyGridItem extends React.Component<any, any, any> {
   props: any
+
   constructor(props) {
     super(props)
     this.props = props
   }
+
 
   render() {
     const previewUrl = process.env.REACT_APP_OSD_BASE
@@ -18,6 +22,8 @@ export class GettyGridItem extends React.Component<any, any, any> {
     const imageBase = thumbnail.split('/full')[0]
     const imageLink = previewUrl + '?image=' + imageBase
     const viewUrl = viewerUrl + '?manifest=' + result._source['id']
+    const contentUrl = result._source['id']
+    const creator = result._source.Artist
     let titleString
     if (source.title.length >= 80) {
       titleString = source.title.substr(0, 80) + '... '
@@ -25,9 +31,9 @@ export class GettyGridItem extends React.Component<any, any, any> {
       titleString = source.title
     }
     return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-      <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink}
-        className={bemBlocks.item('poster')}/>
+      <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
       <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={titleString}/>
+      <StructuredData headline={source.title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}/>
     </div>)
   }
 }

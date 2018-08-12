@@ -57,7 +57,9 @@
       "order": "asc"
     }
   ],
-  "highlightFields": ["Title"],
+  "highlightFields": [
+    "Title"
+  ],
   "suggestionField": "Title"
 }
 

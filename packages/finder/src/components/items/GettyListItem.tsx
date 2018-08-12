@@ -1,6 +1,8 @@
 import * as React from "react";
 import {FavoriteButton, Thumbnail} from "../ui";
 import {AuthUserContext} from "../core";
+import {StructuredData} from "../core/StructuredData";
+
 const firebase = require("firebase/app");
 const extend = require("lodash/extend")
 
@@ -18,6 +20,7 @@ const getSubject = (source, bemBlocks) => {
 
 export class GettyListItem extends React.Component<any, any, any> {
   props: any
+
   constructor(props) {
     super(props)
     this.props = props
@@ -32,25 +35,25 @@ export class GettyListItem extends React.Component<any, any, any> {
     const imageBase = thumbnail.split('/full')[0]
     const imageLink = previewUrl + '?image=' + imageBase
     const viewUrl = viewerUrl + '?manifest=' + result._source['id']
+    const contentUrl = result._source['id']
+    const creator = result._source.Artist
     return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-      <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink}
-        className={bemBlocks.item('poster')}/>
+      <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
       <div className={bemBlocks.item('details')}>
         <AuthUserContext.Consumer>
           {(authUser) => authUser ?
             <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
         </AuthUserContext.Consumer>
-        <a href={viewUrl} target='_blank' rel='noopener noreferrer'>
-          <h2 className={bemBlocks.item('title')}
-            dangerouslySetInnerHTML={{__html: source['title']}}/>
+        <a href={viewUrl}>
+          <h2 className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: source['title']}}/>
         </a>
         {getAuthor(source, bemBlocks)}
         {getSubject(source, bemBlocks)}
         <h3 className={bemBlocks.item('subtitle')}>
           <b>Date:</b> {source['Culture & Date']} {source['Culture & Date']}</h3>
-        <h3 className={bemBlocks.item('subtitle')}
-          dangerouslySetInnerHTML={{__html: source['Inscription']}}/>
+        <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source['Inscription']}}/>
       </div>
+      <StructuredData headline={source.title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}/>
     </div>)
   }
 }

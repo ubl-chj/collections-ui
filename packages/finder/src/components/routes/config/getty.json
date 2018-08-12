@@ -4,7 +4,7 @@
     "Artist",
     "Birthplace",
     "Culture & Date",
-    "Dimensions ",
+    "Dimensions",
     "Gallery Label (created)",
     "Inscription",
     "Markings",
@@ -16,7 +16,6 @@
     "Signed",
     "id",
     "related",
-    "thumbnail",
     "thumbnail",
     "title",
     "within"
