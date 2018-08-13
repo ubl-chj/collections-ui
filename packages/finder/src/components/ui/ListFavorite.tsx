@@ -62,7 +62,7 @@ export class ListFavorite extends React.Component<any, any> {
       case process.env.REACT_APP_EC_INDEX:
         return (
           <div>
-            <a href={result._source['related']} target='_blank' rel='noopener noreferrer'>
+            <a href={result._source['related']}>
               <h2 className='sk-hits-list-hit__title'
                 dangerouslySetInnerHTML={{__html: result._source.title}}/>
             </a>
@@ -77,7 +77,7 @@ export class ListFavorite extends React.Component<any, any> {
         const ucViewUrl = viewerUrl + result._source['Manifest']
         return (
           <div>
-            <a href={ucViewUrl} target='_blank' rel='noopener noreferrer'>
+            <a href={ucViewUrl}>
               <h2 className='sk-hits-list-hit__title'
                 dangerouslySetInnerHTML={{__html: result._source.Title}}/>
             </a>
@@ -89,7 +89,7 @@ export class ListFavorite extends React.Component<any, any> {
         const gettyViewUrl = viewerUrl + result._source['id']
         return (
           <div>
-            <a href={gettyViewUrl} target='_blank' rel='noopener noreferrer'>
+            <a href={gettyViewUrl}>
               <h2 className='sk-hits-list-hit__title'
                 dangerouslySetInnerHTML={{__html: result._source.title}}/>
             </a>

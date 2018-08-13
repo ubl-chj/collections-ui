@@ -63,7 +63,7 @@ export class HarvardListItem extends React.Component<any, any, any> {
             {(authUser) => authUser ?
               <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
           </AuthUserContext.Consumer>
-          <a href={viewUrl} target='_blank' rel='noopener noreferrer'>
+          <a href={viewUrl}>
             <h2 className={bemBlocks.item('title')}
               dangerouslySetInnerHTML={{__html: source['title']}}/>
           </a>

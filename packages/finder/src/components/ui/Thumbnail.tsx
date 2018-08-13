@@ -20,7 +20,7 @@ export class Thumbnail extends React.Component<any, any> {
 
   render() {
     return (<div className={this.className}>
-      <a href={this.imageLink} target='_blank' rel='noopener noreferrer'>
+      <a href={this.imageLink}>
         <img width={this.imageWidth} onError={(e) => {
           this.handleMissingImage(e.target as HTMLImageElement)
         }} alt='thumbnail' src={this.imageSource}/></a></div>)

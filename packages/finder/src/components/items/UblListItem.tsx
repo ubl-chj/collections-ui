@@ -39,7 +39,7 @@ export class UblListItem extends React.Component<any, any, any> {
             {(authUser) => authUser ?
               <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
           </AuthUserContext.Consumer>
-          <a href={contentUrl} target='_blank' rel='noopener noreferrer'>
+          <a href={contentUrl}>
             <h2 className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: source.Title}}/></a>
           <table>
             <tbody>
@@ -53,8 +53,7 @@ export class UblListItem extends React.Component<any, any, any> {
             </tr>
             <tr>
               <td>Katalog URI:</td>
-              <td><a href={katalogBase + source['Source PPN (SWB)']} target='_blank'
-                rel='noopener noreferrer'> {source['Source PPN (SWB)']}</a>
+              <td><a href={katalogBase + source['Source PPN (SWB)']}> {source['Source PPN (SWB)']}</a>
               </td>
             </tr>
             </tbody>

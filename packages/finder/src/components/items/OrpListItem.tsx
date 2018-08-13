@@ -63,8 +63,7 @@ export class OrpListItem extends React.Component<any, any, any> {
           </tr>
           <tr>
             <td>Composite Manifest:</td>
-            <td><a href={viewerIRI + encodeURIComponent(query)} target='_blank'
-              rel='noopener noreferrer'>{source.metadataMap.tag3} {source.metadataMap.tag5} {source.metadataMap.tag7} {source.metadataMap.tag8}</a>
+            <td><a href={viewerIRI + encodeURIComponent(query)}>{source.metadataMap.tag3} {source.metadataMap.tag5} {source.metadataMap.tag7} {source.metadataMap.tag8}</a>
             </td>
           </tr>
           </tbody>

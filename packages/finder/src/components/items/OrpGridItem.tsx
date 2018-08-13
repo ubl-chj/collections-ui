@@ -42,7 +42,7 @@ export class OrpGridItem extends React.Component<any, any, any> {
     const finalTitle = titleString.substr(0, 50) + '...: ' + source.imageIndex
     return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
       <Thumbnail imageWidth={140} imageSource={imageSource} imageLink={imageLink} className={bemBlocks.item('poster')}/>
-      <div><a href={viewer + encodeURIComponent(query)} target='_blank' rel='noopener noreferrer'>
+      <div><a href={viewer + encodeURIComponent(query)}>
         <div data-qa='title' className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: finalTitle}}/>
       </a></div>
     </div>)

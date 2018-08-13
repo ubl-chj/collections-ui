@@ -35,7 +35,7 @@ export class ECListItem extends React.Component<any, any, any> {
           {(authUser) => authUser ?
             <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
         </AuthUserContext.Consumer>
-        <a href={contentUrl} target='_blank' rel='noopener noreferrer'>
+        <a href={contentUrl}>
           <h2 className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: source.title}}/>
         </a>
         <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={createTitle(source)}/>

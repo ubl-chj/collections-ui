@@ -123,10 +123,10 @@ const ManifestsListItem = (props) => {
   return (
     <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
       <div className={bemBlocks.item('poster')}>
-        <a href={url} target='_blank'><img className='thumbnail' alt='presentation' data-qa='poster' src={thumbnail}/></a>
+        <a href={url}><img className='thumbnail' alt='presentation' data-qa='poster' src={thumbnail}/></a>
       </div>
       <div className={bemBlocks.item('details')}>
-        <a href={viewerUrl} target='_blank'>
+        <a href={viewerUrl}>
           <h2 className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: source.metadata.Title}}/></a>
         <table>
           <tbody>
@@ -148,7 +148,7 @@ const ManifestsListItem = (props) => {
           </tr>
           <tr>
             <td>Composite Manifest:</td>
-            <td><a href={constManifestUrl + query} target='_blank' rel='noopener noreferrer'>{viewId}</a></td>
+            <td><a href={constManifestUrl + query}>{viewId}</a></td>
           </tr>
           </tbody>
         </table>
