@@ -1,6 +1,7 @@
 import * as React from "react";
 import {FavoriteButton, Thumbnail} from "../ui";
 import {AuthUserContext} from "../core";
+import {Domain} from "../../constants";
 
 const extend = require("lodash/extend")
 const firebase = require("firebase/app");
@@ -31,7 +32,7 @@ export class OrpListItem extends React.Component<any, any, any> {
     const {bemBlocks, result} = this.props
     const source = extend({}, result._source, result.highlight)
     const viewerIRI = process.env.REACT_APP_VIEWER_BASE + '/#?c=0&m=0&s=0&cv=0&manifest='
-    const imageSource = source.imageServiceIRI + '/full/90,/0/default.jpg'
+    const imageSource = source.imageServiceIRI + Domain.THUMBNAIL_API_REQUEST
     const imageLink = osdUrl + '?image=' + source.imageServiceIRI
     let tag4 = source.metadataMap.tag4 || ''
     let tag5 = source.metadataMap.tag5 || ''

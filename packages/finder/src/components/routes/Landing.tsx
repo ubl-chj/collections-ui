@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {Link} from 'react-router-dom'
 import {CollectionsListItem} from '../items'
+import * as _ from "lodash"
 import {
   ActionBar,
   ActionBarRow,
@@ -25,19 +26,44 @@ import {
 import '../../assets/index.css'
 import {AuthUserProfile, AuthUserTooltip} from '../ui'
 import {Domain, Routes} from '../../constants'
+import {RouteProps} from './RouteProps'
 
 const ReactTooltip = require('react-tooltip')
-const host = process.env.REACT_APP_ELASTICSEARCH_HOST + 'a1'
-const config = require('./config/landing.json')
-const options = {
-  timeout: 20000
-}
-const searchkit = new SearchkitManager(host, options)
 
-export class Landing extends React.Component {
+export class Landing extends React.Component<RouteProps, {}> {
+  searchkit: SearchkitManager
+  cachedHits: any
+
+  static defaultProps = {
+    host: process.env.REACT_APP_ELASTICSEARCH_HOST + 'a1',
+    config: require('./config/landing.json'),
+    options: {timeout: 20000}
+  }
+
+  constructor(props) {
+    super(props)
+    this.searchkit = new SearchkitManager(props.host, props.options)
+  }
+
+  componentDidMount() {
+    this.cachedHits = localStorage.getItem("a2");
+    if (this.cachedHits) {
+      this.searchkit.setResults(_.cloneDeep(JSON.parse(this.cachedHits)))
+      console.log("getting results from localstorage")
+    }
+  }
+
+  componentDidUpdate() {
+    if (!this.cachedHits) {
+      localStorage.setItem("a2", JSON.stringify(this.searchkit.getResultsAndState().results))
+      console.log("setting local storage")
+    }
+  }
+
   render() {
+    const {config} = this.props
     const t = Boolean(true)
-    return (<SearchkitProvider searchkit={searchkit}>
+    return (<SearchkitProvider searchkit={this.searchkit}>
       <Layout>
         <TopBar>
           <div className='my-logo'>

@@ -17,7 +17,7 @@ export class UblGridItem extends React.Component<any, any, any> {
     const {bemBlocks, result} = this.props
     const osdUrl = process.env.REACT_APP_OSD_BASE
     const source = extend({}, result._source, result.highlight)
-    const pathname = new URL(result._source['@id']).pathname
+    const pathname = new URL(source['@id']).pathname
     const splitPath = pathname.split('/')
     const viewId = splitPath[1].padStart(10, '0')
     const contentUrl = 'https://digital.ub.uni-leipzig.de/object/viewid/' + viewId

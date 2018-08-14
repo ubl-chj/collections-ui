@@ -32,17 +32,11 @@ import {asCollection} from "./asCollection";
 
 const ReactTooltip = require('react-tooltip')
 
-const searchkit = (config) => {
-  const host = process.env.REACT_APP_ELASTICSEARCH_HOST + config.routeConfig.indexName
-  const options = {
-    timeout: 20000
-  }
-  return new SearchkitManager(host, options)
-}
-
 class Collection extends React.Component {
   state: { components: [] }
   props: any;
+  searchkit: SearchkitManager
+
   addComponent = async type => {
     import(`../items/${type}` )
       .then(component =>
@@ -57,10 +51,17 @@ class Collection extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       components: []
     }
+  }
+
+  getSearchkit = (config) => {
+    const host = process.env.REACT_APP_ELASTICSEARCH_HOST + config.routeConfig.indexName
+    const options = {
+      timeout: 20000
+    }
+    return new SearchkitManager(host, options)
   }
 
   async componentDidMount() {
@@ -83,7 +84,7 @@ class Collection extends React.Component {
       return (
         <CollectionContext.Consumer>
           {(config) =>
-            <SearchkitProvider searchkit={searchkit(config)}>
+            <SearchkitProvider searchkit={this.getSearchkit(config)}>
               <Layout>
                 <TopBar>
                   <div className='my-logo'>

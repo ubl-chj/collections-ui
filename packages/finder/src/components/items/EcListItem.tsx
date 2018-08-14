@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FavoriteButton, Thumbnail} from '../ui'
+import {FavoriteButton, Thumbnail, Title} from '../ui'
 import {AuthUserContext} from "../core";
 import {StructuredData} from "../core/StructuredData";
 import {Domain} from "../../constants";
@@ -35,9 +35,7 @@ export class ECListItem extends React.Component<any, any, any> {
           {(authUser) => authUser ?
             <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
         </AuthUserContext.Consumer>
-        <a href={contentUrl}>
-          <h2 className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: source.title}}/>
-        </a>
+        <Title viewUrl={contentUrl} className={bemBlocks.item('title')} titleString={source.title}/>
         <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={createTitle(source)}/>
         <h3 className={bemBlocks.item('subtitle')}><b>Date of Origin:</b> {source['Date of Origin (English)']}</h3>
         <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source['Summary (English)']}}/>

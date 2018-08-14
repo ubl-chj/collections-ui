@@ -6,16 +6,21 @@ import Collection from '../routes/Collection'
 import {Routes} from '../../constants'
 import {withAuthentication} from "./withAuthentication";
 
-const App = () =>
-  <BrowserRouter>
-    <Switch>
-      <Route exact path={Routes.LANDING} component={Landing}/>
-      <Route exact path={Routes.ACCOUNT} component={Account}/>
-      <Route exact path={Routes.SIGN_IN} component={SignIn}/>
-      <Route exact path='/collection/:id' component={Collection}/>
-      <Route exact path='/component' component={Viewer}/>
-      <Route exact path='/osd' component={Previewer}/>
-    </Switch>
-  </BrowserRouter>
+class App extends React.Component<any> {
+
+  render() {
+    return (
+        <BrowserRouter>
+          <Switch>
+            <Route exact path={Routes.LANDING} component={Landing}/>
+            <Route exact path={Routes.ACCOUNT} component={Account}/>
+            <Route exact path={Routes.SIGN_IN} component={SignIn}/>
+            <Route exact path='/collection/:id' component={Collection}/>
+            <Route exact path='/view' component={Viewer}/>
+            <Route exact path='/preview' component={Previewer}/>
+          </Switch>
+        </BrowserRouter>)
+  }
+}
 
 export default withAuthentication(App);

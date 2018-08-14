@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FavoriteButton, Thumbnail} from "../ui";
+import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {AuthUserContext} from "../core";
 import {StructuredData} from "../core/StructuredData";
 import {Domain} from "../../constants";
@@ -39,10 +39,10 @@ export class UcListItem extends React.Component<any, any, any> {
     const viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE
     const {bemBlocks, result} = this.props
     const source = extend({}, result._source, result.highlight)
-    const thumbnail = result._source['thumbnail'] + Domain.THUMBNAIL_API_REQUEST
-    const contentUrl = result._source['Manifest']
-    const creator = result._source['Author(s) of the Record']
-    const imageLink = osdUrl + '?image=' + result._source['thumbnail']
+    const thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
+    const contentUrl = source.Manifest
+    const creator = source['Author(s) of the Record']
+    const imageLink = osdUrl + '?image=' + source.thumbnail + '&manifest=' + source.Manifest
     const viewUrl = viewerUrl + '?manifest=' + contentUrl
     return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
       <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
@@ -51,9 +51,7 @@ export class UcListItem extends React.Component<any, any, any> {
           {(authUser) => authUser ?
             <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
         </AuthUserContext.Consumer>
-        <a href={viewUrl}>
-          <h2 className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: source['Title']}}/>
-        </a>
+        <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source['Title']}/>
         {UcListItem.getAuthor(source, bemBlocks)}
         {UcListItem.getSubject(source, bemBlocks)}
         {UcListItem.getDate(source, bemBlocks)}

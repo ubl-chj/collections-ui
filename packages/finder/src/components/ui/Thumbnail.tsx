@@ -1,7 +1,10 @@
 import * as React from "react";
+import {ResultContext} from "../core";
+import {Link} from 'react-router-dom'
 
 export class Thumbnail extends React.Component<any, any> {
   imageSource: string
+  search: string
   imageLink: string
   className: string
   imageWidth: number
@@ -9,6 +12,7 @@ export class Thumbnail extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.imageSource = props.imageSource
+    this.search = '?' + props.imageLink.split('?')[1]
     this.imageLink = props.imageLink
     this.className = props.className
     this.imageWidth = props.imageWidth
@@ -20,9 +24,23 @@ export class Thumbnail extends React.Component<any, any> {
 
   render() {
     return (<div className={this.className}>
-      <a href={this.imageLink}>
-        <img width={this.imageWidth} onError={(e) => {
-          this.handleMissingImage(e.target as HTMLImageElement)
-        }} alt='thumbnail' src={this.imageSource}/></a></div>)
+      <ResultContext.Consumer>
+        {(result) => result ?
+          <Link to={{
+            pathname: process.env.REACT_APP_OSD_BASE,
+            search: this.search,
+            state: {
+              result: result
+            }
+          }}>
+            <img width={this.imageWidth} onError={(e) => {
+              this.handleMissingImage(e.target as HTMLImageElement)
+            }} alt='thumbnail' src={this.imageSource}/></Link> :
+          <a href={this.imageLink} target='_blank' rel='noopener noreferrer'>
+            <img width={this.imageWidth} onError={(e) => {
+              this.handleMissingImage(e.target as HTMLImageElement)
+            }} alt='thumbnail' src={this.imageSource}/></a>}
+      </ResultContext.Consumer>
+    </div>)
   }
 }

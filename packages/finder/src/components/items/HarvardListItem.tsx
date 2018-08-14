@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FavoriteButton, Thumbnail} from "../ui";
+import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {AuthUserContext} from "../core";
 import {StructuredData} from "../core/StructuredData";
 import {Domain} from "../../constants";
@@ -44,15 +44,15 @@ export class HarvardListItem extends React.Component<any, any, any> {
     const viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE
     const {bemBlocks, result} = this.props
     const source = extend({}, result._source, result.highlight)
-    const contentUrl = result._source['manifest']
-    const creator = result._source.People
+    const contentUrl = source.manifest
+    const creator = source.People
     let thumbnail
-    if (result._source['thumbnail']) {
-      thumbnail = result._source['thumbnail'] + Domain.THUMBNAIL_API_REQUEST
+    if (source.thumbnail) {
+      thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
     } else {
-      thumbnail = result._source['thumbnail']
+      thumbnail = source.thumbnail
     }
-    const imageLink = previewUrl + '?image=' + result._source['thumbnail']
+    const imageLink = previewUrl + '?image=' + source.thumbnail + '&manifest=' + source.manifest
     const viewUrl = viewerUrl + '?manifest=' + contentUrl
     if (thumbnail) {
       return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
@@ -63,10 +63,7 @@ export class HarvardListItem extends React.Component<any, any, any> {
             {(authUser) => authUser ?
               <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
           </AuthUserContext.Consumer>
-          <a href={viewUrl}>
-            <h2 className={bemBlocks.item('title')}
-              dangerouslySetInnerHTML={{__html: source['title']}}/>
-          </a>
+          <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source['title']}/>
           {getAuthor(source, bemBlocks)}
           {getTechnique(source, bemBlocks)}
           {getDate(source, bemBlocks)}

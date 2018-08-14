@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import {
   ActionBar,
   DocumentViewSwitcher,
@@ -16,55 +16,54 @@ import '../../assets/index.css'
 import {Domain, Routes} from '../../constants'
 
 const ReactTooltip = require('react-tooltip')
-let manifest = null
-let image = null
-let region = null
-let abstractRegion = null
-let viewer
+const qs = require('query-string')
 
-if (window.location.search && window.location.search.includes('image')) {
-  const params = new URLSearchParams(window.location.search)
-  image = params.get('image')
-  if (params.get('region')) {
-    if (!params.get('region').startsWith('pct:')) {
-      region = params.get('region').split(',')
-    } else {
-      abstractRegion = params.get('region').substring(4).split(',')
-    }
+class ViewerComponent extends React.Component<any, any> {
+  viewer: ViewerManager
+  manifest: string
+  props: any
+
+  constructor(props) {
+    super(props)
+    this.props = props
   }
-  const document = image + '/info.json'
-  viewer = new ViewerManager(document)
-} else if (window.location.search && window.location.search.includes('manifest')) {
-  const params = new URLSearchParams(window.location.search)
-  manifest = params.get('manifest')
-  viewer = new ViewerManager(manifest)
-}
 
-export class Viewer extends React.Component {
+  componentDidMount() {
+    const manifest = qs.parse(this.props.location.search).manifest
+    this.viewer = new ViewerManager(manifest)
+    this.forceUpdate()
+    console.log(this.props.location.state)
+  }
+
   render() {
     const t = Boolean(true)
-    return (<ViewerProvider viewer={viewer}>
-      <Layout>
-        <TopBar>
-          <div className='my-logo-thin'>
-            <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
-          </div>
-          <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
-            <AuthUserProfile/>
-          </div>
-          <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light'
-            effect='solid'>
-            <AuthUserTooltip/>
-          </ReactTooltip>
-        </TopBar>
-        <ActionBar>
-          <Metadata key='metadata'/>
-        </ActionBar>
-        <LayoutBody>
-          <DocumentViewSwitcher viewerComponents={[{key: 'grid', title: 'Grid', itemComponent: ManifestItem, defaultOption: true}]}/>
-        </LayoutBody>
-      </Layout>
-    </ViewerProvider>)
+    if (this.viewer) {
+      return (<ViewerProvider viewer={this.viewer}>
+        <Layout>
+          <TopBar>
+            <div className='my-logo-thin'>
+              <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
+            </div>
+            <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
+              <AuthUserProfile/>
+            </div>
+            <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light'
+              effect='solid'>
+              <AuthUserTooltip/>
+            </ReactTooltip>
+          </TopBar>
+          <ActionBar>
+            <Metadata key='metadata'/>
+          </ActionBar>
+          <LayoutBody>
+            <DocumentViewSwitcher viewerComponents={[{key: 'grid', title: 'Grid', itemComponent: ManifestItem, defaultOption: true}]}/>
+          </LayoutBody>
+        </Layout>
+      </ViewerProvider>)
+    } else {
+      return null
+    }
   }
 }
 
+export const Viewer = withRouter(ViewerComponent)

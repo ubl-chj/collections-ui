@@ -13,7 +13,8 @@ const tagManagerArgs = {
 
 TagManager.initialize(tagManagerArgs)
 
-ReactDOM.render((<App/>), document.getElementById('container'))
+ReactDOM.render((
+  <App/>), document.getElementById('container'))
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

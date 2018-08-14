@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FavoriteButton, Thumbnail} from "../ui";
+import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {AuthUserContext} from "../core";
 import {Domain} from "../../constants";
 import {StructuredData} from "../core/StructuredData";
@@ -20,7 +20,7 @@ export class UblListItem extends React.Component<any, any, any> {
     const {bemBlocks, result} = this.props
     const osdUrl = process.env.REACT_APP_OSD_BASE
     const source = extend({}, result._source, result.highlight)
-    const pathname = new URL(result._source['@id']).pathname
+    const pathname = new URL(source['@id']).pathname
     const splitPath = pathname.split('/')
     const viewId = splitPath[1].padStart(10, '0')
     const katalogBase = 'https://katalog.ub.uni-leipzig.de/Search/Results?lookfor=record_id:'
@@ -39,8 +39,7 @@ export class UblListItem extends React.Component<any, any, any> {
             {(authUser) => authUser ?
               <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
           </AuthUserContext.Consumer>
-          <a href={contentUrl}>
-            <h2 className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: source.Title}}/></a>
+          <Title viewUrl={contentUrl} className={bemBlocks.item('title')} titleString={source.Title}/>
           <table>
             <tbody>
             <tr>
