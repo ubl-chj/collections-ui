@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Thumbnail, Title} from "../ui";
 import {StructuredData} from "../core/StructuredData";
+import {ResultContext} from "../core";
 
 const extend = require("lodash/extend")
 
@@ -18,11 +19,11 @@ export class GettyGridItem extends React.Component<any, any, any> {
     const viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE
     const {bemBlocks, result} = this.props
     const source = extend({}, result._source, result.highlight)
-    const thumbnail = result._source['thumbnail']
+    const thumbnail = source.thumbnail
     const imageBase = thumbnail.split('/full')[0]
-    const imageLink = previewUrl + '?image=' + imageBase
-    const viewUrl = viewerUrl + '?manifest=' + result._source['id']
-    const contentUrl = result._source['id']
+    const imageLink = previewUrl + '?image=' + imageBase + '&manifest=' + source.id
+    const viewUrl = viewerUrl + '?manifest=' + source.id
+    const contentUrl = source.id
     const creator = result._source.Artist
     let titleString
     if (source.title.length >= 80) {
@@ -30,11 +31,14 @@ export class GettyGridItem extends React.Component<any, any, any> {
     } else {
       titleString = source.title
     }
-    return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-      <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
-      <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={titleString}/>
-      <StructuredData headline={source.title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}/>
-    </div>)
+    return (
+      <ResultContext.Provider value={result}>
+        <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
+          <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
+          <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={titleString}/>
+          <StructuredData headline={source.title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}/>
+        </div>
+      </ResultContext.Provider>)
   }
 }
 

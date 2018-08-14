@@ -58,8 +58,10 @@ class Collection extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      components: []
+    {
+      this.state = {
+        components: []
+      }
     }
   }
 

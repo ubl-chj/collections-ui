@@ -34,13 +34,13 @@ export class HarvardGridItem extends React.Component<any, any, any> {
     const {bemBlocks, result} = this.props
     const source = extend({}, result._source, result.highlight)
     let thumbnail
-    if (result._source['thumbnail']) {
-      thumbnail = result._source['thumbnail'] + Domain.THUMBNAIL_API_REQUEST
+    if (source.thumbnail) {
+      thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
     } else {
-      thumbnail = result._source['thumbnail']
+      thumbnail = source.thumbnail
     }
-    const imageLink = previewUrl + '?image=' + result._source['thumbnail']
-    const contentUrl = result._source['manifest']
+    const imageLink = previewUrl + '?image=' + source.thumbnail + '&manifest=' + source.manifest
+    const contentUrl = source.manifest
     const creator = result._source.People
     const viewUrl = viewerUrl + '?manifest=' + contentUrl
     const title = source.title

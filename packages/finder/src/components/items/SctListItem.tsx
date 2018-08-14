@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FavoriteButton, Thumbnail} from "../ui";
+import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {AuthUserContext} from "../core";
 import {Domain} from "../../constants";
 
@@ -25,9 +25,9 @@ export class SctListItem extends React.Component<any, any, any> {
     const viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE
     const {bemBlocks, result} = this.props
     const source = extend({}, result._source, result.highlight)
-    const imageSource = result._source['thumbnail'] + Domain.THUMBNAIL_API_REQUEST
-    const imageLink = osdUrl + '?image=' + result._source['thumbnail']
-    const viewUrl = viewerUrl + '?manifest=' + result._source['manifest']
+    const imageSource = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
+    const imageLink = osdUrl + '?image=' + source.thumbnail + '&manifest=' + source.manifest
+    const viewUrl = viewerUrl + '?manifest=' + source.manifest
     return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
       <Thumbnail imageWidth={140} imageSource={imageSource} imageLink={imageLink} className={bemBlocks.item('poster')}/>
       <div className={bemBlocks.item('details')}>
@@ -35,9 +35,7 @@ export class SctListItem extends React.Component<any, any, any> {
           {(authUser) => authUser ?
             <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
         </AuthUserContext.Consumer>
-        <a href={viewUrl}>
-          <h2 className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: source['Title']}}/>
-        </a>
+        <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source['Title']}/>
         <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source['Description']}}/>
         {getPart(source, bemBlocks)}
       </div>

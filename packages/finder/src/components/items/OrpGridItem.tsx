@@ -1,5 +1,6 @@
 import * as React from "react";
-import {Thumbnail} from "../ui";
+import {Thumbnail, Title} from "../ui";
+import {Domain} from "../../constants";
 
 const extend = require("lodash/extend")
 
@@ -29,7 +30,7 @@ export class OrpGridItem extends React.Component<any, any, any> {
   render() {
     const {bemBlocks, result} = this.props
     const source = extend({}, result._source, result.highlight)
-    const imageSource = source.imageServiceIRI + '/full/pct:25/0/default.jpg'
+    const thumbnail = source.imageServiceIRI + Domain.THUMBNAIL_API_REQUEST
     const imageLink = osdUrl + '?image=' + source.imageServiceIRI
     const viewer = process.env.REACT_APP_VIEWER_BASE + '/#?c=0&m=0&s=0&cv=0&manifest='
     let tag4 = source.metadataMap.tag4 || ''
@@ -40,11 +41,12 @@ export class OrpGridItem extends React.Component<any, any, any> {
     const query = getQuery(source.metadataMap.tag3 + ' ' + tag4 + ' ' + tag5 + ' ' + tag6 + ' ' + tag7 + ' ' + tag8)
     const titleString = source.metadataMap.tag3 + ' ' + source.metadataMap.tag5 + ' ' + source.metadataMap.tag7 + ' ' + source.metadataMap.tag8
     const finalTitle = titleString.substr(0, 50) + '...: ' + source.imageIndex
+    const viewUrl = viewer + encodeURIComponent(query)
     return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-      <Thumbnail imageWidth={140} imageSource={imageSource} imageLink={imageLink} className={bemBlocks.item('poster')}/>
-      <div><a href={viewer + encodeURIComponent(query)}>
-        <div data-qa='title' className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: finalTitle}}/>
-      </a></div>
+      <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
+      <div>
+        <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={finalTitle}/>
+      </div>
     </div>)
   }
 }

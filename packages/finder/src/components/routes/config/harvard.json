@@ -32,6 +32,11 @@
   },
   "sortingSelectorOptions": [
     {
+      "label": "Technique",
+      "field": "Technique.keyword",
+      "order": "asc"
+    },
+    {
       "label": "Title",
       "field": "title.keyword",
       "order": "asc"
@@ -39,11 +44,6 @@
     {
       "label": "Date",
       "field": "Date.keyword",
-      "order": "asc"
-    },
-    {
-      "label": "Technique",
-      "field": "Technique.keyword",
       "order": "asc"
     }
   ],

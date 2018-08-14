@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FavoriteButton, Thumbnail} from "../ui";
+import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {AuthUserContext} from "../core";
 import {StructuredData} from "../core/StructuredData";
 import {Domain} from "../../constants";
@@ -41,8 +41,7 @@ export class AtomicListItem extends React.Component<any, any, any> {
             {(authUser) => authUser ?
               <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
           </AuthUserContext.Consumer>
-          <a href={contentUrl} target="_blank">
-            <h2 className={bemBlocks.item("title")} dangerouslySetInnerHTML={{__html: source.metadata.Title}}/></a>
+          <Title viewUrl={contentUrl} className={bemBlocks.item('title')} titleString={source.metadata.Title}/>
           <table>
             <tbody>
             <tr>

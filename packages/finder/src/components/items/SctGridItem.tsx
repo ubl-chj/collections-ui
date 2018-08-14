@@ -18,9 +18,9 @@ export class SctGridItem extends React.Component<any, any, any> {
     const viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE
     const {bemBlocks, result} = this.props
     const source = extend({}, result._source, result.highlight)
-    const thumbnail = result._source['thumbnail'] + Domain.THUMBNAIL_API_REQUEST
-    const imageLink = previewUrl + '?image=' + result._source['thumbnail']
-    const contentUrl = result._source['manifest']
+    const thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
+    const imageLink = previewUrl + '?image=' + source.thumbnail + '&manifest=' + source.manifest
+    const contentUrl = source.manifest
     const viewUrl = viewerUrl + '?manifest=' + contentUrl
     let titleString
     if (source.Title.length >= 80) {

@@ -10,8 +10,6 @@ export const Controls = () => {
         className="glyphicon glyphicon-home"/></a></button>
       <button type="button" className="btn btn-primary-outline btn-xs"><a id="full-page"><i
         className="glyphicon glyphicon-resize-full"/></a></button>
-      <button type="button" className="btn btn-primary-outline btn-xs"><a href="/atomic"><i
-        className="glyphicon glyphicon-search"/></a></button>
       <button type="button" className="btn btn-primary-outline btn-xs"><a id="sidebar-previous"><i
         className="glyphicon glyphicon-chevron-left"/></a></button>
       <button type="button" className="btn btn-primary-outline btn-xs"><a id="sidebar-next"><i

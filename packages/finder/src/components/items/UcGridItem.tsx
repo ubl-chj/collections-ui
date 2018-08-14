@@ -18,10 +18,10 @@ export class UcGridItem extends React.Component<any, any, any> {
     const viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE
     const {bemBlocks, result} = this.props
     const source = extend({}, result._source, result.highlight)
-    const thumbnail = result._source['thumbnail'] + Domain.THUMBNAIL_API_REQUEST
-    const contentUrl = result._source['Manifest']
-    const creator = result._source['Author(s) of the Record']
-    const imageLink = previewUrl + '?image=' + result._source['thumbnail']
+    const thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
+    const contentUrl = source.Manifest
+    const creator = source['Author(s) of the Record']
+    const imageLink = previewUrl + '?image=' + source.thumbnail + '&manifest=' + source.Manifest
     const viewUrl = viewerUrl + '?manifest=' + contentUrl
 
     let titleString
