@@ -1,19 +1,22 @@
 import * as React from "react";
 import {FavoriteButton, Thumbnail, Title} from "../ui";
-import {AuthUserContext} from "../core";
+import {AuthUserContext, ResultContext} from "../core";
 import {StructuredData} from "../core/StructuredData";
 import {Domain} from "../../constants";
+import {ItemProps} from "./ItemProps";
 
 const firebase = require("firebase/app");
 const extend = require("lodash/extend")
 
 
-export class UcListItem extends React.Component<any, any, any> {
-  props: any
-
+export class UcListItem extends React.Component<ItemProps, any> {
   constructor(props) {
     super(props)
-    this.props = props
+  }
+
+  static defaultProps = {
+    previewUrl: process.env.REACT_APP_OSD_BASE,
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE
   }
 
   static getAuthor(source, bemBlocks) {
@@ -35,30 +38,31 @@ export class UcListItem extends React.Component<any, any, any> {
   }
 
   render() {
-    const osdUrl = process.env.REACT_APP_OSD_BASE
-    const viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE
-    const {bemBlocks, result} = this.props
+    const {previewUrl, viewerUrl, result, bemBlocks} = this.props
     const source = extend({}, result._source, result.highlight)
     const thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
     const contentUrl = source.Manifest
     const creator = source['Author(s) of the Record']
-    const imageLink = osdUrl + '?image=' + source.thumbnail + '&manifest=' + source.Manifest
+    const imageLink = previewUrl + '?image=' + source.thumbnail + '&manifest=' + source.Manifest
     const viewUrl = viewerUrl + '?manifest=' + contentUrl
-    return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-      <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
-      <div className={bemBlocks.item('details')}>
-        <AuthUserContext.Consumer>
-          {(authUser) => authUser ?
-            <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
-        </AuthUserContext.Consumer>
-        <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source['Title']}/>
-        {UcListItem.getAuthor(source, bemBlocks)}
-        {UcListItem.getSubject(source, bemBlocks)}
-        {UcListItem.getDate(source, bemBlocks)}
-        <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source['Abstract']}}/>
-      </div>
-      <StructuredData headline={source.title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}/>
-    </div>)
+    return (
+      <ResultContext.Provider value={result}>
+        <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
+          <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
+          <div className={bemBlocks.item('details')}>
+            <AuthUserContext.Consumer>
+              {(authUser) => authUser ?
+                <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
+            </AuthUserContext.Consumer>
+            <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source['Title']}/>
+            {UcListItem.getAuthor(source, bemBlocks)}
+            {UcListItem.getSubject(source, bemBlocks)}
+            {UcListItem.getDate(source, bemBlocks)}
+            <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source['Abstract']}}/>
+          </div>
+          <StructuredData headline={source.title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}/>
+        </div>
+      </ResultContext.Provider>)
   }
 }
 

@@ -32,7 +32,6 @@ class ViewerComponent extends React.Component<any, any> {
     const manifest = qs.parse(this.props.location.search).manifest
     this.viewer = new ViewerManager(manifest)
     this.forceUpdate()
-    console.log(this.props.location.state)
   }
 
   render() {

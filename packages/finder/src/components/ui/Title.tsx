@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Link, withRouter} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {ResultContext} from "../core";
 
 export class Title extends React.Component<any, any> {
@@ -14,10 +14,6 @@ export class Title extends React.Component<any, any> {
     this.viewUrl = props.viewUrl
     this.className = props.className
     this.titleString = props.titleString
-  }
-
-  componentDidUpdate() {
-    console.log("Updated!");
   }
 
   render() {

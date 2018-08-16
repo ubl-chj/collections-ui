@@ -12,7 +12,7 @@
     "metadataMap.tag8"
   ],
   "listItem": "CollectionsListItem",
-  "gridItem": "OrpGridItem",
+  "gridItem": "CollectionsGridItem",
   "refinementListFilterDef1": {
     "field": "metadataMap.tag1.keyword",
     "title": "Collection",
@@ -28,13 +28,7 @@
     "title": "Fakultät",
     "id": "faculty"
   },
-  "hasRangeFilter": true,
-  "rangeFilter": {
-    "field": "metadataMap.tag3.raw",
-    "id": "date",
-    "min": 1641,
-    "max": 1975
-  },
+  "hasRangeFilter": false,
   "sortingSelectorOptions": [
     {
       "label": "Index",
@@ -55,5 +49,6 @@
   "highlightFields": [
     "metadataMap.tag1"
   ],
-  "suggestionField": "metadataMap.tag1"
+  "suggestionField": "metadataMap.tag1",
+  "listDefault": true
 }

@@ -6,7 +6,7 @@ import {ItemProps} from './ItemProps'
 
 const extend = require('lodash/extend')
 
-export class CollectionsListItem extends React.Component<ItemProps, any> {
+export class CollectionsGridItem extends React.Component<ItemProps, any> {
   constructor(props) {
     super(props)
   }

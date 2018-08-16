@@ -20,7 +20,6 @@ export class StructuredData extends React.Component<any, any, any> {
     this.position = props.position
   }
 
-
   buildStructuredData() {
     let positionKey
     let creatorKey
