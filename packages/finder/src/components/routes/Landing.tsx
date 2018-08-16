@@ -60,25 +60,22 @@ export class Landing extends React.Component<RouteProps, {}> {
     this.setState({result: null})
   }
 
-  componentDidUpdate({}, previousState) {
-    this.handleSessionPersistence(previousState)
+  componentDidUpdate() {
+    this.handleSessionPersistence()
   }
 
-  handleSessionPersistence(previousState) {
-    const {result} = this.state
-    if (result !== undefined) {
-      this.cachedHits = sessionStorage.getItem(this.routeKey);
-      if (this.cachedHits && this.cachedHits !== 'undefined' && !previousState.result) {
-        this.searchkit.setResults(_.cloneDeep(JSON.parse(this.cachedHits)))
-        console.log("getting results for " + this.routeKey + " from session storage")
-      } else if (this.cachedHits === null || this.cachedHits === 'undefined') {
-        const results = JSON.stringify(this.searchkit.getResultsAndState().results)
-        if (results !== 'undefined' && results) {
-          sessionStorage.setItem(this.routeKey, results)
-          this.setState({result: results})
-          console.log("setting session storage with " + this.cachedHits + " for " + this.routeKey)
-        }
+  async handleSessionPersistence() {
+    this.cachedHits = sessionStorage.getItem(this.routeKey);
+    if (this.cachedHits === null || this.cachedHits === 'undefined') {
+      const results = await JSON.stringify(this.searchkit.getResultsAndState().results)
+      if (results !== 'undefined' && results) {
+        sessionStorage.setItem(this.routeKey, results)
+        this.setState({result: results})
+        console.log("setting session storage with " + this.cachedHits + " for " + this.routeKey)
       }
+    } else if (this.cachedHits && this.cachedHits !== 'undefined') {
+      this.searchkit.setResults(_.cloneDeep(JSON.parse(this.cachedHits)))
+      console.log("getting results for " + this.routeKey + " from session storage")
     }
   }
 

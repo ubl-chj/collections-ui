@@ -5,6 +5,7 @@ import {
   ActionBarRow,
   GroupedSelectedFilters,
   HitsStats,
+  ItemList,
   Layout,
   LayoutBody,
   LayoutResults,
@@ -35,8 +36,7 @@ const ReactTooltip = require('react-tooltip')
 
 class Collection extends React.Component<RouteProps, {}> {
   state: {
-    components: [],
-    result: object
+    components: []
   }
   props: any;
   searchkit: SearchkitManager
@@ -63,8 +63,7 @@ class Collection extends React.Component<RouteProps, {}> {
   constructor(props) {
     super(props);
     this.state = {
-      components: [],
-      result: {}
+      components: []
     }
     this.routeProps = props.config
     this.routeKey = props.config.routeConfig.indexName
@@ -75,26 +74,6 @@ class Collection extends React.Component<RouteProps, {}> {
   componentDidMount() {
     const {items} = this.props
     items.map(type => this.addComponent(type))
-    this.setState({result: null})
-  }
-
-  componentDidUpdate() {
-    this.handleSessionPersistence()
-  }
-
-  async handleSessionPersistence() {
-    this.cachedHits = sessionStorage.getItem(this.routeKey);
-    if (this.cachedHits === null || this.cachedHits === 'undefined') {
-      const results = await JSON.stringify(this.searchkit.getResultsAndState().results)
-      if (results !== 'undefined' && results) {
-        sessionStorage.setItem(this.routeKey, results)
-        this.setState({result: results})
-        console.log("setting session storage with " + this.cachedHits + " for " + this.routeKey)
-      }
-    } else if (this.cachedHits && this.cachedHits !== 'undefined') {
-      this.searchkit.setResults(_.cloneDeep(JSON.parse(this.cachedHits)))
-      console.log("getting results for " + this.routeKey + " from session storage")
-    }
   }
 
   static buildHitComponents(gridItem, listItem, listDefault) {
@@ -145,7 +124,7 @@ class Collection extends React.Component<RouteProps, {}> {
               <div className='my-logo'>
                 <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
               </div>
-              <SearchBox autofocus={true} searchOnChange={false} queryFields={routeConfig.queryFields}/>
+              <SearchBox autofocus={true} searchOnChange={true} queryFields={routeConfig.queryFields}/>
               <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
                 <AuthUserProfile/>
               </div>
@@ -158,13 +137,13 @@ class Collection extends React.Component<RouteProps, {}> {
               <SideBar>
                 <RefinementListFilter containerComponent={<Panel collapsable={true} defaultCollapsed={false}/>}
                   field={routeConfig.refinementListFilterDef1.field} title={routeConfig.refinementListFilterDef1.title}
-                  id={routeConfig.refinementListFilterDef1.id} listComponent={TagCloud}/>
+                  id={routeConfig.refinementListFilterDef1.id} operator='AND' listComponent={ItemList}/>
                 <RefinementListFilter containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
                   field={routeConfig.refinementListFilterDef2.field} title={routeConfig.refinementListFilterDef2.title}
-                  id={routeConfig.refinementListFilterDef2.id} orderKey='_term' operator='AND' listComponent={TagCloud}/>
+                  id={routeConfig.refinementListFilterDef2.id} operator='AND' listComponent={ItemList}/>
                 <RefinementListFilter containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
                   field={routeConfig.refinementListFilterDef3.field} title={routeConfig.refinementListFilterDef3.title}
-                  id={routeConfig.refinementListFilterDef3.id} orderKey='_term' operator='AND' listComponent={TagCloud}/>
+                  id={routeConfig.refinementListFilterDef3.id} operator='AND' listComponent={ItemList}/>
               </SideBar>
               <LayoutResults>
                 <ActionBar>

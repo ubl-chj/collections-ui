@@ -1,10 +1,11 @@
 import * as React from 'react'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Layout, LayoutBody, LayoutResults, SearchBox, SearchkitManager, SearchkitProvider, SideBar, TopBar} from 'searchkit-fork'
 import {AuthUserContext, withAuthorization} from '../core'
 import {AuthUserProfile, AuthUserTooltip} from '../ui/index'
 import {Domain, Routes} from '../../constants';
 import {ListFavorites} from '../ui'
+
 
 const firebase = require("firebase/app");
 const ReactTooltip = require('react-tooltip')
@@ -40,7 +41,7 @@ const AccountPage = () => <SearchkitProvider searchkit={searchkit}>
             {(authUser) => <div>
               <p>Welcome {firebase.auth().currentUser.displayName}!</p>
               <h2>My Workspace</h2>
-              <ListFavorites authUser={authUser}/>
+              <ListFavoritesWithRouter authUser={authUser}/>
             </div>}
           </AuthUserContext.Consumer>
         </ActionBar>
@@ -50,5 +51,5 @@ const AccountPage = () => <SearchkitProvider searchkit={searchkit}>
 </SearchkitProvider>
 
 const authCondition = (authUser) => !!authUser
-
+const ListFavoritesWithRouter = withRouter(ListFavorites)
 export default withAuthorization(authCondition)(AccountPage)

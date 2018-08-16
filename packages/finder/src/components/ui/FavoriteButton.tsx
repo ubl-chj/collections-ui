@@ -15,6 +15,7 @@ export class FavoriteButton extends React.Component<any, any> {
   result: {
     _id: string
   }
+  _isMounted: boolean
 
   constructor(props) {
     super(props)
@@ -42,19 +43,28 @@ export class FavoriteButton extends React.Component<any, any> {
 
   componentDidMount() {
     this.getFavorite()
+    this._isMounted = true
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false
   }
 
   setFavorite(result) {
-    this.setState({
-      isFavorite: true,
-      favorite: result._id
-    });
+    if (this._isMounted) {
+      this.setState({
+        isFavorite: true,
+        favorite: result._id
+      });
+    }
   }
 
   unsetFavorite() {
-    this.setState({
-      isFavorite: false,
-    });
+    if (this._isMounted) {
+      this.setState({
+        isFavorite: false,
+      });
+    }
   }
 
   static writeFavorite(authUserUid, result) {
@@ -80,14 +90,14 @@ export class FavoriteButton extends React.Component<any, any> {
           (<button type="button" className="btn btn-primary-outline btn-xs">
             <a id={this.result._id}>
               <i className="glyphicon glyphicon-star" onClick={() => {
-            FavoriteButton.removeFavorite(this.authUser.uid, this.result);
-            this.unsetFavorite()
-            }}/></a></button>)
+                FavoriteButton.removeFavorite(this.authUser.uid, this.result);
+                this.unsetFavorite()
+              }}/></a></button>)
           : (<button type="button" className="btn btn-primary-outline btn-xs"><a id={this.result._id}>
             <i className="glyphicon glyphicon-star-empty" onClick={() => {
-            FavoriteButton.writeFavorite(this.authUser.uid, this.result);
-            this.setFavorite(this.result)
-          }}/></a></button>)
+              FavoriteButton.writeFavorite(this.authUser.uid, this.result);
+              this.setFavorite(this.result)
+            }}/></a></button>)
         }
       </div>)
     }

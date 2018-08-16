@@ -1,8 +1,11 @@
 import * as React from "react";
 import {Thumbnail} from './Thumbnail'
+import {Title} from "./index";
+import {Domain} from "../../constants";
+import {ResultContext} from "../core";
 
+const extend = require("lodash/extend")
 const firebase = require("firebase/app");
-const viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE + '?manifest='
 
 export class ListFavorite extends React.Component<any, any> {
   favorite: {
@@ -20,6 +23,7 @@ export class ListFavorite extends React.Component<any, any> {
   authUser: {
     uid: string
   }
+  viewerUrl: string
 
   constructor(props) {
     super(props)
@@ -29,6 +33,7 @@ export class ListFavorite extends React.Component<any, any> {
       error: null,
       isFavorite: true
     }
+    this.viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE + '?manifest='
   }
 
   unsetFavorite() {
@@ -57,46 +62,48 @@ export class ListFavorite extends React.Component<any, any> {
   }
 
   //TODO Harmonize the metadata labels before indexing
-  static renderFavoriteContent(result) {
+  renderFavoriteContent(result) {
+    const source = extend({}, result._source, result.highlight)
     switch (result._index) {
       case process.env.REACT_APP_EC_INDEX:
         return (
           <div>
-            <a href={result._source['related']}>
-              <h2 className='sk-hits-list-hit__title'
-                dangerouslySetInnerHTML={{__html: result._source.title}}/>
-            </a>
-            <h3 className='sk-hits-list-hit__subtitle'
-              dangerouslySetInnerHTML={ListFavorite.createTitle(result._source['Title (English)'])}/>
+            <Title viewUrl={source['related']} className='sk-hits-list-hit__title' titleString={source.title}/>
+            <h3 className='sk-hits-list-hit__subtitle' dangerouslySetInnerHTML={ListFavorite.createTitle(source['Title (English)'])}/>
             <h3 className='sk-hits-list-hit__subtitle'><b>Date of
-              Origin:</b> {result._source['Date of Origin (English)']}</h3>
-            <h3 className='sk-hits-list-hit__subtitle'
-              dangerouslySetInnerHTML={{__html: result._source['Summary (English)']}}/>
+              Origin:</b> {source['Date of Origin (English)']}</h3>
+            <h3 className='sk-hits-list-hit__subtitle' dangerouslySetInnerHTML={{__html: source['Summary (English)']}}/>
           </div>);
       case process.env.REACT_APP_UC_INDEX:
-        const ucViewUrl = viewerUrl + result._source['Manifest']
+        const ucViewUrl = this.viewerUrl + source['Manifest']
         return (
-          <div>
-            <a href={ucViewUrl}>
-              <h2 className='sk-hits-list-hit__title'
-                dangerouslySetInnerHTML={{__html: result._source.Title}}/>
-            </a>
-            <h3 className='sk-hits-list-hit__subtitle'><b>Subject:</b> {result._source['Subject(s)']}</h3>
-            <h3 className='sk-hits-list-hit__subtitle'
-              dangerouslySetInnerHTML={{__html: result._source['Abstract']}}/>
-          </div>);
+          <ResultContext.Provider value={result}>
+            <div>
+              <Title viewUrl={ucViewUrl} className='sk-hits-list-hit__title' titleString={source.Title}/>
+              <h3 className='sk-hits-list-hit__subtitle'><b>Subject:</b> {source['Subject(s)']}</h3>
+              <h3 className='sk-hits-list-hit__subtitle' dangerouslySetInnerHTML={{__html: source['Abstract']}}/>
+            </div>
+          </ResultContext.Provider>);
       case process.env.REACT_APP_GETTY_INDEX:
-        const gettyViewUrl = viewerUrl + result._source['id']
+        const gettyViewUrl = this.viewerUrl + source['id']
         return (
-          <div>
-            <a href={gettyViewUrl}>
-              <h2 className='sk-hits-list-hit__title'
-                dangerouslySetInnerHTML={{__html: result._source.title}}/>
-            </a>
-            <h3 className='sk-hits-list-hit__subtitle'><b>Object Type:</b> {result._source['Object Type']}</h3>
-            <h3 className='sk-hits-list-hit__subtitle'
-              dangerouslySetInnerHTML={{__html: result._source['Inscription']}}/>
-          </div>);
+          <ResultContext.Provider value={result}>
+            <div>
+              <Title viewUrl={gettyViewUrl} className='sk-hits-list-hit__title' titleString={source.title}/>
+              <h3 className='sk-hits-list-hit__subtitle'><b>Object Type:</b> {source['Object Type']}</h3>
+              <h3 className='sk-hits-list-hit__subtitle' dangerouslySetInnerHTML={{__html: source['Inscription']}}/>
+            </div>
+          </ResultContext.Provider>);
+      case process.env.REACT_APP_HARVARD_INDEX:
+        const harvardViewUrl = this.viewerUrl + source['manifest']
+        return (
+          <ResultContext.Provider value={result}>
+            <div>
+              <Title viewUrl={harvardViewUrl} className='sk-hits-list-hit__title' titleString={source.title}/>
+              <h3 className='sk-hits-list-hit__subtitle'><b>Creator:</b> {source['People']}</h3>
+              <h3 className='sk-hits-list-hit__subtitle'><b>Classification:</b> {source['Classification']}</h3>
+            </div>
+          </ResultContext.Provider>);
       default:
         return 'Item Metadata Display Not Defined';
     }
@@ -109,12 +116,12 @@ export class ListFavorite extends React.Component<any, any> {
     let imageSource
     let imageLink
     const thumbnail = result._source['thumbnail']
-    if (this.favorite.result._index ===  process.env.REACT_APP_GETTY_INDEX) {
+    if (this.favorite.result._index === process.env.REACT_APP_GETTY_INDEX) {
       const imageBase = thumbnail.split('/full')[0]
       imageSource = thumbnail
       imageLink = previewUrl + '?image=' + imageBase
     } else {
-      imageSource = thumbnail + '/full/90,/0/default.jpg'
+      imageSource = thumbnail + Domain.THUMBNAIL_API_REQUEST
       imageLink = previewUrl + '?image=' + result._source['thumbnail']
     }
     if (error) {
@@ -122,12 +129,12 @@ export class ListFavorite extends React.Component<any, any> {
     } else {
       return (isFavorite ?
         <div className='sk-hits-list-hit sk-hits-list__item'>
-          <Thumbnail imageWidth={140} className="sk-hits-list-hit__poster" imageSource={imageSource}
-            imageLink={imageLink}/>
+          <ResultContext.Provider value={result}>
+            <Thumbnail imageWidth={140} className="sk-hits-list-hit__poster" imageSource={imageSource} imageLink={imageLink}/>
+          </ResultContext.Provider>
           <div className='sk-hits-list-hit__details'>
-            <ListFavoriteItem authUser={this.authUser} result={result}
-              unsetFavorite={this.unsetFavorite.bind(this)}/>
-            {ListFavorite.renderFavoriteContent(result)}
+            <ListFavoriteItem authUser={this.authUser} result={result} unsetFavorite={this.unsetFavorite.bind(this)}/>
+            {this.renderFavoriteContent(result)}
           </div>
         </div> : null)
     }

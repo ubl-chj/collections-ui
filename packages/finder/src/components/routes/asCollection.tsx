@@ -14,10 +14,7 @@ export const asCollection = (Component) => {
     }
 
     render() {
-      let id = this.props.match.params.id
-      if (!id) {
-        id = 'landing'
-      }
+      const id = this.props.match.params.id
       const configFileName = './config/' + id + '.json'
       const configFile = require(`${configFileName}`)
       const items = [configFile.gridItem, configFile.listItem]

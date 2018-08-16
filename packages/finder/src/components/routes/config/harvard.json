@@ -21,9 +21,9 @@
     "id": "classification"
   },
   "refinementListFilterDef2": {
-    "field": "Medium.keyword",
-    "title": "Medium",
-    "id": "medium"
+    "field": "Date.keyword",
+    "title": "Date",
+    "id": "date"
   },
   "refinementListFilterDef3": {
     "field": "Technique.keyword",

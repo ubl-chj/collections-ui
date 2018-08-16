@@ -8,7 +8,6 @@ import {Domain, Routes} from '../../constants'
 
 const styles = require('../../assets/app.css')
 const firebase = require("firebase/app");
-
 const firebaseApi_key = process.env.REACT_APP_FIREBASE_KEY
 
 const config = {

@@ -9,8 +9,9 @@ import {withAuthentication} from "./withAuthentication";
 class App extends React.Component<any> {
 
   render() {
+    const supportsHistory = 'pushState' in window.history
     return (
-        <BrowserRouter>
+        <BrowserRouter forceRefresh={!supportsHistory}>
           <Switch>
             <Route exact path={Routes.LANDING} component={Landing}/>
             <Route exact path={Routes.ACCOUNT} component={Account}/>
