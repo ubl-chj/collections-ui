@@ -4,12 +4,11 @@ import {AuthUserContext} from './AuthUserContext';
 import {firebase} from '../../firebase';
 
 export const withAuthentication = (Component) =>
-  class WithAuthentication extends React.Component<any> {
+  class WithAuthentication extends React.Component<any, any> {
     state: { authUser: Object }
 
     constructor(props) {
       super(props);
-
       this.state = {
         authUser: null,
       };
@@ -21,6 +20,9 @@ export const withAuthentication = (Component) =>
           ? this.setState({authUser})
           : this.setState({authUser: null});
       });
+    }
+
+    componentWillUnmount() {
     }
 
     render() {

@@ -36,14 +36,14 @@
     "id": "collection"
   },
   "refinementListFilterDef2": {
-    "field": "Language(s).keyword",
-    "title": "Language",
-    "id": "language"
+    "field": "Format.keyword",
+    "title": "Format",
+    "id": "format"
   },
   "refinementListFilterDef3": {
-    "field": "Subject(s).keyword",
-    "title": "Subject",
-    "id": "subject"
+    "field": "Origin Place.keyword",
+    "title": "Origin",
+    "id": "origin"
   },
   "sortingSelectorOptions": [
     {
@@ -66,6 +66,7 @@
     "Title",
     "Abstract"
   ],
-  "suggestionField": "Title"
+  "suggestionField": "Title",
+  "listDefault": true
 }
 

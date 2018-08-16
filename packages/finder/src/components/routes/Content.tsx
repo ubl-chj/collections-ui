@@ -157,7 +157,7 @@ const ManifestsListItem = (props) => {
   )
 }
 
-class Atomic extends React.Component {
+class Content extends React.Component {
   render() {
     return (
       <SearchkitProvider searchkit={searchkit}>
@@ -218,4 +218,4 @@ class Atomic extends React.Component {
   }
 }
 
-export default Atomic
+export default Content

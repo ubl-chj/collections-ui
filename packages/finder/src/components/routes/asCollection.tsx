@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {withRouter} from 'react-router-dom';
-import {CollectionContext} from '../core'
 
 export const asCollection = (Component) => {
 
@@ -8,22 +7,24 @@ export const asCollection = (Component) => {
     config: Object
 
     constructor(props) {
-      super(props);
-
+      super(props)
       this.config = {
         id: null
-      };
+      }
     }
 
     render() {
-      const id = this.props.match.params.id
+      let id = this.props.match.params.id
+      if (!id) {
+        id = 'landing'
+      }
       const configFileName = './config/' + id + '.json'
       const configFile = require(`${configFileName}`)
       const items = [configFile.gridItem, configFile.listItem]
       const config = {
         routeConfig: configFile
       };
-      return (<CollectionContext.Provider value={config}><Component items={items}/></CollectionContext.Provider>)
+      return (<Component {...this.props} config={config} items={items}/>)
     }
   }
 

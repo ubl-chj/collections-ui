@@ -2,20 +2,23 @@ import {Thumbnail, Title} from "../ui";
 import * as React from "react";
 import {Domain} from "../../constants";
 import {StructuredData} from "../core/StructuredData";
+import {ItemProps} from "./ItemProps";
 
 const extend = require("lodash/extend")
 
-export class UblGridItem extends React.Component<any, any, any> {
-  props: any
-
+export class UblGridItem extends React.Component<ItemProps, any> {
   constructor(props) {
     super(props)
-    this.props = props
+  }
+
+  static defaultProps = {
+    previewUrl: process.env.REACT_APP_OSD_BASE,
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE
   }
 
   render() {
-    const {bemBlocks, result} = this.props
-    const osdUrl = process.env.REACT_APP_OSD_BASE
+    const {previewUrl, result, bemBlocks} = this.props
+
     const source = extend({}, result._source, result.highlight)
     const pathname = new URL(source['@id']).pathname
     const splitPath = pathname.split('/')
@@ -26,7 +29,7 @@ export class UblGridItem extends React.Component<any, any, any> {
     const secondId = viewId.substring(5, 8).padStart(4, '0')
     const imageBase = process.env.REACT_APP_UBL_IMAGE_SERVICE_BASE + firstId + '/' + secondId + '/' + viewId + '/00000001.jpx'
     const thumbnail = imageBase + Domain.THUMBNAIL_API_REQUEST
-    const imageLink = osdUrl + "?image=" + imageBase
+    const imageLink = previewUrl + "?image=" + imageBase
     let titleString;
     if (source.Title.length >= 80) {
       titleString = source.Title.substr(0, 80) + "... "

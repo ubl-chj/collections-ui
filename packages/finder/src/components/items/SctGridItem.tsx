@@ -2,21 +2,23 @@ import * as React from "react";
 import {Thumbnail, Title} from "../ui";
 import {StructuredData} from "../core/StructuredData";
 import {Domain} from "../../constants";
+import {ItemProps} from "./ItemProps";
+import {ResultContext} from "../core";
 
 const extend = require("lodash/extend")
 
-export class SctGridItem extends React.Component<any, any, any> {
-  props: any
-
+export class SctGridItem extends React.Component<ItemProps, any> {
   constructor(props) {
     super(props)
-    this.props = props
+  }
+
+  static defaultProps = {
+    previewUrl: process.env.REACT_APP_OSD_BASE,
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE
   }
 
   render() {
-    const previewUrl = process.env.REACT_APP_OSD_BASE
-    const viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE
-    const {bemBlocks, result} = this.props
+    const {previewUrl, viewerUrl, result, bemBlocks} = this.props
     const source = extend({}, result._source, result.highlight)
     const thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
     const imageLink = previewUrl + '?image=' + source.thumbnail + '&manifest=' + source.manifest
@@ -28,11 +30,14 @@ export class SctGridItem extends React.Component<any, any, any> {
     } else {
       titleString = source.Title
     }
-    return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-      <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
-      <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={titleString}/>
-      <StructuredData headline={source.Title} thumbnail={thumbnail} contentUrl={contentUrl} position={source.imageIndex}/>
-    </div>)
+    return (
+      <ResultContext.Provider value={result}>
+        <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
+          <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
+          <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={titleString}/>
+          <StructuredData headline={source.Title} thumbnail={thumbnail} contentUrl={contentUrl} position={source.imageIndex}/>
+        </div>
+      </ResultContext.Provider>)
   }
 }
 

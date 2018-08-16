@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {Link} from 'react-router-dom'
 import {CollectionsListItem} from '../items'
+import * as _ from "lodash"
 import {
   ActionBar,
   ActionBarRow,
@@ -25,25 +26,55 @@ import {
 import '../../assets/index.css'
 import {AuthUserProfile, AuthUserTooltip} from '../ui'
 import {Domain, Routes} from '../../constants'
+import {RouteProps} from './RouteProps'
 
 const ReactTooltip = require('react-tooltip')
-const host = process.env.REACT_APP_ELASTICSEARCH_HOST + 'a1'
-const config = require('./config/landing.json')
-const options = {
-  timeout: 20000
-}
-const searchkit = new SearchkitManager(host, options)
 
-export class Landing extends React.Component {
+export class Landing extends React.Component<RouteProps, {}> {
+  searchkit: SearchkitManager
+  cachedHits: any
+  routeKey: string
+
+  static defaultProps = {
+    host: process.env.REACT_APP_ELASTICSEARCH_HOST + 'a1',
+    routeConfig: require('./config/landing.json'),
+    options: {timeout: 20000}
+  }
+
+  constructor(props) {
+    super(props)
+    this.searchkit = new SearchkitManager(props.host, props.options)
+    this.routeKey = this.props.routeConfig.indexName
+  }
+
+  componentDidMount() {
+    this.cachedHits = sessionStorage.getItem(this.routeKey);
+    if (this.cachedHits && this.cachedHits !== 'undefined') {
+      this.searchkit.setResults(_.cloneDeep(JSON.parse(this.cachedHits)))
+      console.log("getting results for " + this.routeKey + " from session storage")
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.cachedHits === null || this.cachedHits === 'undefined') {
+      const results = JSON.stringify(this.searchkit.getResultsAndState().results)
+      if (results !== 'undefined' && results) {
+        sessionStorage.setItem(this.routeKey, results)
+        console.log("setting session storage with " + this.cachedHits + " for " + this.routeKey)
+      }
+    }
+  }
+
   render() {
+    const {routeConfig} = this.props
     const t = Boolean(true)
-    return (<SearchkitProvider searchkit={searchkit}>
+    return (<SearchkitProvider searchkit={this.searchkit}>
       <Layout>
         <TopBar>
           <div className='my-logo'>
             <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
           </div>
-          <SearchBox autofocus={true} searchOnChange={true} queryFields={config.queryFields}/>
+          <SearchBox autofocus={true} searchOnChange={true} queryFields={routeConfig.queryFields}/>
           <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
             <AuthUserProfile/>
           </div>

@@ -2,44 +2,46 @@ import * as React from "react";
 import {FavoriteButton, Thumbnail} from "../ui";
 import {AuthUserContext} from "../core";
 import {Domain} from "../../constants";
+import {ItemProps} from "./ItemProps";
 
 const extend = require("lodash/extend")
 const firebase = require("firebase/app");
-const osdUrl = process.env.REACT_APP_OSD_BASE
-const generatorUrl = process.env.REACT_APP_GENERATOR_BASE
-const constManifestUrl = generatorUrl + '?type=orp&index=' + process.env.REACT_APP_ORP_INDEX + '&q='
 
-const getQuery = (params) => {
-  const query = JSON.stringify({
-    'query': {
-      'simple_query_string': {
-        'query': params, 'default_operator': 'and'
-      }
-    }, 'size': 500
-  })
-  return constManifestUrl + query
-}
-
-export class OrpListItem extends React.Component<any, any, any> {
-  props: any
-
+export class OrpListItem extends React.Component<ItemProps, any> {
   constructor(props) {
     super(props)
-    this.props = props
+  }
+
+  static defaultProps = {
+    previewUrl: process.env.REACT_APP_OSD_BASE,
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE
+  }
+
+  static getQuery(params, constManifestUrl) {
+    const query = JSON.stringify({
+      'query': {
+        'simple_query_string': {
+          'query': params, 'default_operator': 'and'
+        }
+      }, 'size': 500
+    })
+    return constManifestUrl + query
   }
 
   render() {
-    const {bemBlocks, result} = this.props
+    const {previewUrl, result, bemBlocks} = this.props
+    const generatorUrl = process.env.REACT_APP_GENERATOR_BASE
+    const constManifestUrl = generatorUrl + '?type=orp&index=' + process.env.REACT_APP_ORP_INDEX + '&q='
     const source = extend({}, result._source, result.highlight)
     const viewerIRI = process.env.REACT_APP_VIEWER_BASE + '/#?c=0&m=0&s=0&cv=0&manifest='
     const imageSource = source.imageServiceIRI + Domain.THUMBNAIL_API_REQUEST
-    const imageLink = osdUrl + '?image=' + source.imageServiceIRI
+    const imageLink = previewUrl + '?image=' + source.imageServiceIRI
     let tag4 = source.metadataMap.tag4 || ''
     let tag5 = source.metadataMap.tag5 || ''
     let tag6 = source.metadataMap.tag6 || ''
     let tag7 = source.metadataMap.tag7 || ''
     let tag8 = source.metadataMap.tag8 || ''
-    const query = getQuery(source.metadataMap.tag3 + ' ' + tag4 + ' ' + tag5 + ' ' + tag6 + ' ' + tag7 + ' ' + tag8)
+    const query = OrpListItem.getQuery(source.metadataMap.tag3 + ' ' + tag4 + ' ' + tag5 + ' ' + tag6 + ' ' + tag7 + ' ' + tag8, constManifestUrl)
 
     return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
       <Thumbnail imageWidth={140} imageSource={imageSource} imageLink={imageLink} className={bemBlocks.item('poster')}/>
@@ -64,7 +66,8 @@ export class OrpListItem extends React.Component<any, any, any> {
           </tr>
           <tr>
             <td>Composite Manifest:</td>
-            <td><a href={viewerIRI + encodeURIComponent(query)}>{source.metadataMap.tag3} {source.metadataMap.tag5} {source.metadataMap.tag7} {source.metadataMap.tag8}</a>
+            <td><a
+              href={viewerIRI + encodeURIComponent(query)}>{source.metadataMap.tag3} {source.metadataMap.tag5} {source.metadataMap.tag7} {source.metadataMap.tag8}</a>
             </td>
           </tr>
           </tbody>
