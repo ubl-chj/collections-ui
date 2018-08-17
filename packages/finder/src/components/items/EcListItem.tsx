@@ -26,10 +26,10 @@ export class ECListItem extends React.Component<ItemProps, any> {
   render() {
     const {result, bemBlocks, previewUrl} = this.props
     const source = extend({}, result._source, result.highlight)
-    const thumbnail = result._source['thumbnail'] + Domain.THUMBNAIL_API_REQUEST
+    const thumbnail = source['thumbnail'] + Domain.THUMBNAIL_API_REQUEST
     const imageLink = previewUrl + '?image=' + result._source['thumbnail']
-    const contentUrl = result._source['related']
-    const creator = result._source['Persons']
+    const contentUrl = source['related']
+    const creator = source['Persons']
     return (
         <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
           <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>

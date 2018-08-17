@@ -75,3 +75,34 @@
 .__react_component_tooltip.type-light.border.place-bottom:before {
   border-bottom: none !important
 }
+
+.Vtmiqc {
+  background: rgba(66,66,66,0.54);
+  -webkit-border-radius: 28px;
+  border-radius: 28px;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  margin-top: -28px;
+  height: 56px;
+  width: 56px;
+}
+
+.xjKiLb {
+  background: black;
+  position: relative;
+  float: left;
+  z-index: 1000;
+}
+
+.JUQOtc {
+  transition: fill cubic-bezier(0.4,0.0,0.2,1) 400ms;
+  fill: white;
+  width: 24px;
+  height: 24px;
+}
+
+.button-transparent {
+  background-color:transparent;
+  border: none;
+}

@@ -49,7 +49,7 @@ class Collection extends React.Component<RouteProps, {}> {
   }
 
   addComponent = async type => {
-    import(`../items/${type}` )
+    import(`../items/${type}`)
       .then(component =>
         this.setState({
           components: this.state.components.concat(component.default)

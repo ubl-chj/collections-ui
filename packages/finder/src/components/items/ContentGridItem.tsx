@@ -1,6 +1,8 @@
 import * as React from "react";
-import {ItemProps} from "./ItemProps";
 const extend = require('lodash/extend')
+
+import {ItemProps} from "./ItemProps";
+import {Domain} from "../../constants";
 
 export class ContentGridItem extends React.Component<ItemProps, any> {
   constructor(props) {
@@ -14,8 +16,8 @@ export class ContentGridItem extends React.Component<ItemProps, any> {
   render() {
     const {bemBlocks, result} = this.props
     const source = extend({}, result._source, result.highlight)
-    const thumbnail = source.iiifService + '/full/pct:25/0/default.jpg'
-    const url = source.iiifService + '/full/full/0/default.jpg'
+    const thumbnail = source.iiifService + Domain.THUMBNAIL_API_REQUEST
+    const url = source.iiifService + Domain.FULL_IMAGE_API_REQUEST
     const pathname = new URL(source.iiifService).pathname
     const splitPath = pathname.split('/')
     const viewId = splitPath[5]

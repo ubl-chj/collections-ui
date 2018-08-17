@@ -11,9 +11,10 @@ import {
   ViewerManager,
   ViewerProvider
 } from 'ubl-viewer'
-import {AuthUserProfile, AuthUserTooltip} from '../ui'
+import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../ui'
 import '../../assets/index.css'
 import {Domain, Routes} from '../../constants'
+
 
 const ReactTooltip = require('react-tooltip')
 const qs = require('query-string')
@@ -26,6 +27,7 @@ class ViewerComponent extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.props = props
+    this.goBack = this.goBack.bind(this);
   }
 
   componentDidMount() {
@@ -34,8 +36,13 @@ class ViewerComponent extends React.Component<any, any> {
     this.forceUpdate()
   }
 
+  goBack() {
+    this.props.history.goBack();
+  }
+
   render() {
     const t = Boolean(true)
+
     if (this.viewer) {
       return (<ViewerProvider viewer={this.viewer}>
         <Layout>
@@ -55,6 +62,7 @@ class ViewerComponent extends React.Component<any, any> {
             <Metadata key='metadata'/>
           </ActionBar>
           <LayoutBody>
+            <BackArrow/>
             <DocumentViewSwitcher viewerComponents={[{key: 'grid', title: 'Grid', itemComponent: ManifestItem, defaultOption: true}]}/>
           </LayoutBody>
         </Layout>

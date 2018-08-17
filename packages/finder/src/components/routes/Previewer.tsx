@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Layout, LayoutBody, Metadata, OsdComponent, TopBar, ViewerManager, ViewerProvider} from 'ubl-viewer'
-import {AuthUserProfile, AuthUserTooltip} from '../ui'
+import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../ui'
 import '../../assets/index.css'
 import {Domain, Routes} from '../../constants'
 
@@ -62,6 +62,7 @@ class PreviewerComponent extends React.Component<any, any> {
               <Metadata key='metadata'/>
             </ActionBar>
             <LayoutBody>
+              <BackArrow/>
               <OsdComponent images={[this.document]}/>
             </LayoutBody>
           </Layout>

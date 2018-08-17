@@ -19,7 +19,7 @@ export class ECGridItem extends React.Component<ItemProps, any> {
   render() {
     const {result, bemBlocks, previewUrl} = this.props
     const source = extend({}, result._source, result.highlight)
-    const thumbnail = result._source['thumbnail'] + Domain.THUMBNAIL_API_REQUEST
+    const thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
     const imageLink = previewUrl + '?image=' + result._source['thumbnail']
     const contentUrl = source.related
     const creator = source.Persons
