@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Link} from 'react-router-dom'
-import {AuthUserContext} from "../../core";
 import {Domain, Routes} from '../../../constants'
+import {AuthUserContext} from "../../core";
 const firebase = require("firebase/app");
 
 export const AuthUserTooltip = (props) => {

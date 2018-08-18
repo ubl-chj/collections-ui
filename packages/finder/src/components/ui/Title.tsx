@@ -24,8 +24,8 @@ export class Title extends React.Component<any, any> {
             pathname: process.env.REACT_APP_OSD_COMPONENT_BASE,
             search: this.search,
             state: {
-              result: result
-            }
+              result,
+            },
             }}>
               <div data-qa='title' className={this.className} dangerouslySetInnerHTML={{__html: this.titleString}}/>
           </Link> :
@@ -33,9 +33,6 @@ export class Title extends React.Component<any, any> {
             <div data-qa='title' className={this.className} dangerouslySetInnerHTML={{__html: this.titleString}}/>
           </a>}
       </ResultContext.Consumer>
-
     )
   }
 }
-
-

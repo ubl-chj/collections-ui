@@ -1,3 +1,3 @@
 export abstract class ManifestTransport {
-  abstract get(documentUri:string):any
+  abstract get(documentUri: string): any
 }

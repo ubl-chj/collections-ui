@@ -4,9 +4,11 @@ export interface ItemProps {
     container: Function
   }
   result: {
-    _source: object
+    _source: {
+      thumbnail: string,
+    }
     highlight: object
-    inner_hits: object
+    inner_hits: object,
   }
   previewUrl: string
   viewerUrl: string

@@ -1,18 +1,18 @@
 import * as React from "react";
 import {Link} from 'react-router-dom'
-import {Thumbnail} from "../ui";
 import {ResultContext} from "../core";
+import {Thumbnail} from "../ui";
 import {ItemProps} from './ItemProps'
 
 const extend = require('lodash/extend')
 
 export class CollectionsGridItem extends React.Component<ItemProps, any> {
-  constructor(props) {
-    super(props)
-  }
-
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
+  }
+
+  constructor(props) {
+    super(props)
   }
 
   render() {

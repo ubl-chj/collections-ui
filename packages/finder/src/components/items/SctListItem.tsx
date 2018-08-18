@@ -1,27 +1,27 @@
 import * as React from "react";
-import {FavoriteButton, Thumbnail, Title} from "../ui";
-import {AuthUserContext} from "../core";
 import {Domain} from "../../constants";
+import {AuthUserContext} from "../core";
+import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {ItemProps} from "./ItemProps";
 
 const firebase = require("firebase/app");
 const extend = require("lodash/extend")
 
-
 export class SctListItem extends React.Component<ItemProps, any> {
-  constructor(props) {
-    super(props)
-  }
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
-    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
   }
 
   static getPart(source, bemBlocks) {
     if (source['Part reference']) {
       return <h3 className={bemBlocks.item('subtitle')}><b>Part:</b> {source['Part reference']}</h3>
     }
+  }
+
+  constructor(props) {
+    super(props)
   }
 
   render() {
@@ -37,8 +37,8 @@ export class SctListItem extends React.Component<ItemProps, any> {
           {(authUser) => authUser ?
             <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
         </AuthUserContext.Consumer>
-        <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source['Title']}/>
-        <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source['Description']}}/>
+        <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source.Title}/>
+        <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source.Description}}/>
         {SctListItem.getPart(source, bemBlocks)}
       </div>
     </div>)

@@ -1,31 +1,33 @@
 import * as React from "react";
-import {FavoriteButton, Thumbnail} from "../ui";
-import {AuthUserContext} from "../core";
 import {Domain} from "../../constants";
+import {AuthUserContext} from "../core";
+import {FavoriteButton, Thumbnail} from "../ui";
 import {ItemProps} from "./ItemProps";
 
 const extend = require("lodash/extend")
 const firebase = require("firebase/app");
 
 export class OrpListItem extends React.Component<ItemProps, any> {
-  constructor(props) {
-    super(props)
-  }
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
-    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
   }
 
   static getQuery(params, constManifestUrl) {
     const query = JSON.stringify({
-      'query': {
-        'simple_query_string': {
-          'query': params, 'default_operator': 'and'
-        }
-      }, 'size': 500
+      query: {
+        simple_query_string: {
+          default_operator: 'and',
+          query: params,
+        },
+      }, size: 500,
     })
     return constManifestUrl + query
+  }
+
+  constructor(props) {
+    super(props)
   }
 
   render() {
@@ -36,12 +38,13 @@ export class OrpListItem extends React.Component<ItemProps, any> {
     const viewerIRI = process.env.REACT_APP_VIEWER_BASE + '/#?c=0&m=0&s=0&cv=0&manifest='
     const imageSource = source.imageServiceIRI + Domain.THUMBNAIL_API_REQUEST
     const imageLink = previewUrl + '?image=' + source.imageServiceIRI
-    let tag4 = source.metadataMap.tag4 || ''
-    let tag5 = source.metadataMap.tag5 || ''
-    let tag6 = source.metadataMap.tag6 || ''
-    let tag7 = source.metadataMap.tag7 || ''
-    let tag8 = source.metadataMap.tag8 || ''
-    const query = OrpListItem.getQuery(source.metadataMap.tag3 + ' ' + tag4 + ' ' + tag5 + ' ' + tag6 + ' ' + tag7 + ' ' + tag8, constManifestUrl)
+    const tag4 = source.metadataMap.tag4 || ''
+    const tag5 = source.metadataMap.tag5 || ''
+    const tag6 = source.metadataMap.tag6 || ''
+    const tag7 = source.metadataMap.tag7 || ''
+    const tag8 = source.metadataMap.tag8 || ''
+    const query = OrpListItem.getQuery(source.metadataMap.tag3 + ' ' + tag4 + ' ' + tag5 + ' ' + tag6 + ' ' + tag7 + ' '
+      + tag8, constManifestUrl)
 
     return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
       <Thumbnail imageWidth={140} imageSource={imageSource} imageLink={imageLink} className={bemBlocks.item('poster')}/>
@@ -66,8 +69,7 @@ export class OrpListItem extends React.Component<ItemProps, any> {
           </tr>
           <tr>
             <td>Composite Manifest:</td>
-            <td><a
-              href={viewerIRI + encodeURIComponent(query)}>{source.metadataMap.tag3} {source.metadataMap.tag5} {source.metadataMap.tag7} {source.metadataMap.tag8}</a>
+            <td><a href={viewerIRI + encodeURIComponent(query)}>{source.metadataMap.tag3} {source.metadataMap.tag5} {source.metadataMap.tag7} {source.metadataMap.tag8}</a>
             </td>
           </tr>
           </tbody>

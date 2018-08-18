@@ -1,17 +1,17 @@
 import * as React from "react";
-import {ListFavorite} from './ListFavorite'
 import {AuthUserContext} from "../core";
+import {ListFavorite} from './ListFavorite'
 const firebase = require("firebase/app");
 
 export class ListFavorites extends React.Component<any, any> {
   state: {
     error: null
-    favorites: Array<any>
+    favorites: any[]
     isFavorite: boolean
-    isLoaded: boolean
+    isLoaded: boolean,
   };
   authUser: {
-    uid: string
+    uid: string,
   }
 
   constructor(props) {
@@ -20,8 +20,8 @@ export class ListFavorites extends React.Component<any, any> {
     this.state = {
       error: null,
       favorites: null,
+      isFavorite: false,
       isLoaded: false,
-      isFavorite: false
     }
     this.getFavorites.bind(this);
   }
@@ -30,32 +30,29 @@ export class ListFavorites extends React.Component<any, any> {
     firebase.database().ref('/users/' + this.authUser.uid + '/favorites').once('value')
       .then((snapshot) =>
         this.setState({
-          isLoaded: true,
           favorites: (this.snapshotToArray(snapshot)),
-          isFavorite: true
-        })
+          isFavorite: true,
+          isLoaded: true,
+        }),
       );
   }
 
   snapshotToArray(snapshot) {
-    var returnArr = [];
-
-    snapshot.forEach(function(childSnapshot) {
-      var item = childSnapshot.val();
-      item.key = childSnapshot.key;
-
-      returnArr.push(item);
-    });
-
+    const returnArr = []
+    snapshot.forEach((childSnapshot) => {
+      const item = childSnapshot.val()
+      item.key = childSnapshot.key
+      returnArr.push(item)
+    })
     return returnArr;
-  };
+  }
 
   componentDidMount() {
     this.getFavorites()
   }
 
   buildFavoritesList(favorites) {
-    const favs = favorites.sort(function(a, b) {
+    const favs = favorites.sort((a, b) => {
         const sortA = a.result.timestamp
         const sortB = b.result.timestamp
         if (sortA < sortB) {
@@ -64,13 +61,13 @@ export class ListFavorites extends React.Component<any, any> {
         if (sortA > sortB) {
           return 1;
         }
-      return 0;
+        return 0;
     })
-    return favs.map(function (favorite) {
+    return favs.map((favorite) => {
       return (
         <AuthUserContext.Consumer>
           {(authUser) => authUser ?
-            <ListFavorite key={favorite.key} favorite={favorite} authUser={authUser}/>: null}
+            <ListFavorite key={favorite.key} favorite={favorite} authUser={authUser}/> : null}
         </AuthUserContext.Consumer>)
     })
   }
@@ -89,5 +86,3 @@ export class ListFavorites extends React.Component<any, any> {
     }
   }
 }
-
-

@@ -1,22 +1,18 @@
 import * as React from "react";
-import {FavoriteButton, Thumbnail, Title} from "../ui";
+import {Domain} from "../../constants";
 import {AuthUserContext, ResultContext} from "../core";
 import {StructuredData} from "../core/StructuredData";
-import {Domain} from "../../constants";
+import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {ItemProps} from "./ItemProps";
 
 const firebase = require("firebase/app");
 const extend = require("lodash/extend")
 
-
 export class UcListItem extends React.Component<ItemProps, any> {
-  constructor(props) {
-    super(props)
-  }
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
-    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
   }
 
   static getAuthor(source, bemBlocks) {
@@ -37,6 +33,10 @@ export class UcListItem extends React.Component<ItemProps, any> {
     }
   }
 
+  constructor(props) {
+    super(props)
+  }
+
   render() {
     const {previewUrl, viewerUrl, result, bemBlocks} = this.props
     const source = extend({}, result._source, result.highlight)
@@ -54,11 +54,11 @@ export class UcListItem extends React.Component<ItemProps, any> {
               {(authUser) => authUser ?
                 <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
             </AuthUserContext.Consumer>
-            <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source['Title']}/>
+            <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source.Title}/>
             {UcListItem.getAuthor(source, bemBlocks)}
             {UcListItem.getSubject(source, bemBlocks)}
             {UcListItem.getDate(source, bemBlocks)}
-            <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source['Abstract']}}/>
+            <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source.Abstract}}/>
           </div>
           <StructuredData headline={source.title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}/>
         </div>

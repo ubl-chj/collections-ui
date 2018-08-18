@@ -1,13 +1,14 @@
 import {State} from "./State"
+
 const isEmpty = require("lodash/isEmpty")
 
-export class ObjectState extends State<Object>{
+export class ObjectState extends State<object> {
 
   getValue() {
     return this.value || {}
   }
 
-  hasValue(){
+  hasValue() {
     return !isEmpty(this.value)
   }
 }

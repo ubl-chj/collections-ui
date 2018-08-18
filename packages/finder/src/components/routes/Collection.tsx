@@ -20,60 +20,22 @@ import {
   SearchkitProvider,
   SideBar,
   SortingSelector,
-  TagCloud,
   TopBar,
   ViewSwitcherHits,
-  ViewSwitcherToggle
+  ViewSwitcherToggle,
 } from 'searchkit-fork'
-import {AuthUserProfile, AuthUserTooltip} from '../ui'
-import {Domain, Routes} from '../../constants'
 import '../../assets/index.css'
+import {Domain, Routes} from '../../constants'
+import {AuthUserProfile, AuthUserTooltip} from '../ui'
 import {asCollection} from './asCollection'
-import {RouteProps} from './RouteProps'
-import * as _ from "lodash"
+import {IRouteProps} from './IRouteProps'
 
 const ReactTooltip = require('react-tooltip')
 
-class Collection extends React.Component<RouteProps, {}> {
-  state: {
-    components: []
-  }
-  props: any;
-  searchkit: SearchkitManager
-  cachedHits: any
-  routeKey: string
-  routeProps: RouteProps
+class Collection extends React.Component<IRouteProps, {}> {
 
   static defaultProps = {
-    options: {timeout: 20000}
-  }
-
-  addComponent = async type => {
-    import(`../items/${type}`)
-      .then(component =>
-        this.setState({
-          components: this.state.components.concat(component.default)
-        })
-      )
-      .catch(error => {
-        console.log(error);
-      })
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      components: []
-    }
-    this.routeProps = props.config
-    this.routeKey = props.config.routeConfig.indexName
-    const host = process.env.REACT_APP_ELASTICSEARCH_HOST + this.routeKey
-    this.searchkit = new SearchkitManager(host, props.options)
-  }
-
-  componentDidMount() {
-    const {items} = this.props
-    items.map(type => this.addComponent(type))
+    options: {timeout: 20000},
   }
 
   static buildHitComponents(gridItem, listItem, listDefault) {
@@ -81,33 +43,70 @@ class Collection extends React.Component<RouteProps, {}> {
     if (!listDefault) {
       items = [
         {
+          defaultOption: true,
+          itemComponent: gridItem,
           key: 'grid',
           title: 'Grid',
-          itemComponent: gridItem,
-          defaultOption: true
         },
         {
+          itemComponent: listItem,
           key: 'list',
           title: 'List',
-          itemComponent: listItem
-        }
+        },
       ]
     } else {
       items = [
         {
+          itemComponent: gridItem,
           key: 'grid',
           title: 'Grid',
-          itemComponent: gridItem
         },
         {
+          defaultOption: true,
+          itemComponent: listItem,
           key: 'list',
           title: 'List',
-          itemComponent: listItem,
-          defaultOption: true
-        }
+        },
       ]
     }
     return items
+  }
+
+  state: {
+    components: [],
+  }
+  props: any;
+  searchkit: SearchkitManager
+  cachedHits: any
+  routeKey: string
+  routeProps: IRouteProps
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      components: [],
+    }
+    this.routeProps = props.config
+    this.routeKey = props.config.routeConfig.indexName
+    const host = process.env.REACT_APP_ELASTICSEARCH_HOST + this.routeKey
+    this.searchkit = new SearchkitManager(host, props.options)
+  }
+
+  addComponent = async (type) => {
+    import(`../items/${type}`)
+      .then((component) =>
+        this.setState({
+          components: this.state.components.concat(component.default),
+        }),
+      )
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
+  componentDidMount() {
+    const {items} = this.props
+    items.map((type) => this.addComponent(type))
   }
 
   render() {

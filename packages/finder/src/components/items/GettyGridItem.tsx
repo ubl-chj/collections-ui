@@ -1,19 +1,20 @@
 import * as React from "react";
-import {Thumbnail, Title} from "../ui";
-import {StructuredData} from "../core/StructuredData";
 import {ResultContext} from "../core";
+import {StructuredData} from "../core/StructuredData";
+import {Thumbnail, Title} from "../ui";
 import {ItemProps} from './ItemProps'
 
 const extend = require("lodash/extend")
 
 export class GettyGridItem extends React.Component<ItemProps, any> {
-  constructor(props) {
-    super(props)
-  }
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
-    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
+  }
+
+  constructor(props) {
+    super(props)
   }
 
   render() {

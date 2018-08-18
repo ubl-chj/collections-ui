@@ -1,18 +1,15 @@
 import * as React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Layout, LayoutBody, LayoutResults, SearchBox, SearchkitManager, SearchkitProvider, SideBar, TopBar} from 'searchkit-fork'
-import {AuthUserContext, withAuthorization} from '../core'
-import {AuthUserProfile, AuthUserTooltip} from '../ui/index'
 import {Domain, Routes} from '../../constants';
+import {AuthUserContext, withAuthorization} from '../core'
 import {ListFavorites} from '../ui'
-
+import {AuthUserProfile, AuthUserTooltip} from '../ui/index'
 
 const firebase = require("firebase/app");
 const ReactTooltip = require('react-tooltip')
 const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_ATOMIC_INDEX
-const options = {
-  timeout: 20000
-}
+const options = {timeout: 20000}
 const searchkit = new SearchkitManager(host, options)
 
 const queryFields = []

@@ -1,8 +1,8 @@
 import * as React from "react";
-import {FavoriteButton, Thumbnail, Title} from "../ui";
-import {AuthUserContext} from "../core";
 import {Domain} from "../../constants";
+import {AuthUserContext} from "../core";
 import {StructuredData} from "../core/StructuredData";
+import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {ItemProps} from "./ItemProps";
 
 const firebase = require("firebase/app");
@@ -10,13 +10,14 @@ const firebase = require("firebase/app");
 const extend = require("lodash/extend")
 
 export class UblListItem extends React.Component<ItemProps, any> {
-  constructor(props) {
-    super(props)
-  }
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
-    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
+  }
+
+  constructor(props) {
+    super(props)
   }
 
   render() {
@@ -50,7 +51,7 @@ export class UblListItem extends React.Component<ItemProps, any> {
             </tr>
             <tr>
               <td>Date:</td>
-              <td>{source.Date} {source['Date of publication']} {source['Datierung']} {source['datiert']}</td>
+              <td>{source.Date} {source['Date of publication']} {source.Datierung} {source.datiert}</td>
             </tr>
             <tr>
               <td>Katalog URI:</td>

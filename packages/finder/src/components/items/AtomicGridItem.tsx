@@ -1,19 +1,19 @@
 import * as React from "react";
-import {Thumbnail, Title} from "../ui";
-import {StructuredData} from "../core/StructuredData";
 import {Domain} from '../../constants'
+import {StructuredData} from "../core/StructuredData";
+import {Thumbnail, Title} from "../ui";
 import {ItemProps} from './ItemProps'
-import {ResultContext} from "../core";
 
 const extend = require("lodash/extend")
 
 export class AtomicGridItem extends React.Component<ItemProps, any> {
-  constructor(props) {
-    super(props)
-  }
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
+  }
+
+  constructor(props) {
+    super(props)
   }
 
   render() {

@@ -1,26 +1,27 @@
 import * as React from "react";
-import {Thumbnail, Title} from "../ui";
-import {StructuredData} from "../core/StructuredData";
 import {Domain} from "../../constants";
+import {StructuredData} from "../core/StructuredData";
+import {Thumbnail, Title} from "../ui";
 import {ItemProps} from './ItemProps'
 
 const extend = require("lodash/extend")
 
 export class ECGridItem extends React.Component<ItemProps, any> {
-  constructor(props) {
-    super(props)
-  }
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
-    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
+  }
+
+  constructor(props) {
+    super(props)
   }
 
   render() {
     const {result, bemBlocks, previewUrl} = this.props
     const source = extend({}, result._source, result.highlight)
     const thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
-    const imageLink = previewUrl + '?image=' + result._source['thumbnail']
+    const imageLink = previewUrl + '?image=' + result._source.thumbnail
     const contentUrl = source.related
     const creator = source.Persons
     let titleString

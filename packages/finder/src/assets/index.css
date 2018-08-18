@@ -1,5 +1,5 @@
 @import url('theme.css');
-@import url('../../node_modules/ubl-viewer/release/theme.css');
+@import '~ubl-viewer/release/theme.css';
 
 .my-logo {
   color:white;
@@ -17,6 +17,7 @@
   line-height: 33px;
   float: left;
 }
+
 .my-logo a:link {
   text-decoration: none;
   color: white;

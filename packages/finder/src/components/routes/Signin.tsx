@@ -1,22 +1,22 @@
 import * as React from 'react'
-import {Link, withRouter} from 'react-router-dom'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import {Link, withRouter} from 'react-router-dom'
 import {Layout, LayoutBody, LayoutResults, TopBar} from 'searchkit-fork'
 import '../../assets/firebaseui-styling.global.css'
-import {AuthUserContext} from '../core';
 import {Domain, Routes} from '../../constants'
+import {AuthUserContext} from '../core';
 
 const styles = require('../../assets/app.css')
 const firebase = require("firebase/app");
-const firebaseApi_key = process.env.REACT_APP_FIREBASE_KEY
+const firebaseApiKey = process.env.REACT_APP_FIREBASE_KEY
 
 const config = {
-  apiKey: firebaseApi_key,
+  apiKey: firebaseApiKey,
   authDomain: 'collections-ui-1532736515660.firebaseapp.com',
   databaseURL: 'https://collections-ui-1532736515660.firebaseio.com',
+  messagingSenderId: '851210977979',
   projectId: 'collections-ui-1532736515660',
   storageBucket: '',
-  messagingSenderId: '851210977979'
 };
 
 if (!firebase.apps.length) {
@@ -24,13 +24,13 @@ if (!firebase.apps.length) {
 }
 
 const uiConfig = {
-  signInSuccessUrl: '/account',
   signInFlow: 'popup',
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    firebase.auth.GithubAuthProvider.PROVIDER_ID
-  ]
+    firebase.auth.GithubAuthProvider.PROVIDER_ID,
+  ],
+  signInSuccessUrl: '/account',
 }
 
 export class SignIn extends React.Component {
@@ -54,5 +54,3 @@ export class SignIn extends React.Component {
     </Layout>)
   }
 }
-
-

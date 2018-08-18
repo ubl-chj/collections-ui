@@ -1,21 +1,21 @@
-export interface RouteProps {
+export interface IRouteProps {
   routeConfig: {
     indexName: string
     queryFields: []
     refinementListFilterDef1: {
       title: string
       field: string
-      id: string
+      id: string,
     }
     refinementListFilterDef2: {
       title: string
       field: string
-      id: string
+      id: string,
     }
     refinementListFilterDef3: {
       title: string
       field: string
-      id: string
+      id: string,
     },
     listDefault: boolean
     sortingSelectorOptions: []
@@ -26,7 +26,7 @@ export interface RouteProps {
       field: string
       id: string
       min: number
-      max: number
-    }
+      max: number,
+    },
   }
 }

@@ -1,44 +1,42 @@
 import {ViewerManager} from "../ViewerManager";
-const get = require("lodash/get")
-const compact = require("lodash/compact")
 
 export class Accessor {
-  viewer:ViewerManager
-  uuid:string
-  document:any
-  active:boolean
-  translations:Object
-  refCount:number
-  constructor(){
+  viewer: ViewerManager
+  uuid: string
+  document: any
+  active: boolean
+  translations: object
+  refCount: number
+  constructor() {
     this.active = true
     this.translations = {}
     this.refCount = 0
   }
 
-  incrementRef(){
+  incrementRef() {
     this.refCount++
   }
 
-  decrementRef(){
+  decrementRef() {
     this.refCount--
   }
 
-  setActive(active:boolean){
+  setActive(active: boolean) {
     this.active = active
     return this
   }
 
-  setViewerManager(viewer){
+  setViewerManager(viewer) {
     this.viewer = viewer
     this.uuid = viewer.guid()
     this.document = this.viewer.document
   }
 
-  getDocument(){
+  getDocument() {
     return this.document
   }
 
-  setDocument(document){
+  setDocument(document) {
     this.document = document
   }
 

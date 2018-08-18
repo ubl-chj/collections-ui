@@ -18,7 +18,7 @@ export const AuthUserProfile = (props) => {
             aria-hidden="true" /> : <img className="account-image"
             src={notFoundImageUri} alt="Account's profile image"
             aria-hidden="true" />
-        }</a></div>:
+        }</a></div> :
         <div className="gb_Ng">
           <Link className='btn btn-outline-secondary float-right' to={Routes.SIGN_IN}>{Domain.LOGIN_TEXT}</Link>
         </div>}

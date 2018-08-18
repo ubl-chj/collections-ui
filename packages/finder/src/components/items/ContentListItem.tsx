@@ -1,26 +1,13 @@
 import * as React from "react";
-import {ItemProps} from "./ItemProps";
 import {Domain} from "../../constants";
+import {ItemProps} from "./ItemProps";
 
 const extend = require('lodash/extend')
 
 export class ContentListItem extends React.Component<ItemProps, any> {
-  constructor(props) {
-    super(props)
-  }
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
-  }
-
-  InnerHits(innerHits) {
-    const content = []
-    if (innerHits.contentList != null) {
-      innerHits.contentList.hits.hits.forEach(function (hit) {
-        content.push(hit._source)
-      })
-    }
-    return content
   }
 
   static queryBuilder(queryString) {
@@ -28,31 +15,45 @@ export class ContentListItem extends React.Component<ItemProps, any> {
       'metadata.Date of publication', 'metadata.Call number', 'metadata.Collection', 'metadata.Objekttitel', 'metadata.Part of',
       'metadata.Place', 'metadata.Place of publication', 'metadata.Publisher', 'metadata.Sprache', 'metadata.URN', 'metadata.Source PPN (SWB)']
     return {
-      'bool': {
-        'should': [
+      bool: {
+        should: [
           {
-            'nested': {
-              'path': 'contentList',
-              'query': {
-                'bool': {
-                  'must': [
-                    {'match': {'contentList.chars': queryString}}
+            nested: {
+              path: 'contentList',
+              query: {
+                bool: {
+                  must: [
+                    {match: {'contentList.chars': queryString}},
                   ],
-                }
+                },
               },
-              'inner_hits': {}
-            }
+              inner_hits: {},
+            },
           },
           {
-            'simple_query_string':
+            simple_query_string:
               {
-                'query': queryString,
-                'fields': queryFields
-              }
-          }
-        ]
-      }
+                query: queryString,
+                fields: queryFields,
+              },
+          },
+        ],
+      },
     }
+  }
+
+  constructor(props) {
+    super(props)
+  }
+
+  InnerHits(innerHits) {
+    const content = []
+    if (innerHits.contentList != null) {
+      innerHits.contentList.hits.hits.forEach(function(hit) {
+        content.push(hit._source)
+      })
+    }
+    return content
   }
 
   render() {
@@ -74,7 +75,7 @@ export class ContentListItem extends React.Component<ItemProps, any> {
           <li className='list-group-item' key={hit.objectId}>
             <a href={previewUrl + '?image=' + source.iiifService + '&region=' + hit.region} target='_blank'
               rel='noopener noreferrer'>{hit.chars}</a>
-          </li>
+          </li>,
         )}
       </ul>)
 
@@ -98,7 +99,7 @@ export class ContentListItem extends React.Component<ItemProps, any> {
             </tr>
             <tr>
               <td>Date:</td>
-              <td>{source.metadata.Date} {source.metadata['Date of publication']} {source.metadata['Datierung']} {source.metadata['datiert']}</td>
+              <td>{source.metadata.Date} {source.metadata['Date of publication']} {source.metadata.Datierung} {source.metadata.datiert}</td>
             </tr>
             <tr>
               <td>Content Coordinates:</td>

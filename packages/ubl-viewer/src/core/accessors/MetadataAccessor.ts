@@ -1,17 +1,16 @@
 import {Accessor} from "./Accessor";
-import {AnnotationsOptions} from "./AnnotationsAccessor";
 
-export interface MetadataOptions{
-  scrollTo:string|boolean
+export interface IMetadataOptions {
+  scrollTo: string | boolean
 }
 
 export class MetadataAccessor extends Accessor {
 
-  constructor(public options:MetadataOptions){
+  constructor(public options: IMetadataOptions) {
     super()
   }
 
-  setResults(results){
+  setResults(results) {
     super.setDocument(results)
   }
 }

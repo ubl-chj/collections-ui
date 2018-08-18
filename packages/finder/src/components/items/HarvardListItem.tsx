@@ -1,45 +1,45 @@
 import * as React from "react";
-import {FavoriteButton, Thumbnail, Title} from "../ui";
+import {Domain} from "../../constants";
 import {AuthUserContext, ResultContext} from "../core";
 import {StructuredData} from "../core/StructuredData";
-import {Domain} from "../../constants";
+import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {ItemProps} from "./ItemProps";
 
 const firebase = require("firebase/app");
 const extend = require("lodash/extend")
 
 export class HarvardListItem extends React.Component<ItemProps, any> {
-  constructor(props) {
-    super(props)
-  }
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
-    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
   }
 
   static getAuthor(source, bemBlocks) {
-    if (source['People']) {
-      return <h3 className={bemBlocks.item('subtitle')}><b>Artist:</b> {source['People']}</h3>
+    if (source.People) {
+      return <h3 className={bemBlocks.item('subtitle')}><b>Artist:</b> {source.People}</h3>
     }
   }
 
   static getTechnique(source, bemBlocks) {
-    if (source['Technique']) {
-      return <h3 className={bemBlocks.item('subtitle')}><b>Classification:</b> {source['Technique']}</h3>
+    if (source.Technique) {
+      return <h3 className={bemBlocks.item('subtitle')}><b>Classification:</b> {source.Technique}</h3>
     }
   }
 
   static getMedium(source, bemBlocks) {
-    if (source['Medium']) {
-      return <h3 className={bemBlocks.item('subtitle')}><b>Medium:</b> {source['Medium']}</h3>
+    if (source.Medium) {
+      return <h3 className={bemBlocks.item('subtitle')}><b>Medium:</b> {source.Medium}</h3>
     }
   }
 
   static getDate(source, bemBlocks) {
-    if (source['Date']) {
-      return <h3 className={bemBlocks.item('subtitle')}><b>Date:</b> {source['Date']}</h3>
+    if (source.Date) {
+      return <h3 className={bemBlocks.item('subtitle')}><b>Date:</b> {source.Date}</h3>
     }
+  }
+  constructor(props) {
+    super(props)
   }
 
   buildListItem() {
@@ -68,13 +68,13 @@ export class HarvardListItem extends React.Component<ItemProps, any> {
                 {(authUser) => authUser ?
                   <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
               </AuthUserContext.Consumer>
-              <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source['title']}/>
+              <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source.title}/>
               {HarvardListItem.getAuthor(source, bemBlocks)}
               {HarvardListItem.getTechnique(source, bemBlocks)}
               {HarvardListItem.getDate(source, bemBlocks)}
               {HarvardListItem.getMedium(source, bemBlocks)}
               <h3 className={bemBlocks.item('subtitle')}>
-                <b>Classification:</b> {source['Classification']}</h3>
+                <b>Classification:</b> {source.Classification}</h3>
               <StructuredData headline={source.title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}/>
             </div>
           </div>

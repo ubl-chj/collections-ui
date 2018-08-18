@@ -2,7 +2,7 @@ import {ManifestTransport} from "./ManifestTransport";
 
 export class MockESTransport extends ManifestTransport {
 
-  get(query){
+  get(query) {
     return Promise.resolve(query)
   }
 }

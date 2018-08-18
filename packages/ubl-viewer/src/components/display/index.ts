@@ -1,3 +1,3 @@
 export * from "./DocumentViewSwitcher";
-export * from "./Metadata"
+export * from "../ui/controls/Metadata"
 export * from "./Annotations"

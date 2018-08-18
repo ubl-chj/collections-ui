@@ -9,12 +9,11 @@ import {
   Metadata,
   TopBar,
   ViewerManager,
-  ViewerProvider
+  ViewerProvider,
 } from 'ubl-viewer'
-import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../ui'
 import '../../assets/index.css'
 import {Domain, Routes} from '../../constants'
-
+import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../ui'
 
 const ReactTooltip = require('react-tooltip')
 const qs = require('query-string')
@@ -27,17 +26,12 @@ class ViewerComponent extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.props = props
-    this.goBack = this.goBack.bind(this);
   }
 
   componentDidMount() {
     const manifest = qs.parse(this.props.location.search).manifest
     this.viewer = new ViewerManager(manifest)
     this.forceUpdate()
-  }
-
-  goBack() {
-    this.props.history.goBack();
   }
 
   render() {

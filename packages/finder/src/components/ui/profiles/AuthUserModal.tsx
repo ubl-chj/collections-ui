@@ -1,7 +1,7 @@
 import * as React from "react";
-import {AuthUserContext} from "../../core";
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap'
 import {Routes} from '../../../constants'
+import {AuthUserContext} from "../../core";
 
 const firebase = require("firebase/app");
 

@@ -33,13 +33,13 @@ export class StructuredData extends React.Component<any, any, any> {
       dataLayer: {
         "@context": "http://schema.org",
         "@type": "ImageObject",
-        "headline": this.headline,
-        [creatorKey]: this.creator,
-        "thumbnail": this.thumbnail,
         "contentUrl": this.contentUrl,
-        [positionKey]: this.position
+        [creatorKey]: this.creator,
+        "headline": this.headline,
+        "thumbnail": this.thumbnail,
+        [positionKey]: this.position,
       },
-      dataLayerName: 'schemaDataLayer'
+      dataLayerName: 'schemaDataLayer',
     }
     TagManager.dataLayer(schema)
   }

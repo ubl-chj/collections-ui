@@ -1,21 +1,22 @@
 import * as React from "react";
-import {FavoriteButton, Thumbnail, Title} from "../ui";
-import {AuthUserContext, ResultContext} from "../core";
-import {StructuredData} from "../core/StructuredData";
 import {Domain} from "../../constants";
+import {AuthUserContext} from "../core";
+import {StructuredData} from "../core/StructuredData";
+import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {ItemProps} from './ItemProps'
 
 const firebase = require("firebase/app");
 const extend = require("lodash/extend")
 
 export class AtomicListItem extends React.Component<ItemProps, any> {
-  constructor(props) {
-    super(props)
-  }
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
-    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
+  }
+
+  constructor(props) {
+    super(props)
   }
 
   render() {
@@ -54,7 +55,7 @@ export class AtomicListItem extends React.Component<ItemProps, any> {
               </tr>
               <tr>
                 <td>Date:</td>
-                <td>{source.metadata.Date} {source.metadata['Date of publication']} {source.metadata['Datierung']} {source.metadata['datiert']}</td>
+                <td>{source.metadata.Date} {source.metadata['Date of publication']} {source.metadata.Datierung} {source.metadata.datiert}</td>
               </tr>
               <tr>
                 <td>Elastic Manifest:</td>

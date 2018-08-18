@@ -1,29 +1,30 @@
 import * as React from "react";
-import {Thumbnail, Title} from "../ui";
 import {Domain} from "../../constants";
+import {Thumbnail, Title} from "../ui";
 import {ItemProps} from "./ItemProps";
 
 const extend = require("lodash/extend")
 
 export class OrpGridItem extends React.Component<ItemProps, any> {
-  constructor(props) {
-    super(props)
-  }
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
-    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
   }
 
   static getQuery(params, constManifestUrl) {
     const query = JSON.stringify({
-      'query': {
-        'simple_query_string': {
-          'query': params, 'default_operator': 'and'
-        }
-      }, 'size': 500
+      query: {
+        simple_query_string: {
+          query: params, default_operator: 'and',
+        },
+      }, size: 500,
     })
     return constManifestUrl + query
+  }
+
+  constructor(props) {
+    super(props)
   }
 
   render() {
@@ -34,11 +35,11 @@ export class OrpGridItem extends React.Component<ItemProps, any> {
     const thumbnail = source.imageServiceIRI + Domain.THUMBNAIL_API_REQUEST
     const imageLink = previewUrl + '?image=' + source.imageServiceIRI
     const viewer = process.env.REACT_APP_VIEWER_BASE + '/#?c=0&m=0&s=0&cv=0&manifest='
-    let tag4 = source.metadataMap.tag4 || ''
-    let tag5 = source.metadataMap.tag5 || ''
-    let tag6 = source.metadataMap.tag6 || ''
-    let tag7 = source.metadataMap.tag7 || ''
-    let tag8 = source.metadataMap.tag8 || ''
+    const tag4 = source.metadataMap.tag4 || ''
+    const tag5 = source.metadataMap.tag5 || ''
+    const tag6 = source.metadataMap.tag6 || ''
+    const tag7 = source.metadataMap.tag7 || ''
+    const tag8 = source.metadataMap.tag8 || ''
     const query = OrpGridItem.getQuery(source.metadataMap.tag3 + ' ' + tag4 + ' ' + tag5 + ' ' + tag6 + ' ' + tag7 + ' ' + tag8, constManifestUrl)
     const titleString = source.metadataMap.tag3 + ' ' + source.metadataMap.tag5 + ' ' + source.metadataMap.tag7 + ' ' + source.metadataMap.tag8
     const finalTitle = titleString.substr(0, 50) + '...: ' + source.imageIndex

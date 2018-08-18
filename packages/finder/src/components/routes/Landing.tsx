@@ -1,7 +1,6 @@
+import * as _ from "lodash"
 import * as React from 'react'
 import {Link} from 'react-router-dom'
-import {CollectionsListItem} from '../items'
-import * as _ from "lodash"
 import {
   ActionBar,
   ActionBarRow,
@@ -21,28 +20,29 @@ import {
   SortingSelector,
   TopBar,
   ViewSwitcherHits,
-  ViewSwitcherToggle
+  ViewSwitcherToggle,
 } from 'searchkit-fork'
 import '../../assets/index.css'
-import {AuthUserProfile, AuthUserTooltip} from '../ui'
 import {Domain, Routes} from '../../constants'
-import {RouteProps} from './RouteProps'
+import {CollectionsListItem} from '../items'
+import {AuthUserProfile, AuthUserTooltip} from '../ui'
+import {IRouteProps} from './IRouteProps'
 
 const ReactTooltip = require('react-tooltip')
 
-export class Landing extends React.Component<RouteProps, {}> {
+export class Landing extends React.Component<IRouteProps, {}> {
+
+  static defaultProps = {
+    host: process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_LANDING_INDEX,
+    options: {timeout: 20000},
+    routeConfig: require('./config/landing.json'),
+  }
   searchkit: SearchkitManager
   cachedHits: any
   routeKey: string
   state: {
     components: [],
-    result: object
-  }
-
-  static defaultProps = {
-    host: process.env.REACT_APP_ELASTICSEARCH_HOST + 'a1',
-    routeConfig: require('./config/landing.json'),
-    options: {timeout: 20000}
+    result: object,
   }
 
   constructor(props) {
@@ -51,7 +51,7 @@ export class Landing extends React.Component<RouteProps, {}> {
     this.routeKey = this.props.routeConfig.indexName
     this.state = {
       components: [],
-      result: {}
+      result: {},
     }
   }
 
@@ -71,11 +71,9 @@ export class Landing extends React.Component<RouteProps, {}> {
       if (results !== 'undefined' && results) {
         sessionStorage.setItem(this.routeKey, results)
         this.setState({result: results})
-        console.log("setting session storage with " + this.cachedHits + " for " + this.routeKey)
       }
     } else if (this.cachedHits && this.cachedHits !== 'undefined') {
       this.searchkit.setResults(_.cloneDeep(JSON.parse(this.cachedHits)))
-      console.log("getting results for " + this.routeKey + " from session storage")
     }
   }
 
@@ -106,7 +104,7 @@ export class Landing extends React.Component<RouteProps, {}> {
               <ActionBarRow>
                 <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
                 <ViewSwitcherToggle/>
-                <SortingSelector options={[{label: 'Collection', field: 'metadataMap.tag1.keyword', order: 'asc'},]}/>
+                <SortingSelector options={[{label: 'Collection', field: 'metadataMap.tag1.keyword', order: 'asc'}]}/>
               </ActionBarRow>
               <ActionBarRow>
                 <GroupedSelectedFilters/>

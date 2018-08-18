@@ -2,50 +2,46 @@ import {State} from "../state"
 import {Accessor} from "./Accessor"
 
 export class StatefulAccessor<T extends State<any>> extends Accessor {
-  key:string
-  urlKey:string
-  state:T
-  resultsState:T
+  key: string
+  urlKey: string
+  state: T
+  resultsState: T
 
-  constructor(key, urlString?){
+  constructor(key, urlString?) {
     super()
     this.key = key
     this.urlKey = urlString || key && key.replace(/\./g, "_")
   }
 
-  onStateChange(_oldState){
-
-  }
-
-  fromQueryObject(ob){
-    let value = ob[this.urlKey]
+  fromQueryObject(ob) {
+    const value = ob[this.urlKey]
     this.state = this.state.setValue(value)
   }
 
-  getQueryObject(){
-    let val = this.state.getValue()
+  getQueryObject() {
+    const val = this.state.getValue()
     return (val) ? {
-      [this.urlKey]:val
+      [this.urlKey]: val,
     } : {}
   }
 
-  setViewerManager(searchkit){
+  setViewerManager(searchkit) {
     super.setViewerManager(searchkit)
-    this.uuid = this.key+this.uuid
+    this.uuid = this.key + this.uuid
     this.fromQueryObject(searchkit.state)
     this.setResultsState()
   }
 
-  setResults(results){
+  setResults(results) {
     super.setDocument(results)
     this.setResultsState()
   }
 
-  setResultsState(){
+  setResultsState() {
     this.resultsState = this.state
   }
 
-  resetState(){
+  resetState() {
     this.state = this.state.clear()
   }
 

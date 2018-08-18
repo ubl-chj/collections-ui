@@ -1,32 +1,33 @@
 import * as React from "react";
-import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {AuthUserContext, ResultContext} from "../core";
 import {StructuredData} from "../core/StructuredData";
+import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {ItemProps} from "./ItemProps";
 
 const firebase = require("firebase/app");
 const extend = require("lodash/extend")
 
-const getAuthor = (source, bemBlocks) => {
-  if (source['Artist']) {
-    return <h3 className={bemBlocks.item('subtitle')}><b>Artist:</b> {source['Artist']}</h3>
-  }
-}
-
-const getSubject = (source, bemBlocks) => {
-  if (source['Subject(s)']) {
-    return <h3 className={bemBlocks.item('subtitle')}><b>Object Type:</b> {source['Object Type']}</h3>
-  }
-}
-
 export class GettyListItem extends React.Component<ItemProps, any> {
-  constructor(props) {
-    super(props)
-  }
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
-    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
+  }
+
+  static getAuthor(source, bemBlocks) {
+    if (source.Artist) {
+      return <h3 className={bemBlocks.item('subtitle')}><b>Artist:</b> {source.Artist}</h3>
+    }
+  }
+
+  static getSubject(source, bemBlocks) {
+    if (source['Subject(s)']) {
+      return <h3 className={bemBlocks.item('subtitle')}><b>Object Type:</b> {source['Object Type']}</h3>
+    }
+  }
+
+  constructor(props) {
+    super(props)
   }
 
   render() {
@@ -47,12 +48,12 @@ export class GettyListItem extends React.Component<ItemProps, any> {
               {(authUser) => authUser ?
                 <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
             </AuthUserContext.Consumer>
-            <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source['title']}/>
-            {getAuthor(source, bemBlocks)}
-            {getSubject(source, bemBlocks)}
+            <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source.title}/>
+            {GettyListItem.getAuthor(source, bemBlocks)}
+            {GettyListItem.getSubject(source, bemBlocks)}
             <h3 className={bemBlocks.item('subtitle')}>
               <b>Date:</b> {source['Culture & Date']} {source['Culture & Date']}</h3>
-            <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source['Inscription']}}/>
+            <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source.Inscription}}/>
           </div>
           <StructuredData headline={source.title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}/>
         </div>

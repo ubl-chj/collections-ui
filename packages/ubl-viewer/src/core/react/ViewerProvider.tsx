@@ -1,41 +1,41 @@
-import * as React from "react";
 import * as PropTypes from "prop-types";
+import * as React from "react";
 import {ViewerManager} from "../ViewerManager"
 
-export interface ViewerProps {
-  viewer:ViewerManager
-  children?:any
+export interface IViewerProps {
+  viewer: ViewerManager
+  children?: any
 }
 
-export class ViewerProvider extends React.Component<ViewerProps,any> {
+export class ViewerProvider extends React.Component<IViewerProps, any> {
 
   static childContextTypes = {
-    viewer:PropTypes.instanceOf(ViewerManager)
+    viewer: PropTypes.instanceOf(ViewerManager),
   }
 
   static propTypes = {
-    viewer:PropTypes.instanceOf(ViewerManager).isRequired,
-    children:PropTypes.element.isRequired
+    children: PropTypes.element.isRequired,
+    viewer: PropTypes.instanceOf(ViewerManager).isRequired,
   }
 
   componentWillMount() {
     this.props.viewer.setupListeners()
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.viewer.completeRegistration()
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     const {viewer} = this.props
     viewer.guidGenerator.reset()
   }
 
-  getChildContext(){
-    return {viewer:this.props.viewer}
+  getChildContext() {
+    return {viewer: this.props.viewer}
   }
 
-  render(){
+  render() {
     return this.props.children
   }
 }

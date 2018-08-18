@@ -1,6 +1,6 @@
 import * as React from "react";
-import {ResultContext} from "../core";
 import {Link} from 'react-router-dom'
+import {ResultContext} from "../core";
 
 export class Thumbnail extends React.Component<any, any> {
   imageSource: string
@@ -30,8 +30,8 @@ export class Thumbnail extends React.Component<any, any> {
             pathname: process.env.REACT_APP_OSD_BASE,
             search: this.search,
             state: {
-              result: result
-            }
+              result,
+            },
           }}>
             <img width={this.imageWidth} onError={(e) => {
               this.handleMissingImage(e.target as HTMLImageElement)

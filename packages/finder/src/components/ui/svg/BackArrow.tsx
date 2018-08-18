@@ -1,6 +1,8 @@
 import React from 'react'
+import keydown from 'react-keydown'
 import {withRouter} from 'react-router-dom'
 
+@keydown
 class BackArrowComponent extends React.Component<any, any> {
   props: any
 
@@ -12,6 +14,14 @@ class BackArrowComponent extends React.Component<any, any> {
 
   goBack() {
     this.props.history.goBack();
+  }
+
+  componentWillReceiveProps({keydown}) {
+    if ( keydown.event ) {
+      if (keydown.event.code === 'ArrowLeft') {
+        this.goBack()
+      }
+    }
   }
 
   render() {

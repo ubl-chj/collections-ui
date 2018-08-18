@@ -1,93 +1,91 @@
-import * as React from "react";
 import * as PropTypes from "prop-types";
+import * as React from "react";
 
 import {
   AnnotationsAccessor,
-  ViewerComponent,
-  ViewerComponentProps,
-  RenderComponentType,
-  RenderComponentPropType,
+  block,
+  IViewerComponentProps,
   renderComponent,
-  block
+  RenderComponentPropType,
+  RenderComponentType,
+  ViewerComponent,
 } from "../../core"
 
 const defaults = require("lodash/defaults")
 
-export interface AnnotationItemProps {
-  key:string,
-  bemBlocks?:any,
-  document:any
+export interface IAnnotationItemProps {
+  key: string,
+  bemBlocks?: any,
+  document: any
 }
 
-export class AnnotationItem extends React.PureComponent<AnnotationItemProps, any> {
+export class AnnotationItem extends React.PureComponent<IAnnotationItemProps, any> {
 
-  render(){
+  render() {
     return (
-      <div data-qa="hit"
-    className={this.props.bemBlocks.item().mix(this.props.bemBlocks.container("item"))}>
-    {this.props.document}
-    </div>
-  )
+      <div data-qa="hit" className={this.props.bemBlocks.item().mix(this.props.bemBlocks.container("item"))}>
+        {this.props.document}
+      </div>
+    )
   }
 }
 
-export interface AnnotationListProps{
-  mod?:string,
-  className?:string,
-  itemComponent?:RenderComponentType<AnnotationItemProps>,
-  document:Object
+export interface IAnnotationListProps {
+  mod?: string,
+  className?: string,
+  itemComponent?: RenderComponentType<IAnnotationItemProps>,
+  document: object
 }
 
-export class AnnotationList extends React.PureComponent<AnnotationListProps, any>{
+export class AnnotationList extends React.PureComponent<IAnnotationListProps, any> {
 
-  static defaultProps={
-    mod:"sk-hits",
-    itemComponent:AnnotationItem
+  static defaultProps = {
+    itemComponent: AnnotationItem,
+    mod: "sk-hits",
   }
 
   static propTypes = {
-    mod:PropTypes.string,
-    className:PropTypes.string,
-    itemComponent:RenderComponentPropType,
-    document:PropTypes.any
+    className: PropTypes.string,
+    document: PropTypes.any,
+    itemComponent: RenderComponentPropType,
+    mod: PropTypes.string,
   }
 
-  render(){
+  render() {
     const {document, mod, className, itemComponent} = this.props
     const bemBlocks = {
       container: block(mod).el,
-      item: block(`${mod}-hit`).el
+      item: block(`${mod}-hit`).el,
     }
     return (
       <div data-qa="document" className={bemBlocks.container().mix(className)}>
-    {renderComponent(itemComponent, {document, bemBlocks})}
-    </div>
-  )
+        {renderComponent(itemComponent, {document, bemBlocks})}
+      </div>
+    )
   }
 }
 
-export interface AnnotationsProps extends ViewerComponentProps{
+export interface IAnnotationsProps extends IViewerComponentProps {
   hitsPerPage?: number
-  highlightFields?:Array<string>
-  customHighlight?:any
-  itemComponent?: RenderComponentType<AnnotationItemProps>
-  listComponent?: RenderComponentType<AnnotationItemProps>
-  scrollTo?: boolean|string
+  highlightFields?: string[]
+  customHighlight?: any
+  itemComponent?: RenderComponentType<IAnnotationItemProps>
+  listComponent?: RenderComponentType<IAnnotationItemProps>
+  scrollTo?: boolean | string
 }
 
-
-export class Annotations extends ViewerComponent<AnnotationsProps, any> {
-  annotationsAccessor:AnnotationsAccessor
+export class Annotations extends ViewerComponent<IAnnotationsProps, any> {
 
   static propTypes = defaults({
-    itemComponent:RenderComponentPropType,
-    listComponent:RenderComponentPropType
+    itemComponent: RenderComponentPropType,
+    listComponent: RenderComponentPropType,
   }, ViewerComponent.propTypes)
 
   static defaultProps = {
-    listComponent:AnnotationList,
-    scrollTo: "body"
+    listComponent: AnnotationList,
+    scrollTo: "body",
   }
+  annotationsAccessor: AnnotationsAccessor
 
   componentWillMount() {
     super.componentWillMount()
@@ -95,18 +93,15 @@ export class Annotations extends ViewerComponent<AnnotationsProps, any> {
     this.viewer.addAccessor(this.annotationsAccessor)
   }
 
-
   render() {
-    let document:Object = this.getDocument()
+    const document: object = this.getDocument()
 
     if (!this.isInitialLoading()) {
       const {listComponent, mod, className, itemComponent} = this.props
       return renderComponent(listComponent, {
-        document, mod, className, itemComponent
+        className, document, itemComponent, mod,
       })
     }
-
     return null
-
   }
 }
