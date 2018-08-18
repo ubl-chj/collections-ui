@@ -4,12 +4,12 @@ import {withRouter} from 'react-router-dom';
 export const asCollection = (Component) => {
 
   class Collection extends React.Component<any> {
-    config: Object
+    config: object
 
     constructor(props) {
       super(props)
       this.config = {
-        id: null
+        id: null,
       }
     }
 
@@ -19,7 +19,7 @@ export const asCollection = (Component) => {
       const configFile = require(`${configFileName}`)
       const items = [configFile.gridItem, configFile.listItem]
       const config = {
-        routeConfig: configFile
+        routeConfig: configFile,
       };
       return (<Component {...this.props} config={config} items={items}/>)
     }
@@ -27,4 +27,3 @@ export const asCollection = (Component) => {
 
   return withRouter(Collection);
 }
-
