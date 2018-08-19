@@ -3,5 +3,5 @@ export enum Routes {
   SIGN_IN = '/signin',
   LANDING = '/',
   ACCOUNT = '/account',
-  PASSWORD_FORGET = '/pw-forget'
+  PASSWORD_FORGET = '/pw-forget',
 }

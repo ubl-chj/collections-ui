@@ -1,8 +1,9 @@
 import * as React from "react";
 import {Link} from 'react-router-dom'
-import {ResultContext} from "../core";
+import {ResultContext, StructuredDataCollection} from "../core";
 import {Thumbnail} from "../ui";
 import {ItemProps} from './ItemProps'
+import {buildImagePreview} from './ItemUtils';
 
 const extend = require('lodash/extend')
 
@@ -20,7 +21,7 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
     const {result, bemBlocks, previewUrl} = this.props
     const source = extend({}, result._source, result.highlight)
     const imageSource = source.imageServiceIRI + '/full/248,300/0/default.jpg'
-    const imageLink = previewUrl + '?image=' + source.imageServiceIRI
+    const imageLink = buildImagePreview(previewUrl, source.imageServiceIRI)
     const updated = new Date(source.metadataMap.tag3).toDateString();
     return (
       <ResultContext.Provider value={result}>

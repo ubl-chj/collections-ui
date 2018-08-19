@@ -39,37 +39,22 @@ class Collection extends React.Component<IRouteProps, {}> {
   }
 
   static buildHitComponents(gridItem, listItem, listDefault) {
-    let items = []
-    if (!listDefault) {
-      items = [
-        {
-          defaultOption: true,
-          itemComponent: gridItem,
-          key: 'grid',
-          title: 'Grid',
-        },
-        {
-          itemComponent: listItem,
-          key: 'list',
-          title: 'List',
-        },
-      ]
-    } else {
-      items = [
-        {
-          itemComponent: gridItem,
-          key: 'grid',
-          title: 'Grid',
-        },
-        {
-          defaultOption: true,
-          itemComponent: listItem,
-          key: 'list',
-          title: 'List',
-        },
-      ]
+    const gridObj = {
+      itemComponent: gridItem,
+      key: 'grid',
+      title: 'Grid',
     }
-    return items
+    const listObj = {
+      itemComponent: listItem,
+      key: 'list',
+      title: 'List',
+    }
+    if (listDefault) {
+      Object.defineProperty(listObj, 'defaultOption', {value: true});
+    } else {
+      Object.defineProperty(gridObj, 'defaultOption', {value: true});
+    }
+    return [gridObj, listObj]
   }
 
   state: {
@@ -80,6 +65,7 @@ class Collection extends React.Component<IRouteProps, {}> {
   cachedHits: any
   routeKey: string
   routeProps: IRouteProps
+  dataLayer: object
 
   constructor(props) {
     super(props);
@@ -107,6 +93,10 @@ class Collection extends React.Component<IRouteProps, {}> {
   componentDidMount() {
     const {items} = this.props
     items.map((type) => this.addComponent(type))
+  }
+
+  componentDidUpdate() {
+    this.dataLayer = (window as any).schemaDataLayer ? (window as any).schemaDataLayer : null
   }
 
   render() {

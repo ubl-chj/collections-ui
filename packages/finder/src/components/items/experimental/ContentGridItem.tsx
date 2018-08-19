@@ -1,8 +1,8 @@
 import * as React from "react";
 const extend = require('lodash/extend')
 
-import {Domain} from "../../constants";
-import {ItemProps} from "./ItemProps";
+import {Domain} from "../../../constants/index";
+import {ItemProps} from "../ItemProps";
 
 export class ContentGridItem extends React.Component<ItemProps, any> {
 

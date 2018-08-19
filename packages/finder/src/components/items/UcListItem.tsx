@@ -1,9 +1,10 @@
 import * as React from "react";
 import {Domain} from "../../constants";
 import {AuthUserContext, ResultContext} from "../core";
-import {StructuredData} from "../core/StructuredData";
+import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
 import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {ItemProps} from "./ItemProps";
+import {buildImagePreview, buildImageView} from './ItemUtils';
 
 const firebase = require("firebase/app");
 const extend = require("lodash/extend")
@@ -43,8 +44,8 @@ export class UcListItem extends React.Component<ItemProps, any> {
     const thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
     const contentUrl = source.Manifest
     const creator = source['Author(s) of the Record']
-    const imageLink = previewUrl + '?image=' + source.thumbnail + '&manifest=' + source.Manifest
-    const viewUrl = viewerUrl + '?manifest=' + contentUrl
+    const imageLink = buildImagePreview(previewUrl, source.thumbnail, contentUrl)
+    const viewUrl = buildImageView(viewerUrl, contentUrl)
     return (
       <ResultContext.Provider value={result}>
         <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
@@ -60,7 +61,7 @@ export class UcListItem extends React.Component<ItemProps, any> {
             {UcListItem.getDate(source, bemBlocks)}
             <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source.Abstract}}/>
           </div>
-          <StructuredData headline={source.title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}/>
+          <StructuredDataImageObject result={result} thumbnail={thumbnail} contentUrl={contentUrl}/>
         </div>
       </ResultContext.Provider>)
   }

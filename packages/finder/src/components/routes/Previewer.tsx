@@ -4,6 +4,7 @@ import {ActionBar, Layout, LayoutBody, Metadata, OsdComponent, TopBar, ViewerMan
 import '../../assets/index.css'
 import {Domain, Routes} from '../../constants'
 import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../ui'
+import {StructuredDataImageObject} from '../schema/StructuredDataImageObject';
 
 const ReactTooltip = require('react-tooltip')
 const qs = require('query-string')
@@ -17,6 +18,7 @@ class PreviewerComponent extends React.Component<any, any> {
   coordinates: any
   image: string
   document: string
+  source: object
 
   constructor(props) {
     super(props)
@@ -35,6 +37,7 @@ class PreviewerComponent extends React.Component<any, any> {
         this.abstractRegion = params.region.substring(4).split(',')
       }
     }
+    this.source = this.props.location.state.result._source
     this.document = image + '/info.json'
     this.viewer = new ViewerManager(manifest)
     this.forceUpdate()

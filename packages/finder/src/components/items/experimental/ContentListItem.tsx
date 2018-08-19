@@ -1,6 +1,6 @@
 import * as React from "react";
-import {Domain} from "../../constants";
-import {ItemProps} from "./ItemProps";
+import {Domain} from "../../../constants/index";
+import {ItemProps} from "../ItemProps";
 
 const extend = require('lodash/extend')
 

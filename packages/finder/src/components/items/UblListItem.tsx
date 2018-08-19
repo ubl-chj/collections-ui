@@ -1,9 +1,10 @@
 import * as React from "react";
 import {Domain} from "../../constants";
 import {AuthUserContext} from "../core";
-import {StructuredData} from "../core/StructuredData";
+import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
 import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {ItemProps} from "./ItemProps";
+import {buildImagePreview} from './ItemUtils';
 
 const firebase = require("firebase/app");
 
@@ -33,7 +34,7 @@ export class UblListItem extends React.Component<ItemProps, any> {
     const secondId = viewId.substring(5, 8).padStart(4, '0')
     const imageBase = process.env.REACT_APP_UBL_IMAGE_SERVICE_BASE + firstId + '/' + secondId + '/' + viewId + '/00000001.jpx'
     const thumbnail = imageBase + Domain.THUMBNAIL_API_REQUEST
-    const imageLink = previewUrl + "?image=" + imageBase
+    const imageLink = buildImagePreview(previewUrl, imageBase)
     return (
       <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
         <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
@@ -61,7 +62,7 @@ export class UblListItem extends React.Component<ItemProps, any> {
             </tbody>
           </table>
         </div>
-        <StructuredData headline={source.Title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}/>
+        <StructuredDataImageObject result={result} thumbnail={thumbnail} contentUrl={contentUrl}/>
       </div>)
   }
 }

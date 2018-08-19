@@ -5,13 +5,13 @@ import {AuthUserContext} from './AuthUserContext';
 
 export const withAuthentication = (Component) =>
   class WithAuthentication extends React.Component<any, any> {
-    state: { authUser: Object }
+    state: { authUser: object }
 
     constructor(props) {
       super(props);
       this.state = {
         authUser: null,
-      };
+      }
     }
 
     componentDidMount() {
@@ -19,7 +19,7 @@ export const withAuthentication = (Component) =>
         authUser
           ? this.setState({authUser})
           : this.setState({authUser: null});
-      });
+      })
     }
 
     render() {
@@ -29,6 +29,6 @@ export const withAuthentication = (Component) =>
         <AuthUserContext.Provider value={authUser}>
           <Component/>
         </AuthUserContext.Provider>
-      );
+      )
     }
   }

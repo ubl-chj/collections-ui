@@ -1,9 +1,10 @@
 import * as React from "react";
 import {Domain} from "../../constants";
 import {AuthUserContext, ResultContext} from "../core";
-import {StructuredData} from "../core/StructuredData";
+import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
 import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {ItemProps} from "./ItemProps";
+import {buildImagePreview, buildImageView} from './ItemUtils';
 
 const firebase = require("firebase/app");
 const extend = require("lodash/extend")
@@ -23,7 +24,7 @@ export class HarvardListItem extends React.Component<ItemProps, any> {
 
   static getTechnique(source, bemBlocks) {
     if (source.Technique) {
-      return <h3 className={bemBlocks.item('subtitle')}><b>Classification:</b> {source.Technique}</h3>
+      return <h3 className={bemBlocks.item('subtitle')}><b>Technique:</b> {source.Technique}</h3>
     }
   }
 
@@ -55,9 +56,8 @@ export class HarvardListItem extends React.Component<ItemProps, any> {
 
     if (thumbnail) {
       const contentUrl = source.manifest
-      const imageLink = previewUrl + '?image=' + source.thumbnail + '&manifest=' + source.manifest
-      const viewUrl = viewerUrl + '?manifest=' + contentUrl
-
+      const imageLink = buildImagePreview(previewUrl, source.thumbnail, contentUrl)
+      const viewUrl = buildImageView(viewerUrl, contentUrl)
       const creator = source.People
       return (
         <ResultContext.Provider value={result}>
@@ -75,7 +75,7 @@ export class HarvardListItem extends React.Component<ItemProps, any> {
               {HarvardListItem.getMedium(source, bemBlocks)}
               <h3 className={bemBlocks.item('subtitle')}>
                 <b>Classification:</b> {source.Classification}</h3>
-              <StructuredData headline={source.title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}/>
+              <StructuredDataImageObject result={result} thumbnail={thumbnail} contentUrl={contentUrl}/>
             </div>
           </div>
         </ResultContext.Provider>)

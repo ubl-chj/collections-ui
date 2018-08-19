@@ -1,8 +1,9 @@
 import * as React from "react";
 import {AuthUserContext, ResultContext} from "../core";
-import {StructuredData} from "../core/StructuredData";
+import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
 import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {ItemProps} from "./ItemProps";
+import {buildImagePreview, buildImageView} from './ItemUtils';
 
 const firebase = require("firebase/app");
 const extend = require("lodash/extend")
@@ -35,9 +36,9 @@ export class GettyListItem extends React.Component<ItemProps, any> {
     const source = extend({}, result._source, result.highlight)
     const thumbnail = source.thumbnail
     const imageBase = thumbnail.split('/full')[0]
-    const imageLink = previewUrl + '?image=' + imageBase + '&manifest=' + source.id
-    const viewUrl = viewerUrl + '?manifest=' + source.id
     const contentUrl = source.id
+    const imageLink = buildImagePreview(previewUrl, imageBase, contentUrl)
+    const viewUrl = buildImageView(viewerUrl, contentUrl)
     const creator = source.Artist
     return (
       <ResultContext.Provider value={result}>
@@ -55,7 +56,7 @@ export class GettyListItem extends React.Component<ItemProps, any> {
               <b>Date:</b> {source['Culture & Date']} {source['Culture & Date']}</h3>
             <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source.Inscription}}/>
           </div>
-          <StructuredData headline={source.title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}/>
+          <StructuredDataImageObject result={result} thumbnail={thumbnail} contentUrl={contentUrl}/>
         </div>
       </ResultContext.Provider>)
   }

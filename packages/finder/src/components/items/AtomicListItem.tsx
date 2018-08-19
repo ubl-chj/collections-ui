@@ -1,9 +1,10 @@
 import * as React from "react";
 import {Domain} from "../../constants";
 import {AuthUserContext} from "../core";
-import {StructuredData} from "../core/StructuredData";
+import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
 import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {ItemProps} from './ItemProps'
+import {buildImagePreview} from './ItemUtils';
 
 const firebase = require("firebase/app");
 const extend = require("lodash/extend")
@@ -26,8 +27,7 @@ export class AtomicListItem extends React.Component<ItemProps, any> {
     const constManifestUrl = generatorUrl + "?type=atomic&index=" + process.env.REACT_APP_ATOMIC_INDEX + "&q="
     const source = extend({}, result._source, result.highlight)
     const thumbnail = source.iiifService + Domain.THUMBNAIL_API_REQUEST
-    const creator = source.metadata.Author
-    const imageLink = previewUrl + "?image=" + source.iiifService
+    const imageLink = buildImagePreview(previewUrl, source.iiifService)
     const pathname = new URL(source.iiifService).pathname
     const splitPath = pathname.split("/")
     const viewId = splitPath[5]
@@ -68,7 +68,7 @@ export class AtomicListItem extends React.Component<ItemProps, any> {
               </tbody>
             </table>
           </div>
-          <StructuredData headline={source.metadata.Title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}
+          <StructuredDataImageObject result={result} thumbnail={thumbnail} contentUrl={contentUrl}
             position={source.imageIndex}/>
         </div>
     )

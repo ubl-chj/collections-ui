@@ -3,6 +3,7 @@ import {Domain} from "../../constants";
 import {AuthUserContext} from "../core";
 import {FavoriteButton, Thumbnail} from "../ui";
 import {ItemProps} from "./ItemProps";
+import {buildImagePreview} from './ItemUtils';
 
 const extend = require("lodash/extend")
 const firebase = require("firebase/app");
@@ -37,7 +38,7 @@ export class OrpListItem extends React.Component<ItemProps, any> {
     const source = extend({}, result._source, result.highlight)
     const viewerIRI = process.env.REACT_APP_VIEWER_BASE + '/#?c=0&m=0&s=0&cv=0&manifest='
     const imageSource = source.imageServiceIRI + Domain.THUMBNAIL_API_REQUEST
-    const imageLink = previewUrl + '?image=' + source.imageServiceIRI
+    const imageLink = buildImagePreview(previewUrl, source.imageServiceIRI)
     const tag4 = source.metadataMap.tag4 || ''
     const tag5 = source.metadataMap.tag5 || ''
     const tag6 = source.metadataMap.tag6 || ''

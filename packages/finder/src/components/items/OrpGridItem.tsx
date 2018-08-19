@@ -2,6 +2,7 @@ import * as React from "react";
 import {Domain} from "../../constants";
 import {Thumbnail, Title} from "../ui";
 import {ItemProps} from "./ItemProps";
+import {buildImagePreview} from './ItemUtils';
 
 const extend = require("lodash/extend")
 
@@ -16,7 +17,8 @@ export class OrpGridItem extends React.Component<ItemProps, any> {
     const query = JSON.stringify({
       query: {
         simple_query_string: {
-          query: params, default_operator: 'and',
+          default_operator: 'and',
+          query: params,
         },
       }, size: 500,
     })
@@ -33,7 +35,7 @@ export class OrpGridItem extends React.Component<ItemProps, any> {
     const constManifestUrl = generatorUrl + '?type=orp&index=' + process.env.REACT_APP_ORP_INDEX + '&q='
     const source = extend({}, result._source, result.highlight)
     const thumbnail = source.imageServiceIRI + Domain.THUMBNAIL_API_REQUEST
-    const imageLink = previewUrl + '?image=' + source.imageServiceIRI
+    const imageLink = buildImagePreview(previewUrl, source.imageServiceIRI)
     const viewer = process.env.REACT_APP_VIEWER_BASE + '/#?c=0&m=0&s=0&cv=0&manifest='
     const tag4 = source.metadataMap.tag4 || ''
     const tag5 = source.metadataMap.tag5 || ''

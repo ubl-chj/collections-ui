@@ -1,9 +1,10 @@
 import * as React from "react";
 import {Domain} from "../../constants";
 import {AuthUserContext, ResultContext} from "../core";
-import {StructuredData} from "../core/StructuredData";
+import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
 import {FavoriteButton, Thumbnail, Title} from '../ui'
 import {ItemProps} from './ItemProps'
+import {buildImagePreview} from './ItemUtils';
 
 const extend = require("lodash/extend")
 const firebase = require("firebase/app");
@@ -28,7 +29,7 @@ export class ECListItem extends React.Component<ItemProps, any> {
     const {result, bemBlocks, previewUrl} = this.props
     const source = extend({}, result._source, result.highlight)
     const thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
-    const imageLink = previewUrl + '?image=' + result._source.thumbnail
+    const imageLink = buildImagePreview(previewUrl, source.thumbnail)
     const contentUrl = source.related
     const creator = source.Persons
     return (
@@ -44,7 +45,7 @@ export class ECListItem extends React.Component<ItemProps, any> {
             <h3 className={bemBlocks.item('subtitle')}><b>Date of Origin:</b> {source['Date of Origin (English)']}</h3>
             <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source['Summary (English)']}}/>
           </div>
-          <StructuredData headline={source.title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}/>
+          <StructuredDataImageObject result={result} thumbnail={thumbnail} contentUrl={contentUrl}/>
         </div>)
   }
 }

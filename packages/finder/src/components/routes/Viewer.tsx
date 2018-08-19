@@ -38,29 +38,30 @@ class ViewerComponent extends React.Component<any, any> {
     const t = Boolean(true)
 
     if (this.viewer) {
-      return (<ViewerProvider viewer={this.viewer}>
-        <Layout>
-          <TopBar>
-            <div className='my-logo-thin'>
-              <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
-            </div>
-            <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
-              <AuthUserProfile/>
-            </div>
-            <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light'
-              effect='solid'>
-              <AuthUserTooltip/>
-            </ReactTooltip>
-          </TopBar>
-          <ActionBar>
-            <Metadata key='metadata'/>
-          </ActionBar>
-          <LayoutBody>
-            <BackArrow/>
-            <DocumentViewSwitcher viewerComponents={[{key: 'grid', title: 'Grid', itemComponent: ManifestItem, defaultOption: true}]}/>
-          </LayoutBody>
-        </Layout>
-      </ViewerProvider>)
+      return (
+        <ViewerProvider viewer={this.viewer}>
+          <Layout>
+            <TopBar>
+              <div className='my-logo-thin'>
+                <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
+              </div>
+              <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
+                <AuthUserProfile/>
+              </div>
+              <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light'
+                effect='solid'>
+                <AuthUserTooltip/>
+              </ReactTooltip>
+            </TopBar>
+            <ActionBar>
+              <Metadata key='metadata'/>
+            </ActionBar>
+            <LayoutBody>
+              <BackArrow/>
+              <DocumentViewSwitcher viewerComponents={[{key: 'grid', title: 'Grid', itemComponent: ManifestItem, defaultOption: true}]}/>
+            </LayoutBody>
+          </Layout>
+        </ViewerProvider>)
     } else {
       return null
     }

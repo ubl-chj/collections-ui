@@ -2,7 +2,7 @@ import * as React from "react";
 import {Domain} from "../../constants";
 import {ResultContext} from "../core";
 import {Title} from "./index";
-import {ListFavoriteItem} from './ListFavoriteItem';
+import {ListFavoriteButton} from './ListFavoriteButton';
 import {Thumbnail} from './Thumbnail'
 
 const extend = require("lodash/extend")
@@ -135,7 +135,7 @@ export class ListFavorite extends React.Component<any, any> {
             <Thumbnail imageWidth={140} className="sk-hits-list-hit__poster" imageSource={imageSource} imageLink={imageLink}/>
           </ResultContext.Provider>
           <div className='sk-hits-list-hit__details'>
-            <ListFavoriteItem authUser={this.authUser} result={result} unsetFavorite={this.unsetFavorite.bind(this)}/>
+            <ListFavoriteButton authUser={this.authUser} result={result} unsetFavorite={this.unsetFavorite.bind(this)}/>
             {this.renderFavoriteContent(result)}
           </div>
         </div> : null)

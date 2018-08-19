@@ -1,8 +1,9 @@
 import * as React from "react";
 import {ResultContext} from "../core";
-import {StructuredData} from "../core/StructuredData";
+import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
 import {Thumbnail, Title} from "../ui";
 import {ItemProps} from './ItemProps'
+import {buildImagePreview, buildImageView, shortenTitle} from './ItemUtils';
 
 const extend = require("lodash/extend")
 
@@ -22,22 +23,17 @@ export class GettyGridItem extends React.Component<ItemProps, any> {
     const source = extend({}, result._source, result.highlight)
     const thumbnail = source.thumbnail
     const imageBase = thumbnail.split('/full')[0]
-    const imageLink = previewUrl + '?image=' + imageBase + '&manifest=' + source.id
-    const viewUrl = viewerUrl + '?manifest=' + source.id
     const contentUrl = source.id
+    const imageLink = buildImagePreview(previewUrl, imageBase, contentUrl)
+    const viewUrl = buildImageView(viewerUrl, contentUrl)
     const creator = source.Artist
-    let titleString
-    if (source.title.length >= 80) {
-      titleString = source.title.substr(0, 80) + '... '
-    } else {
-      titleString = source.title
-    }
+    const titleString = shortenTitle(source.title)
     return (
       <ResultContext.Provider value={result}>
         <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
           <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
           <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={titleString}/>
-          <StructuredData headline={source.title} thumbnail={thumbnail} creator={creator} contentUrl={contentUrl}/>
+          <StructuredDataImageObject result={result} thumbnail={thumbnail} contentUrl={contentUrl}/>
         </div>
       </ResultContext.Provider>)
   }

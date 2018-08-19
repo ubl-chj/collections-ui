@@ -1,9 +1,9 @@
 import * as React from "react";
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 import {Routes} from '../../constants';
-import { firebase } from '../../firebase';
-import { AuthUserContext } from './AuthUserContext';
+import {firebase} from '../../firebase';
+import {AuthUserContext} from './AuthUserContext';
 
 export const withAuthorization = (authCondition) => (Component) => {
   class WithAuthorization extends React.Component<any> {
@@ -12,7 +12,7 @@ export const withAuthorization = (authCondition) => (Component) => {
         if (!authCondition(authUser)) {
           this.props.history.push(Routes.SIGN_IN);
         }
-      });
+      })
     }
 
     render() {
@@ -20,7 +20,7 @@ export const withAuthorization = (authCondition) => (Component) => {
         <AuthUserContext.Consumer>
           {(authUser) => authUser ? <Component /> : null}
         </AuthUserContext.Consumer>
-      );
+      )
     }
   }
 
