@@ -37,7 +37,6 @@ class PreviewerComponent extends React.Component<any, any> {
         this.abstractRegion = params.region.substring(4).split(',')
       }
     }
-    this.source = this.props.location.state.result._source
     this.document = image + '/info.json'
     this.viewer = new ViewerManager(manifest)
     this.forceUpdate()

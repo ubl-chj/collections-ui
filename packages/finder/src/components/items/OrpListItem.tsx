@@ -47,12 +47,12 @@ export class OrpListItem extends React.Component<ItemProps, any> {
     const query = OrpListItem.getQuery(source.metadataMap.tag3 + ' ' + tag4 + ' ' + tag5 + ' ' + tag6 + ' ' + tag7 + ' '
       + tag8, constManifestUrl)
 
-    return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
+    return (
+      <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
       <Thumbnail imageWidth={140} imageSource={imageSource} imageLink={imageLink} className={bemBlocks.item('poster')}/>
       <div className={bemBlocks.item('details')}>
         <AuthUserContext.Consumer>
-          {(authUser) => authUser ?
-            <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
+          {(authUser) => authUser ? <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
         </AuthUserContext.Consumer>
         <table>
           <tbody>
@@ -70,7 +70,8 @@ export class OrpListItem extends React.Component<ItemProps, any> {
           </tr>
           <tr>
             <td>Composite Manifest:</td>
-            <td><a href={viewerIRI + encodeURIComponent(query)}>{source.metadataMap.tag3} {source.metadataMap.tag5} {source.metadataMap.tag7} {source.metadataMap.tag8}</a>
+            <td><a href={viewerIRI + encodeURIComponent(query)}>{source.metadataMap.tag3} {source.metadataMap.tag5}
+            {source.metadataMap.tag7} {source.metadataMap.tag8}</a>
             </td>
           </tr>
           </tbody>

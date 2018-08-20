@@ -24,7 +24,6 @@ import {
 } from 'searchkit-fork'
 import '../../assets/index.css'
 import {Domain, Routes} from '../../constants'
-import {StructuredDataCollection} from '../core';
 import {CollectionsListItem} from '../items'
 import {AuthUserProfile, AuthUserTooltip} from '../ui'
 import {IRouteProps} from './IRouteProps'
@@ -34,7 +33,7 @@ const ReactTooltip = require('react-tooltip')
 export class Landing extends React.Component<IRouteProps, {}> {
 
   static defaultProps = {
-    host: process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_LANDING_INDEX,
+    host: process.env.REACT_APP_ELASTICSEARCH_HOST,
     options: {timeout: 20000},
     routeConfig: require('./config/landing.json'),
   }
@@ -48,8 +47,9 @@ export class Landing extends React.Component<IRouteProps, {}> {
 
   constructor(props) {
     super(props)
-    this.searchkit = new SearchkitManager(props.host, props.options)
     this.routeKey = this.props.routeConfig.indexName
+    const host = props.host + this.routeKey
+    this.searchkit = new SearchkitManager(host, props.options)
     this.state = {
       components: [],
       result: {},
@@ -62,7 +62,7 @@ export class Landing extends React.Component<IRouteProps, {}> {
   }
 
   componentDidUpdate() {
-    this.handleSessionPersistence()
+    //this.handleSessionPersistence()
   }
 
   async handleSessionPersistence() {

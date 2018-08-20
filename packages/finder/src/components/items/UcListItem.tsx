@@ -1,12 +1,12 @@
-import * as React from "react";
-import {Domain} from "../../constants";
-import {AuthUserContext, ResultContext} from "../core";
-import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
-import {FavoriteButton, Thumbnail, Title} from "../ui";
-import {ItemProps} from "./ItemProps";
-import {buildImagePreview, buildImageView} from './ItemUtils';
+import * as React from "react"
+import {Domain} from "../../constants"
+import {AuthUserContext, ResultContext} from "../core"
+import {StructuredDataImageObject} from "../schema/StructuredDataImageObject"
+import {FavoriteButton, Thumbnail, Title} from "../ui"
+import {ItemProps} from "./ItemProps"
+import {buildImagePreview, buildImageView, getSchema} from './ItemUtils'
 
-const firebase = require("firebase/app");
+const firebase = require("firebase/app")
 const extend = require("lodash/extend")
 
 export class UcListItem extends React.Component<ItemProps, any> {
@@ -43,7 +43,7 @@ export class UcListItem extends React.Component<ItemProps, any> {
     const source = extend({}, result._source, result.highlight)
     const thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
     const contentUrl = source.Manifest
-    const creator = source['Author(s) of the Record']
+    const schema = getSchema(result, contentUrl, thumbnail, null)
     const imageLink = buildImagePreview(previewUrl, source.thumbnail, contentUrl)
     const viewUrl = buildImageView(viewerUrl, contentUrl)
     return (
@@ -52,8 +52,7 @@ export class UcListItem extends React.Component<ItemProps, any> {
           <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
           <div className={bemBlocks.item('details')}>
             <AuthUserContext.Consumer>
-              {(authUser) => authUser ?
-                <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
+              {(authUser) => authUser ? <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
             </AuthUserContext.Consumer>
             <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source.Title}/>
             {UcListItem.getAuthor(source, bemBlocks)}
@@ -61,7 +60,7 @@ export class UcListItem extends React.Component<ItemProps, any> {
             {UcListItem.getDate(source, bemBlocks)}
             <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source.Abstract}}/>
           </div>
-          <StructuredDataImageObject result={result} thumbnail={thumbnail} contentUrl={contentUrl}/>
+          <StructuredDataImageObject schema={schema}/>
         </div>
       </ResultContext.Provider>)
   }

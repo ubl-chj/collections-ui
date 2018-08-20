@@ -3,7 +3,7 @@ import {Domain} from "../../constants";
 import {AuthUserContext} from "../core";
 import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {ItemProps} from "./ItemProps";
-import {buildImagePreview, buildImageView} from './ItemUtils';
+import {buildImagePreview, buildImageView, getSchema} from './ItemUtils';
 import {StructuredDataImageObject} from '../schema/StructuredDataImageObject';
 
 const firebase = require("firebase/app");
@@ -33,17 +33,18 @@ export class SctListItem extends React.Component<ItemProps, any> {
     const contentUrl = source.manifest
     const imageLink = buildImagePreview(previewUrl, source.thumbnail, contentUrl)
     const viewUrl = buildImageView(viewerUrl, contentUrl)
-    return (<div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
+    const schema = getSchema(result, contentUrl, thumbnail, null)
+    return (
+      <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
       <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
       <div className={bemBlocks.item('details')}>
         <AuthUserContext.Consumer>
-          {(authUser) => authUser ?
-            <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
+          {(authUser) => authUser ? <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
         </AuthUserContext.Consumer>
         <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source.Title}/>
         <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source.Description}}/>
         {SctListItem.getPart(source, bemBlocks)}
-        <StructuredDataImageObject result={result} thumbnail={thumbnail} contentUrl={contentUrl}/>
+        <StructuredDataImageObject schema={schema}/>
       </div>
     </div>)
   }

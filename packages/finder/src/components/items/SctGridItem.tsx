@@ -4,7 +4,7 @@ import {ResultContext} from "../core";
 import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
 import {Thumbnail, Title} from "../ui";
 import {ItemProps} from "./ItemProps";
-import {buildImagePreview, buildImageView, shortenTitle} from './ItemUtils';
+import {buildImagePreview, buildImageView, getSchema, shortenTitle} from './ItemUtils';
 
 const extend = require("lodash/extend")
 
@@ -26,13 +26,14 @@ export class SctGridItem extends React.Component<ItemProps, any> {
     const contentUrl = source.manifest
     const imageLink = buildImagePreview(previewUrl, source.thumbnail, contentUrl)
     const viewUrl = buildImageView(viewerUrl, contentUrl)
+    const schema = getSchema(result, contentUrl, thumbnail, null)
     const titleString = shortenTitle(source.Title)
     return (
       <ResultContext.Provider value={result}>
         <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
           <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
           <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={titleString}/>
-          <StructuredDataImageObject result={result} thumbnail={thumbnail} contentUrl={contentUrl}/>
+          <StructuredDataImageObject schema={schema}/>
         </div>
       </ResultContext.Provider>)
   }

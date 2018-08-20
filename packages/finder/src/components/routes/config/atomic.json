@@ -1,39 +1,38 @@
 {
-  "indexName": "t4",
+  "indexName": "t5",
   "queryFields": [
     "iiifService",
-    "imageIndex",
     "structureMap.1.@id",
     "structureMap.1.label",
-    "metadata.Date",
-    "metadata.Title",
-    "metadata.Author",
-    "metadata.Date of publication",
-    "metadata.Call number",
-    "metadata.Collection",
-    "metadata.Objekttitel",
-    "metadata.Part of",
-    "metadata.Place",
-    "metadata.Place of publication",
-    "metadata.Publisher",
-    "metadata.Sprache",
-    "metadata.URN",
-    "metadata.Source PPN (SWB)"
+    "Date",
+    "Title",
+    "Author",
+    "Date of publication",
+    "Call number",
+    "Collection",
+    "Objekttitel",
+    "Part of",
+    "Place",
+    "Place of publication",
+    "Publisher",
+    "Sprache",
+    "URN",
+    "Source PPN (SWB)"
   ],
   "listItem": "AtomicListItem",
   "gridItem": "AtomicGridItem",
   "refinementListFilterDef1": {
-    "field": "metadata.Sprache.keyword",
+    "field": "Sprache.keyword",
     "title": "Language",
     "id": "language"
   },
   "refinementListFilterDef2": {
-    "field": "metadata.Collection.keyword",
+    "field": "Collection.keyword",
     "title": "Collection",
     "id": "collection"
   },
   "refinementListFilterDef3": {
-    "field": "metadata.Place.keyword",
+    "field": "Place.keyword",
     "title": "Place",
     "id": "place"
   },
@@ -45,17 +44,17 @@
     },
     {
       "label": "Title",
-      "field": "metadata.Title.keyword",
+      "field": "Title.keyword",
       "order": "asc"
     },
     {
       "label": "Author",
-      "field": "metadata.Author.keyword",
+      "field": "Author.keyword",
       "order": "asc"
     }
   ],
   "highlightFields": [
-    "metadata.Title"
+    "Title"
   ],
-  "suggestionField": "metadata.Title"
+  "suggestionField": "Title"
 }

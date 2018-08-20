@@ -3,6 +3,7 @@
   "queryFields": [
     "Century",
     "Collection Name",
+    "Date of Origin (English)",
     "DOI",
     "Dimensions",
     "Document Type",

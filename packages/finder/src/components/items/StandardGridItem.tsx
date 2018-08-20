@@ -4,8 +4,7 @@ import {ResultContext} from "../core";
 import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
 import {Thumbnail, Title} from "../ui";
 import {ItemProps} from './ItemProps'
-import {buildImagePreview, buildImageView, shortenTitle} from './ItemUtils';
-import {buildSchemaObject} from './SchemaAdapter';
+import {buildImagePreview, buildImageView, getSchema, shortenTitle} from './ItemUtils';
 const extend = require("lodash/extend")
 
 export class StandardGridItem extends React.Component<ItemProps, any> {
@@ -21,26 +20,31 @@ export class StandardGridItem extends React.Component<ItemProps, any> {
 
   buildGridItem() {
     const {result, bemBlocks, previewUrl, viewerUrl} = this.props
-    const source = extend({}, result._source, result.highlight)
-    const schema = buildSchemaObject(source)
-    let thumbnail
-    if (schema.thumbnail) {
-      thumbnail = schema.thumbnail + Domain.THUMBNAIL_API_REQUEST
-    } else {
-      thumbnail = schema.thumbnail
-    }
-    if (thumbnail) {
-      const previewLink = buildImagePreview(previewUrl, schema.thumbnail, schema.contentUrl)
-      const viewLink = buildImageView(viewerUrl, schema.contentUrl)
-      const titleString = shortenTitle(schema.headline)
-      return (
-        <ResultContext.Provider value={result}>
-          <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-            <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={previewLink} className={bemBlocks.item('poster')}/>
-            <Title viewUrl={viewLink} className={bemBlocks.item('title')} titleString={titleString}/>
-            <StructuredDataImageObject result={result} thumbnail={thumbnail} contentUrl={schema.contentUrl}/>
-          </div>
-        </ResultContext.Provider>)
+    if (result) {
+      const source = extend({}, result._source, result.highlight)
+      const contentUrl = source.identifier.manifest
+      let thumbnail
+      if (source.thumbnail) {
+        thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
+      } else {
+        thumbnail = source.thumbnail
+      }
+      const schema = getSchema(result, contentUrl, thumbnail, null)
+      if (thumbnail) {
+        const previewLink = buildImagePreview(previewUrl, thumbnail, contentUrl)
+        const viewLink = buildImageView(viewerUrl, contentUrl)
+        const titleString = shortenTitle(schema.mainEntity.name)
+        return (
+          <ResultContext.Provider value={result}>
+            <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
+              <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={previewLink} className={bemBlocks.item('poster')}/>
+              <Title viewUrl={viewLink} className={bemBlocks.item('title')} titleString={titleString}/>
+              <StructuredDataImageObject schema={schema}/>
+            </div>
+          </ResultContext.Provider>)
+      } else {
+        return null
+      }
     } else {
       return null
     }

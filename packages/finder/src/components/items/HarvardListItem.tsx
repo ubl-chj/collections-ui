@@ -4,7 +4,7 @@ import {AuthUserContext, ResultContext} from "../core";
 import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
 import {FavoriteButton, Thumbnail, Title} from "../ui";
 import {ItemProps} from "./ItemProps";
-import {buildImagePreview, buildImageView} from './ItemUtils';
+import {buildImagePreview, buildImageView, getSchema} from './ItemUtils';
 
 const firebase = require("firebase/app");
 const extend = require("lodash/extend")
@@ -58,15 +58,14 @@ export class HarvardListItem extends React.Component<ItemProps, any> {
       const contentUrl = source.manifest
       const imageLink = buildImagePreview(previewUrl, source.thumbnail, contentUrl)
       const viewUrl = buildImageView(viewerUrl, contentUrl)
-      const creator = source.People
+      const schema = getSchema(result, contentUrl, thumbnail, null)
       return (
         <ResultContext.Provider value={result}>
           <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
             <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
             <div className={bemBlocks.item('details')}>
               <AuthUserContext.Consumer>
-                {(authUser) => authUser ?
-                  <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
+                {(authUser) => authUser ? <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
               </AuthUserContext.Consumer>
               <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source.title}/>
               {HarvardListItem.getAuthor(source, bemBlocks)}
@@ -75,7 +74,7 @@ export class HarvardListItem extends React.Component<ItemProps, any> {
               {HarvardListItem.getMedium(source, bemBlocks)}
               <h3 className={bemBlocks.item('subtitle')}>
                 <b>Classification:</b> {source.Classification}</h3>
-              <StructuredDataImageObject result={result} thumbnail={thumbnail} contentUrl={contentUrl}/>
+              <StructuredDataImageObject schema={schema}/>
             </div>
           </div>
         </ResultContext.Provider>)
