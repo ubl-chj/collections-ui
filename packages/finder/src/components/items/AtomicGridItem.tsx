@@ -25,7 +25,7 @@ export class AtomicGridItem extends React.Component<ItemProps, any> {
       const imageLink = buildImagePreview(previewUrl, source.iiifService)
       const viewId = buildUBLViewId(source.iiifService)
       const contentUrl = viewerUrl + viewId
-      const schema = getSchema(result, contentUrl, thumbnail, null)
+      const schema = getSchema(result, contentUrl, thumbnail, source.imageIndex)
       const titleString = shortenTitle(schema.mainEntity.name)
       return (
         <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">

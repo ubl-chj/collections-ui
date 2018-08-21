@@ -3,7 +3,7 @@
 
 An interface that sources ElasticSearch indices and provides collections of IIIF manifests.
 
-See it live at https://collections.iiif.cloud
+See it live at [https://collections.iiif.cloud/?utm_source=github&utm_medium=referral&utm_campaign=iiif](https://collections.iiif.cloud)
 
 Also provides an image viewer (WIP).
 
