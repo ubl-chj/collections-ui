@@ -1,5 +1,5 @@
 {
-  "indexName": "ec7",
+  "indexName": "ec8",
   "queryFields": [
     "Century",
     "Collection Name",
@@ -18,7 +18,8 @@
     "title",
     "Title (English).trigram",
     "related",
-    "thumbnail"
+    "thumbnail",
+    "identifier.manifest"
   ],
   "listItem": "EcListItem",
   "gridItem": "EcGridItem",
@@ -55,9 +56,26 @@
     }
   ],
   "highlightFields": [
+    "Century",
+    "Collection Name",
+    "Date of Origin (English)",
+    "DOI",
+    "Dimensions",
+    "Document Type",
+    "Location",
+    "Material",
+    "Number of Pages",
+    "Shelfmark",
+    "Summary (English)",
+    "Text Language",
+    "Persons",
+    "Place of Origin (English)",
     "title",
-    "Summary (English)"
+    "Title (English)",
+    "related",
+    "thumbnail",
+    "identifier.manifest"
   ],
-  "suggestionField": "Title (English).trigram"
+  "suggestionField": "Title (English)"
 }
 

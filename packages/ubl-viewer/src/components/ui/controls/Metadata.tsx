@@ -6,12 +6,12 @@ import {MetadataItem} from "../osd";
 const uuidv4 = require('uuid/v4');
 const manifesto = require('manifesto.js')
 
-export interface MetadataProps {
+export interface IMetadataProps {
   key: string,
   bemBlocks?: any
 }
 
-export class Metadata extends ViewerComponent<MetadataProps, any> {
+export class Metadata extends ViewerComponent<IMetadataProps, any> {
   props: any;
   annotationsAccessor: AnnotationsAccessor
   state: { menuOpen: boolean; };
@@ -61,26 +61,39 @@ export class Metadata extends ViewerComponent<MetadataProps, any> {
       const items = this.buildMetadata(manifest)
       return (
         <div className="manifest-info">
-          <Menu noOverlay right customBurgerIcon={false} isOpen={this.state.menuOpen}
-            onStateChange={(state) => this.handleStateChange(state)}>
-            <ul className="list-group"> {items.map(({data, label, value}) => <MetadataItem key={uuidv4()} data={data} label={label}
-              value={value}/>)}</ul>
+          <Menu
+            noOverlay
+            right
+            customBurgerIcon={false}
+            isOpen={this.state.menuOpen}
+            onStateChange={(state) => this.handleStateChange(state)}
+          >
+            <ul className="list-group">
+              {items.map(({data, label, value}) => <MetadataItem key={uuidv4()} data={data} label={label} value={value}/>)}
+            </ul>
           </Menu>
           <div className="btn-group">
-            <button type="button" className="btn btn-primary-outline btn-xs"><a id="zoom-in"><i
-              className="glyphicon glyphicon-zoom-in"/></a></button>
-            <button type="button" className="btn btn-primary-outline btn-xs"><a id="zoom-out"><i className="glyphicon glyphicon-zoom-out"/></a>
+            <button type="button" className="btn btn-primary-outline btn-xs">
+              <a id="zoom-in"><i className="glyphicon glyphicon-zoom-in"/></a>
             </button>
-            <button type="button" className="btn btn-primary-outline btn-xs"><a id="reset"><i className="glyphicon glyphicon-home"/></a>
+            <button type="button" className="btn btn-primary-outline btn-xs">
+              <a id="zoom-out"><i className="glyphicon glyphicon-zoom-out"/></a>
             </button>
-            <button type="button" className="btn btn-primary-outline btn-xs"><a id="full-page"><i
-              className="glyphicon glyphicon-resize-full"/></a></button>
-            <button type="button" className="btn btn-primary-outline btn-xs"><a id="sidebar-previous"><i
-              className="glyphicon glyphicon-chevron-left"/></a></button>
-            <button type="button" className="btn btn-primary-outline btn-xs"><a id="sidebar-next"><i
-              className="glyphicon glyphicon-chevron-right"/></a></button>
-            <button type="button" className="btn btn-primary-outline btn-xs" onClick={this.toggleMenu}><i
-              className="glyphicon glyphicon-info-sign"/></button>
+            <button type="button" className="btn btn-primary-outline btn-xs">
+              <a id="reset"><i className="glyphicon glyphicon-home"/></a>
+            </button>
+            <button type="button" className="btn btn-primary-outline btn-xs">
+              <a id="full-page"><i className="glyphicon glyphicon-resize-full"/></a>
+            </button>
+            <button type="button" className="btn btn-primary-outline btn-xs">
+              <a id="sidebar-previous"><i className="glyphicon glyphicon-chevron-left"/></a>
+            </button>
+            <button type="button" className="btn btn-primary-outline btn-xs">
+              <a id="sidebar-next"><i className="glyphicon glyphicon-chevron-right"/></a>
+            </button>
+            <button type="button" className="btn btn-primary-outline btn-xs" onClick={this.toggleMenu}>
+              <i className="glyphicon glyphicon-info-sign"/>
+            </button>
           </div>
           <div className="window-manifest-title">
             <h2 className="window-manifest-title">{title}</h2>

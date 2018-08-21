@@ -58,7 +58,20 @@
     }
   ],
   "highlightFields": [
-    "Title"
+    "@id",
+    "Date",
+    "Title",
+    "Author",
+    "Date of publication",
+    "Collection",
+    "Objekttitel",
+    "Part of",
+    "Place",
+    "Place of publication",
+    "Publisher",
+    "Sprache",
+    "URN",
+    "Source PPN (SWB)"
   ],
   "suggestionField": "Title"
 }

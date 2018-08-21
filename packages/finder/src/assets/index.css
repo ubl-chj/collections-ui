@@ -86,13 +86,6 @@ th, td {
     padding: 0
 }
 
-.sk-hits-list-hit__poster {
-    width: 200px;
-    -ms-flex: 0 0 200px;
-    flex: 0 0 200px;
-    padding: 10px;
-}
-
 .sk-hits-grid-hit {
   padding: 10px;
   max-width: 250px;

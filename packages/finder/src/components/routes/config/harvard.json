@@ -48,8 +48,17 @@
     }
   ],
   "highlightFields": [
+    "Medium",
+    "Classification",
+    "Credit Line",
+    "Dimensions",
+    "Object Number",
     "title",
-    "Inscription"
+    "Technique",
+    "Provenance",
+    "People",
+    "Date",
+    "manifest"
   ],
   "suggestionField": "title"
 }

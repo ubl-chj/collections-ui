@@ -1,15 +1,16 @@
 import * as React from "react";
 import {Domain} from '../../constants'
-import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
-import {Thumbnail, Title} from "../ui";
+import {GridItemDisplay} from "../ui/GridItemDisplay";
 import {ItemProps} from './ItemProps'
-import {buildImagePreview, buildUBLViewId, getSchema, shortenTitle} from './ItemUtils'
+import {buildImagePreview, buildImageView, buildUBLManifestId, getSchema, shortenTitle} from './ItemUtils'
+import {ResultContext} from "../core";
 const extend = require("lodash/extend")
 
 export class AtomicGridItem extends React.Component<ItemProps, any> {
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
   }
 
   constructor(props) {
@@ -17,22 +18,26 @@ export class AtomicGridItem extends React.Component<ItemProps, any> {
   }
 
   render() {
-    const viewerUrl = process.env.REACT_APP_UBL_IMAGE_VIEWER_BASE
-    const {result, bemBlocks, previewUrl} = this.props
+    const {result, previewUrl, viewerUrl} = this.props
     if (result) {
       const source = extend({}, result._source, result.highlight)
       const thumbnail = source.iiifService + Domain.THUMBNAIL_API_REQUEST
-      const imageLink = buildImagePreview(previewUrl, source.iiifService)
-      const viewId = buildUBLViewId(source.iiifService)
-      const contentUrl = viewerUrl + viewId
-      const schema = getSchema(result, contentUrl, thumbnail, null)
+      const manifestId = buildUBLManifestId(source.iiifService)
+      const imageLink = buildImagePreview(previewUrl, source.iiifService, manifestId)
+      const viewUrl = buildImageView(viewerUrl, manifestId)
+      const schema = getSchema(source, manifestId, thumbnail, source.imageIndex)
       const titleString = shortenTitle(schema.mainEntity.name)
       return (
-        <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
-          <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
-          <Title viewUrl={contentUrl} className={bemBlocks.item('title')} titleString={titleString}/>
-          <StructuredDataImageObject schema={schema}/>
-        </div>
+        <ResultContext.Provider value={result}>
+          <GridItemDisplay
+            contentUrl={viewUrl}
+            imageLink={imageLink}
+            schema={schema}
+            thumbnail={thumbnail}
+            titleString={titleString}
+            {...this.props}
+          />
+        </ResultContext.Provider>
       )
     } else {
       return null

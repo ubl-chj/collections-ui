@@ -1,10 +1,11 @@
 import * as React from "react"
 import {Domain} from "../../constants"
-import {AuthUserContext} from "../core"
+import {AuthUserContext, ResultContext} from "../core"
 import {StructuredDataImageObject} from "../schema/StructuredDataImageObject"
 import {FavoriteButton, Thumbnail, Title} from "../ui"
 import {ItemProps} from "./ItemProps"
-import {buildImagePreview, getSchema} from './ItemUtils'
+import {buildImagePreview, buildImageView, buildUBLManifestId, getSchema} from './ItemUtils'
+import {ListItemDisplay} from "../ui/ListItemDisplay";
 
 const firebase = require("firebase/app")
 
@@ -22,47 +23,30 @@ export class UblListItem extends React.Component<ItemProps, any> {
   }
 
   render() {
-    const {previewUrl, result, bemBlocks} = this.props
+    const {viewerUrl, previewUrl, result} = this.props
     const source = extend({}, result._source, result.highlight)
     const pathname = new URL(source['@id']).pathname
     const splitPath = pathname.split('/')
     const viewId = splitPath[1].padStart(10, '0')
-    const katalogBase = 'https://katalog.ub.uni-leipzig.de/Search/Results?lookfor=record_id:'
     const contentUrl = 'https://digital.ub.uni-leipzig.de/object/viewid/' + viewId
     const firstId = viewId.substring(0, 4).padStart(4, '0')
     const secondId = viewId.substring(5, 8).padStart(4, '0')
     const imageBase = process.env.REACT_APP_UBL_IMAGE_SERVICE_BASE + firstId + '/' + secondId + '/' + viewId + '/00000001.jpx'
+    const manifestId = buildUBLManifestId(imageBase)
+    const viewUrl = buildImageView(viewerUrl, manifestId)
     const thumbnail = imageBase + Domain.THUMBNAIL_API_REQUEST
-    const imageLink = buildImagePreview(previewUrl, imageBase)
-    const schema = getSchema(result, contentUrl, thumbnail, null)
+    const imageLink = buildImagePreview(previewUrl, imageBase, manifestId)
+    const schema = getSchema(source, contentUrl, thumbnail, null)
     return (
-      <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-        <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
-        <div className={bemBlocks.item('details')}>
-          <AuthUserContext.Consumer>
-            {(authUser) => authUser ? <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
-          </AuthUserContext.Consumer>
-          <Title viewUrl={contentUrl} className={bemBlocks.item('title')} titleString={source.Title}/>
-          <table>
-            <tbody>
-            <tr>
-              <td>Author:</td>
-              <td>{source.Author}</td>
-            </tr>
-            <tr>
-              <td>Date:</td>
-              <td>{source.Date} {source['Date of publication']} {source.Datierung} {source.datiert}</td>
-            </tr>
-            <tr>
-              <td>Katalog URI:</td>
-              <td><a href={katalogBase + source['Source PPN (SWB)']}> {source['Source PPN (SWB)']}</a>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <StructuredDataImageObject schema={schema}/>
-      </div>)
+      <ResultContext.Provider value={result}>
+        <ListItemDisplay
+          contentUrl={viewUrl}
+          imageLink={imageLink}
+          schema={schema}
+          thumbnail={thumbnail}
+          {...this.props}
+        />
+      </ResultContext.Provider>)
   }
 }
 

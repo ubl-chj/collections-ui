@@ -61,8 +61,30 @@
     }
   ],
   "highlightFields": [
+    "Date of Publication",
+    "Provenance",
+    "Place of Publication",
+    "Physical Location",
+    "Extent",
+    "Abstract",
+    "Former Owner(s)",
+    "Associated Person(s)",
     "Title",
-    "Abstract"
+    "Publisher",
+    "title",
+    "Classmark",
+    "seeAlso",
+    "Origin Place",
+    "Level of Description",
+    "Date of Creation",
+    "thumbnail",
+    "Material",
+    "Language(s)",
+    "Bibliography",
+    "Subject(s)",
+    "Author(s) of the Record",
+    "Collection",
+    "Manifest"
   ],
   "suggestionField": "Title",
   "listDefault": true

@@ -20,14 +20,16 @@ export class Title extends React.Component<any, any> {
     return (
       <ResultContext.Consumer>
         {(result) => result ?
-          <Link to={{
+          <Link
+            to={{
             pathname: process.env.REACT_APP_OSD_COMPONENT_BASE,
             search: this.search,
             state: {
               result,
             },
-            }}>
-              <div data-qa='title' className={this.className} dangerouslySetInnerHTML={{__html: this.titleString}}/>
+          }}
+          >
+            <div data-qa='title' className={this.className} dangerouslySetInnerHTML={{__html: this.titleString}}/>
           </Link> :
           <a href={this.viewUrl} target='_blank' rel='noopener noreferrer'>
             <div data-qa='title' className={this.className} dangerouslySetInnerHTML={{__html: this.titleString}}/>

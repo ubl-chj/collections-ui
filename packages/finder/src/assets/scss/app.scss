@@ -4,12 +4,13 @@
 .modal-container {
   position: relative;
 }
+
 .modal-container .modal, .modal-container .modal-backdrop {
   position: absolute;
 }
 
 .modal-open {
-  overflow:hidden;
+  overflow: hidden;
   overflow-y: scroll !important;
   padding-right: 0 !important;
 }
@@ -77,7 +78,7 @@
 }
 
 .Vtmiqc {
-  background: rgba(66,66,66,0.54);
+  background: rgba(66, 66, 66, 0.54);
   -webkit-border-radius: 28px;
   border-radius: 28px;
   cursor: pointer;
@@ -96,14 +97,14 @@
 }
 
 .JUQOtc {
-  transition: fill cubic-bezier(0.4,0.0,0.2,1) 400ms;
+  transition: fill cubic-bezier(0.4, 0.0, 0.2, 1) 400ms;
   fill: white;
   width: 24px;
   height: 24px;
 }
 
 .button-transparent {
-  background-color:transparent;
+  background-color: transparent;
   border: none;
 }
 
@@ -123,31 +124,36 @@
   flex-direction: column;
   font-family: sans-serif;
 }
+
 .signedIn {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
+
 .logo {
   font-family: 'Amaranth', sans-serif;
   font-size: 200%;
 }
+
 .logoIcon {
   top: 4px;
   font-size: 32px;
   margin-right: -2px;
   position: relative;
 }
+
 .caption {
   margin: 20px 0 40px 0;
   font-family: 'Amaranth', sans-serif;
   font-size: 18px;
   opacity: 0.8;
 }
+
 .skip {
-  font-weight:lighter;
-  color:white;
+  font-weight: lighter;
+  color: white;
   opacity: 0.7;
   width: 100%;
   display: block;
@@ -155,12 +161,15 @@
   text-decoration: none;
   cursor: pointer;
 }
+
 .skip:HOVER {
   text-decoration: underline;
 }
+
 .firebaseUi {
   min-width: 250px;
 }
+
 .button {
   cursor: pointer;
   color: blue;
@@ -212,8 +221,8 @@
 }
 
 .gb_Ng {
-  margin-left: 0!important;
-  margin-right: 0!important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   text-align: right;
   padding-right: 10px;
   padding-left: 20px;
@@ -221,10 +230,18 @@
 
 .glyphicon-star:before {
   content: "\e006";
+  position: absolute !important;
 }
 
 .glyphicon-star-empty:before {
-  content:"\e007";
+  content: "\e007";
+}
+.favorite-button {
+  display: inline-block;
+  font: normal normal 16px/1 Glyphicons Halflings;
+  margin-right: 4px;
+  position: absolute;
+  top: 1px;
 }
 
 .svg-icon {
@@ -241,4 +258,32 @@
 .svg-icon circle {
   stroke: #4691f6;
   stroke-width: 1px;
+}
+
+.schema-list {
+  display: flex;
+  flex-flow: row wrap;
+  background: #fff;
+  flex: auto;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
+}
+
+.schema-list-key {
+  line-height: 20px;
+  font-size: .95em;
+  color: #45467b;
+  font-weight: 600;
+}
+
+.schema-list-value {
+  font-size: .95em;
+  flex: 1 0;
+  color: #3a3a3a;
+  padding: 10px;
+}
+
+.schema-list__left {
+  width: 20%;
+  flex: 0 0 20%;
+  padding: 10px;
 }

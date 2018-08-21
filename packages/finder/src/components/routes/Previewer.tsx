@@ -4,7 +4,6 @@ import {ActionBar, Layout, LayoutBody, Metadata, OsdComponent, TopBar, ViewerMan
 import '../../assets/index.css'
 import {Domain, Routes} from '../../constants'
 import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../ui'
-import {StructuredDataImageObject} from '../schema/StructuredDataImageObject';
 
 const ReactTooltip = require('react-tooltip')
 const qs = require('query-string')
