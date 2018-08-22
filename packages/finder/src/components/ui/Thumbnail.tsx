@@ -23,23 +23,34 @@ export class Thumbnail extends React.Component<any, any> {
   }
 
   render() {
-    return (<div className={this.className}>
+    return (
+      <div className={this.className}>
       <ResultContext.Consumer>
         {(result) => result ?
-          <Link to={{
+          <Link
+            to={{
             pathname: process.env.REACT_APP_OSD_BASE,
             search: this.search,
             state: {
               result,
             },
-          }}>
-            <img width={this.imageWidth} onError={(e) => {
-              this.handleMissingImage(e.target as HTMLImageElement)
-            }} alt='thumbnail' src={this.imageSource}/></Link> :
+          }}
+          >
+          <img
+            width={this.imageWidth}
+            onError={(e) => {this.handleMissingImage(e.target as HTMLImageElement)}}
+            alt='thumbnail'
+            src={this.imageSource}
+          />
+          </Link> :
           <a href={this.imageLink} target='_blank' rel='noopener noreferrer'>
-            <img width={this.imageWidth} onError={(e) => {
-              this.handleMissingImage(e.target as HTMLImageElement)
-            }} alt='thumbnail' src={this.imageSource}/></a>}
+            <img
+              width={this.imageWidth}
+              onError={(e) => {this.handleMissingImage(e.target as HTMLImageElement)}}
+              alt='thumbnail'
+              src={this.imageSource}
+            />
+          </a>}
       </ResultContext.Consumer>
     </div>)
   }

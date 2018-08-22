@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Domain} from "../../../constants/index";
+import {Domain} from "../../../constants";
 import {ItemProps} from "../ItemProps";
 
 const extend = require('lodash/extend')
@@ -49,7 +49,7 @@ export class ContentListItem extends React.Component<ItemProps, any> {
   InnerHits(innerHits) {
     const content = []
     if (innerHits.contentList != null) {
-      innerHits.contentList.hits.hits.forEach(function(hit) {
+      innerHits.contentList.hits.hits.forEach((hit) => {
         content.push(hit._source)
       })
     }

@@ -1,12 +1,10 @@
 import * as React from "react";
 import {Domain} from "../../constants";
-import {AuthUserContext} from "../core";
-import {FavoriteButton, Thumbnail, Title} from "../ui";
+import {ResultContext} from "../core";
+import {ListItemDisplay} from "../ui/ListItemDisplay";
 import {ItemProps} from "./ItemProps";
 import {buildImagePreview, buildImageView, getSchema} from './ItemUtils';
-import {StructuredDataImageObject} from '../schema/StructuredDataImageObject';
 
-const firebase = require("firebase/app");
 const extend = require("lodash/extend")
 
 export class SctListItem extends React.Component<ItemProps, any> {
@@ -16,37 +14,28 @@ export class SctListItem extends React.Component<ItemProps, any> {
     viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
   }
 
-  static getPart(source, bemBlocks) {
-    if (source['Part reference']) {
-      return <h3 className={bemBlocks.item('subtitle')}><b>Part:</b> {source['Part reference']}</h3>
-    }
-  }
-
   constructor(props) {
     super(props)
   }
 
   render() {
-    const {previewUrl, viewerUrl, result, bemBlocks} = this.props
+    const {previewUrl, viewerUrl, result} = this.props
     const source = extend({}, result._source, result.highlight)
     const thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
-    const contentUrl = source.manifest
-    const imageLink = buildImagePreview(previewUrl, source.thumbnail, contentUrl)
-    const viewUrl = buildImageView(viewerUrl, contentUrl)
-    const schema = getSchema(result, contentUrl, thumbnail, null)
+    const manifestId = source.manifest
+    const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
+    const viewUrl = buildImageView(viewerUrl, manifestId)
+    const schema = getSchema(source, manifestId, thumbnail, null)
     return (
-      <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-      <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
-      <div className={bemBlocks.item('details')}>
-        <AuthUserContext.Consumer>
-          {(authUser) => authUser ? <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
-        </AuthUserContext.Consumer>
-        <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={source.Title}/>
-        <h3 className={bemBlocks.item('subtitle')} dangerouslySetInnerHTML={{__html: source.Description}}/>
-        {SctListItem.getPart(source, bemBlocks)}
-        <StructuredDataImageObject schema={schema}/>
-      </div>
-    </div>)
+      <ResultContext.Provider value={result}>
+        <ListItemDisplay
+          contentUrl={viewUrl}
+          imageLink={imageLink}
+          schema={schema}
+          thumbnail={thumbnail}
+          {...this.props}
+        />
+      </ResultContext.Provider>)
   }
 }
 

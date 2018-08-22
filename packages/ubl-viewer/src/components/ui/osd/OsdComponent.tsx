@@ -41,7 +41,7 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
       minZoomLevel: 0,
       nextButton: 'sidebar-next',
       previousButton: 'sidebar-previous',
-      referenceStripScroll: 'horizontal',
+      referenceStripScroll: 'vertical',
       sequenceMode: true,
       showNavigator: true,
       showReferenceStrip: true,

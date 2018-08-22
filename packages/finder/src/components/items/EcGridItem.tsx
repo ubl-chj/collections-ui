@@ -1,9 +1,9 @@
 import * as React from "react";
 import {Domain} from "../../constants";
-import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
-import {Thumbnail, Title} from "../ui";
+import {ResultContext} from "../core";
+import {GridItemDisplay} from "../ui/GridItemDisplay";
 import {ItemProps} from './ItemProps'
-import {buildImagePreview, getSchema, shortenTitle} from './ItemUtils';
+import {buildImagePreview, buildImageView, getSchema, shortenTitle} from './ItemUtils';
 
 const extend = require("lodash/extend")
 
@@ -19,19 +19,26 @@ export class ECGridItem extends React.Component<ItemProps, any> {
   }
 
   render() {
-    const {result, bemBlocks, previewUrl} = this.props
+    const {result, previewUrl, viewerUrl} = this.props
     const source = extend({}, result._source, result.highlight)
     const thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
-    const imageLink = buildImagePreview(previewUrl, source.thumbnail)
-    const contentUrl = source.related
-    const schema = getSchema(result, contentUrl, thumbnail, null)
+    const manifestId = source['identifier.manifest']
+    const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
+    const viewUrl = buildImageView(viewerUrl, manifestId)
+    const schema = getSchema(source, manifestId, thumbnail, null)
     const titleString = shortenTitle(source.title)
     return (
-        <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-          <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
-          <Title viewUrl={contentUrl} className={bemBlocks.item('title')} titleString={titleString}/>
-          <StructuredDataImageObject schema={schema}/>
-        </div>)
+      <ResultContext.Provider value={result}>
+        <GridItemDisplay
+          contentUrl={viewUrl}
+          imageLink={imageLink}
+          schema={schema}
+          thumbnail={thumbnail}
+          titleString={titleString}
+          {...this.props}
+        />
+      </ResultContext.Provider>
+    )
   }
 }
 

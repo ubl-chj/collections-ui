@@ -1,10 +1,9 @@
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Layout, LayoutBody, Metadata, OsdComponent, TopBar, ViewerManager, ViewerProvider} from 'ubl-viewer'
-import '../../assets/index.css'
+import '../../styles/index.css'
 import {Domain, Routes} from '../../constants'
 import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../ui'
-import {StructuredDataImageObject} from '../schema/StructuredDataImageObject';
 
 const ReactTooltip = require('react-tooltip')
 const qs = require('query-string')

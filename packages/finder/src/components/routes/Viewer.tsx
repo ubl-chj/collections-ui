@@ -11,7 +11,7 @@ import {
   ViewerManager,
   ViewerProvider,
 } from 'ubl-viewer'
-import '../../assets/index.css'
+import '../../styles/index.css'
 import {Domain, Routes} from '../../constants'
 import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../ui'
 

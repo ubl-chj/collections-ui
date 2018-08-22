@@ -1,5 +1,6 @@
 import * as React from "react";
 import {SchemaAdapter} from "../schema";
+import {Domain} from "../../constants";
 
 export function shortenTitle(title: string) {
   if (title.length >= 80) {
@@ -39,12 +40,40 @@ export function getSchema(result, contentUrl, thumbnail, position) {
 }
 
 // this is a hack
-export function  buildUBLViewId(thumbnail) {
+export function  buildUBLManifestId(thumbnail) {
   const pathname = new URL(thumbnail).pathname
   const splitPath = pathname.split("/")
-  return splitPath[5]
+  return 'https://iiif.ub.uni-leipzig.de/' + splitPath[5] + '/manifest.json'
 }
 
 export function buildGenerator(generatorUrl: string, index: string) {
   return generatorUrl + "?type=atomic&index=" + index + "&q="
+}
+
+export function buildThumbnailReference(thumbnail) {
+  let thumbnailLink
+  if (thumbnail) {
+    thumbnailLink = thumbnail + Domain.THUMBNAIL_API_REQUEST
+  } else {
+    thumbnailLink = thumbnail
+  }
+  return thumbnailLink
+}
+
+export function buildRandomThumbnailReference(thumbnail) {
+  let thumbnailLink
+  if (thumbnail) {
+    thumbnailLink = thumbnail + Domain.RANDOM_THUMBNAIL_API_REQUEST
+  } else {
+    thumbnailLink = thumbnail
+  }
+  return thumbnailLink
+}
+
+export function resolveName(schema) {
+  if (schema.mainEntity.name) {
+    return schema.mainEntity.name
+  } else {
+    return schema.mainEntity.alternateName
+  }
 }

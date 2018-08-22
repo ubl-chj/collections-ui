@@ -5,6 +5,7 @@ import {StructuredDataImageObject} from "../schema/StructuredDataImageObject"
 import {Thumbnail, Title} from "../ui"
 import {ItemProps} from "./ItemProps"
 import {buildImagePreview, buildImageView, getSchema, shortenTitle} from './ItemUtils'
+import {GridItemDisplay} from "../ui/GridItemDisplay";
 
 const extend = require("lodash/extend")
 
@@ -20,21 +21,24 @@ export class UcGridItem extends React.Component<ItemProps, any> {
   }
 
   render() {
-    const {previewUrl, viewerUrl, result, bemBlocks} = this.props
+    const {previewUrl, viewerUrl, result} = this.props
     const source = extend({}, result._source, result.highlight)
     const thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
-    const contentUrl = source.Manifest
-    const schema = getSchema(result, contentUrl, thumbnail, null)
-    const imageLink = buildImagePreview(previewUrl, source.thumbnail, contentUrl)
-    const viewUrl = buildImageView(viewerUrl, contentUrl)
+    const manifestId = source.Manifest
+    const schema = getSchema(source, manifestId, thumbnail, null)
+    const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
+    const viewUrl = buildImageView(viewerUrl, manifestId)
     const titleString = shortenTitle(source.Title)
     return (
       <ResultContext.Provider value={result}>
-        <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-          <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
-          <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={titleString}/>
-          <StructuredDataImageObject schema={schema}/>
-        </div>
+        <GridItemDisplay
+          contentUrl={viewUrl}
+          imageLink={imageLink}
+          schema={schema}
+          thumbnail={thumbnail}
+          titleString={titleString}
+          {...this.props}
+        />
       </ResultContext.Provider>)
   }
 }

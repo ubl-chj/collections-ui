@@ -47,8 +47,16 @@
     }
   ],
   "highlightFields": [
+    "viewer",
+    "thumbnail",
+    "Description",
+    "Part reference",
     "Title",
-    "Description"
+    "title",
+    "Shelfmark",
+    "collection",
+    "subCollection",
+    "manifest"
   ],
   "suggestionField": "Title"
 }

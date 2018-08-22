@@ -55,8 +55,24 @@
     }
   ],
   "highlightFields": [
+    "Artist",
+    "Birthplace",
+    "Culture & Date",
+    "Dimensions",
+    "Gallery Label (created)",
+    "Inscription",
+    "Markings",
+    "Medium",
+    "Object Number",
+    "Place Created",
+    "Place Depicted",
+    "Place Found",
+    "Signed",
+    "id",
+    "related",
+    "thumbnail",
     "title",
-    "Inscription"
+    "within"
   ],
   "suggestionField": "title"
 }

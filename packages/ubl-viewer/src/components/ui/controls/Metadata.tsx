@@ -61,8 +61,13 @@ export class Metadata extends ViewerComponent<IMetadataProps, any> {
       const items = this.buildMetadata(manifest)
       return (
         <div className="manifest-info">
-          <Menu noOverlay right customBurgerIcon={false} isOpen={this.state.menuOpen}
-            onStateChange={(state) => this.handleStateChange(state)}>
+          <Menu
+            noOverlay
+            right
+            customBurgerIcon={false}
+            isOpen={this.state.menuOpen}
+            onStateChange={(state) => this.handleStateChange(state)}
+          >
             <ul className="list-group">
               {items.map(({data, label, value}) => <MetadataItem key={uuidv4()} data={data} label={label} value={value}/>)}
             </ul>

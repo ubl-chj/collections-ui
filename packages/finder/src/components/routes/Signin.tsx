@@ -2,11 +2,11 @@ import * as React from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import {Link, withRouter} from 'react-router-dom'
 import {Layout, LayoutBody, LayoutResults, TopBar} from 'searchkit-fork'
-import '../../assets/firebaseui-styling.global.css'
+import '../../styles/firebaseui-styling.global.css'
 import {Domain, Routes} from '../../constants'
 import {AuthUserContext} from '../core';
 
-const styles = require('../../assets/app.css')
+const styles = require('../../styles/app.css')
 const firebase = require("firebase/app");
 const firebaseApiKey = process.env.REACT_APP_FIREBASE_KEY
 

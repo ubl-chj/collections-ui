@@ -2,8 +2,8 @@ import 'babel-polyfill';
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/core/App'
-import './assets/index.css'
-import './assets/scss/app.scss';
+import './styles/index.css'
+import './styles/scss/app.scss';
 import TagManager from 'react-gtm-module'
 
 const tagManagerArgs = {

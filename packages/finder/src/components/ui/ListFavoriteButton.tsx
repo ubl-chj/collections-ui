@@ -53,11 +53,16 @@ export class ListFavoriteButton extends React.Component<any, any> {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-      return (<div className='result-item-actions layout-row'>
+      return (
+        <div className='result-item-actions layout-row'>
         {isFavorite && favorite ?
           (<button type="button" className="btn btn-primary-outline btn-xs">
             <a id={this.result._id}>
-              <i className="glyphicon glyphicon-star" onClick={this.unsetFavorite}/></a>
+              <i
+                className="glyphicon glyphicon-star"
+                onClick={this.unsetFavorite}
+              />
+            </a>
           </button>)
           : null}
       </div>)

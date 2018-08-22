@@ -1,9 +1,8 @@
 import * as React from "react"
 import {Domain} from "../../constants"
-import {StructuredDataImageObject} from "../schema/StructuredDataImageObject"
-import {Thumbnail, Title} from "../ui"
+import {GridItemDisplay} from "../ui/GridItemDisplay";
 import {ItemProps} from "./ItemProps"
-import {buildImagePreview, getSchema, shortenTitle} from './ItemUtils'
+import {buildImagePreview, buildUBLManifestId, getSchema, shortenTitle} from './ItemUtils'
 
 const extend = require("lodash/extend")
 
@@ -19,7 +18,7 @@ export class UblGridItem extends React.Component<ItemProps, any> {
   }
 
   render() {
-    const {previewUrl, result, bemBlocks} = this.props
+    const {previewUrl, result} = this.props
 
     const source = extend({}, result._source, result.highlight)
     const pathname = new URL(source['@id']).pathname
@@ -29,16 +28,20 @@ export class UblGridItem extends React.Component<ItemProps, any> {
     const firstId = viewId.substring(0, 4).padStart(4, '0')
     const secondId = viewId.substring(5, 8).padStart(4, '0')
     const imageBase = process.env.REACT_APP_UBL_IMAGE_SERVICE_BASE + firstId + '/' + secondId + '/' + viewId + '/00000001.jpx'
+    const manifestId = buildUBLManifestId(imageBase)
     const thumbnail = imageBase + Domain.THUMBNAIL_API_REQUEST
-    const imageLink = buildImagePreview(previewUrl, imageBase)
-    const schema = getSchema(result, contentUrl, thumbnail, null)
+    const imageLink = buildImagePreview(previewUrl, imageBase, manifestId)
+    const schema = getSchema(source, contentUrl, thumbnail, null)
     const titleString = shortenTitle(source.Title)
     return (
-      <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
-        <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={imageLink} className={bemBlocks.item('poster')}/>
-        <Title viewUrl={contentUrl} className={bemBlocks.item('title')} titleString={titleString}/>
-        <StructuredDataImageObject schema={schema}/>
-      </div>
+      <GridItemDisplay
+        contentUrl={contentUrl}
+        imageLink={imageLink}
+        schema={schema}
+        thumbnail={thumbnail}
+        titleString={titleString}
+        {...this.props}
+      />
     )
   }
 }

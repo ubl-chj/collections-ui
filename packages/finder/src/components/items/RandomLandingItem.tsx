@@ -1,0 +1,51 @@
+import * as React from "react";
+import {Link} from 'react-router-dom'
+import {ResultContext} from "../core";
+import {Thumbnail, Title} from "../ui";
+import {ListSchemaEntry} from '../ui/ListItemDisplay';
+import {ItemProps} from './ItemProps'
+import {buildImagePreview, buildImageView, buildRandomThumbnailReference, getSchema,} from './ItemUtils';
+import {ActionBar} from 'searchkit-fork';
+import {resolveName} from './index';
+
+const uuidv4 = require('uuid/v4');
+const extend = require('lodash/extend')
+
+export class RandomLandingItem extends React.Component<ItemProps, any> {
+
+  static defaultProps = {
+    previewUrl: process.env.REACT_APP_OSD_BASE,
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
+  }
+
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    const {result, bemBlocks, previewUrl, viewerUrl} = this.props
+    const source = extend({}, result._source, result.highlight)
+    const manifestId = source.manifest
+    const thumbnail = buildRandomThumbnailReference(source.thumbnail)
+    const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
+    const viewUrl = buildImageView(viewerUrl, manifestId)
+    const schema = getSchema(source, manifestId, thumbnail, null)
+    const name = resolveName(schema)
+    const schemaFilterName = Object.entries(schema.mainEntity).filter((e) => e[0] !== 'alternateName')
+    if (thumbnail) {
+      return (
+        <ResultContext.Provider value={result}>
+          <span className='sk-hits-stats__info'>Random Item</span>
+          <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
+            <Thumbnail imageSource={thumbnail} imageLink={imageLink} className={'featured__poster'}/>
+            <div className={bemBlocks.item('details')}>
+              <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={name}/>
+              {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
+            </div>
+          </div>
+        </ResultContext.Provider>)
+    } else {
+      return null
+    }
+  }
+}

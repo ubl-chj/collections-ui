@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import {
   ActionBar,
   ActionBarRow,
-  GroupedSelectedFilters,
+  GroupedSelectedFilters, Hits,
   HitsStats,
   Layout,
   LayoutBody,
@@ -22,11 +22,13 @@ import {
   ViewSwitcherHits,
   ViewSwitcherToggle,
 } from 'searchkit-fork'
-import '../../assets/index.css'
 import {Domain, Routes} from '../../constants'
+import '../../styles/index.css'
 import {CollectionsListItem} from '../items'
+import HarvardGridItem from '../items/HarvardGridItem';
 import {AuthUserProfile, AuthUserTooltip} from '../ui'
 import {IRouteProps} from './IRouteProps'
+import {RandomLandingItem} from '../items/RandomLandingItem';
 
 const ReactTooltip = require('react-tooltip')
 
@@ -37,7 +39,24 @@ export class Landing extends React.Component<IRouteProps, {}> {
     options: {timeout: 20000},
     routeConfig: require('./config/landing.json'),
   }
+
+  static randomQuery() {
+    const val = (new Date()).getTime()
+    return {
+        function_score: {
+          functions: [
+            {
+              random_score: {
+                seed: val,
+              },
+            },
+          ],
+        },
+      }
+  }
+
   searchkit: SearchkitManager
+  searchkit2: SearchkitManager
   cachedHits: any
   routeKey: string
   state: {
@@ -49,7 +68,10 @@ export class Landing extends React.Component<IRouteProps, {}> {
     super(props)
     this.routeKey = this.props.routeConfig.indexName
     const host = props.host + this.routeKey
+    const host2 = props.host + 'hvd2'
     this.searchkit = new SearchkitManager(host, props.options)
+    this.searchkit2 = new SearchkitManager(host2, props.options)
+    this.searchkit2.addDefaultQuery((query) => query.addQuery(Landing.randomQuery()))
     this.state = {
       components: [],
       result: {},
@@ -62,7 +84,7 @@ export class Landing extends React.Component<IRouteProps, {}> {
   }
 
   componentDidUpdate() {
-    //this.handleSessionPersistence()
+    // this.handleSessionPersistence()
   }
 
   async handleSessionPersistence() {
@@ -88,18 +110,30 @@ export class Landing extends React.Component<IRouteProps, {}> {
             <div className='my-logo'>
               <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
             </div>
-            <SearchBox autofocus={true} searchOnChange={true} queryFields={routeConfig.queryFields}/>
+            <SearchBox
+              autofocus={true}
+              searchOnChange={true}
+              queryFields={routeConfig.queryFields}/>
             <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
               <AuthUserProfile/>
             </div>
-            <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light'
+            <ReactTooltip id='authUserProfile'
+              offset={{left: 170}}
+              globalEventOff='click'
+              border={t} place='bottom'
+              type='light'
               effect='solid'>
               <AuthUserTooltip/>
             </ReactTooltip>
           </TopBar>
           <LayoutBody>
             <SideBar>
-              <RefinementListFilter id='tag1' title='Collection' field='metadataMap.tag1.keyword' orderKey='_term' operator='AND'/>
+              <RefinementListFilter
+                id='tag1'
+                title='Collection'
+                field='metadataMap.tag1.keyword'
+                orderKey='_term'
+                operator='AND'/>
             </SideBar>
             <LayoutResults>
               <ActionBar>
@@ -113,13 +147,22 @@ export class Landing extends React.Component<IRouteProps, {}> {
                   <ResetFilters/>
                 </ActionBarRow>
               </ActionBar>
-              <ViewSwitcherHits hitsPerPage={50} highlightFields={['metadataMap.tag1']}
-                hitComponents={[{key: 'list', title: 'List', itemComponent: CollectionsListItem}]} scrollTo='body'/>
+              <SearchkitProvider searchkit={this.searchkit2}>
+                <ActionBar>
+                  <Hits hitsPerPage={1} highlightFields={["title"]} mod="sk-hits-list" itemComponent={RandomLandingItem}/>
+                </ActionBar>
+              </SearchkitProvider>
+              <ViewSwitcherHits
+                hitsPerPage={50}
+                highlightFields={['metadataMap.tag1']}
+                hitComponents={[{key: 'list', title: 'List', itemComponent: CollectionsListItem}]}
+                scrollTo='body'/>
               <NoHits suggestionsField={'metadataMap.tag1'}/>
               <Pagination showNumbers={true}/>
             </LayoutResults>
           </LayoutBody>
         </Layout>
-      </SearchkitProvider>)
+      </SearchkitProvider>
+    )
   }
 }
