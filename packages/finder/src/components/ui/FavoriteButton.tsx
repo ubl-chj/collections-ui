@@ -35,8 +35,8 @@ export class FavoriteButton extends React.Component<any, any> {
     this.state = {
       error: null,
       favorite: null,
-      isLoaded: false,
       isFavorite: false,
+      isLoaded: false,
     }
     this.getFavorite.bind(this);
   }
@@ -45,9 +45,9 @@ export class FavoriteButton extends React.Component<any, any> {
     firebase.database().ref('/users/' + this.authUser.uid + '/favorites/' + this.result._id).once('value')
       .then((snapshot) =>
         this.setState({
-          isLoaded: true,
           favorite: (snapshot.val() && snapshot.val().result._id),
           isFavorite: true,
+          isLoaded: true,
         }),
       );
   }
@@ -64,8 +64,8 @@ export class FavoriteButton extends React.Component<any, any> {
   setFavorite(result) {
     if (this._isMounted) {
       this.setState({
-        isFavorite: true,
         favorite: result._id,
+        isFavorite: true,
       });
     }
   }

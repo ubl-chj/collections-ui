@@ -3,7 +3,7 @@ import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Layout, LayoutBody, LayoutResults, SearchBox, SearchkitManager, SearchkitProvider, SideBar, TopBar} from 'searchkit-fork'
 import {Domain, Routes} from '../../constants';
 import {AuthUserContext, withAuthorization} from '../core'
-import {ListFavorites} from '../ui'
+import {FavoritesList} from '../ui'
 import {AuthUserProfile, AuthUserTooltip} from '../ui/index'
 
 const firebase = require("firebase/app");
@@ -48,5 +48,5 @@ const AccountPage = () => <SearchkitProvider searchkit={searchkit}>
 </SearchkitProvider>
 
 const authCondition = (authUser) => !!authUser
-const ListFavoritesWithRouter = withRouter(ListFavorites)
+const ListFavoritesWithRouter = withRouter(FavoritesList)
 export default withAuthorization(authCondition)(AccountPage)

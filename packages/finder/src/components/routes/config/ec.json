@@ -1,5 +1,5 @@
 {
-  "indexName": "ec8",
+  "indexName": "ec9",
   "queryFields": [
     "Century",
     "Collection Name",
@@ -19,7 +19,7 @@
     "Title (English).trigram",
     "related",
     "thumbnail",
-    "identifier.manifest"
+    "manifest"
   ],
   "listItem": "EcListItem",
   "gridItem": "EcGridItem",
@@ -74,7 +74,7 @@
     "Title (English)",
     "related",
     "thumbnail",
-    "identifier.manifest"
+    "manifest"
   ],
   "suggestionField": "Title (English)"
 }

@@ -22,7 +22,7 @@ export class ECGridItem extends React.Component<ItemProps, any> {
     const {result, previewUrl, viewerUrl} = this.props
     const source = extend({}, result._source, result.highlight)
     const thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
-    const manifestId = source['identifier.manifest']
+    const manifestId = source.manifest
     const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
     const viewUrl = buildImageView(viewerUrl, manifestId)
     const schema = getSchema(source, manifestId, thumbnail, null)

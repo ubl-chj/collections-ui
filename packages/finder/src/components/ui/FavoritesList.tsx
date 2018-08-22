@@ -1,9 +1,9 @@
 import * as React from "react";
 import {AuthUserContext} from "../core";
-import {ListFavorite} from './ListFavorite'
+import {FavoriteListItem} from './FavoriteListItem'
 const firebase = require("firebase/app");
 
-export class ListFavorites extends React.Component<any, any> {
+export class FavoritesList extends React.Component<any, any> {
   state: {
     error: null
     favorites: any[]
@@ -67,7 +67,7 @@ export class ListFavorites extends React.Component<any, any> {
       return (
         <AuthUserContext.Consumer>
           {(authUser) => authUser ?
-            <ListFavorite key={favorite.key} favorite={favorite} authUser={authUser}/> : null}
+            <FavoriteListItem key={favorite.key} favorite={favorite} authUser={authUser}/> : null}
         </AuthUserContext.Consumer>)
     })
   }

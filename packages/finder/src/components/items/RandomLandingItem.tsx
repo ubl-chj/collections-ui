@@ -1,12 +1,12 @@
 import * as React from "react";
 import {Link} from 'react-router-dom'
 import {ResultContext} from "../core";
+import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
 import {Thumbnail, Title} from "../ui";
 import {ListSchemaEntry} from '../ui/ListItemDisplay';
+import {resolveManifestId, resolveName} from './index';
 import {ItemProps} from './ItemProps'
-import {buildImagePreview, buildImageView, buildRandomThumbnailReference, getSchema,} from './ItemUtils';
-import {ActionBar} from 'searchkit-fork';
-import {resolveName} from './index';
+import {buildImagePreview, buildImageView, buildRandomThumbnailReference, getSchema} from './ItemUtils';
 
 const uuidv4 = require('uuid/v4');
 const extend = require('lodash/extend')
@@ -18,6 +18,10 @@ export class RandomLandingItem extends React.Component<ItemProps, any> {
     viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
   }
 
+  state: {
+    result: any,
+  }
+
   constructor(props) {
     super(props)
   }
@@ -25,7 +29,7 @@ export class RandomLandingItem extends React.Component<ItemProps, any> {
   render() {
     const {result, bemBlocks, previewUrl, viewerUrl} = this.props
     const source = extend({}, result._source, result.highlight)
-    const manifestId = source.manifest
+    const manifestId = resolveManifestId(source)
     const thumbnail = buildRandomThumbnailReference(source.thumbnail)
     const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
     const viewUrl = buildImageView(viewerUrl, manifestId)
@@ -37,12 +41,21 @@ export class RandomLandingItem extends React.Component<ItemProps, any> {
         <ResultContext.Provider value={result}>
           <span className='sk-hits-stats__info'>Random Item</span>
           <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-            <Thumbnail imageSource={thumbnail} imageLink={imageLink} className={'featured__poster'}/>
+            <Thumbnail
+              imageSource={thumbnail}
+              imageLink={imageLink}
+              className={'featured__poster'}
+            />
             <div className={bemBlocks.item('details')}>
-              <Title viewUrl={viewUrl} className={bemBlocks.item('title')} titleString={name}/>
+              <Title
+                viewUrl={viewUrl}
+                className={bemBlocks.item('title')}
+                titleString={name}
+              />
               {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
             </div>
           </div>
+          <StructuredDataImageObject schema={schema}/>
         </ResultContext.Provider>)
     } else {
       return null

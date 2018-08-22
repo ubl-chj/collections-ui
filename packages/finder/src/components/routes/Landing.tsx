@@ -25,10 +25,9 @@ import {
 import {Domain, Routes} from '../../constants'
 import '../../styles/index.css'
 import {CollectionsListItem} from '../items'
-import HarvardGridItem from '../items/HarvardGridItem';
+import {RandomLandingItem} from '../items/RandomLandingItem';
 import {AuthUserProfile, AuthUserTooltip} from '../ui'
 import {IRouteProps} from './IRouteProps'
-import {RandomLandingItem} from '../items/RandomLandingItem';
 
 const ReactTooltip = require('react-tooltip')
 
@@ -38,6 +37,7 @@ export class Landing extends React.Component<IRouteProps, {}> {
     host: process.env.REACT_APP_ELASTICSEARCH_HOST,
     options: {timeout: 20000},
     routeConfig: require('./config/landing.json'),
+    searchkit2: {},
   }
 
   static randomQuery() {
@@ -61,30 +61,33 @@ export class Landing extends React.Component<IRouteProps, {}> {
   routeKey: string
   state: {
     components: [],
-    result: object,
+    refreshItem: boolean,
   }
 
   constructor(props) {
     super(props)
     this.routeKey = this.props.routeConfig.indexName
     const host = props.host + this.routeKey
-    const host2 = props.host + 'hvd2'
+    const host2 = props.host + 'hvd2,uc2,ec8'
     this.searchkit = new SearchkitManager(host, props.options)
     this.searchkit2 = new SearchkitManager(host2, props.options)
     this.searchkit2.addDefaultQuery((query) => query.addQuery(Landing.randomQuery()))
     this.state = {
       components: [],
-      result: {},
+      refreshItem: false,
     }
   }
 
   componentDidMount() {
     this.cachedHits = sessionStorage.getItem(this.routeKey);
-    this.setState({result: null})
+    this.setState({refreshItem: true})
+    this.refreshItem = this.refreshItem.bind(this)
   }
 
-  componentDidUpdate() {
-    // this.handleSessionPersistence()
+  componentDidUpdate(prevProps) {
+    if (this.props.searchkit2 !== prevProps.searchkit2) {
+      this.setState({refreshItem: true})
+    }
   }
 
   async handleSessionPersistence() {
@@ -100,7 +103,26 @@ export class Landing extends React.Component<IRouteProps, {}> {
     }
   }
 
-  render() {
+  refreshItem() {
+    this.setState({refreshItem: !this.state.refreshItem})
+  }
+
+  renderRandomItem() {
+    if (this.state.refreshItem) {
+      return(
+        <SearchkitProvider searchkit={this.searchkit2}>
+        <ActionBar>
+          <Hits
+            hitsPerPage={1}
+            highlightFields={["title"]}
+            mod="sk-hits-list"
+            itemComponent={RandomLandingItem}
+          />
+        </ActionBar>
+      </SearchkitProvider>)
+    }
+  }
+   render() {
     const {routeConfig} = this.props
     const t = Boolean(true)
     return (
@@ -113,16 +135,20 @@ export class Landing extends React.Component<IRouteProps, {}> {
             <SearchBox
               autofocus={true}
               searchOnChange={true}
-              queryFields={routeConfig.queryFields}/>
+              queryFields={routeConfig.queryFields}
+            />
             <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
               <AuthUserProfile/>
             </div>
-            <ReactTooltip id='authUserProfile'
+            <ReactTooltip
+              id='authUserProfile'
               offset={{left: 170}}
               globalEventOff='click'
-              border={t} place='bottom'
+              border={t}
+              place='bottom'
               type='light'
-              effect='solid'>
+              effect='solid'
+            >
               <AuthUserTooltip/>
             </ReactTooltip>
           </TopBar>
@@ -133,7 +159,8 @@ export class Landing extends React.Component<IRouteProps, {}> {
                 title='Collection'
                 field='metadataMap.tag1.keyword'
                 orderKey='_term'
-                operator='AND'/>
+                operator='AND'
+              />
             </SideBar>
             <LayoutResults>
               <ActionBar>
@@ -147,16 +174,14 @@ export class Landing extends React.Component<IRouteProps, {}> {
                   <ResetFilters/>
                 </ActionBarRow>
               </ActionBar>
-              <SearchkitProvider searchkit={this.searchkit2}>
-                <ActionBar>
-                  <Hits hitsPerPage={1} highlightFields={["title"]} mod="sk-hits-list" itemComponent={RandomLandingItem}/>
-                </ActionBar>
-              </SearchkitProvider>
+              <button onClick={() => {this.refreshItem()}}>refresh</button>
+              {this.renderRandomItem()}
               <ViewSwitcherHits
                 hitsPerPage={50}
                 highlightFields={['metadataMap.tag1']}
                 hitComponents={[{key: 'list', title: 'List', itemComponent: CollectionsListItem}]}
-                scrollTo='body'/>
+                scrollTo='body'
+              />
               <NoHits suggestionsField={'metadataMap.tag1'}/>
               <Pagination showNumbers={true}/>
             </LayoutResults>

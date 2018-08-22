@@ -1,7 +1,7 @@
 import * as React from 'react';
 const firebase = require("firebase/app");
 
-export class ListFavoriteButton extends React.Component<any, any> {
+export class FavoritesListButton extends React.Component<any, any> {
   state: {
     error: null
     favorite: string

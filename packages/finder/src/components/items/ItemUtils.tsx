@@ -1,6 +1,6 @@
 import * as React from "react";
-import {SchemaAdapter} from "../schema";
 import {Domain} from "../../constants";
+import {SchemaAdapter} from "../schema";
 
 export function shortenTitle(title: string) {
   if (title.length >= 80) {
@@ -76,4 +76,29 @@ export function resolveName(schema) {
   } else {
     return schema.mainEntity.alternateName
   }
+}
+
+// this is an ugly workaround
+export function resolveManifestId(source) {
+  if (source.manifest) {
+    return source.manifest
+  } else if (source.Manifest) {
+    return source.Manifest
+  } else if (source.iiifService) {
+    return (buildUBLManifestId(source.iiifService))
+  } else if (source.id) {
+    return source.id
+  }
+}
+
+export function resolveThumbnailSource(source) {
+  if (source.thumbnail) {
+      return source.thumbnail
+  } else if (source.iiifService) {
+    return source.iiifService
+  }
+}
+
+export function resolveThumbnail(thumbnail) {
+    return thumbnail + Domain.THUMBNAIL_API_REQUEST
 }

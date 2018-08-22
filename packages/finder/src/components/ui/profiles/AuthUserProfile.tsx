@@ -12,15 +12,28 @@ export const AuthUserProfile = (props) => {
   return (
     <AuthUserContext.Consumer>
       {(authUser) => authUser ?
-        <div className="gb_Ng"><a role="dialog">{
-          firebase.auth().currentUser.photoURL ?  <img className="account-image"
-            src={firebase.auth().currentUser.photoURL} alt="Account's profile image"
-            aria-hidden="true" /> : <img className="account-image"
-            src={notFoundImageUri} alt="Account's profile image"
-            aria-hidden="true" />
-        }</a></div> :
         <div className="gb_Ng">
-          <Link className='btn btn-outline-secondary float-right' to={Routes.SIGN_IN}>{Domain.LOGIN_TEXT}</Link>
+          <a role="dialog">
+          {firebase.auth().currentUser.photoURL ?
+            <img
+              className="account-image"
+              src={firebase.auth().currentUser.photoURL}
+              alt="Account's profile image"
+              aria-hidden="true"
+            /> :
+            <img
+              className="account-image"
+              src={notFoundImageUri}
+              alt="Account's profile image"
+              aria-hidden="true"
+            />
+        }</a>
+        </div> :
+        <div className="gb_Ng">
+          <Link
+            className='btn btn-outline-secondary float-right'
+            to={Routes.SIGN_IN}>{Domain.LOGIN_TEXT}
+          </Link>
         </div>}
     </AuthUserContext.Consumer>
   )

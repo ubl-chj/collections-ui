@@ -2,10 +2,9 @@ import * as React from "react";
 import {AuthUserContext} from "../core";
 import {resolveName} from '../items';
 import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
-import {FavoriteButton, Thumbnail, Title} from "./index";
+import {FavoritesListButton, Thumbnail, Title} from "./index";
 
 const uuidv4 = require('uuid/v4');
-const firebase = require("firebase/app");
 
 export interface IListItemDisplayProps {
   bemBlocks?: any
@@ -14,6 +13,7 @@ export interface IListItemDisplayProps {
   result?: any
   schema: any
   thumbnail: string
+  unsetFavorite: any
 }
 
 export const makeAnchor = (entry) => {
@@ -37,10 +37,35 @@ export const ListSchemaEntry = (props) => {
   )
 }
 
-export class ListItemDisplay extends React.Component<IListItemDisplayProps, any> {
+export class FavoritesListItemDisplay extends React.Component<IListItemDisplayProps, any> {
+
+  favorite: {
+    result: any,
+  }
+  state: {
+    error: null
+    isFavorite: boolean,
+  };
+  authUser: {
+    uid: string,
+  }
+  unsetFavorite: any
+  viewerUrl: string
+
+  constructor(props) {
+    super(props)
+    this.favorite = props.favorite
+    this.authUser = props.authUser
+    this.unsetFavorite = props.unsetFavorite
+    this.state = {
+      error: null,
+      isFavorite: true,
+    }
+    this.viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE + '?manifest='
+  }
 
   render() {
-    const {bemBlocks, contentUrl, imageLink, result, thumbnail, schema} = this.props
+    const {bemBlocks, contentUrl, imageLink, unsetFavorite, result, thumbnail, schema} = this.props
     const schemaFilterName = Object.entries(schema.mainEntity).filter((e) => e[0] !== 'name')
     const name = resolveName(schema)
 
@@ -54,7 +79,11 @@ export class ListItemDisplay extends React.Component<IListItemDisplayProps, any>
         />
         <div className={bemBlocks.item('details')}>
           <AuthUserContext.Consumer>
-            {(authUser) => authUser ? <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
+            {(authUser) => authUser ? <FavoritesListButton
+              authUser={this.authUser}
+              result={result}
+              unsetFavorite={unsetFavorite}
+            /> : null}
           </AuthUserContext.Consumer>
           <Title viewUrl={contentUrl} className={bemBlocks.item('title')} titleString={name}/>
           {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
