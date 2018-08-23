@@ -26,7 +26,7 @@ import {Domain, Routes} from '../../constants'
 import '../../styles/index.css'
 import {CollectionsListItem} from '../items'
 import {RandomLandingItem} from '../items/RandomLandingItem';
-import {AuthUserProfile, AuthUserTooltip} from '../ui'
+import {AuthUserProfile, AuthUserTooltip, RefreshIcon} from '../ui'
 import {IRouteProps} from './IRouteProps'
 
 const ReactTooltip = require('react-tooltip')
@@ -174,7 +174,7 @@ export class Landing extends React.Component<IRouteProps, {}> {
                   <ResetFilters/>
                 </ActionBarRow>
               </ActionBar>
-              <button onClick={() => {this.refreshItem()}}>refresh</button>
+              <button className='button-transparent' onClick={() => {this.refreshItem()}}><RefreshIcon/></button>
               {this.renderRandomItem()}
               <ViewSwitcherHits
                 hitsPerPage={50}
