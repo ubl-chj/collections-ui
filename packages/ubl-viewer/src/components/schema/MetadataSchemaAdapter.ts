@@ -1,28 +1,31 @@
 import * as React from "react";
+import {mapping} from 'schema-map'
 
-export interface IStructuredDataImageObjectProps {
+export interface IMetadataSchemaAdapterProps {
   contentUrl: string
   position?: number
   source: any
   thumbnail: string
 }
 
-export class SchemaAdapter extends React.Component<IStructuredDataImageObjectProps, any> {
+export class MetadataSchemaAdapter extends React.Component<IMetadataSchemaAdapterProps, any> {
   mainEntity: any
   mappingFileName: string
   source: any
+  metadata = {}
   private readonly contentUrl: any;
   private readonly thumbnail: any;
-  private readonly position?: any;
+  private readonly name?: string;
 
-  constructor(source, contentUrl, thumbnail, position) {
+  constructor(source, contentUrl, thumbnail, name) {
     super(source)
-    this.mappingFileName = './mapping.json'
+    this.mappingFileName = './metadataMapping.json'
     this.mainEntity = {} as any
     this.source = source
     this.contentUrl = contentUrl
     this.thumbnail = thumbnail
-    this.position = position
+    this.name = name
+    this.metadata = {} as any
   }
 
   buildMainEntity(source) {
@@ -31,13 +34,14 @@ export class SchemaAdapter extends React.Component<IStructuredDataImageObjectPro
         enumerable: true,
         value: "CreativeWork",
       })
-    const mapping = require(`${this.mappingFileName}`)
+
     const mappingProps = this.getMappingProps(mapping, source)
     mappingProps.forEach((k) => {
       const label = mapping[k]
-      const val = source[k]
+      const val = this.metadata[k]
       Object.defineProperty(this.mainEntity, label,
         {
+          configurable: true,
           enumerable: true,
           value: val,
         })
@@ -46,7 +50,16 @@ export class SchemaAdapter extends React.Component<IStructuredDataImageObjectPro
 
   getMappingProps(mapping, source) {
     const mappingProps = Object.getOwnPropertyNames(mapping)
-    const sourceKeys = Object.getOwnPropertyNames(source)
+
+    source.forEach((s) => {
+      Object.defineProperty(this.metadata, s.resource.label,
+        {
+          configurable: true,
+          enumerable: true,
+          value: s.resource.value,
+        })
+    })
+    const sourceKeys = Object.getOwnPropertyNames(this.metadata)
     return mappingProps.filter((x) => sourceKeys.includes(x));
   }
 
@@ -62,6 +75,7 @@ export class SchemaAdapter extends React.Component<IStructuredDataImageObjectPro
         "@type": "ImageObject",
         "contentUrl": this.contentUrl,
         "mainEntity": ordered,
+        "name": this.name,
         "thumbnail": this.thumbnail,
       },
       dataLayerName: 'schemaDataLayer',

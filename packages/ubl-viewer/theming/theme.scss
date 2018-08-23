@@ -680,3 +680,15 @@ body {
   margin: 10px 20px 5px 20px;
   padding: 0 5px 5px 0;
 }
+
+.JUQOtd {
+  transition: fill cubic-bezier(0.4, 0.0, 0.2, 1) 400ms;
+  fill: white;
+  width: 20px;
+  height: 20px;
+  vertical-align:unset;
+}
+
+.control-btn {
+  padding: 0.175rem 0.75rem !important
+}

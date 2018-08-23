@@ -1,11 +1,9 @@
 import * as React from "react"
 import {Domain} from "../../constants"
-import {AuthUserContext, ResultContext} from "../core"
-import {StructuredDataImageObject} from "../schema/StructuredDataImageObject"
-import {FavoriteButton, Thumbnail, Title} from "../ui"
+import {ResultContext} from "../core"
+import {ListItemDisplay} from "../ui/ListItemDisplay";
 import {ItemProps} from "./ItemProps"
 import {buildImagePreview, buildImageView, buildUBLManifestId, getSchema} from './ItemUtils'
-import {ListItemDisplay} from "../ui/ListItemDisplay";
 
 const firebase = require("firebase/app")
 

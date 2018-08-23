@@ -59,7 +59,7 @@ export class FavoritesListButton extends React.Component<any, any> {
           (<button type="button" className="btn btn-primary-outline btn-xs">
             <a id={this.result._id}>
               <i
-                className="glyphicon glyphicon-star"
+                className="favorite-button glyphicon-star"
                 onClick={this.unsetFavorite}
               />
             </a>

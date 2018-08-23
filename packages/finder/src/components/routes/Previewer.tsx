@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
-import {ActionBar, Layout, LayoutBody, Metadata, OsdComponent, TopBar, ViewerManager, ViewerProvider} from 'ubl-viewer'
+import {ActionBar, Controls, Layout, LayoutBody, OsdComponent, TopBar, ViewerManager, ViewerProvider} from 'ubl-viewer'
 import {Domain, Routes} from '../../constants'
 import '../../styles/index.css'
 import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../ui'
@@ -49,7 +49,9 @@ class PreviewerComponent extends React.Component<any, any> {
           <Layout>
             <TopBar>
               <div className='my-logo-thin'>
-                <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
+                <Link
+                  className='my-logo'
+                  to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
               </div>
               <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
                 <AuthUserProfile/>
@@ -67,7 +69,7 @@ class PreviewerComponent extends React.Component<any, any> {
               </ReactTooltip>
             </TopBar>
             <ActionBar>
-              <Metadata key='metadata'/>
+              <Controls {...this.props} key='metadata'/>
             </ActionBar>
             <LayoutBody>
               <BackArrow/>

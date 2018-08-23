@@ -1,11 +1,9 @@
 import * as React from "react"
 import {Domain} from "../../constants"
 import {ResultContext} from "../core"
-import {StructuredDataImageObject} from "../schema/StructuredDataImageObject"
-import {Thumbnail, Title} from "../ui"
+import {GridItemDisplay} from "../ui/GridItemDisplay";
 import {ItemProps} from "./ItemProps"
 import {buildImagePreview, buildImageView, getSchema, shortenTitle} from './ItemUtils'
-import {GridItemDisplay} from "../ui/GridItemDisplay";
 
 const extend = require("lodash/extend")
 

@@ -30,8 +30,7 @@ const AccountPage = () => <SearchkitProvider searchkit={searchkit}>
       </ReactTooltip>
     </TopBar>
     <LayoutBody>
-      <SideBar>
-      </SideBar>
+      <SideBar/>
       <LayoutResults>
         <ActionBar>
           <AuthUserContext.Consumer>

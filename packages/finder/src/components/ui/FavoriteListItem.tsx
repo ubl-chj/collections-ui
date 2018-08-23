@@ -1,6 +1,5 @@
 import * as React from "react";
 import {block} from 'searchkit-fork'
-import {Domain} from "../../constants";
 import {ResultContext} from "../core";
 import {buildImageView, resolveManifestId, resolveThumbnail, resolveThumbnailSource} from "../items";
 import {getSchema} from "../items";

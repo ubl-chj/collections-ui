@@ -12,10 +12,10 @@
     "noEmitOnError": true,
     "noUnusedParameters":true,
     "noImplicitUseStrict":true,
-    "allowSyntheticDefaultImports":false,
+    "allowSyntheticDefaultImports":true,
     "jsx": "react",
     "lib":[
-      "es5", "es2015", "dom"
+      "es5", "es2015", "es2017", "dom"
     ],
     "types":[
       "jest", "node"

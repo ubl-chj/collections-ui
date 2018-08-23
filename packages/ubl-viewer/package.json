@@ -73,15 +73,16 @@
     "jest": "^23.4.2",
     "jest-junit-reporter": "^1.1.0",
     "js-beautify": "^1.5.10",
-    "json-loader": "^0.5.7",
     "mini-css-extract-plugin": "^0.4.1",
     "node-sass": "^4.9.2",
     "null-loader": "^0.1.1",
     "optimize-css-assets-webpack-plugin": "^5.0.0",
     "postcss-loader": "^2.0.8",
     "react-dev-utils": "^5.0.1",
+    "react-gtm-module": "^2.0.2",
     "react-test-renderer": "^16.4.1",
     "sass-loader": "^7.0.3",
+    "schema-map": "file:../schema-map",
     "sinon": "^1.17.2",
     "style-loader": "^0.21.0",
     "ts-jest": "^23.0.1",
@@ -107,7 +108,8 @@
     "rc-slider": "^8.6.1",
     "react": "^16.4.1",
     "react-burger-menu": "^2.5.2",
-    "react-dom": "16.4.1"
+    "react-dom": "16.4.1",
+    "react-router-dom": "^4.2.2"
   },
   "peerDependencies": {
     "react": "^16.0.0-0",
