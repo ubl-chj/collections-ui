@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Domain} from "../../constants";
 import {ResultContext} from "../core";
-import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
 import {Thumbnail, Title} from "../ui";
 import {ItemProps} from './ItemProps'
 import {buildImagePreview, buildImageView, getSchema, shortenTitle} from './ItemUtils';
@@ -39,7 +38,6 @@ export class StandardGridItem extends React.Component<ItemProps, any> {
             <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
               <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={previewLink} className={bemBlocks.item('poster')}/>
               <Title viewUrl={viewLink} className={bemBlocks.item('title')} titleString={titleString}/>
-              <StructuredDataImageObject schema={schema}/>
             </div>
           </ResultContext.Provider>)
       } else {

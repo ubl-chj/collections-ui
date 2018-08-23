@@ -1,10 +1,10 @@
 import * as React from "react";
 import {Link} from 'react-router-dom'
+import {Domain} from '../../constants';
 import {ResultContext} from "../core";
 import {Thumbnail} from "../ui";
 import {ItemProps} from './ItemProps'
 import {buildImagePreview} from './ItemUtils';
-import {Domain} from '../../constants';
 
 const extend = require('lodash/extend')
 

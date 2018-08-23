@@ -17,7 +17,7 @@ export interface IListItemDisplayProps {
 }
 
 export const makeAnchor = (entry) => {
-  if (entry[0] === 'relatedLink' || entry[0] === 'identifier.manifest') {
+  if (entry[0] === 'sameAs' || entry[0] === 'url') {
     return {__html: '<a target=\'_blank\' rel=\'noopener noreferrer\' href=' + entry[1] + '>' + entry[1] + '</a>'}
   } else {
     return {__html: entry[1]}
@@ -85,9 +85,12 @@ export class FavoritesListItemDisplay extends React.Component<IListItemDisplayPr
               unsetFavorite={unsetFavorite}
             /> : null}
           </AuthUserContext.Consumer>
-          <Title viewUrl={contentUrl} className={bemBlocks.item('title')} titleString={name}/>
+          <Title
+            viewUrl={contentUrl}
+            className={bemBlocks.item('title')}
+            titleString={name}
+          />
           {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
-          <StructuredDataImageObject schema={schema}/>
         </div>
       </div>
     )

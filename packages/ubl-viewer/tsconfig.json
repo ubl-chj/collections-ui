@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
     "strict": false,
-    "declaration": true,
+    "allowJs": true,
     "module": "commonjs",
     "target": "es5",
     "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
     "experimentalDecorators": true,
     "outDir": "lib",
     "sourceMap": true,
@@ -12,10 +13,11 @@
     "noEmitOnError": true,
     "noUnusedParameters":true,
     "noImplicitUseStrict":true,
-    "allowSyntheticDefaultImports":false,
+    "resolveJsonModule":true,
+    "allowSyntheticDefaultImports":true,
     "jsx": "react",
     "lib":[
-      "es5", "es2015", "dom"
+      "es5", "es2015", "es2017", "dom"
     ],
     "types":[
       "jest", "node"

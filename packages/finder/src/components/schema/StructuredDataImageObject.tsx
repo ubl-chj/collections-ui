@@ -13,12 +13,19 @@ export class StructuredDataImageObject extends React.Component<any, any> {
   buildStructuredData() {
     const dataLayer = {
       dataLayer: this.schema,
+      dataLayerName: 'schemaDataLayer',
     }
     TagManager.dataLayer(dataLayer)
   }
 
   componentDidMount() {
     this.buildStructuredData()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.schema !== prevProps.schema) {
+      this.buildStructuredData()
+    }
   }
 
   render() {

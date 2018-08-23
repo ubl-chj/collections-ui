@@ -2,17 +2,17 @@ import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {
   ActionBar,
+  ButtonBar,
   DocumentViewSwitcher,
   Layout,
   LayoutBody,
   ManifestItem,
-  Metadata,
   TopBar,
   ViewerManager,
   ViewerProvider,
 } from 'ubl-viewer'
-import '../../styles/index.css'
 import {Domain, Routes} from '../../constants'
+import '../../styles/index.css'
 import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../ui'
 
 const ReactTooltip = require('react-tooltip')
@@ -48,13 +48,20 @@ class ViewerComponent extends React.Component<any, any> {
               <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
                 <AuthUserProfile/>
               </div>
-              <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light'
-                effect='solid'>
+              <ReactTooltip
+                id='authUserProfile'
+                offset={{left: 170}}
+                globalEventOff='click'
+                border={t}
+                place='bottom'
+                type='light'
+                effect='solid'
+              >
                 <AuthUserTooltip/>
               </ReactTooltip>
             </TopBar>
             <ActionBar>
-              <Metadata key='metadata'/>
+              <ButtonBar key='metadata'/>
             </ActionBar>
             <LayoutBody>
               <BackArrow/>

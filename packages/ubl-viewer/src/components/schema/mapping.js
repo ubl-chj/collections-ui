@@ -1,4 +1,4 @@
-{
+export const mapping = {
   "Abmessungen": "dimensions",
   "Abstract": "description",
   "Artist": "creator",
@@ -76,3 +76,4 @@
   "Umfang": "numberOfPages",
   "URN" : "identifier.urn"
 }
+

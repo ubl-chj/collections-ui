@@ -29,7 +29,7 @@ module.exports = {
     publicPath: ''
   },
   resolve: {
-    extensions:['.js', '.ts', '.tsx', '.webpack.js', '.web.js', '.scss']
+    extensions:['.js', '.ts', '.json', '.tsx', '.webpack.js', '.web.js', '.scss']
   },
 
   plugins: [
@@ -64,26 +64,60 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        loaders: ['ts-loader'],
-        include: [path.join(__dirname, 'src'),path.join(__dirname, 'theming')]
-      },
-      {
-        test: /\.(sa|sc|c)ss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'postcss-loader',
-          'sass-loader',
-        ],
-      },
-      {
-        test: /\.(jpg|png|svg)$/,
-        loaders: [
-          'file-loader?name=[path][name].[ext]'
-        ],
-        include: path.join(__dirname, 'theming')
+        oneOf: [
+          {
+            test: /\.tsx?$/,
+            loaders: ['ts-loader'],
+            include: [path.join(__dirname, 'src'),path.join(__dirname, 'theming')]
+          },
+          {
+            test: /\.(sa|sc|c)ss$/,
+            use: [
+              MiniCssExtractPlugin.loader,
+              'css-loader',
+              'postcss-loader',
+              'sass-loader',
+            ],
+          },
+          {
+            test: /\.css$/,
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  ident: 'postcss',
+                  plugins: () => [
+                    require('postcss-flexbugs-fixes'),
+                    autoprefixer({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9',
+                      ],
+                      flexbox: 'no-2009',
+                    }),
+                  ],
+                },
+              },
+            ],
+          },
+          {
+            exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
+            loader: require.resolve('file-loader'),
+            options: {
+              name: 'static/media/[name].[hash:8].[ext]',
+            },
+          }
+        ]
       }
     ]
   }
-};
+}
