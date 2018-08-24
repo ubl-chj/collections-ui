@@ -1,0 +1,48 @@
+{
+  "extends": [
+    "plugin:jsx-a11y/recommended"
+  ],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "jsx-a11y/href-no-hash": "off",
+    "jsx-a11y/anchor-is-valid": [
+      "warn",
+      {
+        "aspects": [
+          "invalidHref"
+        ]
+      }
+    ],
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/interactive-supports-focus": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-a11y/anchor-has-content": "off",
+    "babel/new-cap": "off",
+    "quotes": [
+      2,
+      "double"
+    ],
+    "strict": [
+      2,
+      "never"
+    ],
+    "generator-star-spacing": 1,
+    "object-shorthand": 1,
+    "arrow-parens": 1,
+    "no-await-in-loop": 1,
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/react-in-jsx-scope": 2
+  },
+  "plugins": [
+    "babel",
+    "react",
+    "jsx-a11y"
+  ]
+}
+

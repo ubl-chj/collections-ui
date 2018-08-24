@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Link} from 'react-router-dom'
 import {ResultContext} from "../core";
-import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
 import {Thumbnail, Title} from "../ui";
 import {ListSchemaEntry} from '../ui/ListItemDisplay';
 import {resolveManifestId, resolveName} from './index';
@@ -55,7 +54,6 @@ export class RandomLandingItem extends React.Component<ItemProps, any> {
               {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
             </div>
           </div>
-          <StructuredDataImageObject schema={schema}/>
         </ResultContext.Provider>)
     } else {
       return null

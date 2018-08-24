@@ -3,7 +3,7 @@ export * from './ArrowRightIcon'
 export * from './FullScreenIcon'
 export * from './HomeIcon'
 export * from './InfoIcon'
-export * from "./ButtonBar"
+export * from "./Controls"
 export * from './RotateLeftIcon'
 export * from './RotateRightIcon'
 export * from './ZoomInIcon'

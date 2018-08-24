@@ -1,7 +1,6 @@
 import axios from 'axios';
 import * as React from 'react';
 import {ViewerComponent, ViewerManager} from '../../../core';
-
 const OpenSeaDragon = require('openseadragon');
 
 export interface IOsdComponentProps {
@@ -16,6 +15,7 @@ export interface IOsdComponentProps {
 }
 
 export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
+
   private defaultProps: object;
   private osd: any;
 
@@ -26,7 +26,7 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
 
   render() {
     return (
-      <div ref={this.osd} className='openseadragon' id='osd'/>
+      <div className='openseadragon' id='osd'/>
     )
   }
 
@@ -69,6 +69,7 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
   componentDidMount() {
     if (this.props.images) {
       this.initSeaDragon()
+      this.setState({ loaded: true })
     }
   }
 

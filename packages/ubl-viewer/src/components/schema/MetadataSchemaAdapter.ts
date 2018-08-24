@@ -1,5 +1,5 @@
 import * as React from "react";
-import {mapping} from './mapping'
+import {mapping} from 'schema-map'
 
 export interface IMetadataSchemaAdapterProps {
   contentUrl: string
@@ -15,16 +15,16 @@ export class MetadataSchemaAdapter extends React.Component<IMetadataSchemaAdapte
   metadata = {}
   private readonly contentUrl: any;
   private readonly thumbnail: any;
-  private readonly position?: any;
+  private readonly name?: string;
 
-  constructor(source, contentUrl, thumbnail, position) {
+  constructor(source, contentUrl, thumbnail, name) {
     super(source)
     this.mappingFileName = './metadataMapping.json'
     this.mainEntity = {} as any
     this.source = source
     this.contentUrl = contentUrl
     this.thumbnail = thumbnail
-    this.position = position
+    this.name = name
     this.metadata = {} as any
   }
 
@@ -41,6 +41,7 @@ export class MetadataSchemaAdapter extends React.Component<IMetadataSchemaAdapte
       const val = this.metadata[k]
       Object.defineProperty(this.mainEntity, label,
         {
+          configurable: true,
           enumerable: true,
           value: val,
         })
@@ -53,6 +54,7 @@ export class MetadataSchemaAdapter extends React.Component<IMetadataSchemaAdapte
     source.forEach((s) => {
       Object.defineProperty(this.metadata, s.resource.label,
         {
+          configurable: true,
           enumerable: true,
           value: s.resource.value,
         })
@@ -73,6 +75,7 @@ export class MetadataSchemaAdapter extends React.Component<IMetadataSchemaAdapte
         "@type": "ImageObject",
         "contentUrl": this.contentUrl,
         "mainEntity": ordered,
+        "name": this.name,
         "thumbnail": this.thumbnail,
       },
       dataLayerName: 'schemaDataLayer',

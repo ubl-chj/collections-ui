@@ -21,6 +21,7 @@ export class Title extends React.Component<any, any> {
       <ResultContext.Consumer>
         {(result) => result ?
           <Link
+            id='image-view'
             to={{
             pathname: process.env.REACT_APP_OSD_COMPONENT_BASE,
             search: this.search,

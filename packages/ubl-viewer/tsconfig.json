@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "strict": false,
-    "allowJs": true,
+    "declaration": true,
     "module": "commonjs",
     "target": "es5",
     "emitDecoratorMetadata": true,
@@ -13,7 +13,6 @@
     "noEmitOnError": true,
     "noUnusedParameters":true,
     "noImplicitUseStrict":true,
-    "resolveJsonModule":true,
     "allowSyntheticDefaultImports":true,
     "jsx": "react",
     "lib":[

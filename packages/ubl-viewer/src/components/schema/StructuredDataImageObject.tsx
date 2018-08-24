@@ -1,5 +1,5 @@
 import * as React from "react";
-import TagManager from 'react-gtm-module'
+const tagManager = require('react-gtm-module')
 
 export class StructuredDataImageObject extends React.Component<any, any> {
 
@@ -15,7 +15,7 @@ export class StructuredDataImageObject extends React.Component<any, any> {
       dataLayer: this.schema,
       dataLayerName: 'schemaDataLayer',
     }
-    TagManager.dataLayer(dataLayer)
+    tagManager.dataLayer(dataLayer)
   }
 
   componentDidMount() {

@@ -81,6 +81,7 @@
     "react-tooltip": "^3.6.1",
     "reactstrap": "^6.0.1",
     "resolve": "1.6.0",
+    "schema-map": "file:../schema-map",
     "searchkit-fork": "^2.3.1",
     "shortid": "^2.2.12",
     "style-loader": "0.21.0",

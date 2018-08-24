@@ -8,7 +8,10 @@ import TagManager from 'react-gtm-module'
 
 const tagManagerArgs = {
   gtmId: 'GTM-KW98JC4',
-  dataLayerName: 'schemaDataLayer'
+  dataLayerName: 'schemaDataLayer',
+  events: {
+    imageView: 'imageView'
+  }
 }
 
 TagManager.initialize(tagManagerArgs)

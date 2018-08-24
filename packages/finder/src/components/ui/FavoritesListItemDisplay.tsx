@@ -1,7 +1,7 @@
 import * as React from "react";
 import {AuthUserContext} from "../core";
 import {resolveName} from '../items';
-import {StructuredDataImageObject} from "../schema/StructuredDataImageObject";
+import {StructuredDataImageObject} from "../../../../ubl-viewer/src/components/schema/StructuredDataImageObject";
 import {FavoritesListButton, Thumbnail, Title} from "./index";
 
 const uuidv4 = require('uuid/v4');

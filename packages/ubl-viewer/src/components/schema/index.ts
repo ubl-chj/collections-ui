@@ -1,2 +1,2 @@
 export * from './MetadataSchemaAdapter'
-export * from './mapping'
+export * from './StructuredDataImageObject'

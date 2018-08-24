@@ -2,7 +2,7 @@ import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {
   ActionBar,
-  ButtonBar,
+  Controls,
   DocumentViewSwitcher,
   Layout,
   LayoutBody,
@@ -17,6 +17,7 @@ import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../ui'
 
 const ReactTooltip = require('react-tooltip')
 const qs = require('query-string')
+const uuidv4 = require('uuid/v4')
 
 class ViewerComponent extends React.Component<any, any> {
   viewer: ViewerManager
@@ -36,7 +37,6 @@ class ViewerComponent extends React.Component<any, any> {
 
   render() {
     const t = Boolean(true)
-
     if (this.viewer) {
       return (
         <ViewerProvider viewer={this.viewer}>
@@ -61,7 +61,7 @@ class ViewerComponent extends React.Component<any, any> {
               </ReactTooltip>
             </TopBar>
             <ActionBar>
-              <ButtonBar key='metadata'/>
+              <Controls {...this.props} uuid={uuidv4()}/>
             </ActionBar>
             <LayoutBody>
               <BackArrow/>
