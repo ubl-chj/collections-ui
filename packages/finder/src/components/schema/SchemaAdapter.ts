@@ -1,4 +1,5 @@
 import * as React from "react";
+import {mapping} from 'schema-map'
 
 export interface IStructuredDataImageObjectProps {
   contentUrl: string
@@ -17,7 +18,6 @@ export class SchemaAdapter extends React.Component<IStructuredDataImageObjectPro
 
   constructor(source, contentUrl, thumbnail, position) {
     super(source)
-    this.mappingFileName = './mapping.json'
     this.mainEntity = {} as any
     this.source = source
     this.contentUrl = contentUrl
@@ -31,8 +31,8 @@ export class SchemaAdapter extends React.Component<IStructuredDataImageObjectPro
         enumerable: true,
         value: "CreativeWork",
       })
-    const mapping = require(`${this.mappingFileName}`)
-    const mappingProps = this.getMappingProps(mapping, source)
+
+    const mappingProps = this.getMappingProps(source)
     mappingProps.forEach((k) => {
       const label = mapping[k]
       const val = source[k]
@@ -44,7 +44,7 @@ export class SchemaAdapter extends React.Component<IStructuredDataImageObjectPro
     })
   }
 
-  getMappingProps(mapping, source) {
+  getMappingProps(source) {
     const mappingProps = Object.getOwnPropertyNames(mapping)
     const sourceKeys = Object.getOwnPropertyNames(source)
     return mappingProps.filter((x) => sourceKeys.includes(x));

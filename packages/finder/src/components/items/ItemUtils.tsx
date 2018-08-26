@@ -2,7 +2,13 @@ import * as React from "react";
 import {Domain} from "../../constants";
 import {SchemaAdapter} from "../schema";
 
-export function shortenTitle(title: string) {
+export function shortenTitle(source) {
+  let title
+  if (source.title) {
+    title = source.title
+  } else if (source.Title) {
+    title = source.Title
+  }
   if (title.length >= 80) {
     return title.substr(0, 80) + "... "
   } else {

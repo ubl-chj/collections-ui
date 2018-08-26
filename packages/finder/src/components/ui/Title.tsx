@@ -3,6 +3,11 @@ import {Link} from 'react-router-dom'
 import {ResultContext} from "../core";
 
 export class Title extends React.Component<any, any> {
+
+  static defaultProps = {
+    viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
+  }
+
   viewUrl: string
   search: string
   className: string
@@ -27,6 +32,7 @@ export class Title extends React.Component<any, any> {
             search: this.search,
             state: {
               result,
+              scrollY,
             },
           }}
           >

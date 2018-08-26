@@ -1,9 +1,9 @@
 import * as React from "react";
-import {Domain} from "../../constants";
-import {AuthUserContext} from "../core";
-import {FavoriteButton, Thumbnail} from "../ui";
-import {ItemProps} from "./ItemProps";
-import {buildImagePreview} from './ItemUtils';
+import {Domain} from "../../../constants/index";
+import {AuthUserContext} from "../../core/index";
+import {FavoriteButton, Thumbnail} from "../../ui/index";
+import {ItemProps} from "../ItemProps";
+import {buildImagePreview} from '../ItemUtils';
 
 const extend = require("lodash/extend")
 const firebase = require("firebase/app");

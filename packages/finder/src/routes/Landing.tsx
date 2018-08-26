@@ -22,11 +22,11 @@ import {
   ViewSwitcherHits,
   ViewSwitcherToggle,
 } from 'searchkit-fork'
-import {Domain, Routes} from '../../constants'
-import '../../styles/index.css'
-import {CollectionsListItem} from '../items'
-import {RandomLandingItem} from '../items/RandomLandingItem';
-import {AuthUserProfile, AuthUserTooltip, RefreshIcon} from '../ui'
+import {Domain, Routes} from '../constants'
+import '../styles/index.css'
+import {CollectionsListItem} from '../components/items'
+import {RandomLandingItem} from '../components/items/RandomLandingItem';
+import {AuthUserProfile, AuthUserTooltip, RefreshIcon} from '../components/ui'
 import {IRouteProps} from './IRouteProps'
 
 const ReactTooltip = require('react-tooltip')
@@ -36,6 +36,7 @@ export class Landing extends React.Component<IRouteProps, {}> {
   static defaultProps = {
     host: process.env.REACT_APP_ELASTICSEARCH_HOST,
     options: {timeout: 20000},
+    randomIndex: process.env.REACT_APP_EC_INDEX,
     routeConfig: require('./config/landing.json'),
     searchkit2: {},
   }
@@ -68,7 +69,7 @@ export class Landing extends React.Component<IRouteProps, {}> {
     super(props)
     this.routeKey = this.props.routeConfig.indexName
     const host = props.host + this.routeKey
-    const host2 = props.host + 'hvd2,uc2,ec8'
+    const host2 = props.host + props.randomIndex
     this.searchkit = new SearchkitManager(host, props.options)
     this.searchkit2 = new SearchkitManager(host2, props.options)
     this.searchkit2.addDefaultQuery((query) => query.addQuery(Landing.randomQuery()))

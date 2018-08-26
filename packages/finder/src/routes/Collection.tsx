@@ -24,9 +24,9 @@ import {
   ViewSwitcherHits,
   ViewSwitcherToggle,
 } from 'searchkit-fork'
-import '../../styles/index.css'
-import {Domain, Routes} from '../../constants'
-import {AuthUserProfile, AuthUserTooltip} from '../ui'
+import {AuthUserProfile, AuthUserTooltip} from '../components/ui'
+import {Domain, Routes} from '../constants'
+import '../styles/index.css'
 import {asCollection} from './asCollection'
 import {IRouteProps} from './IRouteProps'
 
@@ -35,7 +35,8 @@ const ReactTooltip = require('react-tooltip')
 class Collection extends React.Component<IRouteProps, {}> {
 
   static defaultProps = {
-    options: {timeout: 20000},
+    options: {
+      timeout: 20000},
   }
 
   static buildHitComponents(gridItem, listItem, listDefault) {
@@ -79,7 +80,7 @@ class Collection extends React.Component<IRouteProps, {}> {
   }
 
   addComponent = async (type) => {
-    import(`../items/${type}`)
+    import(`../components/items/${type}`)
       .then((component) =>
         this.setState({
           components: this.state.components.concat(component.default),

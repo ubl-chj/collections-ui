@@ -13,8 +13,8 @@
     "Date",
     "manifest"
   ],
-  "listItem": "HarvardListItem",
-  "gridItem": "HarvardGridItem",
+  "listItem": "StandardListItem",
+  "gridItem": "StandardGridItem",
   "refinementListFilterDef1": {
     "field": "Classification.keyword",
     "title": "Classification",
@@ -32,13 +32,13 @@
   },
   "sortingSelectorOptions": [
     {
-      "label": "Technique",
-      "field": "Technique.keyword",
+      "label": "Title",
+      "field": "title.keyword",
       "order": "asc"
     },
     {
-      "label": "Title",
-      "field": "title.keyword",
+      "label": "Technique",
+      "field": "Technique.keyword",
       "order": "asc"
     },
     {

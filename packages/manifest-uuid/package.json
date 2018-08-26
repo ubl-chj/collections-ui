@@ -1,0 +1,18 @@
+{
+  "name": "manifest-uuid",
+  "version": "0.1.0",
+  "description": "namespaced uuids for IIIF Collections manifests",
+  "main": "data/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ubl-chj/collections-ui"
+  },
+  "keywords": [
+    "schema.org"
+  ],
+  "author": "Christopher Johnson",
+  "license": "Apache-2.0"
+}

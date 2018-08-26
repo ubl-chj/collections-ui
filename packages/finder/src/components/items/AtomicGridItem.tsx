@@ -1,9 +1,9 @@
 import * as React from "react";
 import {Domain} from '../../constants'
+import {ResultContext} from "../core";
 import {GridItemDisplay} from "../ui/GridItemDisplay";
 import {ItemProps} from './ItemProps'
 import {buildImagePreview, buildImageView, buildUBLManifestId, getSchema, shortenTitle} from './ItemUtils'
-import {ResultContext} from "../core";
 const extend = require("lodash/extend")
 
 export class AtomicGridItem extends React.Component<ItemProps, any> {
@@ -26,7 +26,7 @@ export class AtomicGridItem extends React.Component<ItemProps, any> {
       const imageLink = buildImagePreview(previewUrl, source.iiifService, manifestId)
       const viewUrl = buildImageView(viewerUrl, manifestId)
       const schema = getSchema(source, manifestId, thumbnail, source.imageIndex)
-      const titleString = shortenTitle(schema.mainEntity.name)
+      const titleString = shortenTitle(source)
       return (
         <ResultContext.Provider value={result}>
           <GridItemDisplay

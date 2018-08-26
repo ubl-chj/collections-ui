@@ -1,28 +1,24 @@
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
-import {
-  ActionBar,
-  Controls,
-  DocumentViewSwitcher,
-  Layout,
-  LayoutBody,
-  ManifestItem,
-  TopBar,
-  ViewerManager,
-  ViewerProvider,
-} from 'ubl-viewer'
-import {Domain, Routes} from '../../constants'
-import '../../styles/index.css'
-import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../ui'
+import {ActionBar, Controls, Layout, LayoutBody, OsdComponent, TopBar, ViewerManager, ViewerProvider} from 'ubl-viewer'
+import {Domain, Routes} from '../constants'
+import '../styles/index.css'
+import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../components/ui'
 
 const ReactTooltip = require('react-tooltip')
 const qs = require('query-string')
 const uuidv4 = require('uuid/v4')
 
-class ViewerComponent extends React.Component<any, any> {
+class PreviewerComponent extends React.Component<any, any> {
   viewer: ViewerManager
   manifest: string
   props: any
+  region: any
+  abstractRegion: any
+  coordinates: any
+  image: string
+  document: string
+  source: object
 
   constructor(props) {
     super(props)
@@ -30,7 +26,18 @@ class ViewerComponent extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    const manifest = qs.parse(this.props.location.search).manifest
+    const params = qs.parse(this.props.location.search)
+    const image = params.image
+    const manifest = params.manifest
+    this.image = image
+    if (params.region) {
+      if (!params.region.startsWith('pct:')) {
+        this.region = params.region.split(',')
+      } else {
+        this.abstractRegion = params.region.substring(4).split(',')
+      }
+    }
+    this.document = image + '/info.json'
     this.viewer = new ViewerManager(manifest)
     this.forceUpdate()
   }
@@ -43,7 +50,11 @@ class ViewerComponent extends React.Component<any, any> {
           <Layout>
             <TopBar>
               <div className='my-logo-thin'>
-                <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
+                <Link
+                  className='my-logo'
+                  to={Routes.LANDING}
+                >{Domain.LOGO_TEXT}
+                </Link>
               </div>
               <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
                 <AuthUserProfile/>
@@ -65,7 +76,7 @@ class ViewerComponent extends React.Component<any, any> {
             </ActionBar>
             <LayoutBody>
               <BackArrow/>
-              <DocumentViewSwitcher viewerComponents={[{key: 'grid', title: 'Grid', itemComponent: ManifestItem, defaultOption: true}]}/>
+              <OsdComponent images={[this.document]}/>
             </LayoutBody>
           </Layout>
         </ViewerProvider>)
@@ -75,4 +86,4 @@ class ViewerComponent extends React.Component<any, any> {
   }
 }
 
-export const Viewer = withRouter(ViewerComponent)
+export const Previewer = withRouter(PreviewerComponent)

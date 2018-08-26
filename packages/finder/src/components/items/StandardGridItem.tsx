@@ -1,9 +1,9 @@
-import * as React from "react";
-import {Domain} from "../../constants";
-import {ResultContext} from "../core";
-import {Thumbnail, Title} from "../ui";
-import {ItemProps} from './ItemProps'
-import {buildImagePreview, buildImageView, getSchema, shortenTitle} from './ItemUtils';
+import * as React from "react"
+import {ResultContext} from "../core"
+import {GridItemDisplay} from "../ui/GridItemDisplay";
+import {ItemProps} from "./ItemProps"
+import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveManifestId, shortenTitle} from './ItemUtils'
+
 const extend = require("lodash/extend")
 
 export class StandardGridItem extends React.Component<ItemProps, any> {
@@ -17,39 +17,30 @@ export class StandardGridItem extends React.Component<ItemProps, any> {
     super(props)
   }
 
-  buildGridItem() {
-    const {result, bemBlocks, previewUrl, viewerUrl} = this.props
-    if (result) {
-      const source = extend({}, result._source, result.highlight)
-      const contentUrl = source.identifier.manifest
-      let thumbnail
-      if (source.thumbnail) {
-        thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
-      } else {
-        thumbnail = source.thumbnail
-      }
-      const schema = getSchema(result, contentUrl, thumbnail, null)
-      if (thumbnail) {
-        const previewLink = buildImagePreview(previewUrl, thumbnail, contentUrl)
-        const viewLink = buildImageView(viewerUrl, contentUrl)
-        const titleString = shortenTitle(schema.mainEntity.name)
-        return (
-          <ResultContext.Provider value={result}>
-            <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-              <Thumbnail imageWidth={140} imageSource={thumbnail} imageLink={previewLink} className={bemBlocks.item('poster')}/>
-              <Title viewUrl={viewLink} className={bemBlocks.item('title')} titleString={titleString}/>
-            </div>
-          </ResultContext.Provider>)
-      } else {
-        return null
-      }
-    } else {
-      return null
-    }
-  }
-
   render() {
-    return (this.buildGridItem())
+    const {previewUrl, viewerUrl, result} = this.props
+    const source = extend({}, result._source, result.highlight)
+    const manifestId = resolveManifestId(source)
+    const thumbnail = buildThumbnailReference(source.thumbnail)
+    if (thumbnail) {
+      const schema = getSchema(source, manifestId, thumbnail, null)
+      const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
+      const viewUrl = buildImageView(viewerUrl, manifestId)
+      const titleString = shortenTitle(source)
+      return (
+        <ResultContext.Provider value={result}>
+          <GridItemDisplay
+            contentUrl={viewUrl}
+            imageLink={imageLink}
+            schema={schema}
+            thumbnail={thumbnail}
+            titleString={titleString}
+            {...this.props}
+          />
+        </ResultContext.Provider>)
+    } else {
+      return (null)
+    }
   }
 }
 

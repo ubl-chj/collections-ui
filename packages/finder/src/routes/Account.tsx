@@ -1,10 +1,9 @@
 import * as React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Layout, LayoutBody, LayoutResults, SearchBox, SearchkitManager, SearchkitProvider, SideBar, TopBar} from 'searchkit-fork'
-import {Domain, Routes} from '../../constants';
-import {AuthUserContext, withAuthorization} from '../core'
-import {FavoritesList} from '../ui'
-import {AuthUserProfile, AuthUserTooltip} from '../ui/index'
+import {AuthUserContext, withAuthorization} from '../components/core'
+import {AuthUserProfile, AuthUserTooltip, FavoritesList} from '../components/ui'
+import {Domain, Routes} from '../constants';
 
 const firebase = require("firebase/app");
 const ReactTooltip = require('react-tooltip')
@@ -21,11 +20,21 @@ const AccountPage = () => <SearchkitProvider searchkit={searchkit}>
       <div className='my-logo'>
         <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
       </div>
-      <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
+      <SearchBox
+        autofocus={true}
+        searchOnChange={true}
+        queryFields={queryFields}/>
       <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
         <AuthUserProfile/>
       </div>
-      <ReactTooltip id='authUserProfile' offset={{left: 170}} globalEventOff='click' border={t} place='bottom' type='light' effect='solid'>
+      <ReactTooltip
+        id='authUserProfile'
+        offset={{left: 170}}
+        globalEventOff='click'
+        border={t}
+        place='bottom'
+        type='light'
+        effect='solid'>
         <AuthUserTooltip/>
       </ReactTooltip>
     </TopBar>

@@ -10,7 +10,6 @@ export interface IMetadataSchemaAdapterProps {
 
 export class MetadataSchemaAdapter extends React.Component<IMetadataSchemaAdapterProps, any> {
   mainEntity: any
-  mappingFileName: string
   source: any
   metadata = {}
   private readonly contentUrl: any;
@@ -19,7 +18,6 @@ export class MetadataSchemaAdapter extends React.Component<IMetadataSchemaAdapte
 
   constructor(source, contentUrl, thumbnail, name) {
     super(source)
-    this.mappingFileName = './metadataMapping.json'
     this.mainEntity = {} as any
     this.source = source
     this.contentUrl = contentUrl
@@ -35,7 +33,7 @@ export class MetadataSchemaAdapter extends React.Component<IMetadataSchemaAdapte
         value: "CreativeWork",
       })
 
-    const mappingProps = this.getMappingProps(mapping, source)
+    const mappingProps = this.getMappingProps(source)
     mappingProps.forEach((k) => {
       const label = mapping[k]
       const val = this.metadata[k]
@@ -48,7 +46,7 @@ export class MetadataSchemaAdapter extends React.Component<IMetadataSchemaAdapte
     })
   }
 
-  getMappingProps(mapping, source) {
+  getMappingProps(source) {
     const mappingProps = Object.getOwnPropertyNames(mapping)
 
     source.forEach((s) => {

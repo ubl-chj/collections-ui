@@ -38,7 +38,7 @@ export class FavoriteButton extends React.Component<any, any> {
       isFavorite: false,
       isLoaded: false,
     }
-    this.getFavorite.bind(this);
+    this.getFavorite.bind(this)
   }
 
   getFavorite() {

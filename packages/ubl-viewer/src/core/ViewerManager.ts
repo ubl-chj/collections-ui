@@ -46,9 +46,9 @@ export class ViewerManager {
 
   constructor(documentUri: string, options: IViewerOptions = {}, initialState: InitialState = {}) {
     this.options = defaults(options, {
-      httpHeaders: {},
       defaultSize: 20,
       getLocation: () => typeof window !== 'undefined' && window.location,
+      httpHeaders: {},
     })
     this.documentUri = documentUri
     this.document = initialState.document

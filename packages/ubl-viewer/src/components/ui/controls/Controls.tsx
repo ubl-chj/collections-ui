@@ -76,10 +76,6 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
     this.viewer.addAccessor(this.annotationsAccessor)
   }
 
-  componentDidUpdate() {
-
-  }
-
   buildMetadata(metadata) {
     const resources = []
     metadata.forEach((item) => {

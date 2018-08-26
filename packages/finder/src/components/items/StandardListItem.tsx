@@ -1,13 +1,12 @@
 import * as React from "react"
-import {Domain} from "../../constants"
 import {ResultContext} from "../core"
 import {ListItemDisplay} from "../ui/ListItemDisplay";
 import {ItemProps} from "./ItemProps"
-import {buildImagePreview, buildImageView, getSchema} from './ItemUtils'
+import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveManifestId} from './ItemUtils'
 
 const extend = require("lodash/extend")
 
-export class UcListItem extends React.Component<ItemProps, any> {
+export class StandardListItem extends React.Component<ItemProps, any> {
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
@@ -21,11 +20,11 @@ export class UcListItem extends React.Component<ItemProps, any> {
   render() {
     const {previewUrl, viewerUrl, result} = this.props
     const source = extend({}, result._source, result.highlight)
-    const thumbnail = source.thumbnail + Domain.THUMBNAIL_API_REQUEST
-    const contentUrl = source.Manifest
-    const schema = getSchema(source, contentUrl, thumbnail, null)
-    const imageLink = buildImagePreview(previewUrl, source.thumbnail, contentUrl)
-    const viewUrl = buildImageView(viewerUrl, contentUrl)
+    const manifestId = resolveManifestId(source)
+    const thumbnail = buildThumbnailReference(source.thumbnail)
+    const schema = getSchema(source, manifestId, thumbnail, null)
+    const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
+    const viewUrl = buildImageView(viewerUrl, manifestId)
     return (
       <ResultContext.Provider value={result}>
         <ListItemDisplay
@@ -39,4 +38,4 @@ export class UcListItem extends React.Component<ItemProps, any> {
   }
 }
 
-export default UcListItem
+export default StandardListItem
