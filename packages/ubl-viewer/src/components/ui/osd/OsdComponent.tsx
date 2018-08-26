@@ -1,7 +1,7 @@
-import axios from 'axios';
 import * as React from 'react';
-import {ViewerComponent, ViewerManager} from '../../../core';
-const OpenSeaDragon = require('openseadragon');
+import {findDOMNode} from 'react-dom';
+import {ViewerComponent, ViewerManager} from '../../../core'
+let openSeaDragon
 
 export interface IOsdComponentProps {
   id?: string;
@@ -16,12 +16,16 @@ export interface IOsdComponentProps {
 
 export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
 
+  static generateView(mountNode, config) {
+    const newConfig = Object.assign({ bindto: mountNode }, config)
+    return openSeaDragon(newConfig)
+  }
+
   private defaultProps: object;
   private osd: any;
 
   constructor(props) {
     super(props)
-    this.osd = React.createRef();
   }
 
   render() {
@@ -59,38 +63,31 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
     return this.props.images
   }
 
-  initSeaDragon() {
-    const firstImage = this.props.images[0]
-    this.getCoordinates(firstImage).then(() => {
-      this.viewer = OpenSeaDragon(this.defaultOsdProps())
+  updateViewer(config) {
+    if (!this.osd) {
+      this.osd = OsdComponent.generateView(findDOMNode(this), config);
+    }
+    this.osd.addHandler("page", (data) => {
+      console.log(data.page)
+    })
+    const viewport = this.osd.viewport
+    this.osd.addHandler('canvas-click', (event) => {
+      const webPoint = event.position;
+      const viewportPoint = viewport.pointFromPixel(webPoint)
+      const imagePoint = viewport.viewportToImageCoordinates(viewportPoint)
+      console.log(webPoint.toString(), viewportPoint.toString(), imagePoint.toString())
     })
   }
 
   componentDidMount() {
+    openSeaDragon = require('openseadragon')
     if (this.props.images) {
-      this.initSeaDragon()
-      this.setState({ loaded: true })
+      this.updateViewer(this.defaultOsdProps())
     }
   }
 
   shouldComponentUpdate() {
     return false
-  }
-
-  getCoordinates = (image) =>
-    axios.get(image).then((response) => {
-      const imageWidth = response.data.width
-      const imageHeight = response.data.height
-    }).catch((error) => {
-      console.log(error)
-    });
-
-  setAbstractRegion = (imageWidth, imageHeight) => {
-    const aspectRatio = imageHeight / imageWidth;
-  }
-
-  setRegion = (imageWidth, imageHeight) => {
-    const aspectRatio = imageHeight / imageWidth;
   }
 }
 
