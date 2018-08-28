@@ -25,7 +25,7 @@ export const mapping = {
   "Document Type": "additionalType",
   "DOI": "identifier.doi",
   "Extent": "disambiguatingDescription",
-  "Format": "material",
+  "Format": "format",
   "Former Owner(s)": "acquiredFrom",
   "@id": "url",
   "id": "url",

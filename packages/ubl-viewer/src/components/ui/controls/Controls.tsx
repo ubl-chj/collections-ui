@@ -99,7 +99,13 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
     if (document) {
       const manifest = manifesto.create(document)
       const metadata = manifest.getMetadata()
-      const thumbnail = manifest.getThumbnail()
+      let thumbnail = manifest.getThumbnail()
+      if (thumbnail) {
+        thumbnail = manifest.getThumbnail().id
+      } else {
+        thumbnail = null
+      }
+
       const items = this.buildMetadata(metadata)
       const itemList = this.buildItemList(items)
       const title = manifesto.TranslationCollection.getValue(manifest.getLabel())
