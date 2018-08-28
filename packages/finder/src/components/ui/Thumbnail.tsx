@@ -28,13 +28,7 @@ export class Thumbnail extends React.Component<any, any> {
       <ResultContext.Consumer>
         {(result) => result ?
           <Link
-            to={{
-            pathname: process.env.REACT_APP_OSD_BASE,
-            search: this.search,
-            state: {
-              result,
-            },
-          }}
+            to={this.imageLink}
           >
           <img
             width={this.imageWidth}

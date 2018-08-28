@@ -1,9 +1,11 @@
+import {UUIDResolver} from "manifest-uuid/";
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Controls, Layout, LayoutBody, OsdComponent, TopBar, ViewerManager, ViewerProvider} from 'ubl-viewer'
-import {Domain, Routes} from '../constants'
-import '../styles/index.css'
 import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../components/ui'
+import {Domain, Routes} from '../constants'
+import {firebase} from '../firebase';
+import '../styles/index.css'
 
 const ReactTooltip = require('react-tooltip')
 const qs = require('query-string')
@@ -28,7 +30,6 @@ class PreviewerComponent extends React.Component<any, any> {
   componentDidMount() {
     const params = qs.parse(this.props.location.search)
     const image = params.image
-    const manifest = params.manifest
     this.image = image
     if (params.region) {
       if (!params.region.startsWith('pct:')) {
@@ -37,9 +38,15 @@ class PreviewerComponent extends React.Component<any, any> {
         this.abstractRegion = params.region.substring(4).split(',')
       }
     }
+    const uuid = this.props.match.params.uuid
+    if (firebase) {
+      const resolver = new UUIDResolver(uuid, firebase.uuidDb)
+      resolver.resolveManifest().then((manifest) => {
+        this.viewer = new ViewerManager(manifest)
+        this.forceUpdate()
+      })
+    }
     this.document = image + '/info.json'
-    this.viewer = new ViewerManager(manifest)
-    this.forceUpdate()
   }
 
   render() {

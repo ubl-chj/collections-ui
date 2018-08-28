@@ -99,14 +99,13 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
     if (document) {
       const manifest = manifesto.create(document)
       const metadata = manifest.getMetadata()
+      const thumbnail = manifest.getThumbnail()
       const items = this.buildMetadata(metadata)
       const itemList = this.buildItemList(items)
       const title = manifesto.TranslationCollection.getValue(manifest.getLabel())
-      if (this.state.uuid !== this.props.uuid) {
-        const adapter = new MetadataSchemaAdapter(metadata, Controls.buildContentUrl(), this.getThumbnail(), title)
-        const schema = adapter.buildStructuredData().dataLayer
-        Controls.buildStructuredData(schema)
-      }
+      const adapter = new MetadataSchemaAdapter(metadata, Controls.buildContentUrl(), thumbnail, title)
+      const schema = adapter.buildStructuredData().dataLayer
+      Controls.buildStructuredData(schema)
       return (
         <div className="manifest-info">
           <Menu

@@ -1,26 +1,27 @@
 {
-  "indexName": "t5",
+  "indexName": "t6",
   "queryFields": [
-    "iiifService",
-    "structureMap.1.@id",
-    "structureMap.1.label",
-    "Date",
-    "Title",
     "Author",
+    "Date",
     "Date of publication",
     "Call number",
     "Collection",
+    "manifest",
     "Objekttitel",
     "Part of",
     "Place",
     "Place of publication",
     "Publisher",
     "Sprache",
+    "thumbnail",
+    "structureMap.1.@id",
+    "structureMap.1.label",
+    "Title",
     "URN",
     "Source PPN (SWB)"
   ],
-  "listItem": "AtomicListItem",
-  "gridItem": "AtomicGridItem",
+  "listItem": "StandardListItem",
+  "gridItem": "StandardGridItem",
   "refinementListFilterDef1": {
     "field": "Sprache.keyword",
     "title": "Language",
@@ -39,17 +40,29 @@
   "sortingSelectorOptions": [
     {
       "label": "Index",
-      "field": "imageIndex",
+      "fields": [
+        {
+          "field": "imageIndex.keyword",
+          "options": {
+            "order": "asc"
+          }
+        },
+        {
+          "field": "Title.keyword",
+          "options": {
+            "order": "asc"
+          }
+        }
+      ]
+    },
+    {
+      "label": "Manifest ID",
+      "field": "manifest.keyword",
       "order": "asc"
     },
     {
-      "label": "Title",
-      "field": "Title.keyword",
-      "order": "asc"
-    },
-    {
-      "label": "Author",
-      "field": "Author.keyword",
+      "label": "Collection",
+      "field": "Collection.keyword",
       "order": "asc"
     }
   ],

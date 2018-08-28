@@ -1,0 +1,90 @@
+{
+  "indexName": "ga1",
+  "queryFields": [
+    "Creator",
+    "Date",
+    "Digitisation funded by",
+    "Digitised by",
+    "Format",
+    "Language",
+    "Metadata Source",
+    "Place",
+    "Relation",
+    "Repository",
+    "Shelfmark",
+    "Source Images",
+    "Title",
+    "Type",
+    "attribution",
+    "collection",
+    "description",
+    "license",
+    "manifest",
+    "related",
+    "seeAlso",
+    "thumbnail",
+    "title"
+  ],
+  "listItem": "StandardListItem",
+  "gridItem": "StandardGridItem",
+  "refinementListFilterDef1": {
+    "field": "collection.keyword",
+    "title": "Collection",
+    "id": "collection"
+  },
+  "refinementListFilterDef2": {
+    "field": "Language.keyword",
+    "title": "Language",
+    "id": "format"
+  },
+  "refinementListFilterDef3": {
+    "field": "Date.keyword",
+    "title": "Date",
+    "id": "origin"
+  },
+  "sortingSelectorOptions": [
+    {
+      "label": "Title",
+      "field": "Title.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Creator",
+      "field": "Creator.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Date",
+      "field": "Date.keyword",
+      "order": "desc"
+    }
+  ],
+  "highlightFields": [
+    "Creator",
+    "Date",
+    "Digitisation funded by",
+    "Digitised by",
+    "Format",
+    "Language",
+    "Metadata Source",
+    "Place",
+    "Relation",
+    "Repository",
+    "Shelfmark",
+    "Source Images",
+    "Title",
+    "Type",
+    "attribution",
+    "collection",
+    "description",
+    "license",
+    "manifest",
+    "related",
+    "seeAlso",
+    "thumbnail",
+    "title"
+  ],
+  "suggestionField": "Title",
+  "listDefault": true
+}
+

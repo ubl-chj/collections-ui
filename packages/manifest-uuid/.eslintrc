@@ -25,7 +25,7 @@
     "babel/new-cap": "off",
     "quotes": [
       2,
-      "double"
+      "single"
     ],
     "strict": [
       2,

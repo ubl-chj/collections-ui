@@ -17,8 +17,8 @@ class App extends React.Component<any> {
               <Route exact path={Routes.ACCOUNT} component={Account}/>
               <Route exact path={Routes.SIGN_IN} component={SignIn}/>
               <Route exact path='/collection/:id' component={Collection}/>
-              <Route exact path='/view' component={Viewer}/>
-              <Route exact path='/preview' component={Previewer}/>
+              <Route exact path='/view/:uuid' component={Viewer}/>
+              <Route exact path='/preview/:uuid?' component={Previewer}/>
             </Switch>
          </BrowserRouter>)
   }

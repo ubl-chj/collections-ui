@@ -1,7 +1,6 @@
 import * as React from "react";
 import {AuthUserContext} from "../core";
 import {resolveName} from '../items';
-import {StructuredDataImageObject} from "../../../../ubl-viewer/src/components/schema/StructuredDataImageObject";
 import {FavoritesListButton, Thumbnail, Title} from "./index";
 
 const uuidv4 = require('uuid/v4');
@@ -61,7 +60,6 @@ export class FavoritesListItemDisplay extends React.Component<IListItemDisplayPr
       error: null,
       isFavorite: true,
     }
-    this.viewerUrl = process.env.REACT_APP_OSD_COMPONENT_BASE + '?manifest='
   }
 
   render() {

@@ -22,19 +22,23 @@ export class StandardListItem extends React.Component<ItemProps, any> {
     const source = extend({}, result._source, result.highlight)
     const manifestId = resolveManifestId(source)
     const thumbnail = buildThumbnailReference(source.thumbnail)
-    const schema = getSchema(source, manifestId, thumbnail, null)
-    const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
-    const viewUrl = buildImageView(viewerUrl, manifestId)
-    return (
-      <ResultContext.Provider value={result}>
-        <ListItemDisplay
-          contentUrl={viewUrl}
-          imageLink={imageLink}
-          schema={schema}
-          thumbnail={thumbnail}
-          {...this.props}
-        />
-      </ResultContext.Provider>)
+    if (thumbnail) {
+      const schema = getSchema(source, manifestId, thumbnail, null)
+      const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
+      const viewUrl = buildImageView(viewerUrl, manifestId)
+      return (
+        <ResultContext.Provider value={result}>
+          <ListItemDisplay
+            contentUrl={viewUrl}
+            imageLink={imageLink}
+            schema={schema}
+            thumbnail={thumbnail}
+            {...this.props}
+          />
+        </ResultContext.Provider>)
+    } else {
+      return (null)
+    }
   }
 }
 

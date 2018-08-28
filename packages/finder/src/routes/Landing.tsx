@@ -22,11 +22,11 @@ import {
   ViewSwitcherHits,
   ViewSwitcherToggle,
 } from 'searchkit-fork'
-import {Domain, Routes} from '../constants'
-import '../styles/index.css'
 import {CollectionsListItem} from '../components/items'
 import {RandomLandingItem} from '../components/items/RandomLandingItem';
 import {AuthUserProfile, AuthUserTooltip, RefreshIcon} from '../components/ui'
+import {Domain, Routes} from '../constants'
+import '../styles/index.css'
 import {IRouteProps} from './IRouteProps'
 
 const ReactTooltip = require('react-tooltip')
@@ -104,9 +104,7 @@ export class Landing extends React.Component<IRouteProps, {}> {
     }
   }
 
-  refreshItem() {
-    this.setState({refreshItem: !this.state.refreshItem})
-  }
+  refreshItem = () => this.setState({refreshItem: !this.state.refreshItem})
 
   renderRandomItem() {
     if (this.state.refreshItem) {
@@ -175,12 +173,13 @@ export class Landing extends React.Component<IRouteProps, {}> {
                   <ResetFilters/>
                 </ActionBarRow>
               </ActionBar>
-              <button className='button-transparent' onClick={() => {this.refreshItem()}}><RefreshIcon/></button>
+              <button className='button-transparent' onClick={this.refreshItem}><RefreshIcon/></button>
               {this.renderRandomItem()}
               <ViewSwitcherHits
                 hitsPerPage={50}
                 highlightFields={['metadataMap.tag1']}
-                hitComponents={[{key: 'list', title: 'List', itemComponent: CollectionsListItem}]}
+                hitComponents={[{key: 'list', title: 'List', itemComponent: CollectionsListItem, defaultOption: true},
+                  {key: 'grid', title: 'Random', itemComponent: RandomLandingItem}]}
                 scrollTo='body'
               />
               <NoHits suggestionsField={'metadataMap.tag1'}/>

@@ -2,7 +2,7 @@ import * as React from "react";
 import {ResultContext} from "../core";
 import {GridItemDisplay} from "../ui/GridItemDisplay";
 import {ItemProps} from './ItemProps'
-import {buildImagePreview, buildImageView, getSchema, shortenTitle} from './ItemUtils';
+import {buildImagePreview, buildImageView, getSchema, resolveManifestId, shortenTitle} from './ItemUtils';
 
 const extend = require("lodash/extend")
 
@@ -22,11 +22,11 @@ export class GettyGridItem extends React.Component<ItemProps, any> {
     const source = extend({}, result._source, result.highlight)
     const thumbnail = source.thumbnail
     const imageBase = thumbnail.split('/full')[0]
-    const manifestId = source.id
+    const manifestId = resolveManifestId(source)
     const imageLink = buildImagePreview(previewUrl, imageBase, manifestId)
     const viewUrl = buildImageView(viewerUrl, manifestId)
     const schema = getSchema(source, manifestId, thumbnail, null)
-    const titleString = shortenTitle(source.title)
+    const titleString = shortenTitle(source)
     return (
       <ResultContext.Provider value={result}>
         <GridItemDisplay

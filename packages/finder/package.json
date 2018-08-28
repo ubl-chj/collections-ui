@@ -61,7 +61,7 @@
     "html-webpack-plugin": "3.2.0",
     "interpolate-html-plugin": "^3.0.0",
     "jest": "23.4.2",
-    "manifesto.js": "^2.2.30",
+    "manifest-uuid": "file:../manifest-uuid",
     "npm": "^6.1.0",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
@@ -86,6 +86,7 @@
     "style-loader": "0.21.0",
     "ubl-viewer": "file:../ubl-viewer",
     "url-loader": "0.6.2",
+    "uuidv5": "^1.0.0",
     "whatwg-fetch": "2.0.4"
   },
   "scripts": {

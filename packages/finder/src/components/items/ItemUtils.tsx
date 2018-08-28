@@ -1,6 +1,8 @@
+import {UUIDResolver} from 'manifest-uuid'
 import * as React from "react";
 import {Domain} from "../../constants";
 import {SchemaAdapter} from "../schema";
+const uuidv5 = require('uuidv5')
 
 export function shortenTitle(source) {
   let title
@@ -18,14 +20,14 @@ export function shortenTitle(source) {
 
 export function buildImagePreview(previewUrl: string, thumbnail: string, manifest?: string) {
   if (manifest) {
-    return previewUrl + '?image=' + thumbnail + '&manifest=' + manifest
+    return previewUrl + '/' + manifest + '?image=' + thumbnail
   } else {
     return previewUrl + '?image=' + thumbnail
   }
 }
 
 export function buildImageView(viewerUrl: string, manifest: string) {
-    return viewerUrl + '?manifest=' + manifest
+    return viewerUrl + '/' + manifest
 }
 
 export function getAuthor(source, bemBlocks) {
@@ -43,13 +45,6 @@ export function getSubject(source, bemBlocks) {
 export function getSchema(result, contentUrl, thumbnail, position) {
   const adapter = new SchemaAdapter(result, contentUrl, thumbnail, position)
   return adapter.buildStructuredData().dataLayer
-}
-
-// this is a hack
-export function  buildUBLManifestId(thumbnail) {
-  const pathname = new URL(thumbnail).pathname
-  const splitPath = pathname.split("/")
-  return 'https://iiif.ub.uni-leipzig.de/' + splitPath[5] + '/manifest.json'
 }
 
 export function buildGenerator(generatorUrl: string, index: string) {
@@ -84,16 +79,13 @@ export function resolveName(schema) {
   }
 }
 
-// this is an ugly workaround
 export function resolveManifestId(source) {
   if (source.manifest) {
-    return source.manifest
+    return uuidv5('url', source.manifest)
   } else if (source.Manifest) {
-    return source.Manifest
-  } else if (source.iiifService) {
-    return (buildUBLManifestId(source.iiifService))
+    return uuidv5('url', source.Manifest)
   } else if (source.id) {
-    return source.id
+    return uuidv5('url', source.id)
   }
 }
 

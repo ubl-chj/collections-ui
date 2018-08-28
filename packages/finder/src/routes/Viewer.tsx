@@ -1,3 +1,4 @@
+import {UUIDResolver} from "manifest-uuid";
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {
@@ -13,10 +14,10 @@ import {
 } from 'ubl-viewer'
 import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../components/ui'
 import {Domain, Routes} from '../constants'
+import {firebase} from '../firebase'
 import '../styles/index.css'
 
 const ReactTooltip = require('react-tooltip')
-const qs = require('query-string')
 const uuidv4 = require('uuid/v4')
 
 class ViewerComponent extends React.Component<any, any> {
@@ -30,9 +31,14 @@ class ViewerComponent extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    const manifest = qs.parse(this.props.location.search).manifest
-    this.viewer = new ViewerManager(manifest)
-    this.forceUpdate()
+    const uuid = this.props.match.params.uuid
+    if (firebase) {
+      const resolver = new UUIDResolver(uuid, firebase.uuidDb)
+      resolver.resolveManifest().then((manifest) => {
+        this.viewer = new ViewerManager(manifest)
+        this.forceUpdate()
+      })
+    }
   }
 
   render() {

@@ -2,10 +2,10 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
-const firebaseApi_key = process.env.REACT_APP_FIREBASE_KEY
+const firebaseApiKey = process.env.REACT_APP_FIREBASE_KEY
 
-const config = {
-  apiKey: firebaseApi_key,
+const userDbConfig = {
+  apiKey: firebaseApiKey,
   authDomain: 'collections-ui-1532736515660.firebaseapp.com',
   databaseURL: 'https://collections-ui-1532736515660.firebaseio.com',
   projectId: 'collections-ui-1532736515660',
@@ -13,14 +13,27 @@ const config = {
   messagingSenderId: '851210977979'
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(config);
+const uuidDbConfig = {
+  apiKey: firebaseApiKey,
+  authDomain: 'collections-ui-1532736515660.firebaseapp.com',
+  databaseURL: 'https://collections-ui-1532736515660-d3c9c.firebaseio.com',
+  messagingSenderId: '851210977979',
+  projectId: 'collections-ui-1532736515660',
+  storageBucket: '',
 }
 
-const auth = firebase.auth();
+let uuidApp
+if (!firebase.apps.length) {
+  firebase.initializeApp(userDbConfig)
+  uuidApp = firebase.initializeApp(uuidDbConfig, 'uuidDb')
+}
+
 const db = firebase.database();
+const auth = firebase.auth();
+const uuidDb = uuidApp.database()
 
 export {
   auth,
-  db
-};
+  db,
+  uuidDb
+}
