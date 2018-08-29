@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Link} from 'react-router-dom'
-import {AuthUserContext, ResultContext} from "../core";
-import {FavoriteButton, Thumbnail, Title} from "../ui";
+import {ResultContext} from "../core";
+import {Thumbnail, Title} from "../ui";
 import {ListSchemaEntry} from '../ui/ListItemDisplay';
 import {resolveManifestId, resolveName} from './index';
 import {ItemProps} from './ItemProps'
@@ -34,18 +34,17 @@ export class RandomLandingItem extends React.Component<ItemProps, any> {
     const viewUrl = buildImageView(viewerUrl, manifestId)
     const schema = getSchema(source, manifestId, thumbnail, null)
     const name = resolveName(schema)
-    const schemaFilterName = Object.entries(schema.mainEntity).filter((e) => e[0] === 'description' || e[0] === 'dateCreated'
-      || e[0] === 'datePublished' || e[0] === 'disambiguatingDescription' || e[0] === 'material.format' || e[0] === 'material'
-      || e[0] === 'creator')
+    const schemaFilterName = Object.entries(schema.mainEntity).filter((e) => e[0] !== 'alternateName')
     if (thumbnail) {
       return (
         <ResultContext.Provider value={result}>
+          <span className='sk-hits-stats__info'>Random Item</span>
           <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-              <Thumbnail
-                imageSource={thumbnail}
-                imageLink={imageLink}
-                className={'featured__poster'}
-              />
+            <Thumbnail
+              imageSource={thumbnail}
+              imageLink={imageLink}
+              className={'featured__poster'}
+            />
             <div className={bemBlocks.item('details')}>
               <Title
                 viewUrl={viewUrl}

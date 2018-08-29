@@ -12,4 +12,5 @@ export interface ItemProps {
   }
   previewUrl: string
   viewerUrl: string
+  searchkit2: any
 }

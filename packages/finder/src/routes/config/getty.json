@@ -1,10 +1,11 @@
 {
-  "indexName": "gt2",
+  "indexName": "gt3",
   "queryFields": [
     "Artist",
     "Birthplace",
     "Collection",
     "Culture & Date",
+    "description",
     "Dimensions",
     "Gallery Label (created)",
     "Inscription",
@@ -61,6 +62,7 @@
     "Artist",
     "Birthplace",
     "Culture & Date",
+    "description",
     "Dimensions",
     "Gallery Label (created)",
     "Inscription",

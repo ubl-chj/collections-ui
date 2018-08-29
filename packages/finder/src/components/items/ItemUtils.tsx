@@ -2,6 +2,7 @@ import {UUIDResolver} from 'manifest-uuid'
 import * as React from "react";
 import {Domain} from "../../constants";
 import {SchemaAdapter} from "../schema";
+
 const uuidv5 = require('uuidv5')
 
 export function shortenTitle(source) {
@@ -19,15 +20,24 @@ export function shortenTitle(source) {
 }
 
 export function buildImagePreview(previewUrl: string, thumbnail: string, manifest?: string) {
+  // hack for Getty
+  let thumbnailLink
+  if (thumbnail) {
+    if (thumbnail.includes('/full')) {
+      thumbnailLink = thumbnail.split('/full')[0]
+    } else {
+      thumbnailLink = thumbnail
+    }
+  }
   if (manifest) {
-    return previewUrl + '/' + manifest + '?image=' + thumbnail
+    return previewUrl + '/' + manifest + '?image=' + thumbnailLink
   } else {
     return previewUrl + '?image=' + thumbnail
   }
 }
 
 export function buildImageView(viewerUrl: string, manifest: string) {
-    return viewerUrl + '/' + manifest
+  return viewerUrl + '/' + manifest
 }
 
 export function getAuthor(source, bemBlocks) {
@@ -64,7 +74,12 @@ export function buildThumbnailReference(thumbnail) {
 export function buildRandomThumbnailReference(thumbnail) {
   let thumbnailLink
   if (thumbnail) {
-    thumbnailLink = thumbnail + Domain.RANDOM_THUMBNAIL_API_REQUEST
+    // hack for Getty ...
+    if (thumbnail.includes('/full')) {
+      thumbnailLink = thumbnail
+    } else {
+      thumbnailLink = thumbnail + Domain.RANDOM_THUMBNAIL_API_REQUEST
+    }
   } else {
     thumbnailLink = thumbnail
   }
@@ -91,12 +106,12 @@ export function resolveManifestId(source) {
 
 export function resolveThumbnailSource(source) {
   if (source.thumbnail) {
-      return source.thumbnail
+    return source.thumbnail
   } else if (source.iiifService) {
     return source.iiifService
   }
 }
 
 export function resolveThumbnail(thumbnail) {
-    return thumbnail + Domain.THUMBNAIL_API_REQUEST
+  return thumbnail + Domain.THUMBNAIL_API_REQUEST
 }

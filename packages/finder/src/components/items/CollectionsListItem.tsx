@@ -1,10 +1,10 @@
 import * as React from "react";
 import {Link} from 'react-router-dom'
-import {Domain} from '../../constants';
+import {Hits, SearchkitManager, SearchkitProvider} from "searchkit-fork";
 import {ResultContext} from "../core";
-import {Thumbnail} from "../ui";
+import {RefreshIcon} from "../ui/svg";
 import {ItemProps} from './ItemProps'
-import {buildImagePreview} from './ItemUtils';
+import {RandomLandingItem} from "./RandomLandingItem";
 
 const extend = require('lodash/extend')
 
@@ -17,7 +17,7 @@ export const ListCollectionEntry = (props) => {
   const val = makeValue(value)
   return (
     <div className='schema-list'>
-      <div className='schema-list__left'>
+      <div className='collection-list__left'>
         <span className='schema-list-key'><b>{label}</b></span>
       </div>
       <div className='schema-list-value' dangerouslySetInnerHTML={val}/>
@@ -28,40 +28,95 @@ export const ListCollectionEntry = (props) => {
 export class CollectionsListItem extends React.Component<ItemProps, any> {
 
   static defaultProps = {
+    host: process.env.REACT_APP_ELASTICSEARCH_HOST,
+    options: {timeout: 20000},
     previewUrl: process.env.REACT_APP_OSD_BASE,
+    randomIndex: process.env.REACT_APP_EC_INDEX,
+  }
+
+  static randomQuery() {
+    const val = (new Date()).getTime()
+    return {
+      function_score: {
+        functions: [
+          {
+            random_score: {
+              seed: val,
+            },
+          },
+        ],
+      },
+    }
+  }
+  host: string
+  options; any
+  searchkit2: SearchkitManager
+  state: {
+    refreshItem: boolean,
   }
 
   constructor(props) {
     super(props)
+    this.host = props.host
+    this.options = props.options
+    this.state = {
+      refreshItem: false,
+    }
+  }
+
+  refreshItem = () => this.setState({refreshItem: !this.state.refreshItem})
+
+  componentDidMount() {
+    this.setState({refreshItem: true})
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.searchkit2 !== prevProps.searchkit2) {
+      this.setState({refreshItem: true})
+    }
+  }
+
+  renderRandomItem() {
+    if (this.state.refreshItem) {
+      return (
+        <div className='schema-list-value'>
+          <SearchkitProvider searchkit={this.searchkit2}>
+            <Hits hitsPerPage={1} highlightFields={["title"]} mod="sk-hits-list" itemComponent={RandomLandingItem}/>
+          </SearchkitProvider>
+        </div>
+      )
+    }
   }
 
   render() {
-    const {result, bemBlocks, previewUrl} = this.props
+    const {result, bemBlocks} = this.props
     const source = extend({}, result._source, result.highlight)
-    const imageSource = source.imageServiceIRI + Domain.LANDING_THUMBNAIL_API_REQUEST
-    const imageLink = buildImagePreview(previewUrl, source.imageServiceIRI)
-    const updated = new Date(source.metadataMap.tag3).toDateString();
+    const index = source.index
+    const queryContext = this.host + index
+    this.searchkit2 = new SearchkitManager(queryContext, this.options)
+    this.searchkit2.addDefaultQuery((query) => query.addQuery(CollectionsListItem.randomQuery()))
+    const updated = new Date(source.dateUpdated).toDateString();
     const updatedKey = 'Last Updated'
     const totalDocsKey = 'Total Documents'
     return (
       <ResultContext.Provider value={result}>
         <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-          <Thumbnail
-            imageWidth={100}
-            imageSource={imageSource}
-            imageLink={imageLink}
-            className={bemBlocks.item('poster')}
-          />
           <div className={bemBlocks.item('details')}>
             <div className='schema-list'>
-              <div className='schema-list__left'>
+              <div className='collection-list__left'>
                 <span className='schema-list-key'><b>Collection:</b></span>
               </div>
-              <div className='schema-list-value'><Link to={source.metadataMap.tag2}>{source.metadataMap.tag1}</Link>
+              <div className='schema-list-value'><Link to={source.route}>{source.name}</Link>
+              </div>
+              <div className='JUQOte'>
+                <button className='button-transparent' onClick={this.refreshItem}><RefreshIcon/></button>
               </div>
             </div>
+            <div className='schema-list'>
+              {this.renderRandomItem()}
+            </div>
             <ListCollectionEntry label={updatedKey} value={updated}/>
-            <ListCollectionEntry label={totalDocsKey} value={source.metadataMap.tag4}/>
+            <ListCollectionEntry label={totalDocsKey} value={source.docCount}/>
           </div>
         </div>
       </ResultContext.Provider>)

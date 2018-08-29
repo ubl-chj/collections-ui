@@ -29,5 +29,5 @@ export interface IRouteProps {
       max: number,
     },
   },
-  searchkit2: any
+  searchkit: any
 }
