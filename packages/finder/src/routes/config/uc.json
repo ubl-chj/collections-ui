@@ -78,8 +78,8 @@
       "order": "asc"
     },
     {
-      "label": "Author of the Record",
-      "field": "Author(s) of the Record.keyword",
+      "label": "Author(s)",
+      "field": "Author(s).keyword",
       "order": "asc"
     },
     {

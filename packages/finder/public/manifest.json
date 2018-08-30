@@ -17,8 +17,9 @@
     }
   ],
   "start_url": "/?utm_source=a2hs",
-  "background_color": "#000",
+  "orientation": "landscape",
+  "background_color": "#FFF",
   "display": "standalone",
   "scope": "/",
-  "theme_color": "#000"
+  "theme_color": "#FFF"
 }

@@ -26,18 +26,18 @@
   "hasRangeFilter": false,
   "sortingSelectorOptions": [
     {
-      "label": "Updated",
-      "field": "dateUpdated",
-      "order": "desc"
+      "label": "Size",
+      "field": "docCount",
+      "order": "asc"
     },
     {
-      "label": "Collection",
+      "label": "Name",
       "field": "name.keyword",
       "order": "asc"
     },
     {
-      "label": "Size",
-      "field": "docCount",
+      "label": "Updated",
+      "field": "dateUpdated",
       "order": "desc"
     }
   ],
