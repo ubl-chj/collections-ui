@@ -2,7 +2,7 @@ import {UUIDResolver} from "manifest-uuid/";
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Controls, Layout, LayoutBody, OsdComponent, TopBar, ViewerManager, ViewerProvider} from 'ubl-viewer'
-import {AuthUserProfile, AuthUserTooltip, BackArrow} from '../components/ui'
+import {AuthUserProfile, AuthUserTooltip, BackArrow, Logo} from '../components/ui'
 import {Domain, Routes} from '../constants'
 import {firebase} from '../firebase';
 import '../styles/index.css'
@@ -60,7 +60,7 @@ class PreviewerComponent extends React.Component<any, any> {
                 <Link
                   className='my-logo'
                   to={Routes.LANDING}
-                >{Domain.LOGO_TEXT}
+                ><Logo className='JUQOtf__small'/>{Domain.LOGO_TEXT}
                 </Link>
               </div>
               <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>

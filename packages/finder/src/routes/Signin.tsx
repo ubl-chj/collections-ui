@@ -5,6 +5,7 @@ import {Layout, LayoutBody, LayoutResults, TopBar} from 'searchkit-fork'
 import {AuthUserContext} from '../components/core'
 import {Domain, Routes} from '../constants'
 import '../styles/firebaseui-styling.global.css'
+import {Logo} from "../components/ui/svg";
 
 const styles = require('../styles/app.css')
 const firebase = require("firebase/app");
@@ -38,7 +39,7 @@ export class SignIn extends React.Component {
     return (<Layout>
       <TopBar>
         <div className='my-logo'>
-          <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
+          <Link className='my-logo' to={Routes.LANDING}><Logo className='JUQOtf'/>{Domain.LOGO_TEXT}</Link>
         </div>
       </TopBar>
       <LayoutBody>

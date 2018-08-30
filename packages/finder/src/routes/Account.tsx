@@ -2,7 +2,7 @@ import * as React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Layout, LayoutBody, LayoutResults, SearchBox, SearchkitManager, SearchkitProvider, SideBar, TopBar} from 'searchkit-fork'
 import {AuthUserContext, withAuthorization} from '../components/core'
-import {AuthUserProfile, AuthUserTooltip, FavoritesList} from '../components/ui'
+import {AuthUserProfile, AuthUserTooltip, FavoritesList, Logo} from '../components/ui'
 import {Domain, Routes} from '../constants';
 
 const firebase = require("firebase/app");
@@ -18,7 +18,7 @@ const AccountPage = () => <SearchkitProvider searchkit={searchkit}>
   <Layout>
     <TopBar>
       <div className='my-logo'>
-        <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
+        <Link className='my-logo' to={Routes.LANDING}><Logo className='JUQOtf'/>{Domain.LOGO_TEXT}</Link>
       </div>
       <SearchBox
         autofocus={true}

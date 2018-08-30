@@ -24,7 +24,7 @@ import {
   ViewSwitcherHits,
   ViewSwitcherToggle,
 } from 'searchkit-fork'
-import {AuthUserProfile, AuthUserTooltip} from '../components/ui'
+import {AuthUserProfile, AuthUserTooltip, Logo} from '../components/ui'
 import {Domain, Routes} from '../constants'
 import '../styles/index.css'
 import {asCollection} from './asCollection'
@@ -112,7 +112,7 @@ class Collection extends React.Component<IRouteProps, {}> {
           <Layout>
             <TopBar>
               <div className='my-logo'>
-                <Link className='my-logo' to={Routes.LANDING}>{Domain.LOGO_TEXT}</Link>
+                <Link className='my-logo' to={Routes.LANDING}><Logo className='JUQOtf'/>{Domain.LOGO_TEXT}</Link>
               </div>
               <SearchBox
                 autofocus={true}
