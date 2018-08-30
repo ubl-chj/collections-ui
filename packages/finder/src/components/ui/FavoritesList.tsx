@@ -56,10 +56,10 @@ export class FavoritesList extends React.Component<any, any> {
         const sortA = a.result.timestamp
         const sortB = b.result.timestamp
         if (sortA < sortB) {
-          return -1;
+          return 1;
         }
         if (sortA > sortB) {
-          return 1;
+          return -1;
         }
         return 0;
     })

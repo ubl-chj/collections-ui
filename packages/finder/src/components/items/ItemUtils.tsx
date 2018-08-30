@@ -64,7 +64,11 @@ export function buildGenerator(generatorUrl: string, index: string) {
 export function buildThumbnailReference(thumbnail) {
   let thumbnailLink
   if (thumbnail) {
-    thumbnailLink = thumbnail + Domain.THUMBNAIL_API_REQUEST
+    if (thumbnail.includes('/full')) {
+      thumbnailLink = thumbnail
+    } else {
+      thumbnailLink = thumbnail + Domain.THUMBNAIL_API_REQUEST
+    }
   } else {
     thumbnailLink = thumbnail
   }

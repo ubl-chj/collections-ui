@@ -1,0 +1,97 @@
+{
+  "indexName": "ox1",
+  "queryFields": [
+    "accessRights",
+    "alternatives",
+    "attribution",
+    "catalogueId",
+    "collections",
+    "contributors",
+    "coverages",
+    "creators",
+    "dates",
+    "description",
+    "descriptions",
+    "displayLanguages",
+    "formats",
+    "identifiers",
+    "incipits",
+    "languages",
+    "locations",
+    "manifest",
+    "publisher",
+    "related",
+    "shelfmark",
+    "sources",
+    "subjects",
+    "title",
+    "titles",
+    "types",
+    "seeAlso"
+  ],
+  "listItem": "StandardListItem",
+  "gridItem": "StandardGridItem",
+  "refinementListFilterDef1": {
+    "field": "collections.keyword",
+    "title": "Collection",
+    "id": "collection"
+  },
+  "refinementListFilterDef2": {
+    "field": "types.keyword",
+    "title": "Type",
+    "id": "type"
+  },
+  "refinementListFilterDef3": {
+    "field": "locations.keyword",
+    "title": "Location",
+    "id": "location"
+  },
+  "sortingSelectorOptions": [
+    {
+      "label": "Title",
+      "field": "titles.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Creator",
+      "field": "creators.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Date",
+      "field": "dates.keyword",
+      "order": "desc"
+    }
+  ],
+  "highlightFields": [
+    "accessRights",
+    "alternatives",
+    "attribution",
+    "catalogueId",
+    "collections",
+    "contributors",
+    "coverages",
+    "creators",
+    "dates",
+    "description",
+    "descriptions",
+    "displayLanguages",
+    "formats",
+    "identifiers",
+    "incipits",
+    "languages",
+    "locations",
+    "manifest",
+    "publisher",
+    "related",
+    "shelfmark",
+    "sources",
+    "subjects",
+    "title",
+    "titles",
+    "types"
+  ],
+  "suggestionField": "title",
+  "listDefault": true
+}
+

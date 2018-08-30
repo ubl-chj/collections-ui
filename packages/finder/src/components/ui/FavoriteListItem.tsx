@@ -42,7 +42,7 @@ export class FavoriteListItem extends React.Component<any, any> {
     }
   }
 
-  unsetFavorite() {
+  unsetFavorite = () => {
     this.setState({
       isFavorite: false,
     });
@@ -57,14 +57,13 @@ export class FavoriteListItem extends React.Component<any, any> {
     // hack around Getty level 0
     let thumbnailSource
     let thumbnail
-    if (result._index !== process.env.REACT_APP_GETTY_INDEX) {
-      thumbnailSource = resolveThumbnailSource(source)
-      thumbnail = resolveThumbnail(thumbnailSource)
-    } else {
+    if (source.thumbnail.includes('/full')) {
       thumbnailSource = source.thumbnail.split('/full')[0]
       thumbnail = source.thumbnail
+    } else {
+      thumbnailSource = resolveThumbnailSource(source)
+      thumbnail = resolveThumbnail(thumbnailSource)
     }
-
     const imageLink = buildImagePreview(previewUrl, thumbnailSource, manifestId)
     const viewUrl = buildImageView(viewerUrl, manifestId)
     const schema = getSchema(source, manifestId, thumbnailSource, source.imageIndex)
@@ -78,7 +77,7 @@ export class FavoriteListItem extends React.Component<any, any> {
             thumbnail={thumbnail}
             bemBlocks={bemBlocks}
             result={result}
-            unsetFavorite={this.unsetFavorite.bind(this)}
+            unsetFavorite={this.unsetFavorite}
             {...this.props}
           />
         </ResultContext.Provider>)

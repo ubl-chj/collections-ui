@@ -24,8 +24,8 @@
     "title",
     "within"
   ],
-  "listItem": "GettyListItem",
-  "gridItem": "GettyGridItem",
+  "listItem": "StandardListItem",
+  "gridItem": "StandardGridItem",
   "refinementListFilterDef1": {
     "field": "Place Created.keyword",
     "title": "Place",
