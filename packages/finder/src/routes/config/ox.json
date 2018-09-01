@@ -37,9 +37,9 @@
     "id": "collection"
   },
   "refinementListFilterDef2": {
-    "field": "types.keyword",
-    "title": "Type",
-    "id": "type"
+    "field": "subjects.keyword",
+    "title": "Subject",
+    "id": "subjects"
   },
   "refinementListFilterDef3": {
     "field": "locations.keyword",

@@ -1,0 +1,11 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://collections.iiif.cloud/</loc></url>
+<url><loc>https://collections.iiif.cloud/collection/atomic</loc></url>
+<url><loc>https://collections.iiif.cloud/collection/ec</loc></url>
+<url><loc>https://collections.iiif.cloud/collection/ga</loc></url>
+<url><loc>https://collections.iiif.cloud/collection/getty</loc></url>
+<url><loc>https://collections.iiif.cloud/collection/harvard</loc></url>
+<url><loc>https://collections.iiif.cloud/collection/ox</loc></url>
+<url><loc>https://collections.iiif.cloud/collection/uc</loc></url>
+<url><loc>https://collections.iiif.cloud/signin</loc></url>
+</urlset>
