@@ -37,6 +37,32 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
     tagManager.dataLayer(dataLayer)
   }
 
+  static buildManifestLink(value) {
+    const link =  '<a href=' + value + '>' + value + '</a>'
+    return(
+      <li className='list-group-item'><div className='metadata-label'>Manifest:</div>
+      <div dangerouslySetInnerHTML={{__html: link}}/>
+    </li>)
+  }
+
+  static buildAttribution(value) {
+    return(
+      <li className='list-group-item'><div className='metadata-label'>Attribution:</div>
+        <div dangerouslySetInnerHTML={{__html: value}}/>
+      </li>)
+  }
+
+  static buildLogo(value) {
+    if (value) {
+      const link = '<img src=' + value + '>'
+      return (
+        <li className='list-group-item'>
+          <div className='metadata-label'>Logo:</div>
+          <div dangerouslySetInnerHTML={{__html: link}}/>
+        </li>)
+    }
+  }
+
   annotationsAccessor: AnnotationsAccessor
   state: {
     menuOpen: boolean,
@@ -99,6 +125,11 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
     if (document) {
       const manifest = manifesto.create(document)
       const metadata = manifest.getMetadata()
+      const manifestItem = Controls.buildManifestLink(manifest.id)
+      const attributionText = manifesto.TranslationCollection.getValue(manifest.getAttribution())
+      const attribution = Controls.buildAttribution(attributionText)
+      const logo = manifest.getLogo()
+      const logoItem = Controls.buildLogo(logo)
       let thumbnail = manifest.getThumbnail()
       if (thumbnail) {
         thumbnail = manifest.getThumbnail().id
@@ -123,6 +154,9 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
           >
             <ul className="list-group">
               {itemList}
+              {manifestItem}
+              {attribution}
+              {logoItem}
             </ul>
           </Menu>
           <div className="btn-group">

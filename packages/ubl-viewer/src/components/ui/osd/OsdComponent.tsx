@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {findDOMNode} from 'react-dom';
+import Select from 'react-select'
 import {ViewerComponent, ViewerManager} from '../../../core'
 let openSeaDragon
 
@@ -21,17 +22,55 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
     return openSeaDragon(newConfig)
   }
 
+  static customStyles() {
+    return {
+      option: (base, state) => ({
+        ...base,
+        backgroundColor: state.isSelected ? 'black' : 'white',
+        borderBottom: '1px dotted silver',
+        color: state.isSelected ? 'white' : 'black',
+      }),
+    }
+  }
+
   private defaultProps: object;
   private osd: any;
 
   constructor(props) {
     super(props)
+    this.state = {
+      selectedOption: null,
+    }
   }
 
   render() {
-    return (
-      <div className='openseadragon' id='osd'/>
-    )
+    if (this.getImages().length > 1) {
+      const options = this.selectorOptions()
+      return (
+        <div className='selector'>
+          <Select isSearchable={Boolean(true)} defaultValue={options[0]} onChange={this.handleChange} options={options}
+            styles={OsdComponent.customStyles()}/>
+          <div className='openseadragon' id='osd'/>
+        </div>
+      )
+    } else {
+      return (
+          <div className='openseadragon' id='osd'/>
+      )
+    }
+  }
+
+  // TODO get Canvas labels
+  selectorOptions() {
+    const pages = this.getImages().length
+    const options = []
+    for (let i = 0; i < pages; i++) {
+      const option = {
+        label: i, value: i,
+      }
+      options.push(option)
+    }
+    return options
   }
 
   defaultOsdProps() {
@@ -61,6 +100,13 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
 
   getImages() {
     return this.props.images
+  }
+
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption });
+    if (this.osd) {
+      this.osd.goToPage(selectedOption.value)
+    }
   }
 
   updateViewer(config) {

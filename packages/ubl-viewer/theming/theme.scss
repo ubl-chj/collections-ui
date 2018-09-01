@@ -621,6 +621,27 @@ body {
   top: 36px;
 }
 
+.bm-menu {
+  background-color: #efefef;
+  border-right: 1px solid #d3d3d3;
+  bottom: 0;
+  box-sizing: border-box;
+  left: 0;
+  opacity: 1;
+  overflow: hidden;
+  padding: 2px;
+  position: absolute;
+  top: 33px;
+  height: 90% !important;
+  transform: translateX(0);
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.metadata-label {
+  color: #666;
+}
+
 .btn-group {
   width: auto !important;
   float: right;
@@ -681,14 +702,6 @@ body {
   padding: 0 5px 5px 0;
 }
 
-.JUQOtd {
-  transition: fill cubic-bezier(0.4, 0.0, 0.2, 1) 400ms;
-  fill: white;
-  width: 20px;
-  height: 20px;
-  vertical-align:unset;
-}
-
 .control-btn {
   padding: 0.175rem 0.75rem !important
 }
@@ -699,4 +712,48 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
+}
+
+.css-10nd86i {
+  position: relative;
+  box-sizing: border-box;
+  z-index: 100;
+}
+
+.selector {
+  width: 6%;
+  flex: 0 0 6%;
+}
+
+.css-1aya2g8 {
+  align-items: center;
+  background-color: hsl(0,0%,98%);
+  border-color: #FFF;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 0;
+  cursor: default;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  min-height: 38px;
+  outline: 0 !important;
+  position: relative;
+  -webkit-transition: all 100ms;
+  transition: all 100ms;
+  box-sizing: border-box;
+}
+
+.css-z5z6cw {
+  background-color: #2684FF;
+  color: hsl(0, 0%, 100%);
+  cursor: default;
+  display: block;
+  font-size: inherit;
+  padding: 8px 12px;
+  width: 100%;
+}
+
+.list-group-item img {
+  max-width: 100px;
 }

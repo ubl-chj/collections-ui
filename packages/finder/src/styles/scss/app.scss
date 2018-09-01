@@ -97,11 +97,11 @@
 }
 
 .JUQOtc {
-  transition: fill cubic-bezier(0.4, 0.0, 0.2, 1) 400ms;
+  transition: fill cubic-bezier(0.4, 0, 0.2, 1) 400ms;
   fill: white;
   width: 24px;
-  height: 24px;
-  vertical-align:unset;
+  height: 36px;
+  vertical-align: middle;
 }
 
 .button-transparent {
