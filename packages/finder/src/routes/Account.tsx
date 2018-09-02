@@ -2,7 +2,7 @@ import * as React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Layout, LayoutBody, LayoutResults, SearchBox, SearchkitManager, SearchkitProvider, SideBar, TopBar} from 'searchkit-fork'
 import {AuthUserContext, withAuthorization} from '../components/core'
-import {AuthUserProfile, AuthUserTooltip, FavoritesList, Logo} from '../components/ui'
+import {AuthUserProfile, AuthUserTooltip, BMenu, FavoritesList, Logo} from '../components/ui'
 import {Domain, Routes} from '../constants';
 
 const firebase = require("firebase/app");
@@ -14,45 +14,54 @@ const searchkit = new SearchkitManager(host, options)
 const queryFields = []
 
 const t = Boolean(true)
-const AccountPage = () => <SearchkitProvider searchkit={searchkit}>
-  <Layout>
-    <TopBar>
-      <div className='my-logo'>
-        <Link className='my-logo' to={Routes.LANDING}><Logo className='JUQOtf'/>{Domain.LOGO_TEXT}</Link>
-      </div>
-      <SearchBox
-        autofocus={true}
-        searchOnChange={true}
-        queryFields={queryFields}/>
-      <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
-        <AuthUserProfile/>
-      </div>
-      <ReactTooltip
-        id='authUserProfile'
-        offset={{left: 170}}
-        globalEventOff='click'
-        border={t}
-        place='bottom'
-        type='light'
-        effect='solid'>
-        <AuthUserTooltip/>
-      </ReactTooltip>
-    </TopBar>
-    <LayoutBody>
-      <SideBar/>
-      <LayoutResults>
-        <ActionBar>
-          <AuthUserContext.Consumer>
-            {(authUser) => <div>
-              <p>Welcome {firebase.auth().currentUser.displayName}!</p>
-              <h2>My Workspace</h2>
-              <ListFavoritesWithRouter authUser={authUser}/>
-            </div>}
-          </AuthUserContext.Consumer>
-        </ActionBar>
-      </LayoutResults>
-    </LayoutBody>
-  </Layout>
+const AccountPage = () =>
+  <SearchkitProvider searchkit={searchkit}>
+  <div id='outer-container'>
+    <BMenu/>
+    <div id='page-wrap'>
+      <Layout>
+        <TopBar>
+          <div className='my-logo'>
+            <Link className='my-logo' to={Routes.LANDING}>
+              <Logo className='JUQOtf'/>
+              <span className='JUQOtq'>{Domain.LOGO_TEXT}</span>
+            </Link>
+          </div>
+          <SearchBox
+            autofocus={true}
+            searchOnChange={true}
+            queryFields={queryFields}/>
+          <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
+            <AuthUserProfile/>
+          </div>
+          <ReactTooltip
+            id='authUserProfile'
+            offset={{left: 170}}
+            globalEventOff='click'
+            border={t}
+            place='bottom'
+            type='light'
+            effect='solid'>
+            <AuthUserTooltip/>
+          </ReactTooltip>
+        </TopBar>
+        <LayoutBody>
+          <SideBar/>
+          <LayoutResults>
+            <ActionBar>
+              <AuthUserContext.Consumer>
+                {(authUser) => <div>
+                  <p>Welcome {firebase.auth().currentUser.displayName}!</p>
+                  <h2>My Workspace</h2>
+                  <ListFavoritesWithRouter authUser={authUser}/>
+                </div>}
+              </AuthUserContext.Consumer>
+            </ActionBar>
+          </LayoutResults>
+        </LayoutBody>
+      </Layout>
+    </div>
+  </div>
 </SearchkitProvider>
 
 const authCondition = (authUser) => !!authUser

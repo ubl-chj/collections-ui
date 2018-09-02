@@ -614,31 +614,6 @@ body {
   font-size: 16px;
 }
 
-.bm-burger-button {
-  position: fixed;
-  width: 36px;
-  height: 30px;
-  left: 36px;
-  top: 36px;
-}
-
-.bm-menu {
-  background-color: #efefef;
-  border-right: 1px solid #d3d3d3;
-  bottom: 0;
-  box-sizing: border-box;
-  left: 0;
-  opacity: 1;
-  overflow: hidden;
-  padding: 2px;
-  position: absolute;
-  top: 33px;
-  height: 90% !important;
-  transform: translateX(0);
-  width: 100%;
-  word-wrap: break-word;
-}
-
 .metadata-label {
   color: #666;
 }
@@ -649,50 +624,6 @@ body {
   font-size: 16px;
   text-align: right;
   padding-right: 30px !important;
-}
-
-.bm-cross-button {
-  top: 5px !important;
-  right: 15px !important;
-}
-
-.right .bm-burger-button {
-  left: initial;
-  right: 36px;
-}
-
-.bm-cross-button {
-  top: 33px;
-  height: 24px;
-  width: 24px;
-}
-
-.bm-cross {
-  background: #000;
-}
-
-.bm-menu {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  top: 33px;
-  width: 100%;
-  background-color: #efefef;
-  border-right: 1px solid lightgray;
-  box-sizing: border-box;
-  overflow: hidden;
-  padding: 2px;
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.bm-menu-wrap[style] {
-  position: fixed;
-  right: 0;
-  z-index: 1100;
-  width: 30% !important;
-  height: 100%;
-  transition: all 0.5s;
 }
 
 .sub-title {
@@ -722,8 +653,7 @@ body {
 }
 
 .selector {
-  width: 70px;
-  flex: 0 0 70px;
+  width: 80px;
 }
 
 .css-1aya2g8 {
@@ -757,5 +687,21 @@ body {
 
 .list-group-item img {
   max-width: 100px;
+}
+
+.bm-cross-button {
+  top: 5px !important;
+  right: 15px !important;
+}
+
+.right .bm-burger-button {
+  left: initial;
+  right: 36px;
+}
+
+.bm-cross-button {
+  top: 33px;
+  height: 24px;
+  width: 24px;
 }
 

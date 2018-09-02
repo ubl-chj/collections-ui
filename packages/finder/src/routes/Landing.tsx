@@ -21,7 +21,7 @@ import {
   TopBar,
 } from 'searchkit-fork'
 import {CollectionsListItem} from '../components/items'
-import {AuthUserProfile, AuthUserTooltip, Logo} from '../components/ui'
+import {AuthUserProfile, AuthUserTooltip, BMenu, Logo} from '../components/ui'
 import {Domain, Routes} from '../constants'
 import '../styles/index.css'
 import {IRouteProps} from './IRouteProps'
@@ -82,10 +82,16 @@ export class Landing extends React.Component<IRouteProps, {}> {
     const t = Boolean(true)
     return (
          <SearchkitProvider searchkit={this.searchkit}>
+           <div id='outer-container'>
+             <BMenu/>
+             <div id='page-wrap'>
            <Layout>
              <TopBar>
                <div className='my-logo'>
-                 <Link className='my-logo' to={Routes.LANDING}><Logo className='JUQOtf'/>{Domain.LOGO_TEXT}</Link>
+                 <Link className='my-logo' to={Routes.LANDING}>
+                   <Logo className='JUQOtf'/>
+                   <span className='JUQOtq'>{Domain.LOGO_TEXT}</span>
+                 </Link>
                </div>
                <SearchBox
                  autofocus={true}
@@ -139,6 +145,8 @@ export class Landing extends React.Component<IRouteProps, {}> {
                </LayoutResults>
              </LayoutBody>
            </Layout>
+             </div>
+           </div>
          </SearchkitProvider>
        )
   }

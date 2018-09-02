@@ -4,7 +4,9 @@
 .my-logo {
   color:white;
   margin-right:15px;
+  margin-left:25px;
   line-height: 16px;
+  display: flex;
 }
 
 .my-logo a:link {
@@ -39,6 +41,12 @@
   color: #0366d6;
 }
 
+.sk-hits-list {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
 body {
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     font-size: 14px;
@@ -59,9 +67,14 @@ body {
 }
 
 .sk-hits-list__item {
-    display: -ms-flexbox;
     display: flex;
     padding: 0
+}
+
+.sk-hits-list-hit__poster {
+  width: 15%;
+  flex: 0 0 15%;
+  padding: 0 20px;
 }
 
 .sk-hits-grid-hit {
@@ -74,7 +87,6 @@ body {
 }
 
 .sk-top-bar__content {
-    display: -ms-flexbox;
     display: flex;
     margin: 0 auto;
     padding: 0 15px;

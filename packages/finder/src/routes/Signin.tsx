@@ -36,10 +36,14 @@ const uiConfig = {
 
 export class SignIn extends React.Component {
   render() {
-    return (<Layout>
+    return (
+      <Layout>
       <TopBar>
         <div className='my-logo'>
-          <Link className='my-logo' to={Routes.LANDING}><Logo className='JUQOtf'/>{Domain.LOGO_TEXT}</Link>
+          <Link className='my-logo' to={Routes.LANDING}>
+            <Logo className='JUQOtf'/>
+            <span className='JUQOtq'>{Domain.LOGO_TEXT}</span>
+          </Link>
         </div>
       </TopBar>
       <LayoutBody>
@@ -52,6 +56,7 @@ export class SignIn extends React.Component {
           </AuthUserContext.Consumer>
         </LayoutResults>
       </LayoutBody>
-    </Layout>)
+    </Layout>
+    )
   }
 }

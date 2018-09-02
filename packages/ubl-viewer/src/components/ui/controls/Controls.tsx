@@ -63,6 +63,50 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
     }
   }
 
+  static styles() {
+    return {
+      bmBurgerBars: {
+        background: 'white',
+        height: '10%',
+      },
+      bmBurgerButton: {
+        height: '18px',
+        position: 'fixed',
+        width: '24px',
+        left: '24px',
+        top: '24px',
+      },
+      bmCross: {
+        background: '#000',
+      },
+      bmMenu: {
+        position: 'absolute',
+        left: '0',
+        bottom: '30px',
+        height: '90%',
+        top: '33px',
+        backgroundColor: '#efefef',
+        borderRight: '1px solid lightgray',
+        boxSizing: 'border-box',
+        padding: '2px',
+        opacity: '1',
+        width: '100%',
+        transform: 'translateX(0)',
+        wordWrap: 'break-word',
+      },
+      bmMorphShape: {
+        fill: '#373a47',
+      },
+      bmItemList: {
+        color: '#000',
+        padding: '0.8em',
+      },
+      bmItem: {
+        display: 'inline-block',
+      },
+    }
+  }
+
   annotationsAccessor: AnnotationsAccessor
   state: {
     menuOpen: boolean,
@@ -146,6 +190,8 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
       return (
         <div className="manifest-info">
           <Menu
+            width='400px'
+            styles={Controls.styles()}
             noOverlay={true}
             right={true}
             customBurgerIcon={false}

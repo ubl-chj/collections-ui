@@ -2,10 +2,11 @@ import {UUIDResolver} from "manifest-uuid/";
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Controls, Layout, LayoutBody, OsdComponent, TopBar, ViewerManager, ViewerProvider} from 'ubl-viewer'
-import {AuthUserProfile, AuthUserTooltip, BackArrow, Logo} from '../components/ui'
+import {AuthUserProfile, AuthUserTooltip, BackArrow, BMenu, Logo} from '../components/ui'
 import {Domain, Routes} from '../constants'
 import {firebase} from '../firebase';
 import '../styles/index.css'
+import {SearchkitProvider} from 'searchkit-fork';
 
 const ReactTooltip = require('react-tooltip')
 const qs = require('query-string')
@@ -57,10 +58,9 @@ class PreviewerComponent extends React.Component<any, any> {
           <Layout>
             <TopBar>
               <div className='my-logo'>
-                <Link
-                  className='my-logo'
-                  to={Routes.LANDING}
-                ><Logo className='JUQOtf'/>{Domain.LOGO_TEXT}
+                <Link className='my-logo' to={Routes.LANDING}>
+                  <Logo className='JUQOtf'/>
+                  <span className='JUQOtq'>{Domain.LOGO_TEXT}</span>
                 </Link>
               </div>
               <div className='header__mid'/>

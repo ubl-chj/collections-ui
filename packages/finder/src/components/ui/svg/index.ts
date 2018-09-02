@@ -3,3 +3,4 @@ export * from "./RefreshIcon"
 export * from './Logo'
 export * from './Star'
 export * from './EmptyStar'
+export * from './Octicon'
