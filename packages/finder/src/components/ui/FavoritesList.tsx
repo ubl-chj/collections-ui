@@ -2,6 +2,7 @@ import * as React from "react";
 import {AuthUserContext} from "../core";
 import {FavoriteListItem} from './FavoriteListItem'
 const firebase = require("firebase/app");
+const uuidv4 = require('uuid/v4')
 
 export class FavoritesList extends React.Component<any, any> {
   state: {
@@ -65,7 +66,7 @@ export class FavoritesList extends React.Component<any, any> {
     })
     return favs.map((favorite) => {
       return (
-        <AuthUserContext.Consumer>
+        <AuthUserContext.Consumer key={uuidv4()}>
           {(authUser) => authUser ?
             <FavoriteListItem key={favorite.key} favorite={favorite} authUser={authUser}/> : null}
         </AuthUserContext.Consumer>)
@@ -79,10 +80,7 @@ export class FavoritesList extends React.Component<any, any> {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-      return (
-        <div>{this.buildFavoritesList(favorites)}
-        </div>
-      )
+      return (this.buildFavoritesList(favorites))
     }
   }
 }

@@ -76,18 +76,20 @@ export class FavoritesListItemDisplay extends React.Component<IListItemDisplayPr
           className={bemBlocks.item('poster')}
         />
         <div className={bemBlocks.item('details')}>
-          <AuthUserContext.Consumer>
-            {(authUser) => authUser ? <FavoritesListButton
-              authUser={this.authUser}
-              result={result}
-              unsetFavorite={unsetFavorite}
-            /> : null}
-          </AuthUserContext.Consumer>
-          <Title
-            viewUrl={contentUrl}
-            className={bemBlocks.item('title')}
-            titleString={name}
-          />
+          <div className='title-flex'>
+            <AuthUserContext.Consumer>
+              {(authUser) => authUser ? <FavoritesListButton
+                authUser={this.authUser}
+                result={result}
+                unsetFavorite={unsetFavorite}
+              /> : null}
+            </AuthUserContext.Consumer>
+            <Title
+              viewUrl={contentUrl}
+              className={bemBlocks.item('title')}
+              titleString={name}
+            />
+          </div>
           {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
         </div>
       </div>

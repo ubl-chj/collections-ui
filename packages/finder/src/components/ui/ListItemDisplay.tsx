@@ -52,15 +52,17 @@ export class ListItemDisplay extends React.Component<IListItemDisplayProps, any>
           className={bemBlocks.item('poster')}
         />
         <div className={bemBlocks.item('details')}>
-          <AuthUserContext.Consumer>
-            {(authUser) => authUser ? <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
-          </AuthUserContext.Consumer>
-          <Title
-            viewUrl={contentUrl}
-            className={bemBlocks.item('title')}
-            titleString={name}
-          />
-          {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
+          <div className='title-flex'>
+            <AuthUserContext.Consumer>
+              {(authUser) => authUser ? <FavoriteButton authUser={firebase.auth().currentUser} result={result}/> : null}
+            </AuthUserContext.Consumer>
+            <Title
+              viewUrl={contentUrl}
+              className={bemBlocks.item('title')}
+              titleString={name}
+            />
+          </div>
+            {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
         </div>
       </div>
     )

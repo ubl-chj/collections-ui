@@ -245,7 +245,7 @@ body {
 
   &__top-bar {
     background: $viewer-primary-theme-color;
-    height:50px;
+    height:60px;
     top: 0;
     left:0;
     right:0;
@@ -257,7 +257,7 @@ body {
 
   &__body {
     position: absolute;
-    top: 83px;
+    top: 93px;
     bottom: 0;
     right: 0;
     overflow: hidden;
@@ -313,8 +313,9 @@ body {
 
 .viewer-top-bar {
   &__content {
-    margin:0 auto;
-    width:100%;
+    display: flex;
+    margin: 0 auto;
+    padding: 0 15px;
   }
 }
 
@@ -721,8 +722,8 @@ body {
 }
 
 .selector {
-  width: 6%;
-  flex: 0 0 6%;
+  width: 70px;
+  flex: 0 0 70px;
 }
 
 .css-1aya2g8 {
@@ -757,3 +758,4 @@ body {
 .list-group-item img {
   max-width: 100px;
 }
+

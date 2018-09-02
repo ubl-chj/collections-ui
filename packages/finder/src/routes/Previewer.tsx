@@ -56,13 +56,14 @@ class PreviewerComponent extends React.Component<any, any> {
         <ViewerProvider viewer={this.viewer}>
           <Layout>
             <TopBar>
-              <div className='my-logo-thin'>
+              <div className='my-logo'>
                 <Link
                   className='my-logo'
                   to={Routes.LANDING}
-                ><Logo className='JUQOtf__small'/>{Domain.LOGO_TEXT}
+                ><Logo className='JUQOtf'/>{Domain.LOGO_TEXT}
                 </Link>
               </div>
+              <div className='header__mid'/>
               <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
                 <AuthUserProfile/>
               </div>

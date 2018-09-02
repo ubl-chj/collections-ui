@@ -339,3 +339,32 @@
   vertical-align: middle;
 }
 
+.header__mid {
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  flex: 1 1;
+}
+
+.button-transparent__fav {
+  background-color: transparent;
+  border: none;
+  vertical-align: top;
+}
+
+.JUQOtg {
+  transition: fill cubic-bezier(0.4, 0, 0.2, 1) 400ms;
+  fill: white;
+  width: 20px;
+  height: 20px;
+  vertical-align: top;
+}
+
+.title-flex {
+  display: flex;
+}
+
+.button-right {
+  margin-left: auto;
+  order: 2;
+}

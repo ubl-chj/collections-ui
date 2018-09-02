@@ -8,6 +8,7 @@ import {FavoritesListItemDisplay} from "./FavoritesListItemDisplay";
 
 const extend = require("lodash/extend")
 const firebase = require("firebase/app");
+const uuidv4 = require('uuid/v4')
 
 export class FavoriteListItem extends React.Component<any, any> {
 

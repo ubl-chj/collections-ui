@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Star} from './svg';
 const firebase = require("firebase/app");
 
 export class FavoritesListButton extends React.Component<any, any> {
@@ -54,15 +55,10 @@ export class FavoritesListButton extends React.Component<any, any> {
       return <div>Loading...</div>;
     } else {
       return (
-        <div className='result-item-actions layout-row'>
+        <div className='button-right'>
         {isFavorite && favorite ?
-          (<button type="button" className="btn btn-primary-outline btn-xs">
-            <a id={this.result._id}>
-              <i
-                className="favorite-button glyphicon-star"
-                onClick={this.unsetFavorite}
-              />
-            </a>
+          (<button onClick={this.unsetFavorite} type="button" className="button-transparent__fav">
+            <Star/>
           </button>)
           : null}
       </div>)

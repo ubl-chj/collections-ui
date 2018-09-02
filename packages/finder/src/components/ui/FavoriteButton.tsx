@@ -1,4 +1,5 @@
 import * as React from "react";
+import {EmptyStar, Star} from './svg';
 
 const firebase = require("firebase/app");
 
@@ -86,31 +87,22 @@ export class FavoriteButton extends React.Component<any, any> {
       return <div>Loading...</div>;
     } else {
       return (
-        <div className='result-item-actions layout-row'>
+        <div className='button-right'>
         {isFavorite && favorite ?
           (
-            <button type="button" className="btn btn-primary-outline btn-xs">
-            <a id={this.result._id}>
-              <i
-                className="favorite-button glyphicon-star"
-                onClick={() => {
-                FavoriteButton.removeFavorite(this.authUser.uid, this.result);
-                this.unsetFavorite()
-              }}
-              />
-            </a>
+            <button type="button" onClick={() => {
+              FavoriteButton.removeFavorite(this.authUser.uid, this.result);
+              this.unsetFavorite()
+            }} className="button-transparent__fav">
+            <Star/>
             </button>)
           : (
-            <button type="button" className="btn btn-primary-outline btn-xs"><a id={this.result._id}>
-            <i
-              className="favorite-button glyphicon-star-empty"
-              onClick={() => {
+            <button type="button" onClick={() => {
               FavoriteButton.writeFavorite(this.authUser.uid, this.result);
               this.setFavorite(this.result)
-            }}
-            />
-          </a>
-          </button>)
+            }} className="button-transparent__fav">
+              <EmptyStar/>
+            </button>)
         }
       </div>)
     }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Link} from 'react-router-dom'
-import {AuthUserContext, ResultContext} from "../core";
-import {FavoriteButton, Thumbnail, Title} from "../ui";
+import {ResultContext} from "../core";
+import {Thumbnail, Title} from "../ui";
 import {ListSchemaEntry} from '../ui/ListItemDisplay';
 import {resolveManifestId, resolveName} from './index';
 import {ItemProps} from './ItemProps'
