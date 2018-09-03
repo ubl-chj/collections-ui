@@ -80,9 +80,7 @@
     "Place of Origin (English)",
     "title",
     "Title (English)",
-    "related",
-    "thumbnail",
-    "manifest"
+    "related"
   ],
   "suggestionField": "Title (English)"
 }

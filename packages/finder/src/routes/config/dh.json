@@ -50,10 +50,7 @@
     "Published",
     "attribution",
     "description",
-    "manifest",
-    "title",
-    "thumbnail"
-  ],
+    "title"  ],
   "suggestionField": "title",
   "listDefault": true
 }

@@ -78,10 +78,8 @@
     "collection",
     "description",
     "license",
-    "manifest",
     "related",
     "seeAlso",
-    "thumbnail",
     "title"
   ],
   "suggestionField": "Title",

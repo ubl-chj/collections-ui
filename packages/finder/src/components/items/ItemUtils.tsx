@@ -100,11 +100,16 @@ export function resolveName(schema) {
 
 export function resolveManifestId(source) {
   if (source.manifest) {
-    return uuidv5('url', source.manifest)
+    let manifest;
+    const regexp = /http[^s]/i
+    if (source.manifest.match(regexp)) {
+      manifest = source.manifest.replace('http', 'https')
+    } else {
+      manifest = source.manifest
+    }
+    return uuidv5('url', manifest)
   } else if (source.Manifest) {
     return uuidv5('url', source.Manifest)
-  } else if (source.id) {
-    return uuidv5('url', source.id)
   }
 }
 

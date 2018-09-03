@@ -31,7 +31,6 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
     host: process.env.REACT_APP_ELASTICSEARCH_HOST,
     options: {timeout: 20000},
     previewUrl: process.env.REACT_APP_OSD_BASE,
-    randomIndex: process.env.REACT_APP_EC_INDEX,
   }
 
   static randomQuery() {

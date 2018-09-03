@@ -105,14 +105,12 @@
     "Origin Place",
     "Level of Description",
     "Date of Creation",
-    "thumbnail",
     "Material",
     "Language(s)",
     "Bibliography",
     "Subject(s)",
     "Author(s) of the Record",
-    "Collection",
-    "Manifest"
+    "Collection"
   ],
   "suggestionField": "Title",
   "listDefault": true

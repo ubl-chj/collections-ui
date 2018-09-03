@@ -57,8 +57,7 @@
     "Technique",
     "Provenance",
     "People",
-    "Date",
-    "manifest"
+    "Date"
   ],
   "suggestionField": "title"
 }
