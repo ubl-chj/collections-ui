@@ -1,0 +1,60 @@
+{
+  "indexName": "dh1",
+  "queryFields": [
+    "Author",
+    "collection",
+    "Published",
+    "attribution",
+    "description",
+    "manifest",
+    "title",
+    "thumbnail"
+  ],
+  "listItem": "StandardListItem",
+  "gridItem": "StandardGridItem",
+  "refinementListFilterDef1": {
+    "field": "collection.keyword",
+    "title": "Collection",
+    "id": "collection"
+  },
+  "refinementListFilterDef2": {
+    "field": "Published.keyword",
+    "title": "Published",
+    "id": "published"
+  },
+  "refinementListFilterDef3": {
+    "field": "Author.keyword",
+    "title": "Author",
+    "id": "author"
+  },
+  "sortingSelectorOptions": [
+    {
+      "label": "Collection",
+      "field": "collection.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Author",
+      "field": "Author.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Published",
+      "field": "Published.keyword",
+      "order": "desc"
+    }
+  ],
+  "highlightFields": [
+    "Author",
+    "collection",
+    "Published",
+    "attribution",
+    "description",
+    "manifest",
+    "title",
+    "thumbnail"
+  ],
+  "suggestionField": "title",
+  "listDefault": true
+}
+
