@@ -13,14 +13,14 @@
   "listItem": "StandardListItem",
   "gridItem": "StandardGridItem",
   "refinementListFilterDef1": {
-    "field": "collection.keyword",
+    "field": "collectionTag1.keyword",
     "title": "Collection",
     "id": "collection"
   },
   "refinementListFilterDef2": {
-    "field": "Published.keyword",
-    "title": "Published",
-    "id": "published"
+    "field": "collection.keyword",
+    "title": "SubCollection",
+    "id": "subcollection"
   },
   "refinementListFilterDef3": {
     "field": "Author.keyword",

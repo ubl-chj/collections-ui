@@ -105,6 +105,7 @@
     "manifesto.js": "^2.2.30",
     "openseadragon": "^2.3.1",
     "prop-types": "^15.5.8",
+    "rc-checkbox": "^2.1.5",
     "rc-slider": "^8.6.1",
     "react": "^16.4.1",
     "react-burger-menu": "^2.5.2",

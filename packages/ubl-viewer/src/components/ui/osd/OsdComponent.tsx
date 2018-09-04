@@ -1,7 +1,12 @@
+import Checkbox from 'rc-checkbox';
+import Slider from 'rc-slider';
 import * as React from 'react';
 import {findDOMNode} from 'react-dom';
 import Select from 'react-select'
 import {ViewerComponent, ViewerManager} from '../../../core'
+import {BRIGHTNESS, Filtering, GREYSCALE, INVERT} from '../../filtering';
+import {FiltersIcon} from '../svg';
+
 let openSeaDragon
 
 export interface IOsdComponentProps {
@@ -31,6 +36,7 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
       }),
     }
   }
+  state: any
 
   private defaultProps: object;
   private osd: any;
@@ -38,30 +44,105 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
   constructor(props) {
     super(props)
     this.state = {
+      brightness: 0,
+      filtersVisible: false,
+      inverted: false,
       selectedOption: null,
     }
   }
 
   render() {
+    if (this.osd) {
+      if (this.state.inverted) {
+        const filterOptions = {
+          filters: [{
+            processors: [
+              BRIGHTNESS(this.state.brightness),
+              INVERT(),
+            ],
+          }],
+          viewer: this.osd,
+        }
+        const brightness = new Filtering(filterOptions)
+      } else {
+        const filterOptions = {
+          filters: [{
+            processors: [
+              BRIGHTNESS(this.state.brightness)
+            ],
+          }],
+          viewer: this.osd,
+        }
+        const brightness = new Filtering(filterOptions)
+      }
+    }
+
     if (this.getImages().length > 1) {
       const options = this.selectorOptions()
       return (
-        <div className='selector'>
-          <Select
-            isSearchable={Boolean(true)}
-            defaultValue={options[0]}
-            onChange={this.handleChange}
-            options={options}
-            styles={OsdComponent.customStyles()}
-          />
+        <div>
+          <div className='xjKiLc'>
+            <button type="button" className="button-transparent" onClick={this.toggleFilters}>
+              <FiltersIcon />
+            </button>
+          </div>
+          {this.filters()}
+            <div className='selector'>
+              <Select
+                isSearchable={Boolean(true)}
+                defaultValue={options[0]}
+                onChange={this.handleChange}
+                options={options}
+                styles={OsdComponent.customStyles()}
+              />
+            </div>
           <div className='openseadragon' id='osd'/>
         </div>
       )
     } else {
       return (
+        <div>
+          <div className='xjKiLc'>
+            <button type="button" className="button-transparent" onClick={this.toggleFilters}>
+              <FiltersIcon />
+            </button>
+          </div>
+          {this.filters()}
           <div className='openseadragon' id='osd'/>
+        </div>
       )
     }
+  }
+
+  filters() {
+    if (this.state.filtersVisible) {
+      return (
+        <div style={{width: 200}} className='xjKiLc'>
+          <Slider min={-255} max={255} value={this.state.brightness} onChange={this.onSliderChange}/>
+          <Checkbox onChange={this.toggleInvert}/>
+        </div>
+      )
+    } else {
+      return null
+    }
+  }
+
+  onSliderChange = (brightness) => {
+    this.setState({
+      brightness,
+    });
+  }
+
+  toggleInvert = () => {
+    this.setState((state) => ({
+      inverted: !state.inverted,
+    }));
+  }
+
+  toggleFilters = () => {
+    this.setState((state) => ({
+      filtersVisible: !state.filtersVisible,
+    }));
   }
 
   // TODO get Canvas labels
@@ -80,6 +161,7 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
   defaultOsdProps() {
     return {
       constrainDuringPan: false,
+      crossOriginPolicy: 'Anonymous',
       defaultZoomLevel: 0,
       fullPageButton: 'full-page',
       homeButton: 'reset',
@@ -134,7 +216,7 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
   }
 
   shouldComponentUpdate() {
-    return false
+    return true
   }
 }
 
