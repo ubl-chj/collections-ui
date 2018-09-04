@@ -2,6 +2,7 @@ import * as React from 'react';
 import {findDOMNode} from 'react-dom';
 import Select from 'react-select'
 import {ViewerComponent, ViewerManager} from '../../../core'
+
 let openSeaDragon
 
 export interface IOsdComponentProps {
@@ -34,6 +35,7 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
 
   private defaultProps: object;
   private osd: any;
+  private filtering: any
 
   constructor(props) {
     super(props)
