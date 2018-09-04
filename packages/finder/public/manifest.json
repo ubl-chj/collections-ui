@@ -1,6 +1,6 @@
 {
-  "short_name": "Collections",
-  "name": "Collections",
+  "short_name": "IIIF Collections",
+  "name": "IIIF Collections",
   "permissions": [
     "unlimitedStorage"
   ],

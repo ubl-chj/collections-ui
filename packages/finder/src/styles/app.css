@@ -78,18 +78,13 @@
 .account-image {
   width: 36px;
   height: 36px;
-  -webkit-box-flex: 0;
-  -webkit-flex-grow: 0;
   flex-grow: 0;
-  -webkit-flex-shrink: 0;
   flex-shrink: 0;
-  -webkit-border-radius: 50%;
   border-radius: 50%;
   z-index: 400;
 }
 
 .account-image-profile {
-  -webkit-background-size: 96px 96px;
   background-size: 96px 96px;
   border: none;
   vertical-align: top;
@@ -124,14 +119,6 @@
   text-align: right;
   padding-right: 10px;
   padding-left: 20px;
-}
-
-.glyphicon-star:before {
-  content: "\e006";
-}
-
-.glyphicon-star-empty:before {
-  content:"\e007";
 }
 
 .svg-icon {

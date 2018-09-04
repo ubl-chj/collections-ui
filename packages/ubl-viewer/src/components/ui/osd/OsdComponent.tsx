@@ -12,7 +12,6 @@ export interface IOsdComponentProps {
   region?: string;
   viewer?: ViewerManager;
   defaultProps?: object;
-  world?: object;
 }
 
 export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
@@ -48,8 +47,13 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
       const options = this.selectorOptions()
       return (
         <div className='selector'>
-          <Select isSearchable={Boolean(true)} defaultValue={options[0]} onChange={this.handleChange} options={options}
-            styles={OsdComponent.customStyles()}/>
+          <Select
+            isSearchable={Boolean(true)}
+            defaultValue={options[0]}
+            onChange={this.handleChange}
+            options={options}
+            styles={OsdComponent.customStyles()}
+          />
           <div className='openseadragon' id='osd'/>
         </div>
       )
@@ -113,9 +117,6 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
     if (!this.osd) {
       this.osd = OsdComponent.generateView(findDOMNode(this), config);
     }
-    this.osd.addHandler("page", (data) => {
-      console.log(data.page)
-    })
     const viewport = this.osd.viewport
     this.osd.addHandler('canvas-click', (event) => {
       const webPoint = event.position;

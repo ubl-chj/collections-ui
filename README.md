@@ -3,7 +3,7 @@
 
 An interface that sources ElasticSearch indices and provides collections of IIIF manifests.
 
-See it live at [https://collections.iiif.cloud/?utm_source=github&utm_medium=referral&utm_campaign=iiif](https://collections.iiif.cloud)
+See it live at [https://collections.iiif.cloud](https://collections.iiif.cloud/?utm_source=github&utm_medium=referral&utm_campaign=iiif)
 
 Also provides an image viewer (WIP).
 
@@ -33,9 +33,6 @@ Current reference implementation includes these required constants:
 ```bash
 REACT_APP_BASEURL=https://collections.iiif.cloud
 REACT_APP_ELASTICSEARCH_HOST=https://es.iiif.cloud/
-REACT_APP_GENERATOR_BASE=https://manifests.iiif.cloud/generator
-REACT_APP_ELASTICSEARCH_LOCALHOST=http://localhost:9100
-REACT_APP_VIEWER_BASE=https://viewer.iiif.cloud
 REACT_APP_OSD_BASE=/preview
 REACT_APP_OSD_COMPONENT_BASE=/view
 ``` 
