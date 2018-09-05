@@ -1,19 +1,12 @@
 import * as React from "react";
 import {slide as Menu} from 'react-burger-menu'
 import {withRouter} from 'react-router-dom'
-import {ScaleLoader} from "react-spinners";
-import {AnnotationsAccessor, ViewerComponent} from "../../../core/index";
+import {ScaleLoader} from "react-spinners"
+import {AnnotationsAccessor, ViewerComponent} from "../../../core/index"
 import {MetadataSchemaAdapter} from '../../schema'
-import {MetadataItem} from "../osd";
-import {ArrowLeftIcon} from "./ArrowLeftIcon";
-import {ArrowRightIcon} from "./ArrowRightIcon";
-import {FullScreenIcon} from "./FullScreenIcon";
-import {HomeIcon} from "./HomeIcon";
-import {InfoIcon} from "./InfoIcon";
-import {RotateLeftIcon} from "./RotateLeftIcon";
-import {RotateRightIcon} from "./RotateRightIcon";
-import {ZoomInIcon} from "./ZoomInIcon";
-import {ZoomOutIcon} from "./ZoomOutIcon";
+import {MetadataItem} from "../osd"
+import {ArrowLeftIcon, ArrowRightIcon, FullScreenIcon, HomeIcon, InfoIcon, RotateLeftIcon, RotateRightIcon, ZoomInIcon,
+  ZoomOutIcon} from "../svg"
 const tagManager = require('react-gtm-module')
 const uuidv4 = require('uuid/v4')
 const manifesto = require('manifesto.js')
@@ -63,7 +56,7 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
     }
   }
 
-  static styles() {
+  static menuStyles() {
     return {
       bmBurgerBars: {
         background: 'white',
@@ -71,38 +64,44 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
       },
       bmBurgerButton: {
         height: '18px',
-        position: 'fixed',
-        width: '24px',
         left: '24px',
+        position: 'fixed',
         top: '24px',
+        width: '24px',
       },
       bmCross: {
         background: '#000',
       },
-      bmMenu: {
-        position: 'absolute',
-        left: '0',
-        bottom: '30px',
-        height: '90%',
-        top: '33px',
-        backgroundColor: '#efefef',
-        borderRight: '1px solid lightgray',
-        boxSizing: 'border-box',
-        padding: '2px',
-        opacity: '1',
-        width: '100%',
-        transform: 'translateX(0)',
-        wordWrap: 'break-word',
+      bmCrossButton: {
+        height: '24px',
+        right: '15px',
+        top: '5px',
+        width: '24px',
       },
-      bmMorphShape: {
-        fill: '#373a47',
+      bmItem: {
+        display: 'inline-block',
       },
       bmItemList: {
         color: '#000',
         padding: '0.8em',
       },
-      bmItem: {
-        display: 'inline-block',
+      bmMenu: {
+        backgroundColor: '#efefef',
+        borderRight: '1px solid lightgray',
+        bottom: '30px',
+        boxSizing: 'border-box',
+        height: '90%',
+        left: '0',
+        opacity: '1',
+        padding: '2px',
+        position: 'absolute',
+        top: '33px',
+        transform: 'translateX(0)',
+        width: '100%',
+        wordWrap: 'break-word',
+      },
+      bmMorphShape: {
+        fill: '#373a47',
       },
     }
   }
@@ -123,7 +122,6 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
       menuOpen: false,
       uuid: null,
     }
-    this.toggleMenu = this.toggleMenu.bind(this);
     this.state.uuid = uuidv4()
   }
 
@@ -135,7 +133,7 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
     this.setState({menuOpen: false})
   }
 
-  toggleMenu() {
+  toggleMenu = () => {
     this.setState((prevState) => {
       return {menuOpen: !prevState.menuOpen};
     })
@@ -191,7 +189,7 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
         <div className="manifest-info">
           <Menu
             width='400px'
-            styles={Controls.styles()}
+            styles={Controls.menuStyles()}
             noOverlay={true}
             right={true}
             customBurgerIcon={false}

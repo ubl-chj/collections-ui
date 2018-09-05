@@ -233,8 +233,8 @@ export class Filtering {
     }
     this.viewer = options.viewer
 
-    this.viewer.addHandler('tile-loaded', this.tileLoadedHandler(options, {}))
-    this.viewer.addHandler('tile-drawing', this.tileDrawingHandler(options))
+    this.viewer.addHandler('tile-loaded', (event) => { this.tileLoadedHandler(options, event)})
+    this.viewer.addHandler('tile-drawing', (event) => {this.tileDrawingHandler(event)})
     this.filterIncrement = 0
 
     this.setOptions(options)
@@ -262,15 +262,15 @@ export class Filtering {
           break
         }
         if (Array.isArray(filter.items)) {
-          for (const j of filter.items.length) {
-            Filtering.addItemToReset(filter.items[j], itemsToReset)
+          for (const item of filter.items) {
+            Filtering.addItemToReset(item, itemsToReset)
           }
         } else {
           Filtering.addItemToReset(filter.items, itemsToReset)
         }
       }
-      for (const i of itemsToReset) {
-        itemsToReset[i].reset()
+      for (const item of itemsToReset) {
+        item.reset()
       }
     }
   }

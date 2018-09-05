@@ -650,6 +650,8 @@ body {
   position: relative;
   box-sizing: border-box;
   z-index: 100;
+  left: -15px;
+  top: -37px;
 }
 
 .selector {
@@ -689,19 +691,27 @@ body {
   max-width: 100px;
 }
 
-.bm-cross-button {
-  top: 5px !important;
-  right: 15px !important;
-}
-
 .right .bm-burger-button {
   left: initial;
   right: 36px;
 }
 
-.bm-cross-button {
-  top: 33px;
-  height: 24px;
-  width: 24px;
+.xjKiLc {
+  position: relative;
+  z-index: 1000;
 }
 
+.xjKiLd {
+  background-color: black;
+  position: relative;
+  z-index: 1000;
+  width: 50px;
+  left: -15px;
+}
+
+.Hj59Ib {
+  font-size: 13px;
+  color: rgb(216,216,216);
+  margin-bottom: -3px;
+  padding-top: 15px;
+}
