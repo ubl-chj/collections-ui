@@ -129,10 +129,6 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
     this.setState({menuOpen: state.menuOpen})
   }
 
-  closeMenu() {
-    this.setState({menuOpen: false})
-  }
-
   toggleMenu = () => {
     this.setState((prevState) => {
       return {menuOpen: !prevState.menuOpen};

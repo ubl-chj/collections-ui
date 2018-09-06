@@ -44,7 +44,7 @@ export class DocumentViewSwitcher extends ViewerComponent<IDocumentViewSwitcherP
       ...this.props,
       itemComponent: selectedOption.itemComponent,
       listComponent: selectedOption.listComponent,
-      mod: 'sk-hits-' + selectedOption.key,
+      mod: 'viewer-' + selectedOption.key,
     }
     return (
       <Annotations {...props} />

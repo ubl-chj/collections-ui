@@ -16,7 +16,6 @@ import {AuthUserProfile, AuthUserTooltip, BackArrow, BMenu, Logo} from '../compo
 import {Domain, Routes} from '../constants'
 import {firebase} from '../firebase'
 import '../styles/index.css'
-import {SearchkitProvider} from 'searchkit-fork';
 
 const ReactTooltip = require('react-tooltip')
 const uuidv4 = require('uuid/v4')

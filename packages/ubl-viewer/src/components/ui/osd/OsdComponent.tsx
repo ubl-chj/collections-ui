@@ -6,7 +6,7 @@ import {findDOMNode} from 'react-dom';
 import Select from 'react-select'
 import {ViewerComponent, ViewerManager} from '../../../core'
 import {BRIGHTNESS, Filtering, GREYSCALE, INVERT} from '../../filtering';
-import {FiltersIcon} from '../svg';
+import {FiltersIcon, ScrollIcon} from '../svg';
 
 let openSeaDragon
 
@@ -27,7 +27,7 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
     return openSeaDragon(newConfig)
   }
 
-  static customStyles() {
+  static selectorStyles() {
     return {
       option: (base, state) => ({
         ...base,
@@ -56,8 +56,8 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
       },
       bmCrossButton: {
         height: '24px',
-        right: '45px',
-        top: '40px',
+        right: '7px',
+        top: '45px',
         width: '24px',
       },
       bmItem: {
@@ -72,11 +72,10 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
         bottom: '30px',
         boxSizing: 'border-box',
         height: '90%',
-        left: '-24px',
         opacity: '1',
         padding: '24px',
         position: 'relative',
-        top: '38px',
+        top: '45px',
         transform: 'translateX(0)',
         width: '100%',
         wordWrap: 'break-word',
@@ -98,6 +97,7 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
       greyscale: false,
       inverted: false,
       menuOpen: false,
+      scrollView: false,
       selectedOption: null,
     }
   }
@@ -115,13 +115,26 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
       )
   }
 
-  handleStateChange(state) {
+  handleStateChange = (state) => {
     this.setState({menuOpen: state.menuOpen})
   }
 
-  toggleMenu = () => {
+  handlePaging = (selectedOption) => {
+    this.setState({ selectedOption });
+    if (this.osd) {
+      this.osd.goToPage(selectedOption.value)
+    }
+  }
+
+  toggleFiltersMenu = () => {
     this.setState((prevState) => {
       return {menuOpen: !prevState.menuOpen};
+    })
+  }
+
+  toggleScrollView = () => {
+    this.setState((prevState) => {
+      return {scrollView: !prevState.scrollView};
     })
   }
 
@@ -186,32 +199,41 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
     return this.props.images
   }
 
-  handleChange = (selectedOption) => {
-    this.setState({ selectedOption });
-    if (this.osd) {
-      this.osd.goToPage(selectedOption.value)
-    }
-  }
-
   updateViewer(config) {
     if (!this.osd) {
       this.osd = OsdComponent.generateView(findDOMNode(this), config);
     }
-    const viewport = this.osd.viewport
   }
 
-  componentDidMount() {
-    openSeaDragon = require('openseadragon')
-    if (this.props.images) {
-      this.updateViewer(this.defaultOsdProps())
+  buildScrollView() {
+    if (this.osd) {
+      if (this.state.scrollView) {
+        this.osd.world.removeItem(this.osd.world.getItemAt(0))
+        this.getImages().forEach((i, index) => {
+          this.osd.addTiledImage({
+            tileSource: i,
+            success(event) {
+              const tiledImage = event.item
+              tiledImage.setPosition({
+                x: index * 1.05,
+                y: 0,
+              })
+            },
+          })
+        })
+      } else {
+        let pageNumber
+        if (this.state.selectedOption) {
+          pageNumber = this.state.selectedOption.value
+        } else {
+          pageNumber = 0
+        }
+        this.osd.goToPage(pageNumber)
+      }
     }
   }
 
-  shouldComponentUpdate() {
-    return true
-  }
-
-  render() {
+  buildFilters() {
     if (this.osd) {
       if (this.state.inverted) {
         const filterOptions = {
@@ -247,64 +269,67 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
         const filters = new Filtering(filterOptions)
       }
     }
+  }
 
+  buildSelector() {
+    const options = this.selectorOptions()
     if (this.getImages().length > 1) {
-      const options = this.selectorOptions()
       return (
-        <div>
-          <Menu
-            width='275px'
-            styles={OsdComponent.menuStyles()}
-            noOverlay={true}
-            right={false}
-            customBurgerIcon={false}
-            isOpen={this.state.menuOpen}
-            onStateChange={(state) => this.handleStateChange(state)}
-          >
-           {this.filters()}
-          </Menu>
-          <div style={{display: 'flex'}}>
-            <div className='xjKiLd'>
-              <button type="button" className="button-transparent" onClick={this.toggleMenu}>
-                <FiltersIcon />
-              </button>
-            </div>
-            <div className='selector'>
-              <Select
-                isSearchable={Boolean(true)}
-                defaultValue={options[0]}
-                onChange={this.handleChange}
-                options={options}
-                styles={OsdComponent.customStyles()}
-              />
-            </div>
-          </div>
-          <div className='openseadragon' id='osd'/>
-        </div>
-      )
+        <div className='selector'>
+          <Select
+            isSearchable={Boolean(true)}
+            defaultValue={options[0]}
+            onChange={this.handlePaging}
+            options={options}
+            styles={OsdComponent.selectorStyles()}
+          />
+        </div>)
     } else {
-      return (
-        <div>
-          <Menu
-            width='275px'
-            styles={OsdComponent.menuStyles()}
-            noOverlay={true}
-            right={false}
-            customBurgerIcon={false}
-            isOpen={this.state.menuOpen}
-            onStateChange={(state) => this.handleStateChange(state)}
-          >
-            {this.filters()}
-          </Menu>
+      return null
+    }
+  }
+  componentDidMount() {
+    openSeaDragon = require('openseadragon')
+    if (this.props.images) {
+      this.updateViewer(this.defaultOsdProps())
+    }
+  }
+
+  shouldComponentUpdate() {
+    return true
+  }
+
+  render() {
+    this.buildFilters()
+    this.buildScrollView()
+
+    return (
+      <div>
+        <Menu
+          width='275px'
+          styles={OsdComponent.menuStyles()}
+          noOverlay={true}
+          right={false}
+          customBurgerIcon={false}
+          isOpen={this.state.menuOpen}
+          onStateChange={(state) => this.handleStateChange(state)}
+        >
+         {this.filters()}
+        </Menu>
+        <div style={{display: 'flex'}}>
           <div className='xjKiLd'>
-            <button type="button" className="button-transparent" onClick={this.toggleMenu}>
+            <button type="button" className="button-transparent" onClick={this.toggleFiltersMenu}>
               <FiltersIcon />
             </button>
+            <button type="button" className="button-transparent" onClick={this.toggleScrollView}>
+              <ScrollIcon/>
+            </button>
           </div>
-          <div className='openseadragon' id='osd'/>
+          {this.buildSelector()}
         </div>
-      )
-    }
+        <div className='openseadragon' id='osd'/>
+      </div>
+    )
   }
 }
 
