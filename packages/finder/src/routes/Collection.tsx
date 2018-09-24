@@ -61,6 +61,7 @@ class Collection extends React.Component<IRouteProps, {}> {
 
   state: {
     components: [],
+    width: number,
   }
   props: any;
   searchkit: SearchkitManager
@@ -73,6 +74,7 @@ class Collection extends React.Component<IRouteProps, {}> {
     super(props);
     this.state = {
       components: [],
+      width: props.width,
     }
     this.routeProps = props.config
     this.routeKey = props.config.routeConfig.indexName
@@ -97,8 +99,48 @@ class Collection extends React.Component<IRouteProps, {}> {
     items.map((type) => this.addComponent(type))
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     this.dataLayer = (window as any).schemaDataLayer ? (window as any).schemaDataLayer : null
+    if (this.props.width !== prevProps.width) {
+      this.setState({width: this.props.width})
+    }
+  }
+
+  buildFilters(routeConfig) {
+    const {width} = this.state
+    const isMobile = width <= 500
+    if (isMobile) {
+      return null
+    } else {
+      return (
+        <SideBar>
+        <RefinementListFilter
+          containerComponent={<Panel collapsable={true} defaultCollapsed={false}/>}
+          field={routeConfig.refinementListFilterDef1.field}
+          title={routeConfig.refinementListFilterDef1.title}
+          id={routeConfig.refinementListFilterDef1.id}
+          operator='AND'
+          listComponent={ItemList}
+        />
+        <RefinementListFilter
+          containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
+          field={routeConfig.refinementListFilterDef2.field}
+          title={routeConfig.refinementListFilterDef2.title}
+          id={routeConfig.refinementListFilterDef2.id}
+          operator='AND'
+          listComponent={ItemList}
+        />
+        <RefinementListFilter
+          containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
+          field={routeConfig.refinementListFilterDef3.field}
+          title={routeConfig.refinementListFilterDef3.title}
+          id={routeConfig.refinementListFilterDef3.id}
+          operator='AND'
+          listComponent={ItemList}
+        />
+      </SideBar>
+      )
+   }
   }
 
   render() {
@@ -113,96 +155,71 @@ class Collection extends React.Component<IRouteProps, {}> {
           <div id='outer-container'>
             <BMenu/>
             <div id='page-wrap'>
-            <Layout>
-              <TopBar>
-                <div className='my-logo'>
-                  <Link className='my-logo' to={Routes.LANDING}>
-                    <Logo className='JUQOtf'/>
-                    <div className='JUQOtq'>{Domain.LOGO_TEXT}</div>
-                  </Link>
-                </div>
-                <SearchBox
-                  autofocus={true}
-                  searchOnChange={true}
-                  queryFields={routeConfig.queryFields}
-                />
-                <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
-                  <AuthUserProfile/>
-                </div>
-                <ReactTooltip
-                  id='authUserProfile'
-                  offset={{left: 170}}
-                  globalEventOff='click'
-                  border={t}
-                  place='bottom'
-                  type='light'
-                  effect='solid'
-                >
-                  <AuthUserTooltip/>
-                </ReactTooltip>
-              </TopBar>
-              <LayoutBody>
-                <SideBar>
-                  <RefinementListFilter
-                    containerComponent={<Panel collapsable={true} defaultCollapsed={false}/>}
-                    field={routeConfig.refinementListFilterDef1.field}
-                    title={routeConfig.refinementListFilterDef1.title}
-                    id={routeConfig.refinementListFilterDef1.id}
-                    operator='AND'
-                    listComponent={ItemList}
+              <Layout>
+                <TopBar>
+                  <div className='my-logo'>
+                    <Link className='my-logo' to={Routes.LANDING}>
+                      <Logo className='JUQOtf'/>
+                      <div className='JUQOtq'>{Domain.LOGO_TEXT}</div>
+                    </Link>
+                  </div>
+                  <SearchBox
+                    autofocus={true}
+                    searchOnChange={true}
+                    queryFields={routeConfig.queryFields}
                   />
-                  <RefinementListFilter
-                    containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
-                    field={routeConfig.refinementListFilterDef2.field}
-                    title={routeConfig.refinementListFilterDef2.title}
-                    id={routeConfig.refinementListFilterDef2.id}
-                    operator='AND'
-                    listComponent={ItemList}
-                  />
-                  <RefinementListFilter
-                    containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
-                    field={routeConfig.refinementListFilterDef3.field}
-                    title={routeConfig.refinementListFilterDef3.title}
-                    id={routeConfig.refinementListFilterDef3.id}
-                    operator='AND'
-                    listComponent={ItemList}
-                  />
-                </SideBar>
-                <LayoutResults>
-                  <ActionBar>
-                    <ActionBarRow>
-                      <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
-                      <ViewSwitcherToggle/>
-                      <SortingSelector options={routeConfig.sortingSelectorOptions}/>
-                    </ActionBarRow>
-                    <ActionBarRow>
-                      <GroupedSelectedFilters/>
-                      <ResetFilters/>
-                    </ActionBarRow>
-                  </ActionBar>
-                  {routeConfig.hasRangeFilter ?
-                    <div className='ex1'>
-                      <RangeFilter
-                        field={routeConfig.rangeFilter.field}
-                        id={routeConfig.rangeFilter.id}
-                        min={routeConfig.rangeFilter.min}
-                        max={routeConfig.rangeFilter.max}
-                        showHistogram={true}
-                        title='Date Selector'
-                      />
-                    </div> : null
-                  }
-                  <ViewSwitcherHits
-                    hitsPerPage={50}
-                    highlightFields={routeConfig.highlightFields}
-                    hitComponents={Collection.buildHitComponents(gridItem, listItem, routeConfig.listDefault)}
-                    scrollTo='body'
-                  />
-                  <NoHits suggestionsField={routeConfig.suggestionField}/>
-                  <Pagination showNumbers={true}/>
-                </LayoutResults>
-              </LayoutBody>
-            </Layout>
+                  <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
+                    <AuthUserProfile/>
+                  </div>
+                  <ReactTooltip
+                    id='authUserProfile'
+                    offset={{left: 170}}
+                    globalEventOff='click'
+                    border={t}
+                    place='bottom'
+                    type='light'
+                    effect='solid'
+                  >
+                    <AuthUserTooltip/>
+                  </ReactTooltip>
+                </TopBar>
+                <LayoutBody>
+                  {this.buildFilters(routeConfig)}
+                  <LayoutResults>
+                    <ActionBar>
+                      <ActionBarRow>
+                        <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
+                        <ViewSwitcherToggle/>
+                        <SortingSelector options={routeConfig.sortingSelectorOptions}/>
+                      </ActionBarRow>
+                      <ActionBarRow>
+                        <GroupedSelectedFilters/>
+                        <ResetFilters/>
+                      </ActionBarRow>
+                    </ActionBar>
+                    {routeConfig.hasRangeFilter ?
+                      <div className='ex1'>
+                        <RangeFilter
+                          field={routeConfig.rangeFilter.field}
+                          id={routeConfig.rangeFilter.id}
+                          min={routeConfig.rangeFilter.min}
+                          max={routeConfig.rangeFilter.max}
+                          showHistogram={true}
+                          title='Date Selector'
+                        />
+                      </div> : null
+                    }
+                    <ViewSwitcherHits
+                      hitsPerPage={50}
+                      highlightFields={routeConfig.highlightFields}
+                      hitComponents={Collection.buildHitComponents(gridItem, listItem, routeConfig.listDefault)}
+                      scrollTo='body'
+                    />
+                    <NoHits suggestionsField={routeConfig.suggestionField}/>
+                    <Pagination showNumbers={true}/>
+                  </LayoutResults>
+                </LayoutBody>
+              </Layout>
             </div>
           </div>
         </SearchkitProvider>)

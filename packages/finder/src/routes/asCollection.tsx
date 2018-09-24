@@ -25,5 +25,5 @@ export const asCollection = (Component) => {
     }
   }
 
-  return withRouter(Collection);
+  return withRouter(Collection)
 }

@@ -4,21 +4,23 @@ import {Routes} from '../../constants'
 import {Landing, Previewer, SignIn, Viewer} from '../../routes'
 import Account from '../../routes/Account'
 import Collection from '../../routes/Collection'
-import {withAuthentication} from "./withAuthentication"
+import {withAuthentication} from './withAuthentication'
+import {withDynamicLayout} from './withDynamicLayout'
 
 class App extends React.Component<any> {
 
   render() {
     const supportsHistory = 'pushState' in window.history
+    const t = Boolean(true)
     return (
         <BrowserRouter forceRefresh={!supportsHistory}>
             <Switch>
-              <Route exact path={Routes.LANDING} component={Landing}/>
-              <Route exact path={Routes.ACCOUNT} component={Account}/>
-              <Route exact path={Routes.SIGN_IN} component={SignIn}/>
-              <Route exact path='/collection/:id' component={Collection}/>
-              <Route exact path='/view/:uuid' component={Viewer}/>
-              <Route exact path='/preview/:uuid?' component={Previewer}/>
+              <Route exact={t} path={Routes.LANDING} component={withDynamicLayout(Landing)}/>
+              <Route exact={t} path={Routes.ACCOUNT} component={Account}/>
+              <Route exact={t} path={Routes.SIGN_IN} component={SignIn}/>
+              <Route exact={t} path='/collection/:id' component={withDynamicLayout(Collection)}/>
+              <Route exact={t} path='/view/:uuid' component={Viewer}/>
+              <Route exact={t} path='/preview/:uuid?' component={Previewer}/>
             </Switch>
          </BrowserRouter>)
   }

@@ -42,6 +42,7 @@ export class Landing extends React.Component<IRouteProps, {}> {
   routeKey: string
   state: {
     components: [],
+    width: number,
   }
 
   constructor(props) {
@@ -51,6 +52,7 @@ export class Landing extends React.Component<IRouteProps, {}> {
     this.searchkit = new SearchkitManager(host, props.options)
     this.state = {
       components: [],
+      width: props.width,
     }
   }
 
@@ -61,6 +63,9 @@ export class Landing extends React.Component<IRouteProps, {}> {
   componentDidUpdate(prevProps) {
     if (this.props.searchkit !== prevProps.searchkit) {
       this.setState({refreshItem: true})
+    }
+    if (this.props.width !== prevProps.width) {
+      this.setState({width: this.props.width})
     }
   }
 
@@ -77,6 +82,25 @@ export class Landing extends React.Component<IRouteProps, {}> {
     }
   }
 
+  buildFilters() {
+    const { width } = this.state
+    const isMobile = width <= 500
+    if (isMobile) {
+      return null
+    } else {
+      return(
+      <SideBar>
+        <RefinementListFilter
+          id='tag1'
+          title='Collection'
+          field='name.keyword'
+          orderKey='_term'
+          operator='AND'
+        />
+      </SideBar>)
+    }
+  }
+
   render() {
     const {routeConfig} = this.props
     const t = Boolean(true)
@@ -85,66 +109,58 @@ export class Landing extends React.Component<IRouteProps, {}> {
            <div id='outer-container'>
              <BMenu/>
              <div id='page-wrap'>
-           <Layout>
-             <TopBar>
-               <div className='my-logo'>
-                 <Link className='my-logo' to={Routes.LANDING}>
-                   <Logo className='JUQOtf'/>
-                   <span className='JUQOtq'>{Domain.LOGO_TEXT}</span>
-                 </Link>
-               </div>
-               <SearchBox
-                 autofocus={true}
-                 searchOnChange={true}
-                 queryFields={routeConfig.queryFields}
-               />
-               <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
-                 <AuthUserProfile/>
-               </div>
-               <ReactTooltip
-                 id='authUserProfile'
-                 offset={{left: 170}}
-                 globalEventOff='click'
-                 border={t}
-                 place='bottom'
-                 type='light'
-                 effect='solid'
-               >
-                 <AuthUserTooltip/>
-               </ReactTooltip>
-             </TopBar>
-             <LayoutBody>
-               <SideBar>
-                 <RefinementListFilter
-                   id='tag1'
-                   title='Collection'
-                   field='name.keyword'
-                   orderKey='_term'
-                   operator='AND'
-                 />
-               </SideBar>
-               <LayoutResults>
-                 <ActionBar>
-                   <ActionBarRow>
-                     <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
-                     <SortingSelector options={routeConfig.sortingSelectorOptions}/>
-                   </ActionBarRow>
-                   <ActionBarRow>
-                     <GroupedSelectedFilters/>
-                     <ResetFilters/>
-                   </ActionBarRow>
-                 </ActionBar>
-                 <Hits
-                   hitsPerPage={50}
-                   highlightFields={["title"]}
-                   mod="sk-hits-list"
-                   itemComponent={CollectionsListItem}
-                 />
-                 <NoHits suggestionsField={'name'}/>
-                 <Pagination showNumbers={true}/>
-               </LayoutResults>
-             </LayoutBody>
-           </Layout>
+               <Layout>
+                 <TopBar>
+                   <div className='my-logo'>
+                     <Link className='my-logo' to={Routes.LANDING}>
+                       <Logo className='JUQOtf'/>
+                       <span className='JUQOtq'>{Domain.LOGO_TEXT}</span>
+                     </Link>
+                   </div>
+                   <SearchBox
+                     autofocus={true}
+                     searchOnChange={true}
+                     queryFields={routeConfig.queryFields}
+                   />
+                   <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
+                     <AuthUserProfile/>
+                   </div>
+                   <ReactTooltip
+                     id='authUserProfile'
+                     offset={{left: 170}}
+                     globalEventOff='click'
+                     border={t}
+                     place='bottom'
+                     type='light'
+                     effect='solid'
+                   >
+                     <AuthUserTooltip/>
+                   </ReactTooltip>
+                 </TopBar>
+                 <LayoutBody>
+                   {this.buildFilters()}
+                   <LayoutResults>
+                     <ActionBar>
+                       <ActionBarRow>
+                         <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
+                         <SortingSelector options={routeConfig.sortingSelectorOptions}/>
+                       </ActionBarRow>
+                       <ActionBarRow>
+                         <GroupedSelectedFilters/>
+                         <ResetFilters/>
+                       </ActionBarRow>
+                     </ActionBar>
+                     <Hits
+                       hitsPerPage={50}
+                       highlightFields={["title"]}
+                       mod="sk-hits-list"
+                       itemComponent={CollectionsListItem}
+                     />
+                     <NoHits suggestionsField={'name'}/>
+                     <Pagination showNumbers={true}/>
+                   </LayoutResults>
+                 </LayoutBody>
+               </Layout>
              </div>
            </div>
          </SearchkitProvider>
