@@ -1,4 +1,5 @@
 import * as React from "react";
+import {resolveCreator} from "../items";
 import {Thumbnail, Title} from "./index";
 
 export interface IGridItemDisplayProps {
@@ -17,7 +18,7 @@ export class GridItemDisplay extends React.Component<IGridItemDisplayProps, any>
     return (
       <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
         <Thumbnail
-          imageWidth={140}
+          imageWidth={170}
           imageSource={thumbnail}
           imageLink={imageLink}
           className={bemBlocks.item('poster')}
@@ -27,6 +28,7 @@ export class GridItemDisplay extends React.Component<IGridItemDisplayProps, any>
           className={bemBlocks.item('title')}
           titleString={titleString}
         />
+        <div className={bemBlocks.item('author')} dangerouslySetInnerHTML={resolveCreator(schema)}/>
       </div>
     )
   }

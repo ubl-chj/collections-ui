@@ -98,6 +98,14 @@ export function resolveName(schema) {
   }
 }
 
+export function resolveCreator(schema) {
+  if (schema.mainEntity.creator) {
+    return {__html: schema.mainEntity.creator}
+  } else {
+    return null
+  }
+}
+
 export function resolveManifestId(source) {
   if (source.manifest) {
     let manifest;

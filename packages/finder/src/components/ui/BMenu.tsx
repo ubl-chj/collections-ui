@@ -9,45 +9,45 @@ export class BMenu extends React.Component<any, any> {
     return {
       bmBurgerBars: {
         background: 'white',
-        height: '10%',
+        height: '15%',
       },
       bmBurgerButton: {
-        height: '18px',
-        position: 'fixed',
-        width: '24px',
+        height: '13px',
         left: '24px',
+        position: 'fixed',
         top: '24px',
+        width: '18px',
+      },
+      bmCross: {
+        background: '#000',
       },
       bmCrossButton: {
         height: '24px',
         width: '24px',
       },
-      bmCross: {
-        background: '#000',
-      },
-      bmMenu: {
-        position: 'absolute',
-        left: '0',
-        bottom: '0',
-        top: '0',
-        backgroundColor: '#efefef',
-        borderRight: '1px solid lightgray',
-        boxSizing: 'border-box',
-        padding: '2px',
-        opacity: '1',
-        width: '100%',
-        transform: 'translateX(0)',
-        wordWrap: 'break-word',
-      },
-      bmMorphShape: {
-        fill: '#373a47',
+      bmItem: {
+        display: 'inline-block',
       },
       bmItemList: {
         color: '#b8b7ad',
         padding: '0.8em',
       },
-      bmItem: {
-        display: 'inline-block',
+      bmMenu: {
+        backgroundColor: '#efefef',
+        borderRight: '1px solid lightgray',
+        bottom: '0',
+        boxSizing: 'border-box',
+        left: '0',
+        opacity: '1',
+        padding: '2px',
+        position: 'absolute',
+        top: '0',
+        transform: 'translateX(0)',
+        width: '100%',
+        wordWrap: 'break-word',
+      },
+      bmMorphShape: {
+        fill: '#373a47',
       },
     }
   }

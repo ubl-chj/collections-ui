@@ -241,9 +241,17 @@
 }
 
 .schema-list {
+  flex-flow: row wrap;
+  background: #FFF;
+  flex: auto;
+  min-width: 400px;
+  box-shadow: 0 1px 3px 0 #666;
+}
+
+.schema-list-flex {
   display: flex;
   flex-flow: row wrap;
-  background: #f8f9fa;
+  background: #FFF;
   flex: auto;
   min-width: 400px;
   box-shadow: 0 1px 3px 0 #666;

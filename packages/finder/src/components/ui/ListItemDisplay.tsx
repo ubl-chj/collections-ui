@@ -46,7 +46,7 @@ export class ListItemDisplay extends React.Component<IListItemDisplayProps, any>
     return (
       <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
         <Thumbnail
-          imageWidth={140}
+          imageWidth={170}
           imageSource={thumbnail}
           imageLink={imageLink}
           className={bemBlocks.item('poster')}

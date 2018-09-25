@@ -112,7 +112,6 @@
     "Author(s) of the Record",
     "Collection"
   ],
-  "suggestionField": "Title",
-  "listDefault": true
+  "suggestionField": "Title"
 }
 

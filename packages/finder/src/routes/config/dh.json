@@ -51,7 +51,6 @@
     "attribution",
     "description",
     "title"  ],
-  "suggestionField": "title",
-  "listDefault": true
+  "suggestionField": "title"
 }
 

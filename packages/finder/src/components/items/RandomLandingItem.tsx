@@ -40,7 +40,7 @@ export class RandomLandingItem extends React.Component<ItemProps, any> {
     if (thumbnail) {
       return (
         <ResultContext.Provider value={result}>
-          <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
+          <div className={bemBlocks.item().mix(bemBlocks.container('landing'))} data-qa='hit'>
               <Thumbnail
                 imageSource={thumbnail}
                 imageLink={imageLink}

@@ -90,7 +90,6 @@
     "titles",
     "types"
   ],
-  "suggestionField": "title",
-  "listDefault": true
+  "suggestionField": "title"
 }
 

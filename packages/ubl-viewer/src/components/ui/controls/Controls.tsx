@@ -184,7 +184,7 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
       return (
         <div className="manifest-info">
           <Menu
-            width='400px'
+            width='380px'
             styles={Controls.menuStyles()}
             noOverlay={true}
             right={true}

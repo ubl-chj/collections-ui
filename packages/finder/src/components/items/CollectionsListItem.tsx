@@ -99,9 +99,9 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
     const totalDocsKey = 'Total Documents'
     return (
       <ResultContext.Provider value={result}>
-        <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
+        <div className={bemBlocks.item().mix(bemBlocks.container('landing'))} data-qa='hit'>
           <div className={bemBlocks.item('details')}>
-            <div className='schema-list'>
+            <div className='schema-list-flex'>
               <div className='collection-list__left'>
                 <span className='schema-list-key'><b>Collection:</b></span>
               </div>
