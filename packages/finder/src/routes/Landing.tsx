@@ -82,6 +82,21 @@ export class Landing extends React.Component<IRouteProps, {}> {
     }
   }
 
+  buildSearchBox(routeConfig) {
+    const {width} = this.state
+    const isMobile = width <= 500
+    if (isMobile) {
+      return null
+    } else {
+      return(
+      <SearchBox
+        autofocus={true}
+        searchOnChange={true}
+        queryFields={routeConfig.queryFields}
+      />)
+    }
+  }
+
   buildFilters() {
     const { width } = this.state
     const isMobile = width <= 500
@@ -117,11 +132,7 @@ export class Landing extends React.Component<IRouteProps, {}> {
                        <span className='JUQOtq'>{Domain.LOGO_TEXT}</span>
                      </Link>
                    </div>
-                   <SearchBox
-                     autofocus={true}
-                     searchOnChange={true}
-                     queryFields={routeConfig.queryFields}
-                   />
+                   {this.buildSearchBox(routeConfig)}
                    <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
                      <AuthUserProfile/>
                    </div>

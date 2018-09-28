@@ -97,6 +97,7 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
     const updated = new Date(source.dateUpdated).toDateString();
     const updatedKey = 'Last Updated'
     const totalDocsKey = 'Total Documents'
+    const logo = '<img width=170 src=' + source.logo + '>'
     return (
       <ResultContext.Provider value={result}>
         <div className={bemBlocks.item().mix(bemBlocks.container('landing'))} data-qa='hit'>
@@ -104,6 +105,7 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
             <div className='schema-list-flex'>
               <div className='collection-list__left'>
                 <span className='schema-list-key'><b>Collection:</b></span>
+                <div dangerouslySetInnerHTML={{__html: logo}}/>
               </div>
               <div className='schema-list-value'><Link to={source.route}>{source.name}</Link>
               </div>
@@ -112,6 +114,9 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
               </div>
             </div>
             <div className='schema-list'>
+              <div className='collection-list__left'>
+                <span className='schema-list-key'><b>Random Item:</b></span>
+              </div>
               {this.renderRandomItem()}
             </div>
             <ListCollectionEntry label={updatedKey} value={updated}/>

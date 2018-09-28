@@ -30,6 +30,8 @@ import {Domain, Routes} from '../constants'
 import '../styles/index.css'
 import {asCollection} from './asCollection'
 import {IRouteProps} from './IRouteProps'
+import StandardListItem from "../components/items/StandardListItem";
+import StandardGridItem from "../components/items/StandardGridItem";
 
 const ReactTooltip = require('react-tooltip')
 
@@ -60,10 +62,9 @@ class Collection extends React.Component<IRouteProps, {}> {
   }
 
   state: {
-    components: [],
+    components: [any, any],
     width: number,
   }
-  props: any;
   searchkit: SearchkitManager
   cachedHits: any
   routeKey: string
@@ -73,7 +74,7 @@ class Collection extends React.Component<IRouteProps, {}> {
   constructor(props) {
     super(props);
     this.state = {
-      components: [],
+      components: [StandardGridItem, StandardListItem],
       width: props.width,
     }
     this.routeProps = props.config
@@ -103,6 +104,21 @@ class Collection extends React.Component<IRouteProps, {}> {
     this.dataLayer = (window as any).schemaDataLayer ? (window as any).schemaDataLayer : null
     if (this.props.width !== prevProps.width) {
       this.setState({width: this.props.width})
+    }
+  }
+
+  buildSearchBox(routeConfig) {
+    const {width} = this.state
+    const isMobile = width <= 500
+    if (isMobile) {
+      return null
+    } else {
+      return(
+        <SearchBox
+          autofocus={true}
+          searchOnChange={true}
+          queryFields={routeConfig.queryFields}
+        />)
     }
   }
 
@@ -163,11 +179,7 @@ class Collection extends React.Component<IRouteProps, {}> {
                       <div className='JUQOtq'>{Domain.LOGO_TEXT}</div>
                     </Link>
                   </div>
-                  <SearchBox
-                    autofocus={true}
-                    searchOnChange={true}
-                    queryFields={routeConfig.queryFields}
-                  />
+                  {this.buildSearchBox(routeConfig)}
                   <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
                     <AuthUserProfile/>
                   </div>

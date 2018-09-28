@@ -31,4 +31,5 @@ export interface IRouteProps {
   },
   searchkit: any,
   width: number,
+  items: any
 }
