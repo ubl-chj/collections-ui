@@ -2,11 +2,10 @@ import {UUIDResolver} from "manifest-uuid/";
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Controls, Layout, LayoutBody, OsdComponent, TopBar, ViewerManager, ViewerProvider} from 'ubl-viewer'
-import {AuthUserProfile, AuthUserTooltip, BackArrow, BMenu, Logo} from '../components/ui'
-import {Domain, Routes} from '../constants'
-import {firebase} from '../firebase';
-import '../styles/index.css'
-import {SearchkitProvider} from 'searchkit-fork';
+import {Domain, Routes} from '../../constants'
+import {firebase} from '../../firebase';
+import '../../styles/index.css'
+import {AuthUserProfile, AuthUserTooltip, BackArrow, Logo} from '../ui'
 
 const ReactTooltip = require('react-tooltip')
 const qs = require('query-string')

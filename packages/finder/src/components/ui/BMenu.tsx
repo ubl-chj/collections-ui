@@ -77,12 +77,15 @@ export class BMenu extends React.Component<any, any> {
             <ListGroupItem
               tag="a"
               href="/api"
-              action>API
+              action={true}
+            >API
               <span className='soon'>soon...</span>
             </ListGroupItem>
-            <ListGroupItem tag="a"
+            <ListGroupItem
+              tag="a"
               href="https://github.com/ubl-chj/collections-ui"
-              action>
+              action={true}
+            >
               <div className='title-flex'>
                 <div className='JUQOtt'>
                   <Octicon/>
@@ -93,13 +96,15 @@ export class BMenu extends React.Component<any, any> {
             <ListGroupItem
               tag="a"
               href="/contact"
-              action>Contact
+              action={true}
+            >Contact
               <span className='soon'>soon...</span>
             </ListGroupItem>
             <ListGroupItem
               tag="a"
               href="/docs"
-              action>Documentation
+              action={true}
+            >Documentation
               <span className='soon'>soon...</span>
             </ListGroupItem>
           </ListGroup>

@@ -394,3 +394,43 @@
   transition: all 0.3s ease-in-out;
   font-style: italic;
 }
+
+.sbico-c {
+  background: transparent;
+  border: 0;
+  float: right;
+  height: 44px;
+  line-height: 44px;
+  margin-top: -1px;
+  outline: 0;
+  position: relative;
+  top: -1px;
+}
+
+.sbico-d {
+  background: transparent;
+  border: 0;
+  float: right;
+  height: 46px;
+  margin-top: 0;
+  outline: 0;
+  position: absolute;
+  top: 6px;
+}
+
+.z1asCe {
+  display: inline-block;
+  fill: white;
+  height: 24px;
+  line-height: 24px;
+  position: relative;
+  width: 24px;
+}
+
+.sk-action-bar {
+  .sk-panel {
+    &__header {
+      display: inline-block;
+    }
+  }
+}

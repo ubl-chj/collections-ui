@@ -12,10 +12,10 @@ import {
   ViewerManager,
   ViewerProvider,
 } from 'ubl-viewer'
-import {AuthUserProfile, AuthUserTooltip, BackArrow, BMenu, Logo} from '../components/ui'
-import {Domain, Routes} from '../constants'
-import {firebase} from '../firebase'
-import '../styles/index.css'
+import {Domain, Routes} from '../../constants'
+import {firebase} from '../../firebase'
+import '../../styles/index.css'
+import {AuthUserProfile, AuthUserTooltip, BackArrow, Logo} from '../ui'
 
 const ReactTooltip = require('react-tooltip')
 const uuidv4 = require('uuid/v4')

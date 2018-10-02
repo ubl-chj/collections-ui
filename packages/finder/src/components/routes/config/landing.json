@@ -9,7 +9,7 @@
   "listItem": "CollectionsListItem",
   "gridItem": "CollectionsGridItem",
   "refinementListFilterDef1": {
-    "field": "name",
+    "field": "name.keyword",
     "title": "Collection",
     "id": "name"
   },

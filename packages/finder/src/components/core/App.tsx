@@ -1,9 +1,9 @@
 import * as React from "react";
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import {Routes} from '../../constants'
-import {Landing, Previewer, SignIn, Viewer} from '../../routes'
-import Account from '../../routes/Account'
-import Collection from '../../routes/Collection'
+import {Landing, Previewer, SignIn, Viewer} from '../routes'
+import Account from '../routes/Account'
+import Collection from '../routes/Collection'
 import {withAuthentication} from './withAuthentication'
 import {withDynamicLayout} from './withDynamicLayout'
 

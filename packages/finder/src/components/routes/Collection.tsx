@@ -23,19 +23,17 @@ import {
   SortingSelector,
   TopBar,
   ViewSwitcherHits,
-  ViewSwitcherToggle,
 } from 'searchkit-fork'
-import {AuthUserProfile, AuthUserTooltip, BMenu, Logo} from '../components/ui'
-import {Domain, Routes} from '../constants'
-import '../styles/index.css'
+import {Domain, Routes} from '../../constants'
+import '../../styles/index.css'
+import {StandardGridItem, StandardListItem} from '../items';
+import {AuthUserProfile, AuthUserTooltip, BMenu, CloseButton, FilterMenu, Logo, SearchIcon} from '../ui'
 import {asCollection} from './asCollection'
 import {IRouteProps} from './IRouteProps'
-import StandardListItem from "../components/items/StandardListItem";
-import StandardGridItem from "../components/items/StandardGridItem";
 
 const ReactTooltip = require('react-tooltip')
 
-class Collection extends React.Component<IRouteProps, {}> {
+class Collection extends React.Component<IRouteProps, any> {
 
   static defaultProps = {
     options: {
@@ -63,6 +61,8 @@ class Collection extends React.Component<IRouteProps, {}> {
 
   state: {
     components: [any, any],
+    filterMenuVisible: boolean,
+    searchBoxVisible: boolean,
     width: number,
   }
   searchkit: SearchkitManager
@@ -75,6 +75,8 @@ class Collection extends React.Component<IRouteProps, {}> {
     super(props);
     this.state = {
       components: [StandardGridItem, StandardListItem],
+      filterMenuVisible: false,
+      searchBoxVisible: false,
       width: props.width,
     }
     this.routeProps = props.config
@@ -84,7 +86,7 @@ class Collection extends React.Component<IRouteProps, {}> {
   }
 
   addComponent = async (type) => {
-    import(`../components/items/${type}`)
+    import(`../items/${type}`)
       .then((component) =>
         this.setState({
           components: this.state.components.concat(component.default),
@@ -107,11 +109,44 @@ class Collection extends React.Component<IRouteProps, {}> {
     }
   }
 
-  buildSearchBox(routeConfig) {
+  toggleSearchBox = () => {
+    this.setState((prevState) => {
+      return {searchBoxVisible: !prevState.searchBoxVisible};
+    })
+  }
+
+  buildSearchBox() {
+    const {routeConfig} = this.routeProps
     const {width} = this.state
     const isMobile = width <= 500
     if (isMobile) {
-      return null
+      if (this.state.searchBoxVisible) {
+        return (
+          <TopBar>
+            <SearchBox
+              autofocus={true}
+              searchOnChange={true}
+              queryFields={routeConfig.queryFields}
+            />
+            <div className='JUQOtc'>
+              <button className='sbico-d' type="button" onClick={this.toggleSearchBox}>
+                <span className='z1asCe'>
+                  <CloseButton/>
+                </span>
+              </button>
+            </div>
+          </TopBar>
+        )
+      }
+      return (
+        <div className='JUQOtc'>
+          <button className='sbico-c' type="button" onClick={this.toggleSearchBox}>
+              <span className='z1asCe'>
+                <SearchIcon/>
+              </span>
+          </button>
+        </div>
+      )
     } else {
       return(
         <SearchBox
@@ -122,7 +157,21 @@ class Collection extends React.Component<IRouteProps, {}> {
     }
   }
 
-  buildFilters(routeConfig) {
+  buildAuthProfile() {
+    const {width} = this.state
+    const isMobile = width <= 500
+    if (isMobile) {
+      return null
+    } else {
+      return(
+        <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
+          <AuthUserProfile/>
+        </div>)
+    }
+  }
+
+  buildSideBar() {
+    const {routeConfig} = this.routeProps
     const {width} = this.state
     const isMobile = width <= 500
     if (isMobile) {
@@ -130,33 +179,81 @@ class Collection extends React.Component<IRouteProps, {}> {
     } else {
       return (
         <SideBar>
-        <RefinementListFilter
-          containerComponent={<Panel collapsable={true} defaultCollapsed={false}/>}
-          field={routeConfig.refinementListFilterDef1.field}
-          title={routeConfig.refinementListFilterDef1.title}
-          id={routeConfig.refinementListFilterDef1.id}
-          operator='AND'
-          listComponent={ItemList}
-        />
-        <RefinementListFilter
-          containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
-          field={routeConfig.refinementListFilterDef2.field}
-          title={routeConfig.refinementListFilterDef2.title}
-          id={routeConfig.refinementListFilterDef2.id}
-          operator='AND'
-          listComponent={ItemList}
-        />
-        <RefinementListFilter
-          containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
-          field={routeConfig.refinementListFilterDef3.field}
-          title={routeConfig.refinementListFilterDef3.title}
-          id={routeConfig.refinementListFilterDef3.id}
-          operator='AND'
-          listComponent={ItemList}
-        />
-      </SideBar>
+          <RefinementListFilter
+            containerComponent={<Panel collapsable={true} defaultCollapsed={false}/>}
+            field={routeConfig.refinementListFilterDef1.field}
+            title={routeConfig.refinementListFilterDef1.title}
+            id={routeConfig.refinementListFilterDef1.id}
+            operator='AND'
+            listComponent={ItemList}
+          />
+          <RefinementListFilter
+            containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
+            field={routeConfig.refinementListFilterDef2.field}
+            title={routeConfig.refinementListFilterDef2.title}
+            id={routeConfig.refinementListFilterDef2.id}
+            operator='AND'
+            listComponent={ItemList}
+          />
+          <RefinementListFilter
+            containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
+            field={routeConfig.refinementListFilterDef3.field}
+            title={routeConfig.refinementListFilterDef3.title}
+            id={routeConfig.refinementListFilterDef3.id}
+            operator='AND'
+            listComponent={ItemList}
+          />
+        </SideBar>
       )
    }
+  }
+
+  toggleFilterMenu = () => {
+    this.setState((prevState) => {
+      return {filterMenuVisible: !prevState.filterMenuVisible};
+    })
+  }
+
+  buildActionBar() {
+    const {routeConfig} = this.routeProps
+    const {width, filterMenuVisible} = this.state
+    const isMobile = width <= 500
+    if (isMobile) {
+      return (
+        <ActionBar>
+          <ActionBarRow>
+            <FilterMenu
+              routeConfig={routeConfig}
+              filterMenuVisible={filterMenuVisible}
+            />
+            <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
+            <SortingSelector options={routeConfig.sortingSelectorOptions}/>
+          </ActionBarRow>
+          <ActionBarRow>
+            <button type="button" className="btn btn-primary-outline btn-xs" onClick={this.toggleFilterMenu}>
+              Filter »
+            </button>
+          </ActionBarRow>
+          <ActionBarRow>
+            <GroupedSelectedFilters/>
+            <ResetFilters/>
+          </ActionBarRow>
+        </ActionBar>
+      )
+    } else {
+      return (
+        <ActionBar>
+          <ActionBarRow>
+            <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
+            <SortingSelector options={routeConfig.sortingSelectorOptions}/>
+          </ActionBarRow>
+          <ActionBarRow>
+            <GroupedSelectedFilters/>
+            <ResetFilters/>
+          </ActionBarRow>
+        </ActionBar>
+      )
+    }
   }
 
   render() {
@@ -179,10 +276,8 @@ class Collection extends React.Component<IRouteProps, {}> {
                       <div className='JUQOtq'>{Domain.LOGO_TEXT}</div>
                     </Link>
                   </div>
-                  {this.buildSearchBox(routeConfig)}
-                  <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
-                    <AuthUserProfile/>
-                  </div>
+                  {this.buildSearchBox()}
+                  {this.buildAuthProfile()}
                   <ReactTooltip
                     id='authUserProfile'
                     offset={{left: 170}}
@@ -196,19 +291,9 @@ class Collection extends React.Component<IRouteProps, {}> {
                   </ReactTooltip>
                 </TopBar>
                 <LayoutBody>
-                  {this.buildFilters(routeConfig)}
+                  {this.buildSideBar()}
                   <LayoutResults>
-                    <ActionBar>
-                      <ActionBarRow>
-                        <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
-                        <ViewSwitcherToggle/>
-                        <SortingSelector options={routeConfig.sortingSelectorOptions}/>
-                      </ActionBarRow>
-                      <ActionBarRow>
-                        <GroupedSelectedFilters/>
-                        <ResetFilters/>
-                      </ActionBarRow>
-                    </ActionBar>
+                    {this.buildActionBar()}
                     {routeConfig.hasRangeFilter ?
                       <div className='ex1'>
                         <RangeFilter

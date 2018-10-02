@@ -20,15 +20,15 @@ import {
   SortingSelector,
   TopBar,
 } from 'searchkit-fork'
-import {CollectionsListItem} from '../components/items'
-import {AuthUserProfile, AuthUserTooltip, BMenu, Logo} from '../components/ui'
-import {Domain, Routes} from '../constants'
-import '../styles/index.css'
+import {Domain, Routes} from '../../constants'
+import '../../styles/index.css'
+import {CollectionsListItem} from '../items'
+import {AuthUserProfile, AuthUserTooltip, BMenu, CloseButton, FilterMenu, Logo, SearchIcon} from '../ui'
 import {IRouteProps} from './IRouteProps'
 
 const ReactTooltip = require('react-tooltip')
 
-export class Landing extends React.Component<IRouteProps, {}> {
+export class Landing extends React.Component<IRouteProps, any> {
 
   static defaultProps = {
     host: process.env.REACT_APP_ELASTICSEARCH_HOST,
@@ -42,6 +42,8 @@ export class Landing extends React.Component<IRouteProps, {}> {
   routeKey: string
   state: {
     components: [],
+    filterMenuVisible: boolean,
+    searchBoxVisible: boolean,
     width: number,
   }
 
@@ -52,6 +54,8 @@ export class Landing extends React.Component<IRouteProps, {}> {
     this.searchkit = new SearchkitManager(host, props.options)
     this.state = {
       components: [],
+      filterMenuVisible: false,
+      searchBoxVisible: false,
       width: props.width,
     }
   }
@@ -82,11 +86,44 @@ export class Landing extends React.Component<IRouteProps, {}> {
     }
   }
 
-  buildSearchBox(routeConfig) {
+  toggleSearchBox = () => {
+    this.setState((prevState) => {
+      return {searchBoxVisible: !prevState.searchBoxVisible};
+    })
+  }
+
+  buildSearchBox() {
+    const {routeConfig} = this.props
     const {width} = this.state
     const isMobile = width <= 500
     if (isMobile) {
-      return null
+      if (this.state.searchBoxVisible) {
+        return (
+          <TopBar>
+            <SearchBox
+              autofocus={true}
+              searchOnChange={true}
+              queryFields={routeConfig.queryFields}
+            />
+            <div className='JUQOtc'>
+              <button className='sbico-d' type="button" onClick={this.toggleSearchBox}>
+                <span className='z1asCe'>
+                  <CloseButton/>
+                </span>
+              </button>
+            </div>
+          </TopBar>
+        )
+      }
+      return (
+          <div className='JUQOtc'>
+            <button className='sbico-c' type="button" onClick={this.toggleSearchBox}>
+              <span className='z1asCe'>
+                <SearchIcon/>
+              </span>
+            </button>
+          </div>
+      )
     } else {
       return(
       <SearchBox
@@ -97,7 +134,20 @@ export class Landing extends React.Component<IRouteProps, {}> {
     }
   }
 
-  buildFilters() {
+  buildAuthProfile() {
+    const {width} = this.state
+    const isMobile = width <= 500
+    if (isMobile) {
+      return null
+    } else {
+      return(
+        <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
+          <AuthUserProfile/>
+        </div>)
+    }
+  }
+
+  buildSideBar() {
     const { width } = this.state
     const isMobile = width <= 500
     if (isMobile) {
@@ -116,8 +166,55 @@ export class Landing extends React.Component<IRouteProps, {}> {
     }
   }
 
-  render() {
+  toggleFilterMenu = () => {
+    this.setState((prevState) => {
+      return {filterMenuVisible: !prevState.filterMenuVisible};
+    })
+  }
+
+  buildActionBar() {
     const {routeConfig} = this.props
+    const {width, filterMenuVisible} = this.state
+    const isMobile = width <= 500
+    if (isMobile) {
+      return (
+        <ActionBar>
+          <ActionBarRow>
+            <FilterMenu
+              routeConfig={routeConfig}
+              filterMenuVisible={filterMenuVisible}
+            />
+            <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
+            <SortingSelector options={routeConfig.sortingSelectorOptions}/>
+          </ActionBarRow>
+          <ActionBarRow>
+          <button type="button" className="btn btn-primary-outline btn-xs" onClick={this.toggleFilterMenu}>
+            Filter »
+          </button>
+          </ActionBarRow>
+          <ActionBarRow>
+            <GroupedSelectedFilters/>
+            <ResetFilters/>
+          </ActionBarRow>
+        </ActionBar>
+      )
+    } else {
+      return (
+        <ActionBar>
+          <ActionBarRow>
+            <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
+            <SortingSelector options={routeConfig.sortingSelectorOptions}/>
+          </ActionBarRow>
+          <ActionBarRow>
+            <GroupedSelectedFilters/>
+            <ResetFilters/>
+          </ActionBarRow>
+        </ActionBar>
+      )
+    }
+  }
+
+  render() {
     const t = Boolean(true)
     return (
          <SearchkitProvider searchkit={this.searchkit}>
@@ -132,10 +229,8 @@ export class Landing extends React.Component<IRouteProps, {}> {
                        <span className='JUQOtq'>{Domain.LOGO_TEXT}</span>
                      </Link>
                    </div>
-                   {this.buildSearchBox(routeConfig)}
-                   <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
-                     <AuthUserProfile/>
-                   </div>
+                   {this.buildSearchBox()}
+                   {this.buildAuthProfile()}
                    <ReactTooltip
                      id='authUserProfile'
                      offset={{left: 170}}
@@ -149,18 +244,9 @@ export class Landing extends React.Component<IRouteProps, {}> {
                    </ReactTooltip>
                  </TopBar>
                  <LayoutBody>
-                   {this.buildFilters()}
+                   {this.buildSideBar()}
                    <LayoutResults>
-                     <ActionBar>
-                       <ActionBarRow>
-                         <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
-                         <SortingSelector options={routeConfig.sortingSelectorOptions}/>
-                       </ActionBarRow>
-                       <ActionBarRow>
-                         <GroupedSelectedFilters/>
-                         <ResetFilters/>
-                       </ActionBarRow>
-                     </ActionBar>
+                     {this.buildActionBar()}
                      <Hits
                        hitsPerPage={50}
                        highlightFields={["title"]}

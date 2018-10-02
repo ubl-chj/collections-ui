@@ -17,7 +17,7 @@
   overflow: hidden;
   width: 166px;
   height: 178px;
-  border: solid 0px #ECEDF0;
+  border: solid 0 #ECEDF0;
 }
 
 .osd {
@@ -45,7 +45,6 @@
   z-index: 1;
   width: 30px;
   height: 30px;
-  font-height: 30px;
   background: rgba(0, 0, 0, 0.6);
   color: #fff;
   margin-right: 1px;
@@ -108,7 +107,7 @@
   margin-top: 1px;
 }
 .osd-sidebar .nav-tabs > li {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 .osd-sidebar .nav-tabs > li.active {
   margin-bottom: -1px;
@@ -178,51 +177,6 @@
   url('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/fonts/glyphicons-halflings-regular.woff') format('woff'),
   url('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/fonts/glyphicons-halflings-regular.ttf') format('truetype'),
   url('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
-}
-.glyphicon {
-  position: relative;
-  top: 1px;
-  display: inline-block;
-  font: normal normal 16px/1 'Glyphicons Halflings';
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  margin-right: 4px;
-}
-
-.glyphicon-zoom-in:before {
-  content:"\e015";
-}
-
-.glyphicon-zoom-out:before {
-  content:"\e016";
-}
-
-.glyphicon-home:before {
-  content:"\e021";
-}
-
-.glyphicon-resize-full:before {
-  content:"\e096";
-}
-
-.glyphicon-search:before {
-  content:"\e003";;
-}
-
-.glyphicon-chevron-left:before {
-  content:"\e079";
-}
-
-.glyphicon-chevron-right:before {
-  content: "\e080";
-}
-
-.glyphicon-menu-hamburger:before {
-  content: "\e236";
-}
-
-.glyphicon-info-sign:before {
-  content:"\e086";
 }
 
 #overlay-rotation-bounding-box {

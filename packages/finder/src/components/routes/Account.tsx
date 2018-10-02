@@ -1,9 +1,9 @@
 import * as React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Layout, LayoutBody, LayoutResults, SearchBox, SearchkitManager, SearchkitProvider, SideBar, TopBar} from 'searchkit-fork'
-import {AuthUserContext, withAuthorization} from '../components/core'
-import {AuthUserProfile, AuthUserTooltip, BMenu, FavoritesList, Logo} from '../components/ui'
-import {Domain, Routes} from '../constants';
+import {Domain, Routes} from '../../constants';
+import {AuthUserContext, withAuthorization} from '../core'
+import {AuthUserProfile, AuthUserTooltip, BMenu, FavoritesList, Logo} from '../ui'
 
 const firebase = require("firebase/app");
 const ReactTooltip = require('react-tooltip')

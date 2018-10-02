@@ -130,17 +130,36 @@ body {
   background: #eeeeee;
 }
 
-.sk-hits-grid-hit {
-  padding: 10px;
-  max-width: 250px;
-  flex-flow: column nowrap;
-  align-content: center;
-  align-items: normal;
-  flex: 190px 0;
-  background-color: #FFF;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  border-radius: 2px;
-  margin: 5px;
+@media (max-width: 500px) {
+  .sk-hits-grid {
+    background: #eeeeee;
+    display: inline-block;
+  }
+
+  .sk-hits-grid-hit {
+    padding: 10px;
+    max-width: 250px;
+    align-content: center;
+    align-items: normal;
+    background-color: #FFF;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 2px;
+    margin: 5px;
+  }
+}
+@media (min-width: 500px) {
+  .sk-hits-grid-hit {
+    padding: 10px;
+    max-width: 250px;
+    flex-flow: column nowrap;
+    align-content: center;
+    align-items: normal;
+    flex: 190px 0;
+    background-color: #FFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    margin: 5px;
+  }
 }
 
 .sk-top-bar__content {
