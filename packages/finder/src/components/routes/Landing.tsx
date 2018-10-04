@@ -174,24 +174,18 @@ export class Landing extends React.Component<IRouteProps, any> {
 
   buildActionBar() {
     const {routeConfig} = this.props
-    const {width, filterMenuVisible} = this.state
+    const {width} = this.state
     const isMobile = width <= 500
     if (isMobile) {
       return (
         <ActionBar>
           <ActionBarRow>
-            <FilterMenu
-              routeConfig={routeConfig}
-              filterMenuVisible={filterMenuVisible}
-            />
             <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
             <SortingSelector options={routeConfig.sortingSelectorOptions}/>
           </ActionBarRow>
-          <ActionBarRow>
-          <button type="button" className="btn btn-primary-outline btn-xs" onClick={this.toggleFilterMenu}>
-            Filter »
-          </button>
-          </ActionBarRow>
+          <FilterMenu
+            routeConfig={routeConfig}
+          />
           <ActionBarRow>
             <GroupedSelectedFilters/>
             <ResetFilters/>

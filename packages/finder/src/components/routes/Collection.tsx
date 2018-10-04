@@ -23,6 +23,7 @@ import {
   SortingSelector,
   TopBar,
   ViewSwitcherHits,
+  ViewSwitcherToggle,
 } from 'searchkit-fork'
 import {Domain, Routes} from '../../constants'
 import '../../styles/index.css'
@@ -208,32 +209,21 @@ class Collection extends React.Component<IRouteProps, any> {
    }
   }
 
-  toggleFilterMenu = () => {
-    this.setState((prevState) => {
-      return {filterMenuVisible: !prevState.filterMenuVisible};
-    })
-  }
-
   buildActionBar() {
     const {routeConfig} = this.routeProps
-    const {width, filterMenuVisible} = this.state
+    const {width} = this.state
     const isMobile = width <= 500
     if (isMobile) {
       return (
         <ActionBar>
           <ActionBarRow>
-            <FilterMenu
-              routeConfig={routeConfig}
-              filterMenuVisible={filterMenuVisible}
-            />
             <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
+            <ViewSwitcherToggle/>
             <SortingSelector options={routeConfig.sortingSelectorOptions}/>
           </ActionBarRow>
-          <ActionBarRow>
-            <button type="button" className="btn btn-primary-outline btn-xs" onClick={this.toggleFilterMenu}>
-              Filter »
-            </button>
-          </ActionBarRow>
+          <FilterMenu
+            routeConfig={routeConfig}
+          />
           <ActionBarRow>
             <GroupedSelectedFilters/>
             <ResetFilters/>
@@ -245,6 +235,7 @@ class Collection extends React.Component<IRouteProps, any> {
         <ActionBar>
           <ActionBarRow>
             <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
+            <ViewSwitcherToggle/>
             <SortingSelector options={routeConfig.sortingSelectorOptions}/>
           </ActionBarRow>
           <ActionBarRow>

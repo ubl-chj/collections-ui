@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {push as Menu} from 'react-burger-menu'
 import {ListGroup, ListGroupItem} from 'reactstrap'
-import {ItemList, Panel, RefinementListFilter, SideBar} from "searchkit-fork";
+import {ActionBar, ActionBarRow, ItemList, RefinementListFilter} from "searchkit-fork";
 
 export class FilterMenu extends React.Component<any, any> {
 
@@ -62,21 +62,27 @@ export class FilterMenu extends React.Component<any, any> {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.filterMenuVisible !== prevProps.filterMenuVisible) {
-      this.setState({menuOpen: this.props.filterMenuVisible})
-    }
+  handleStateChange(state) {
+    this.setState({menuOpen: state.menuOpen})
+  }
+
+  toggleFilterMenu = () => {
+    this.setState((prevState) => {
+      return {menuOpen: !prevState.menuOpen};
+    })
   }
 
   render() {
     const {routeConfig} = this.props
     return (
+      <ActionBarRow>
         <Menu
           customBurgerIcon={false}
           styles={FilterMenu.styles()}
           isOpen={this.state.menuOpen}
           noOverlay={true}
           right={true}
+          onStateChange={(state) => this.handleStateChange(state)}
           width='340px'
         ><br/>
             <RefinementListFilter
@@ -101,6 +107,10 @@ export class FilterMenu extends React.Component<any, any> {
             listComponent={ItemList}
           />
         </Menu>
+        <button type="button" className="btn btn-primary-outline btn-xs" onClick={this.toggleFilterMenu}>
+          Filter »
+        </button>
+      </ActionBarRow>
     )
   }
 }

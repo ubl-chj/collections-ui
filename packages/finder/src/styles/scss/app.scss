@@ -239,12 +239,41 @@
   stroke: #4691f6;
   stroke-width: 1px;
 }
+@media (max-width: 500px) {
+  .schema-list {
+    max-width: 240px;
+  }
+
+  .title-flex {
+    display: flex;
+    max-width: 240px;
+  }
+
+  .sk-toggle {
+    max-width: 40px;
+  }
+
+  .sk-action-bar-row {
+    display: inline-block;
+  }
+
+  .schema-list-value {
+    word-break: break-word;
+  }
+
+  .sk-hits-list-hit__poster {
+    flex: 0 0 25%;
+  }
+
+  .sk-hits-list {
+    max-width: 340px;
+  }
+}
 
 .schema-list {
   flex-flow: row wrap;
   background: #FFF;
   flex: auto;
-  min-width: 400px;
   box-shadow: 0 1px 3px 0 #666;
 }
 
@@ -283,7 +312,6 @@
 }
 
 .collection-list__left {
-  width: 15%;
   flex: 0 0 15%;
   padding: 10px;
 }

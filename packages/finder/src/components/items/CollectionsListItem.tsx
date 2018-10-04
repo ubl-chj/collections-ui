@@ -107,15 +107,16 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
                 <span className='schema-list-key'><b>Collection:</b></span>
                 <div dangerouslySetInnerHTML={{__html: logo}}/>
               </div>
-              <div className='schema-list-value'><Link to={source.route}>{source.name}</Link>
-              </div>
-              <div className='JUQOte'>
-                <button className='button-transparent' onClick={this.refreshItem}><RefreshIcon/></button>
+              <div className='schema-list-value'>
+                <Link to={source.route}>{source.name}</Link>
               </div>
             </div>
             <div className='schema-list'>
               <div className='collection-list__left'>
                 <span className='schema-list-key'><b>Random Item:</b></span>
+                <div className='JUQOte'>
+                  <button className='button-transparent' onClick={this.refreshItem}><RefreshIcon/></button>
+                </div>
               </div>
               {this.renderRandomItem()}
             </div>
