@@ -4,7 +4,7 @@ import OsdComponent from './OsdComponent';
 const manifesto = require('manifesto.js')
 
 export const ManifestItem = (props) => {
-  const {document} = props
+  const {document, width} = props
   if (document) {
     const manifest = manifesto.create(document)
     const sequences = manifest.getSequences()
@@ -22,7 +22,7 @@ export const ManifestItem = (props) => {
         })
       })
     })
-    return (<OsdComponent images={imageIds}/>)
+    return (<OsdComponent width={width} images={imageIds}/>)
   }
   return (null)
 }

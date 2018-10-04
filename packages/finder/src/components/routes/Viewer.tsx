@@ -16,6 +16,7 @@ import {Domain, Routes} from '../../constants'
 import {firebase} from '../../firebase'
 import '../../styles/index.css'
 import {AuthUserProfile, AuthUserTooltip, BackArrow, Logo} from '../ui'
+import {withDynamicLayout} from "../core";
 
 const ReactTooltip = require('react-tooltip')
 const uuidv4 = require('uuid/v4')
@@ -28,6 +29,9 @@ class ViewerComponent extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.props = props
+    this.state = {
+      width: props.width,
+    }
   }
 
   componentDidMount() {
@@ -41,8 +45,38 @@ class ViewerComponent extends React.Component<any, any> {
     }
   }
 
-  render() {
+  componentDidUpdate(prevProps) {
+    if (this.props.width !== prevProps.width) {
+      this.setState({width: this.props.width})
+    }
+  }
+
+  buildAuthProfile() {
+    const {width} = this.state
     const t = Boolean(true)
+    const isMobile = width <= 500
+    if (isMobile) {
+      return null
+    } else {
+      return(
+        <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
+          <AuthUserProfile/>
+          <ReactTooltip
+            id='authUserProfile'
+            offset={{left: 170}}
+            globalEventOff='click'
+            border={t}
+            place='bottom'
+            type='light'
+            effect='solid'
+          >
+            <AuthUserTooltip/>
+          </ReactTooltip>
+        </div>)
+    }
+  }
+
+  render() {
     if (this.viewer) {
       return (
         <ViewerProvider viewer={this.viewer}>
@@ -55,27 +89,14 @@ class ViewerComponent extends React.Component<any, any> {
                 </Link>
               </div>
               <div className='header__mid'/>
-              <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
-                <AuthUserProfile/>
-              </div>
-              <ReactTooltip
-                id='authUserProfile'
-                offset={{left: 170}}
-                globalEventOff='click'
-                border={t}
-                place='bottom'
-                type='light'
-                effect='solid'
-              >
-                <AuthUserTooltip/>
-              </ReactTooltip>
+              {this.buildAuthProfile()}
             </TopBar>
             <ActionBar>
               <Controls {...this.props} uuid={uuidv4()}/>
             </ActionBar>
             <LayoutBody>
               <BackArrow/>
-              <DocumentViewSwitcher viewerComponents={[{key: 'grid', title: 'Grid', itemComponent: ManifestItem, defaultOption: true}]}/>
+              <DocumentViewSwitcher viewerComponents={[{key: 'grid', title: 'Grid', itemComponent: withDynamicLayout(ManifestItem), defaultOption: true}]}/>
             </LayoutBody>
           </Layout>
         </ViewerProvider>)

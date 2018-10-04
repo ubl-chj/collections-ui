@@ -11,13 +11,13 @@ import {FiltersIcon, ScrollIcon} from '../svg';
 let openSeaDragon
 
 export interface IOsdComponentProps {
-  id?: string;
-  image?: string;
-  images?: any;
-  document?: object;
-  region?: string;
-  viewer?: ViewerManager;
-  defaultProps?: object;
+  id?: string
+  image?: string
+  images?: any
+  document?: object
+  region?: string
+  viewer?: ViewerManager
+  width: number
 }
 
 export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
@@ -86,8 +86,6 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
     }
   }
   state: any
-
-  private defaultProps: object;
   private osd: any;
 
   constructor(props) {
@@ -99,6 +97,7 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
       menuOpen: false,
       scrollView: false,
       selectedOption: null,
+      width: props.width,
     }
   }
 
@@ -170,6 +169,15 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
   }
 
   defaultOsdProps() {
+    const {width} = this.state
+    const isMobile = width <= 500
+    let showNavigator = true
+    let showReferenceStrip = true
+
+    if (isMobile) {
+      showNavigator = false
+      showReferenceStrip = false
+    }
     return {
       constrainDuringPan: false,
       crossOriginPolicy: 'Anonymous',
@@ -185,8 +193,8 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
       rotateLeftButton: 'left',
       rotateRightButton: 'right',
       sequenceMode: true,
-      showNavigator: true,
-      showReferenceStrip: true,
+      showNavigator,
+      showReferenceStrip,
       showRotationControl: true,
       tileSources: [this.getImages()],
       visibilityRatio: 0.5,
@@ -292,6 +300,12 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
     openSeaDragon = require('openseadragon')
     if (this.props.images) {
       this.updateViewer(this.defaultOsdProps())
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.width !== prevProps.width) {
+      this.setState({width: this.props.width})
     }
   }
 

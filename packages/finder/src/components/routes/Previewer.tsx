@@ -21,10 +21,12 @@ class PreviewerComponent extends React.Component<any, any> {
   image: string
   document: string
   source: object
+  width: number
 
   constructor(props) {
     super(props)
     this.props = props
+    this.width = props.width
   }
 
   componentDidMount() {
@@ -83,7 +85,7 @@ class PreviewerComponent extends React.Component<any, any> {
             </ActionBar>
             <LayoutBody>
               <BackArrow/>
-              <OsdComponent images={[this.document]}/>
+              <OsdComponent images={[this.document]} width={this.width}/>
             </LayoutBody>
           </Layout>
         </ViewerProvider>)

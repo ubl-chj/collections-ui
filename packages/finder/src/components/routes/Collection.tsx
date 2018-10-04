@@ -160,6 +160,7 @@ class Collection extends React.Component<IRouteProps, any> {
 
   buildAuthProfile() {
     const {width} = this.state
+    const t = Boolean(true)
     const isMobile = width <= 500
     if (isMobile) {
       return null
@@ -167,6 +168,17 @@ class Collection extends React.Component<IRouteProps, any> {
       return(
         <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
           <AuthUserProfile/>
+          <ReactTooltip
+            id='authUserProfile'
+            offset={{left: 170}}
+            globalEventOff='click'
+            border={t}
+            place='bottom'
+            type='light'
+            effect='solid'
+          >
+            <AuthUserTooltip/>
+          </ReactTooltip>
         </div>)
     }
   }
@@ -253,7 +265,6 @@ class Collection extends React.Component<IRouteProps, any> {
     if (components.length >= 2 && components[0] !== 'undefined') {
       const gridItem = components[0]
       const listItem = components[1]
-      const t = Boolean(true)
       return (
         <SearchkitProvider searchkit={this.searchkit}>
           <div id='outer-container'>
@@ -269,17 +280,6 @@ class Collection extends React.Component<IRouteProps, any> {
                   </div>
                   {this.buildSearchBox()}
                   {this.buildAuthProfile()}
-                  <ReactTooltip
-                    id='authUserProfile'
-                    offset={{left: 170}}
-                    globalEventOff='click'
-                    border={t}
-                    place='bottom'
-                    type='light'
-                    effect='solid'
-                  >
-                    <AuthUserTooltip/>
-                  </ReactTooltip>
                 </TopBar>
                 <LayoutBody>
                   {this.buildSideBar()}

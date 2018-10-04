@@ -136,6 +136,7 @@ export class Landing extends React.Component<IRouteProps, any> {
 
   buildAuthProfile() {
     const {width} = this.state
+    const t = Boolean(true)
     const isMobile = width <= 500
     if (isMobile) {
       return null
@@ -143,6 +144,17 @@ export class Landing extends React.Component<IRouteProps, any> {
       return(
         <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
           <AuthUserProfile/>
+          <ReactTooltip
+            id='authUserProfile'
+            offset={{left: 170}}
+            globalEventOff='click'
+            border={t}
+            place='bottom'
+            type='light'
+            effect='solid'
+          >
+            <AuthUserTooltip/>
+          </ReactTooltip>
         </div>)
     }
   }
@@ -209,7 +221,6 @@ export class Landing extends React.Component<IRouteProps, any> {
   }
 
   render() {
-    const t = Boolean(true)
     return (
          <SearchkitProvider searchkit={this.searchkit}>
            <div id='outer-container'>
@@ -225,17 +236,6 @@ export class Landing extends React.Component<IRouteProps, any> {
                    </div>
                    {this.buildSearchBox()}
                    {this.buildAuthProfile()}
-                   <ReactTooltip
-                     id='authUserProfile'
-                     offset={{left: 170}}
-                     globalEventOff='click'
-                     border={t}
-                     place='bottom'
-                     type='light'
-                     effect='solid'
-                   >
-                     <AuthUserTooltip/>
-                   </ReactTooltip>
                  </TopBar>
                  <LayoutBody>
                    {this.buildSideBar()}
