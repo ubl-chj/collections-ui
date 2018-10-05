@@ -6,7 +6,7 @@ import {findDOMNode} from 'react-dom';
 import Select from 'react-select'
 import {ViewerComponent, ViewerManager} from '../../../core'
 import {BRIGHTNESS, Filtering, GREYSCALE, INVERT} from '../../filtering';
-import {FiltersIcon, ScrollIcon} from '../svg';
+import {FiltersIcon, FullScreenIcon, ScrollIcon} from '../svg';
 
 let openSeaDragon
 
@@ -332,12 +332,13 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
         </Menu>
         <div style={{display: 'flex'}}>
           <div className='xjKiLd'>
-            <button type="button" className="button-transparent" onClick={this.toggleFiltersMenu}>
+            <button title='Edit' type="button" className="button-transparent" onClick={this.toggleFiltersMenu}>
               <FiltersIcon />
             </button>
-            <button type="button" className="button-transparent" onClick={this.toggleScrollView}>
+            <button title='Scroll View' type="button" className="button-transparent" onClick={this.toggleScrollView}>
               <ScrollIcon/>
             </button>
+            <FullScreenIcon/>
           </div>
           {this.buildSelector()}
         </div>

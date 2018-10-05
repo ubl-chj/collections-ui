@@ -16,7 +16,7 @@ export const ListCollectionEntry = (props) => {
   const {label, value} = props
   const val = makeValue(value)
   return (
-    <div className='schema-list'>
+    <div className='schema-list-flex'>
       <div className='collection-list__left'>
         <span className='schema-list-key'><b>{label}</b></span>
       </div>
@@ -108,14 +108,14 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
                 <div dangerouslySetInnerHTML={{__html: logo}}/>
               </div>
               <div className='schema-list-value'>
-                <Link to={source.route}>{source.name}</Link>
+                <Link title='Browse this Collection' to={source.route}>{source.name}</Link>
               </div>
             </div>
-            <div className='schema-list'>
+            <div className='schema-list-flex'>
               <div className='collection-list__left'>
                 <span className='schema-list-key'><b>Random Item:</b></span>
                 <div className='JUQOte'>
-                  <button className='button-transparent' onClick={this.refreshItem}><RefreshIcon/></button>
+                  <button title='Refresh this Item' className='button-transparent' onClick={this.refreshItem}><RefreshIcon/></button>
                 </div>
               </div>
               {this.renderRandomItem()}

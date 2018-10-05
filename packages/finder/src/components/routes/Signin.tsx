@@ -18,7 +18,7 @@ const config = {
   messagingSenderId: '851210977979',
   projectId: 'collections-ui-1532736515660',
   storageBucket: '',
-};
+}
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config);

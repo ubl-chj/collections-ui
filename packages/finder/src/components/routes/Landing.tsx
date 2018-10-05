@@ -23,10 +23,8 @@ import {
 import {Domain, Routes} from '../../constants'
 import '../../styles/index.css'
 import {CollectionsListItem} from '../items'
-import {AuthUserProfile, AuthUserTooltip, BMenu, CloseButton, FilterMenu, Logo, SearchIcon} from '../ui'
+import {AuthProfile, BMenu, CloseButton, FilterMenu, Logo, SearchIcon} from '../ui'
 import {IRouteProps} from './IRouteProps'
-
-const ReactTooltip = require('react-tooltip')
 
 export class Landing extends React.Component<IRouteProps, any> {
 
@@ -134,31 +132,6 @@ export class Landing extends React.Component<IRouteProps, any> {
     }
   }
 
-  buildAuthProfile() {
-    const {width} = this.state
-    const t = Boolean(true)
-    const isMobile = width <= 500
-    if (isMobile) {
-      return null
-    } else {
-      return(
-        <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
-          <AuthUserProfile/>
-          <ReactTooltip
-            id='authUserProfile'
-            offset={{left: 170}}
-            globalEventOff='click'
-            border={t}
-            place='bottom'
-            type='light'
-            effect='solid'
-          >
-            <AuthUserTooltip/>
-          </ReactTooltip>
-        </div>)
-    }
-  }
-
   buildSideBar() {
     const { width } = this.state
     const isMobile = width <= 500
@@ -221,6 +194,7 @@ export class Landing extends React.Component<IRouteProps, any> {
   }
 
   render() {
+    const {width} = this.state;
     return (
          <SearchkitProvider searchkit={this.searchkit}>
            <div id='outer-container'>
@@ -235,7 +209,7 @@ export class Landing extends React.Component<IRouteProps, any> {
                      </Link>
                    </div>
                    {this.buildSearchBox()}
-                   {this.buildAuthProfile()}
+                   <AuthProfile width={width}/>
                  </TopBar>
                  <LayoutBody>
                    {this.buildSideBar()}

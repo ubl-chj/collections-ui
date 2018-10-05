@@ -26,13 +26,13 @@
   "hasRangeFilter": false,
   "sortingSelectorOptions": [
     {
-      "label": "Size",
-      "field": "docCount",
+      "label": "Name",
+      "field": "name.keyword",
       "order": "asc"
     },
     {
-      "label": "Name",
-      "field": "name.keyword",
+      "label": "Size",
+      "field": "docCount",
       "order": "asc"
     },
     {

@@ -21,9 +21,9 @@ export class Title extends React.Component<any, any> {
       <ResultContext.Consumer>
         {(result) => result ?
           <Link to={this.viewUrl}>
-            <div data-qa='title' className={this.className} dangerouslySetInnerHTML={{__html: this.titleString}}/>
+            <div  title='View this Item' data-qa='title' className={this.className} dangerouslySetInnerHTML={{__html: this.titleString}}/>
           </Link> :
-          <a href={this.viewUrl} target='_blank' rel='noopener noreferrer'>
+          <a href={this.viewUrl} title='View this Item' target='_blank' rel='noopener noreferrer'>
             <div data-qa='title' className={this.className} dangerouslySetInnerHTML={{__html: this.titleString}}/>
           </a>}
       </ResultContext.Consumer>

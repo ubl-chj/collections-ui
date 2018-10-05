@@ -82,7 +82,6 @@
     "seeAlso",
     "title"
   ],
-  "suggestionField": "Title",
-  "listDefault": true
+  "suggestionField": "Title"
 }
 

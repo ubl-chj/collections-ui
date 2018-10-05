@@ -3,7 +3,7 @@ import {withRouter} from 'react-router-dom'
 import {ScaleLoader} from "react-spinners"
 import {AnnotationsAccessor, ViewerComponent} from "../../../core/index"
 import {MetadataSchemaAdapter} from '../../schema'
-import {ArrowLeftIcon, ArrowRightIcon, FullScreenIcon, HomeIcon, RotateLeftIcon, RotateRightIcon, ZoomInIcon,
+import {ArrowLeftIcon, ArrowRightIcon, HomeIcon, RotateLeftIcon, RotateRightIcon, ZoomInIcon,
   ZoomOutIcon} from "../svg"
 import {ManifestInfoMenu} from "./ManifestInfoMenu";
 const tagManager = require('react-gtm-module')
@@ -91,7 +91,6 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
             <ZoomInIcon/>
             <ZoomOutIcon/>
             <HomeIcon/>
-            <FullScreenIcon/>
             <ArrowLeftIcon/>
             <ArrowRightIcon/>
             <RotateLeftIcon/>

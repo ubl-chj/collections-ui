@@ -5,9 +5,8 @@ import {ActionBar, Controls, Layout, LayoutBody, OsdComponent, TopBar, ViewerMan
 import {Domain, Routes} from '../../constants'
 import {firebase} from '../../firebase';
 import '../../styles/index.css'
-import {AuthUserProfile, AuthUserTooltip, BackArrow, Logo} from '../ui'
+import {AuthProfile, BackArrow, Logo} from '../ui'
 
-const ReactTooltip = require('react-tooltip')
 const qs = require('query-string')
 const uuidv4 = require('uuid/v4')
 
@@ -21,12 +20,16 @@ class PreviewerComponent extends React.Component<any, any> {
   image: string
   document: string
   source: object
-  width: number
+  state: {
+    width: number,
+  }
 
   constructor(props) {
     super(props)
     this.props = props
-    this.width = props.width
+    this.state = {
+      width: props.width,
+    }
   }
 
   componentDidMount() {
@@ -51,8 +54,14 @@ class PreviewerComponent extends React.Component<any, any> {
     this.document = image + '/info.json'
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.width !== prevProps.width) {
+      this.setState({width: this.props.width})
+    }
+  }
+
   render() {
-    const t = Boolean(true)
+    const {width} = this.state
     if (this.viewer) {
       return (
         <ViewerProvider viewer={this.viewer}>
@@ -65,27 +74,14 @@ class PreviewerComponent extends React.Component<any, any> {
                 </Link>
               </div>
               <div className='header__mid'/>
-              <div className='profile' data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
-                <AuthUserProfile/>
-              </div>
-              <ReactTooltip
-                id='authUserProfile'
-                offset={{left: 170}}
-                globalEventOff='click'
-                border={t}
-                place='bottom'
-                type='light'
-                effect='solid'
-              >
-                <AuthUserTooltip/>
-              </ReactTooltip>
+              <AuthProfile width={width}/>
             </TopBar>
             <ActionBar>
               <Controls {...this.props} uuid={uuidv4()}/>
             </ActionBar>
             <LayoutBody>
               <BackArrow/>
-              <OsdComponent images={[this.document]} width={this.width}/>
+              <OsdComponent images={[this.document]} width={width}/>
             </LayoutBody>
           </Layout>
         </ViewerProvider>)

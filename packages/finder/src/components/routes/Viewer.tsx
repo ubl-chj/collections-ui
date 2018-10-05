@@ -15,10 +15,9 @@ import {
 import {Domain, Routes} from '../../constants'
 import {firebase} from '../../firebase'
 import '../../styles/index.css'
-import {AuthUserProfile, AuthUserTooltip, BackArrow, Logo} from '../ui'
 import {withDynamicLayout} from "../core";
+import {AuthProfile, BackArrow, Logo} from '../ui'
 
-const ReactTooltip = require('react-tooltip')
 const uuidv4 = require('uuid/v4')
 
 class ViewerComponent extends React.Component<any, any> {
@@ -51,52 +50,31 @@ class ViewerComponent extends React.Component<any, any> {
     }
   }
 
-  buildAuthProfile() {
-    const {width} = this.state
-    const t = Boolean(true)
-    const isMobile = width <= 500
-    if (isMobile) {
-      return null
-    } else {
-      return(
-        <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
-          <AuthUserProfile/>
-          <ReactTooltip
-            id='authUserProfile'
-            offset={{left: 170}}
-            globalEventOff='click'
-            border={t}
-            place='bottom'
-            type='light'
-            effect='solid'
-          >
-            <AuthUserTooltip/>
-          </ReactTooltip>
-        </div>)
-    }
-  }
-
   render() {
+    const {width} = this.state
     if (this.viewer) {
       return (
         <ViewerProvider viewer={this.viewer}>
           <Layout>
             <TopBar>
               <div className='my-logo'>
-                <Link className='my-logo' to={Routes.LANDING}>
+                <Link title={Domain.LOGO_TEXT} className='my-logo' to={Routes.LANDING}>
                   <Logo className='JUQOtf'/>
                   <span className='JUQOtq'>{Domain.LOGO_TEXT}</span>
                 </Link>
               </div>
               <div className='header__mid'/>
-              {this.buildAuthProfile()}
+              <AuthProfile width={width}/>
             </TopBar>
             <ActionBar>
               <Controls {...this.props} uuid={uuidv4()}/>
             </ActionBar>
             <LayoutBody>
               <BackArrow/>
-              <DocumentViewSwitcher viewerComponents={[{key: 'grid', title: 'Grid', itemComponent: withDynamicLayout(ManifestItem), defaultOption: true}]}/>
+              <DocumentViewSwitcher
+                viewerComponents={[{defaultOption: true, itemComponent: withDynamicLayout(ManifestItem), key: 'grid', title: 'Grid',
+                  }]}
+              />
             </LayoutBody>
           </Layout>
         </ViewerProvider>)

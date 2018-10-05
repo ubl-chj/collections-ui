@@ -158,7 +158,7 @@ export class ManifestInfoMenu extends ViewerComponent<any, any> {
             {logoItem}
           </ul>
         </Menu>
-        <button type="button" className="btn btn-primary-outline btn-xs" onClick={this.toggleMenu}>
+        <button title='Info' type="button" className="btn btn-primary-outline btn-xs" onClick={this.toggleMenu}>
           <InfoIcon/>
         </button>
       </div>

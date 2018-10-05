@@ -28,6 +28,7 @@ export class Thumbnail extends React.Component<any, any> {
       <ResultContext.Consumer>
         {(result) => result ?
           <Link
+            title='Preview this image'
             to={this.imageLink}
           >
           <img

@@ -28,11 +28,9 @@ import {
 import {Domain, Routes} from '../../constants'
 import '../../styles/index.css'
 import {StandardGridItem, StandardListItem} from '../items';
-import {AuthUserProfile, AuthUserTooltip, BMenu, CloseButton, FilterMenu, Logo, SearchIcon} from '../ui'
+import {AuthProfile, BMenu, CloseButton, FilterMenu, Logo, SearchIcon} from '../ui'
 import {asCollection} from './asCollection'
 import {IRouteProps} from './IRouteProps'
-
-const ReactTooltip = require('react-tooltip')
 
 class Collection extends React.Component<IRouteProps, any> {
 
@@ -158,31 +156,6 @@ class Collection extends React.Component<IRouteProps, any> {
     }
   }
 
-  buildAuthProfile() {
-    const {width} = this.state
-    const t = Boolean(true)
-    const isMobile = width <= 500
-    if (isMobile) {
-      return null
-    } else {
-      return(
-        <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
-          <AuthUserProfile/>
-          <ReactTooltip
-            id='authUserProfile'
-            offset={{left: 170}}
-            globalEventOff='click'
-            border={t}
-            place='bottom'
-            type='light'
-            effect='solid'
-          >
-            <AuthUserTooltip/>
-          </ReactTooltip>
-        </div>)
-    }
-  }
-
   buildSideBar() {
     const {routeConfig} = this.routeProps
     const {width} = this.state
@@ -261,7 +234,7 @@ class Collection extends React.Component<IRouteProps, any> {
 
   render() {
     const {routeConfig} = this.routeProps
-    const {components} = this.state;
+    const {components, width} = this.state
     if (components.length >= 2 && components[0] !== 'undefined') {
       const gridItem = components[0]
       const listItem = components[1]
@@ -279,7 +252,7 @@ class Collection extends React.Component<IRouteProps, any> {
                     </Link>
                   </div>
                   {this.buildSearchBox()}
-                  {this.buildAuthProfile()}
+                  <AuthProfile width={width}/>
                 </TopBar>
                 <LayoutBody>
                   {this.buildSideBar()}
