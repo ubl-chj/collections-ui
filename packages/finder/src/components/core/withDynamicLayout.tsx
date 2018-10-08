@@ -23,7 +23,7 @@ export const withDynamicLayout = (Component): any => {
     }
 
     handleWindowSizeChange = () => {
-      this.setState({ width: window.innerWidth })
+        this.setState({width: window.innerWidth})
     }
 
     render() {
