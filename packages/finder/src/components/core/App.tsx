@@ -1,3 +1,4 @@
+import {AnnotationPlayground} from 'annotations-viewer'
 import * as React from "react";
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import {Routes} from '../../constants'
@@ -21,6 +22,7 @@ class App extends React.Component<any> {
               <Route exact={t} path='/collection/:id' component={withDynamicLayout(Collection)}/>
               <Route exact={t} path='/view/:uuid' component={withDynamicLayout(Viewer)}/>
               <Route exact={t} path='/preview/:uuid?' component={withDynamicLayout(Previewer)}/>
+              <Route exact={t} path='/annotations' component={AnnotationPlayground}/>
             </Switch>
          </BrowserRouter>)
   }

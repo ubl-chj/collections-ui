@@ -15,6 +15,8 @@ WORKDIR /srv/collections-ui/packages/ubl-viewer
 RUN yarn
 WORKDIR /srv/collections-ui/packages/finder
 RUN npm install
+WORKDIR /srv/collections-ui/packages/annotations-viewer
+RUN npm install
 WORKDIR /srv/collections-ui
 RUN lerna run build
 WORKDIR /srv/collections-ui/packages/finder

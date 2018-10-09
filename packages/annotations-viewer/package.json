@@ -1,0 +1,41 @@
+{
+  "name": "annotations-viewer",
+  "version": "0.1.0",
+  "description": "Experimental Annotations Viewer",
+  "private": true,
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@canvas-panel/core": "^0.0.9",
+    "@canvas-panel/full-page-plugin": "^0.0.8",
+    "@canvas-panel/patchwork-plugin": "^0.0.9",
+    "@stephenwf-forks/manifesto.js": "2.2.25",
+    "bezier-easing": "2.1.0",
+    "brace": "0.11.1",
+    "classnames": "2.2.6",
+    "html-loader": "0.5.5",
+    "iiif-prezi2to3": "1.0.8",
+    "lorem-ipsum-simple": "0.0.20",
+    "markdown-loader": "4.0.0",
+    "react": "16.5.2",
+    "react-ace": "6.2.0",
+    "react-dom": "16.5.2",
+    "react-measure": "2.1.2",
+    "react-promise": "2.0.3",
+    "react-router-dom": "4.3.1",
+    "react-transition-group": "2.5.0",
+    "system-font-css": "2.0.2",
+    "typescript": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^10.5.6",
+    "@types/react": "^16.4.14"
+  },
+  "author": "Digirati",
+  "homepage": "https://digirati.com/",
+  "license": "MIT",
+  "repository": "https://github.com/digirati-co-uk/canvas-panel"
+}

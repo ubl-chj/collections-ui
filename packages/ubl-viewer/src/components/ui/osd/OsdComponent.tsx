@@ -1,8 +1,8 @@
-import * as React from 'react';
+import * as React from 'react'
 import {findDOMNode} from 'react-dom'
 import {ViewerComponent, ViewerManager} from '../../../core'
-import {ImageFiltersMenu, PageSelector} from "../controls"
-import {FullScreenIcon, ScrollIcon} from '../svg';
+import {ImageFiltersMenu, PageSelector, ViewSelector} from '../controls'
+import {FullScreenIcon} from '../svg'
 
 let openSeaDragon
 
@@ -30,15 +30,8 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
     super(props)
     this.state = {
       menuOpen: false,
-      scrollView: false,
       width: props.width,
     }
-  }
-
-  toggleScrollView = () => {
-    this.setState((prevState) => {
-      return {scrollView: !prevState.scrollView}
-    })
   }
 
   defaultOsdProps() {
@@ -86,28 +79,6 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
     }
   }
 
-  buildScrollView() {
-    if (this.osd) {
-      if (this.state.scrollView) {
-        this.osd.world.removeItem(this.osd.world.getItemAt(0))
-        this.getImages().forEach((i, index) => {
-          this.osd.addTiledImage({
-            tileSource: i,
-            success(event) {
-              const tiledImage = event.item
-              tiledImage.setPosition({
-                x: index * 1.05,
-                y: 0,
-              })
-            },
-          })
-        })
-      } else {
-        this.osd.goToPage(0)
-      }
-    }
-  }
-
   buildImageFilterMenu() {
     const {menuOpen} = this.state
     if (this.osd) {
@@ -123,6 +94,13 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
       return (
         <PageSelector imageCount={imageCount} osd={this.osd}/>
       )
+    }
+  }
+
+  buildViewSelector() {
+    const images = this.getImages()
+    if (this.osd && images.length > 1) {
+      return (<ViewSelector images={images} osd={this.osd}/>)
     }
   }
 
@@ -145,15 +123,12 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
   }
 
   render() {
-    this.buildScrollView()
     return (
       <div>
         <div style={{display: 'flex'}}>
           <div className='xjKiLd'>
             {this.buildImageFilterMenu()}
-            <button title='Scroll View' type="button" className="button-transparent" onClick={this.toggleScrollView}>
-              <ScrollIcon/>
-            </button>
+            {this.buildViewSelector()}
             <FullScreenIcon/>
           </div>
           {this.buildPageSelector()}
