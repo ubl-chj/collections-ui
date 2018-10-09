@@ -1,5 +1,4 @@
 import * as React from 'react'
-import {withRouter} from 'react-router-dom';
 
 export const withDynamicLayout = (Component): any => {
   class DynamicLayout extends React.Component<any> {

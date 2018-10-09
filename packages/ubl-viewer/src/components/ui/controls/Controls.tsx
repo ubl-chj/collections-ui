@@ -1,5 +1,4 @@
-import * as React from "react";
-import {withRouter} from 'react-router-dom'
+import * as React from "react"
 import {ScaleLoader} from "react-spinners"
 import {AnnotationsAccessor, ViewerComponent} from "../../../core/index"
 import {MetadataSchemaAdapter} from '../../schema'
