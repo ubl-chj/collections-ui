@@ -1,12 +1,11 @@
 import * as React from "react";
 import {slide as Menu} from 'react-burger-menu'
-import {ViewerComponent} from "../../../core/react";
 import {MetadataItem} from "../osd";
 import {InfoIcon} from "../svg";
 
 const uuidv4 = require('uuid/v4')
 
-export class ManifestInfoMenu extends ViewerComponent<any, any> {
+export class ManifestInfoMenu extends React.Component<any, any> {
 
   static buildAttribution(value) {
     return(
@@ -100,7 +99,7 @@ export class ManifestInfoMenu extends ViewerComponent<any, any> {
     this.state.uuid = uuidv4()
   }
 
-  handleStateChange(state) {
+  handleStateChange = (state) => {
     this.setState({menuOpen: state.menuOpen})
   }
 
@@ -149,7 +148,7 @@ export class ManifestInfoMenu extends ViewerComponent<any, any> {
           right={true}
           customBurgerIcon={false}
           isOpen={this.state.menuOpen}
-          onStateChange={(state) => this.handleStateChange(state)}
+          onStateChange={this.handleStateChange}
         >
           <ul className="list-group">
             {itemList}

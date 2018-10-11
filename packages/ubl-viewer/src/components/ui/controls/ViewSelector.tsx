@@ -1,8 +1,7 @@
 import * as React from "react";
-import {ViewerComponent} from "../../../core/react"
 import {ScrollIcon} from "../svg"
 
-export class ViewSelector extends ViewerComponent<any, any> {
+export class ViewSelector extends React.Component<any, any> {
 
   constructor(props) {
     super(props)

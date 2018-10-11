@@ -23,6 +23,7 @@ import {
 import {Domain, Routes} from '../../constants'
 import '../../styles/index.css'
 import {CollectionsListItem} from '../items'
+import {HeadMeta} from "../schema";
 import {AuthProfile, BMenu, CloseButton, FilterMenu, Logo, SearchIcon} from '../ui'
 import {IRouteProps} from './IRouteProps'
 
@@ -151,12 +152,6 @@ export class Landing extends React.Component<IRouteProps, any> {
     }
   }
 
-  toggleFilterMenu = () => {
-    this.setState((prevState) => {
-      return {filterMenuVisible: !prevState.filterMenuVisible};
-    })
-  }
-
   buildActionBar() {
     const {routeConfig} = this.props
     const {width} = this.state
@@ -198,6 +193,7 @@ export class Landing extends React.Component<IRouteProps, any> {
     return (
          <SearchkitProvider searchkit={this.searchkit}>
            <div id='outer-container'>
+             <HeadMeta/>
              <BMenu/>
              <div id='page-wrap'>
                <Layout>

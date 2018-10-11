@@ -1,4 +1,3 @@
-export * from './BackArrow'
 export * from './CloseButton'
 export * from "./RefreshIcon"
 export * from './Logo'

@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {Link, withRouter} from 'react-router-dom'
-
 import {
   ActionBar,
   ActionBarRow,
@@ -28,6 +27,7 @@ import {
 import {Domain, Routes} from '../../constants'
 import '../../styles/index.css'
 import {StandardGridItem, StandardListItem} from '../items';
+import {HeadMeta} from "../schema";
 import {AuthProfile, BMenu, CloseButton, FilterMenu, Logo, SearchIcon} from '../ui'
 import {asCollection} from './asCollection'
 import {IRouteProps} from './IRouteProps'
@@ -241,6 +241,7 @@ class Collection extends React.Component<IRouteProps, any> {
       return (
         <SearchkitProvider searchkit={this.searchkit}>
           <div id='outer-container'>
+            <HeadMeta/>
             <BMenu/>
             <div id='page-wrap'>
               <Layout>

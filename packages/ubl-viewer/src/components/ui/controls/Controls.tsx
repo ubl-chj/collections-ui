@@ -1,10 +1,11 @@
 import * as React from "react"
+import {HeadProvider, Meta, Title} from 'react-head'
 import {ScaleLoader} from "react-spinners"
-import {AnnotationsAccessor, ViewerComponent} from "../../../core/index"
+import {AnnotationsAccessor, ViewerComponent} from "../../../core"
 import {MetadataSchemaAdapter} from '../../schema'
 import {ArrowLeftIcon, ArrowRightIcon, HomeIcon, RotateLeftIcon, RotateRightIcon, ZoomInIcon,
   ZoomOutIcon} from "../svg"
-import {ManifestInfoMenu} from "./ManifestInfoMenu";
+import {ManifestInfoMenu} from "./ManifestInfoMenu"
 const tagManager = require('react-gtm-module')
 const manifesto = require('manifesto.js')
 
@@ -48,7 +49,9 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
 
   componentDidMount() {
     this.annotationsAccessor = new AnnotationsAccessor()
-    this.viewer.addAccessor(this.annotationsAccessor)
+    if (this.viewer) {
+      this.viewer.addAccessor(this.annotationsAccessor)
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -76,11 +79,20 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
       } else {
         thumbnail = null
       }
-      const adapter = new MetadataSchemaAdapter(metadata, Controls.buildContentUrl(), thumbnail, title)
+      const href = Controls.buildContentUrl()
+      const adapter = new MetadataSchemaAdapter(metadata, href, thumbnail, title)
       const schema = adapter.buildStructuredData().dataLayer
       Controls.buildStructuredData(schema)
       return (
         <div className="manifest-info">
+          <HeadProvider>
+            <Title>{title}</Title>
+            <Meta property='og:site_name' content='IIIF Collections'/>
+            <Meta property='og:type' content='website'/>
+            <Meta property='og:url' content={href}/>
+            <Meta property='og:title' content={title}/>
+            <Meta property='og:image' content={schema.thumbnail}/>
+          </HeadProvider>
           <ManifestInfoMenu
             attributionText={attributionText}
             manifest={manifest}

@@ -42,9 +42,11 @@ export class Viewer extends React.Component<any, any> {
     this.setManifest(this.props);
   }
 
-  componentWillReceiveProps(newProps) {
-    this.setState({ error: null });
-    this.setManifest(newProps);
+  componentDidUpdate(prevProps) {
+    if (this.props !== prevProps) {
+      this.setState({ error: null })
+      this.setManifest(this.props)
+    }
   }
 
   setManifest({ annotation }) {
@@ -72,7 +74,7 @@ export class Viewer extends React.Component<any, any> {
 
   render() {
     const { error, manifest, canvas } = this.state;
-    const { annotation } = this.props;
+    const {annotation} = this.props;
     const anno = Manifesto.Utils.createAnnotation(annotation);
 
     if (error || !manifest || !canvas) {

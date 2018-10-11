@@ -1,6 +1,7 @@
-import * as PropTypes from "prop-types";
-import * as React from "react";
+import * as PropTypes from "prop-types"
+import * as React from "react"
 import {ViewerManager} from "../ViewerManager"
+import {ViewerContext} from './ViewerContext'
 
 export interface IViewerProps {
   viewer: ViewerManager
@@ -18,11 +19,8 @@ export class ViewerProvider extends React.Component<IViewerProps, any> {
     viewer: PropTypes.instanceOf(ViewerManager).isRequired,
   }
 
-  componentWillMount() {
-    this.props.viewer.setupListeners()
-  }
-
   componentDidMount() {
+    this.props.viewer.setupListeners()
     this.props.viewer.completeRegistration()
   }
 
@@ -36,6 +34,9 @@ export class ViewerProvider extends React.Component<IViewerProps, any> {
   }
 
   render() {
-    return this.props.children
+    return (
+      <ViewerContext.Provider value={this.props.viewer}>
+        {this.props.children}
+      </ViewerContext.Provider>)
   }
 }

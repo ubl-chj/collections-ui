@@ -57,6 +57,7 @@ export class ViewerComponent<P extends IViewerComponentProps, S> extends React.C
   _getViewer() {
     return this.props.viewer || this.context.viewer
   }
+
   componentWillMount() {
     const self = this;
     this.viewer = this._getViewer()
@@ -69,7 +70,7 @@ export class ViewerComponent<P extends IViewerComponentProps, S> extends React.C
         if (!self.unmounted) {
           self.forceUpdate();
         }
-      });
+      })
     } else {
       console.warn("No viewer found in props or context for " + this.constructor.name)
     }

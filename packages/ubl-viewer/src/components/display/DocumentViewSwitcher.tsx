@@ -39,15 +39,19 @@ export class DocumentViewSwitcher extends ViewerComponent<IDocumentViewSwitcherP
   }
 
   render() {
-    const selectedOption = this.accessor.getSelectedOption()
-    const props = {
-      ...this.props,
-      itemComponent: selectedOption.itemComponent,
-      listComponent: selectedOption.listComponent,
-      mod: 'viewer-' + selectedOption.key,
+    if (this.accessor) {
+      const selectedOption = this.accessor.getSelectedOption()
+      const props = {
+        ...this.props,
+        itemComponent: selectedOption.itemComponent,
+        listComponent: selectedOption.listComponent,
+        mod: 'viewer-' + selectedOption.key,
+      }
+      return (
+        <Annotations {...props} />
+      )
+    } else {
+      return null
     }
-    return (
-      <Annotations {...props} />
-    )
   }
 }

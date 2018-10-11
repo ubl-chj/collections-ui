@@ -65,7 +65,7 @@
     "react-dom": "^16.5.2",
     "react-firebaseui": "^3.1.2",
     "react-gtm-module": "^2.0.2",
-    "react-keydown": "^1.9.7",
+    "react-head": "3.0.1",
     "react-router-dom": "^4.3.1",
     "react-tooltip": "^3.6.1",
     "reactstrap": "^6.0.1",

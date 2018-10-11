@@ -2,11 +2,10 @@ import Checkbox from 'rc-checkbox'
 import Slider from 'rc-slider'
 import * as React from "react";
 import {slide as Menu} from 'react-burger-menu'
-import {ViewerComponent} from "../../../core/react";
 import {BRIGHTNESS, Filtering, GREYSCALE, INVERT} from "../../filtering"
 import {FiltersIcon} from "../svg";
 
-export class ImageFiltersMenu extends ViewerComponent<any, any> {
+export class ImageFiltersMenu extends React.Component<any, any> {
 
   static menuStyles() {
     return {

@@ -1,3 +1,4 @@
+export * from "./ViewerContext"
 export * from "./ViewerProvider"
 export * from "./ViewerComponent"
 export * from "./renderComponent"

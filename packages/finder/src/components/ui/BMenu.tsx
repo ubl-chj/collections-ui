@@ -59,7 +59,7 @@ export class BMenu extends React.Component<any, any> {
     }
    }
 
-  handleStateChange(state) {
+  handleStateChange = (state) => {
     this.setState({menuOpen: state.menuOpen})
   }
 
@@ -69,7 +69,7 @@ export class BMenu extends React.Component<any, any> {
           styles={BMenu.styles()}
           isOpen={this.state.menuOpen}
           noOverlay={true}
-          onStateChange={(state) => this.handleStateChange(state)}
+          onStateChange={this.handleStateChange}
           pageWrapId={'page-wrap'}
           outerContainerId={'outer-container'}
         >

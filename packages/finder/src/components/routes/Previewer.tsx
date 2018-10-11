@@ -5,7 +5,7 @@ import {ActionBar, Controls, Layout, LayoutBody, OsdComponent, TopBar, ViewerMan
 import {Domain, Routes} from '../../constants'
 import {firebase} from '../../firebase';
 import '../../styles/index.css'
-import {AuthProfile, BackArrow, Logo} from '../ui'
+import {AuthProfile, Logo} from '../ui'
 
 const qs = require('query-string')
 const uuidv4 = require('uuid/v4')
@@ -80,7 +80,6 @@ class PreviewerComponent extends React.Component<any, any> {
               <Controls {...this.props} uuid={uuidv4()}/>
             </ActionBar>
             <LayoutBody>
-              <BackArrow/>
               <OsdComponent images={[this.document]} width={width}/>
             </LayoutBody>
           </Layout>

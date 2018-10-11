@@ -1,3 +1,3 @@
 export * from "./ManifestTransport"
-export * from "./AxiosESTransport"
+export * from "./AxiosManifestTransport"
 export * from "./MockESTransport"

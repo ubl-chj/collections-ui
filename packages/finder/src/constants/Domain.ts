@@ -1,5 +1,6 @@
 export enum Domain {
   LOGO_TEXT = 'IIIF Collections',
+  LOGO_URL = 'https://iiif.cloud/images/icons-512.png',
   LOGIN_TEXT = 'Login',
   ACCOUNT_TEXT = 'Account',
   THUMBNAIL_API_REQUEST = '/full/90,/0/default.jpg',

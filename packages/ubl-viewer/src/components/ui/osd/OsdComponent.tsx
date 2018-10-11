@@ -1,14 +1,14 @@
 import * as React from 'react'
 import {findDOMNode} from 'react-dom'
-import {ViewerComponent, ViewerManager} from '../../../core'
+import {ViewerContext, ViewerManager} from '../../../core'
 import {ImageFiltersMenu, PageSelector, ViewSelector} from '../controls'
-import {FullScreenIcon} from '../svg'
+import {BackArrow, FullScreenIcon} from '../svg'
 
 let openSeaDragon
 
 export interface IOsdComponentProps {
   id?: string
-  image?: string
+  currentCanvas?: number
   images?: any
   document?: object
   region?: string
@@ -16,7 +16,7 @@ export interface IOsdComponentProps {
   width: number
 }
 
-export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
+export class OsdComponent extends React.Component<IOsdComponentProps, any> {
 
   static generateView(mountNode, config) {
     const newConfig = Object.assign({ bindto: mountNode }, config)
@@ -29,6 +29,7 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
   constructor(props) {
     super(props)
     this.state = {
+      currentCanvas: props.currentCanvas,
       menuOpen: false,
       width: props.width,
     }
@@ -39,7 +40,6 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
     const isMobile = width <= 500
     let showNavigator = true
     let showReferenceStrip = true
-
     if (isMobile) {
       showNavigator = false
       showReferenceStrip = false
@@ -53,6 +53,7 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
       id: 'osd',
       maxZoomLevel: 10,
       minZoomLevel: 0,
+      navigatorPosition: "BOTTOM_RIGHT",
       nextButton: 'sidebar-next',
       previousButton: 'sidebar-previous',
       referenceStripScroll: 'vertical',
@@ -90,10 +91,9 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
 
   buildPageSelector() {
     const imageCount = this.getImages().length
+    const {currentCanvas} = this.state
     if (this.osd && imageCount > 1) {
-      return (
-        <PageSelector imageCount={imageCount} osd={this.osd}/>
-      )
+      return (<PageSelector currentCanvas={currentCanvas} imageCount={imageCount} osd={this.osd}/>)
     }
   }
 
@@ -127,6 +127,7 @@ export class OsdComponent extends ViewerComponent<IOsdComponentProps, any> {
       <div>
         <div style={{display: 'flex'}}>
           <div className='xjKiLd'>
+            <BackArrow/>
             {this.buildImageFilterMenu()}
             {this.buildViewSelector()}
             <FullScreenIcon/>
