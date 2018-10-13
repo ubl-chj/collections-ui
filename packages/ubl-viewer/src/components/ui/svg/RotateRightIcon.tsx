@@ -3,8 +3,7 @@ import * as React from "react";
 export class RotateRightIcon extends React.Component<any, any> {
   render() {
     return (
-      <button type="button" className="btn btn-primary-outline btn-xs">
-        <a id="right">
+      <button id="right" type="button" className="btn btn-primary-outline btn-xs">
           <svg className="JUQOtd" viewBox="0 0 1792 1792">
             <path
               style={{stroke: 'black', fill: 'black'}}
@@ -14,7 +13,6 @@ export class RotateRightIcon extends React.Component<any, any> {
               0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z"
             />
           </svg>
-        </a>
       </button>
     )
   }

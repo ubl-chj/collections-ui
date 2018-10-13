@@ -3,8 +3,7 @@ import * as React from "react";
 export class ZoomInIcon extends React.Component<any, any> {
   render() {
     return (
-      <button type="button" className="btn control-btn btn-primary-outline btn-xs">
-        <a id="zoom-in">
+      <button id="zoom-in" type="button" className="btn control-btn btn-primary-outline btn-xs">
           <svg className="JUQOtd" viewBox="0 0 512 512">
             <path
               style={{stroke: 'black', fill: 'black'}}
@@ -16,7 +15,6 @@ export class ZoomInIcon extends React.Component<any, any> {
               v64.109h-64.11V320.548z"
             />
           </svg>
-        </a>
       </button>
     )
   }

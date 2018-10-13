@@ -3,8 +3,7 @@ import * as React from "react";
 export class RotateLeftIcon extends React.Component<any, any> {
   render() {
     return (
-      <button type="button" className="btn btn-primary-outline btn-xs">
-        <a id="left">
+      <button id="left" type="button" className="btn btn-primary-outline btn-xs">
           <svg className="JUQOtd" viewBox="0 0 1792 1792">
             <path
               style={{stroke: 'black', fill: 'black'}}
@@ -15,7 +14,6 @@ export class RotateLeftIcon extends React.Component<any, any> {
               244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z"
             />
           </svg>
-        </a>
       </button>
     )
   }

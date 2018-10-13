@@ -3,8 +3,7 @@ import * as React from "react";
 export class ZoomOutIcon extends React.Component<any, any> {
   render() {
     return (
-      <button type="button" className="btn control-btn btn-primary-outline btn-xs">
-        <a id="zoom-out">
+      <button id="zoom-out" type="button" className="btn control-btn btn-primary-outline btn-xs">
           <svg className="JUQOtd" viewBox="0 0 512 512">
             <path
               style={{stroke: 'black', fill: 'black'}}
@@ -15,7 +14,6 @@ export class ZoomOutIcon extends React.Component<any, any> {
               C384.656,312.91,312.909,384.658,224.383,384.658z M128.219,256.438h192.329v-64.109H128.219V256.438z"
             />
           </svg>
-        </a>
       </button>
     )
   }

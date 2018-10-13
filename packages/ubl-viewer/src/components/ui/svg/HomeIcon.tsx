@@ -3,8 +3,7 @@ import * as React from "react";
 export class HomeIcon extends React.Component<any, any> {
   render() {
     return (
-      <button type="button" className="btn control-btn btn-primary-outline btn-xs">
-        <a id="reset">
+      <button id="reset" type="button" className="btn control-btn btn-primary-outline btn-xs">
           <svg className="JUQOtd" viewBox="0 0 59.465 59.465">
             <path
               style={{stroke: 'black', fill: 'black'}}
@@ -21,7 +20,6 @@ export class HomeIcon extends React.Component<any, any> {
           c2.74,0,4.971-2.229,4.971-4.972V38.252c0-0.312-0.031-0.63-0.092-0.941C53.471,36.904,53.271,36.533,52.979,36.245z"
             />
           </svg>
-        </a>
       </button>
     )
   }
