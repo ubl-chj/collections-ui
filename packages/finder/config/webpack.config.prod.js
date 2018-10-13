@@ -214,6 +214,7 @@ module.exports = {
             statuses: [0, 200]
           }, cacheName: 'images', expiration: {
             maxAgeSeconds: 7 * 24 * 60 * 60,
+            purgeOnQuotaError: true,
           },
         },
       }, {

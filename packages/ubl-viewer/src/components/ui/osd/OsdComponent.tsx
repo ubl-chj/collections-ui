@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {findDOMNode} from 'react-dom'
-import {ViewerContext, ViewerManager} from '../../../core'
+import {ViewerManager} from '../../../core'
 import {ImageFiltersMenu, PageSelector, ViewSelector} from '../controls'
 import {BackArrow, FullScreenIcon} from '../svg'
 
@@ -51,6 +51,7 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
       fullPageButton: 'full-page',
       homeButton: 'reset',
       id: 'osd',
+      loadTilesWithAjax: true,
       maxZoomLevel: 10,
       minZoomLevel: 0,
       navigatorPosition: "BOTTOM_RIGHT",
