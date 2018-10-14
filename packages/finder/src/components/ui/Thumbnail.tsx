@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import {Link} from 'react-router-dom'
 import {ResultContext} from "../core";
 
@@ -8,6 +8,8 @@ export class Thumbnail extends React.Component<any, any> {
   imageLink: string
   className: string
   imageWidth: number
+  canvas: any
+  img: any
 
   constructor(props) {
     super(props)
@@ -32,6 +34,7 @@ export class Thumbnail extends React.Component<any, any> {
             to={this.imageLink}
           >
           <img
+            crossOrigin=''
             width={this.imageWidth}
             onError={(e) => {this.handleMissingImage(e.target as HTMLImageElement)}}
             alt='thumbnail'
@@ -40,6 +43,7 @@ export class Thumbnail extends React.Component<any, any> {
           </Link> :
           <a href={this.imageLink} target='_blank' rel='noopener noreferrer'>
             <img
+              crossOrigin=''
               width={this.imageWidth}
               onError={(e) => {this.handleMissingImage(e.target as HTMLImageElement)}}
               alt='thumbnail'
