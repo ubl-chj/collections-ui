@@ -1,6 +1,4 @@
 import {UUIDResolver} from "manifest-uuid";
-import React from 'react'
-import {Link, withRouter} from 'react-router-dom'
 import {
   ActionBar,
   Controls,
@@ -13,6 +11,8 @@ import {
   ViewerManager,
   ViewerProvider,
 } from 'manifest-viewer'
+import React from 'react'
+import {Link, withRouter} from 'react-router-dom'
 import {Domain, Routes} from '../../constants'
 import {firebase} from '../../firebase'
 import '../../styles/index.css'
