@@ -11,7 +11,7 @@ COPY packages/finder/.env packages/finder/.env
 ##Install
 RUN npm i npm@latest -g
 RUN npm install --global lerna
-WORKDIR /srv/collections-ui/packages/ubl-viewer
+WORKDIR /srv/collections-ui/packages/manifest-viewer
 RUN yarn
 WORKDIR /srv/collections-ui/packages/finder
 RUN npm install

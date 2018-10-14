@@ -1,5 +1,5 @@
 {
-  "name": "ubl-viewer",
+  "name": "manifest-viewer",
   "version": "0.1.0",
   "description": "An OpenSeaDragon Viewer Implementation",
   "main": "lib/index.js",

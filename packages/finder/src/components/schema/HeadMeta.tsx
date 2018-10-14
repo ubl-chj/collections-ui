@@ -12,6 +12,8 @@ export class HeadMeta extends React.Component<any, any> {
         <Meta property='og:url' content={window.location.href}/>
         <Meta property='og:title' content={Domain.LOGO_TEXT}/>
         <Meta property='og:image' content={Domain.LOGO_URL}/>
+        <Meta name='theme-color' content='#FFF'/>
+        <Meta name='description' content={Domain.META_DESCRIPTION}/>
       </HeadProvider>
     )
   }

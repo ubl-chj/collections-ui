@@ -72,7 +72,7 @@
     "schema-map": "file:../schema-map",
     "searchkit-fork": "^2.3.1",
     "style-loader": "0.21.0",
-    "ubl-viewer": "file:../ubl-viewer",
+    "manifest-viewer": "file:../manifest-viewer",
     "url-loader": "0.6.2",
     "uuidv5": "^1.0.0",
     "whatwg-fetch": "2.0.4"

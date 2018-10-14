@@ -2,11 +2,10 @@ import * as React from "react"
 import {HeadProvider, Meta, Title} from 'react-head'
 import {ScaleLoader} from "react-spinners"
 import {AnnotationsAccessor, ViewerComponent} from "../../../core"
-import {MetadataSchemaAdapter} from '../../schema'
+import {buildContentUrl, buildStructuredData, buildThumbnail, HeadMeta, MetadataSchemaAdapter} from '../../schema'
 import {ArrowLeftIcon, ArrowRightIcon, HomeIcon, RotateLeftIcon, RotateRightIcon, ZoomInIcon,
   ZoomOutIcon} from "../svg"
 import {ManifestInfoMenu} from "./ManifestInfoMenu"
-const tagManager = require('react-gtm-module')
 const manifesto = require('manifesto.js')
 
 export interface IMetadataProps {
@@ -18,19 +17,8 @@ export interface IMetadataProps {
 
 export class Controls extends ViewerComponent<IMetadataProps, any> {
 
-  static buildContentUrl() {
-    return window.location.href
-  }
-
-  static buildStructuredData(schema) {
-    const dataLayer = {
-      dataLayer: schema,
-      dataLayerName: 'schemaDataLayer',
-    }
-    tagManager.dataLayer(dataLayer)
-  }
-
   annotationsAccessor: AnnotationsAccessor
+  document: any
   state: {
     uuid: string,
     loading: boolean,
@@ -73,26 +61,19 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
       const metadata = manifest.getMetadata()
       const attributionText = manifesto.TranslationCollection.getValue(manifest.getAttribution())
       const title = manifesto.TranslationCollection.getValue(manifest.getLabel())
-      let thumbnail = manifest.getThumbnail()
-      if (thumbnail) {
-        thumbnail = thumbnail.id
-      } else {
-        thumbnail = null
-      }
-      const href = Controls.buildContentUrl()
+      const thumbnail = buildThumbnail(manifest)
+      const href = buildContentUrl()
       const adapter = new MetadataSchemaAdapter(metadata, href, thumbnail, title)
       const schema = adapter.buildStructuredData().dataLayer
-      Controls.buildStructuredData(schema)
+      buildStructuredData(schema)
       return (
         <div className="manifest-info">
-          <HeadProvider>
-            <Title>{title}</Title>
-            <Meta property='og:site_name' content='IIIF Collections'/>
-            <Meta property='og:type' content='website'/>
-            <Meta property='og:url' content={href}/>
-            <Meta property='og:title' content={title}/>
-            <Meta property='og:image' content={schema.thumbnail}/>
-          </HeadProvider>
+          <HeadMeta
+            href={href}
+            schema={schema}
+            thumbnail={thumbnail}
+            title={title}
+          />
           <ManifestInfoMenu
             attributionText={attributionText}
             manifest={manifest}

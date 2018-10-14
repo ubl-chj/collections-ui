@@ -12,7 +12,7 @@ the UI provides access to dynamic keyword sourced manifest assembly.
 
 ## Install Finder and Viewer
 ```bash
-$ cd packages/ubl-viewer
+$ cd packages/manifest-viewer
 $ yarn
 $ cd ../finder
 $ npm install

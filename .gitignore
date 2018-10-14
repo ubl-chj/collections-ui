@@ -1,5 +1,5 @@
 node_modules
-packages/ubl-viewer/release
+packages/manifest-viewer/release
 lib
 build/
 # testing

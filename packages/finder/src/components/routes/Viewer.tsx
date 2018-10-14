@@ -12,7 +12,7 @@ import {
   ViewerContext,
   ViewerManager,
   ViewerProvider,
-} from 'ubl-viewer'
+} from 'manifest-viewer'
 import {Domain, Routes} from '../../constants'
 import {firebase} from '../../firebase'
 import '../../styles/index.css'

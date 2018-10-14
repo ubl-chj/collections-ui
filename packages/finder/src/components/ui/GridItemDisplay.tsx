@@ -18,7 +18,7 @@ export class GridItemDisplay extends React.Component<IGridItemDisplayProps, any>
     return (
       <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
         <Thumbnail
-          imageWidth={190}
+          imageWidth={170}
           imageSource={thumbnail}
           imageLink={imageLink}
           className={bemBlocks.item('poster')}
