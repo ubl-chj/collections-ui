@@ -44,7 +44,12 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
       showNavigator = false
       showReferenceStrip = false
     }
+    const ajaxHeaders = {
+       // "x-requested-with": "XMLHttpRequest",
+    }
+
     return {
+      ajaxHeaders,
       constrainDuringPan: false,
       crossOriginPolicy: 'Anonymous',
       defaultZoomLevel: 0,
@@ -68,7 +73,7 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
       visibilityRatio: 0.5,
       zoomInButton: 'zoom-in',
       zoomOutButton: 'zoom-out',
-    };
+    }
   }
 
   getImages() {

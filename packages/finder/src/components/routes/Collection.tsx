@@ -15,20 +15,17 @@ import {
   RangeFilter,
   RefinementListFilter,
   ResetFilters,
-  SearchBox,
   SearchkitManager,
   SearchkitProvider,
   SideBar,
   SortingSelector,
-  TopBar,
   ViewSwitcherHits,
   ViewSwitcherToggle,
 } from 'searchkit-fork'
-import {Domain, Routes} from '../../constants'
 import '../../styles/index.css'
 import {StandardGridItem, StandardListItem} from '../items';
 import {HeadMeta} from "../schema";
-import {AuthProfile, BMenu, CloseButton, FilterMenu, Logo, SearchIcon} from '../ui'
+import {BMenu, FilterMenu, Head} from '../ui'
 import {asCollection} from './asCollection'
 import {IRouteProps} from './IRouteProps'
 
@@ -105,54 +102,6 @@ class Collection extends React.Component<IRouteProps, any> {
     this.dataLayer = (window as any).schemaDataLayer ? (window as any).schemaDataLayer : null
     if (this.props.width !== prevProps.width) {
       this.setState({width: this.props.width})
-    }
-  }
-
-  toggleSearchBox = () => {
-    this.setState((prevState) => {
-      return {searchBoxVisible: !prevState.searchBoxVisible};
-    })
-  }
-
-  buildSearchBox() {
-    const {routeConfig} = this.routeProps
-    const {width} = this.state
-    const isMobile = width <= 500
-    if (isMobile) {
-      if (this.state.searchBoxVisible) {
-        return (
-          <TopBar>
-            <SearchBox
-              autofocus={true}
-              searchOnChange={true}
-              queryFields={routeConfig.queryFields}
-            />
-            <div className='JUQOtc'>
-              <button className='sbico-d' type="button" onClick={this.toggleSearchBox}>
-                <span className='z1asCe'>
-                  <CloseButton/>
-                </span>
-              </button>
-            </div>
-          </TopBar>
-        )
-      }
-      return (
-        <div className='JUQOtc'>
-          <button className='sbico-c' type="button" onClick={this.toggleSearchBox}>
-              <span className='z1asCe'>
-                <SearchIcon/>
-              </span>
-          </button>
-        </div>
-      )
-    } else {
-      return(
-        <SearchBox
-          autofocus={true}
-          searchOnChange={true}
-          queryFields={routeConfig.queryFields}
-        />)
     }
   }
 
@@ -245,42 +194,35 @@ class Collection extends React.Component<IRouteProps, any> {
             <BMenu/>
             <div id='page-wrap'>
               <Layout>
-                <TopBar>
-                  <div className='my-logo'>
-                    <Link className='my-logo' to={Routes.LANDING}>
-                      <Logo className='JUQOtf'/>
-                      <div className='JUQOtq'>{Domain.LOGO_TEXT}</div>
-                    </Link>
-                  </div>
-                  {this.buildSearchBox()}
-                  <AuthProfile width={width}/>
-                </TopBar>
-                <LayoutBody>
-                  {this.buildSideBar()}
-                  <LayoutResults>
-                    {this.buildActionBar()}
-                    {routeConfig.hasRangeFilter ?
-                      <div className='ex1'>
-                        <RangeFilter
-                          field={routeConfig.rangeFilter.field}
-                          id={routeConfig.rangeFilter.id}
-                          min={routeConfig.rangeFilter.min}
-                          max={routeConfig.rangeFilter.max}
-                          showHistogram={true}
-                          title='Date Selector'
-                        />
-                      </div> : null
-                    }
-                    <ViewSwitcherHits
-                      hitsPerPage={50}
-                      highlightFields={routeConfig.highlightFields}
-                      hitComponents={Collection.buildHitComponents(gridItem, listItem, routeConfig.listDefault)}
-                      scrollTo='body'
-                    />
-                    <NoHits suggestionsField={routeConfig.suggestionField}/>
-                    <Pagination showNumbers={true}/>
-                  </LayoutResults>
-                </LayoutBody>
+                <Head width={width} routeConfig={routeConfig}/>
+                <main>
+                  <LayoutBody>
+                    {this.buildSideBar()}
+                    <LayoutResults>
+                      {this.buildActionBar()}
+                      {routeConfig.hasRangeFilter ?
+                        <div className='ex1'>
+                          <RangeFilter
+                            field={routeConfig.rangeFilter.field}
+                            id={routeConfig.rangeFilter.id}
+                            min={routeConfig.rangeFilter.min}
+                            max={routeConfig.rangeFilter.max}
+                            showHistogram={true}
+                            title='Date Selector'
+                          />
+                        </div> : null
+                      }
+                      <ViewSwitcherHits
+                        hitsPerPage={50}
+                        highlightFields={routeConfig.highlightFields}
+                        hitComponents={Collection.buildHitComponents(gridItem, listItem, routeConfig.listDefault)}
+                        scrollTo='body'
+                      />
+                      <NoHits suggestionsField={routeConfig.suggestionField}/>
+                      <Pagination showNumbers={true}/>
+                    </LayoutResults>
+                  </LayoutBody>
+                </main>
               </Layout>
             </div>
           </div>

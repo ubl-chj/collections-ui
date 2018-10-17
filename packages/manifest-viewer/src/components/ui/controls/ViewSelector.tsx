@@ -52,7 +52,13 @@ export class ViewSelector extends React.Component<any, any> {
   render() {
     this.buildScrollView()
     return (
-      <button title='Scroll View' type="button" className="button-transparent" onClick={this.toggleScrollView}>
+      <button
+        aria-label='toggle scroll view'
+        title='Scroll View'
+        type="button"
+        className="button-transparent"
+        onClick={this.toggleScrollView}
+      >
         <ScrollIcon/>
       </button>
     )

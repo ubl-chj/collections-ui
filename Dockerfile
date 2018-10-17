@@ -18,7 +18,7 @@ RUN npm install
 WORKDIR /srv/collections-ui/packages/annotations-viewer
 RUN npm install
 WORKDIR /srv/collections-ui
-RUN lerna run build
+RUN lerna run build --ignore=annotations-viewer
 WORKDIR /srv/collections-ui/packages/finder
 RUN yarn global add serve
 

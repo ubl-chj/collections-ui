@@ -1,9 +1,13 @@
-import * as React from "react";
+import * as React from "react"
 
 export class ZoomOutIcon extends React.Component<any, any> {
   render() {
     return (
-      <button id="zoom-out" type="button" className="btn control-btn btn-primary-outline btn-xs">
+      <button
+        aria-label='zoom out'
+        id="zoom-out"
+        type="button"
+        className="btn control-btn btn-primary-outline btn-xs">
           <svg className="JUQOtd" viewBox="0 0 512 512">
             <path
               style={{stroke: 'black', fill: 'black'}}

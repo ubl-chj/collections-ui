@@ -19,6 +19,7 @@ import '../../styles/index.css'
 import {withDynamicLayout} from "../core";
 import {AuthProfile, Logo} from '../ui'
 
+const qs = require('query-string')
 const uuidv4 = require('uuid/v4')
 
 class ViewerComponent extends React.Component<any, any> {
@@ -36,17 +37,30 @@ class ViewerComponent extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    const uuid = this.props.match.params.uuid
-    const currentCanvas = this.props.location.hash.substring(1)
-    this.setState({currentCanvas})
-    if (firebase) {
-      const resolver = new UUIDResolver(uuid, firebase.uuidDb)
-      resolver.resolveManifest().then((manifest) => {
-        if (!this.hasUnmounted) {
-          this.viewer = new ViewerManager(manifest)
-          this.forceUpdate()
-        }
-      })
+    const params = qs.parse(this.props.location.search)
+    if (this.props.match.params.uuid && !Object.keys(params).length) {
+      const uuid = this.props.match.params.uuid
+      const currentCanvas = this.props.location.hash.substring(1)
+      this.setState({currentCanvas})
+      if (firebase) {
+        const resolver = new UUIDResolver(uuid, firebase.uuidDb)
+        resolver.resolveManifest().then((manifest) => {
+          if (!this.hasUnmounted) {
+            this.viewer = new ViewerManager(manifest)
+            this.forceUpdate()
+          }
+        })
+      }
+    } else if (Object.keys(params).length) {
+      const doc = params.manifest
+      const currentCanvas = this.props.location.hash.substring(1)
+      this.setState({currentCanvas})
+      // const uuid = uuidv5('url', doc)
+      // this.props.history.replace(window.parent.location.pathname + uuid)
+      if (!this.hasUnmounted) {
+        this.viewer = new ViewerManager(doc)
+        this.forceUpdate()
+      }
     }
   }
 

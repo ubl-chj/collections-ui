@@ -1,9 +1,9 @@
 import Checkbox from 'rc-checkbox'
 import Slider from 'rc-slider'
-import * as React from "react";
+import * as React from "react"
 import {slide as Menu} from 'react-burger-menu'
 import {BRIGHTNESS, Filtering, GREYSCALE, INVERT} from "../../filtering"
-import {FiltersIcon} from "../svg";
+import {FiltersIcon} from "../svg"
 
 export class ImageFiltersMenu extends React.Component<any, any> {
 
@@ -100,11 +100,23 @@ export class ImageFiltersMenu extends React.Component<any, any> {
     return (
       <div style={{width: 200}} className='xjKiLc'>
         <div className='Hj59Ib'>Brightness</div>
-        <Slider min={-255} max={255} value={this.state.brightness} onChange={this.onSliderChange}/>
+        <Slider
+          aria-label='brightness'
+          min={-255}
+          max={255}
+          value={this.state.brightness}
+          onChange={this.onSliderChange}
+        />
         <div className='Hj59Ib'>Invert</div>
-        <Checkbox onChange={this.toggleInvert}/>
+        <Checkbox
+          aria-label='invert'
+          onChange={this.toggleInvert}
+        />
         <div className='Hj59Ib'>Greyscale</div>
-        <Checkbox onChange={this.toggleGreyscale}/>
+        <Checkbox
+          aria-label='grayscale'
+          onChange={this.toggleGreyscale}
+        />
       </div>
     )
   }
@@ -167,11 +179,17 @@ export class ImageFiltersMenu extends React.Component<any, any> {
           right={false}
           customBurgerIcon={false}
           isOpen={this.state.menuOpen}
-          onStateChange={(state) => this.handleStateChange(state)}
+          onStateChange={this.handleStateChange}
         >
         {this.filters()}
         </Menu>
-        <button title='Edit' type="button" className="button-transparent" onClick={this.toggleFiltersMenu}>
+        <button
+          aria-label='toggle image filters'
+          title='Edit'
+          type="button"
+          className="button-transparent"
+          onClick={this.toggleFiltersMenu}
+        >
           <FiltersIcon />
         </button>
       </div>

@@ -97,7 +97,7 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
     const updated = new Date(source.dateUpdated).toDateString();
     const updatedKey = 'Last Updated'
     const totalDocsKey = 'Total Documents'
-    const logo = '<img width=170 src=' + source.logo + '>'
+    const logo = '<img alt="collection logo" width=170 src=' + source.logo + '>'
     return (
       <ResultContext.Provider value={result}>
         <div className={bemBlocks.item().mix(bemBlocks.container('landing'))} data-qa='hit'>
@@ -115,7 +115,14 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
               <div className='collection-list__left'>
                 <span className='schema-list-key'><b>Random Item:</b></span>
                 <div className='JUQOte'>
-                  <button title='Refresh this Item' className='button-transparent' onClick={this.refreshItem}><RefreshIcon/></button>
+                  <button
+                    aria-label='refresh item'
+                    title='Refresh this Item'
+                    className='button-transparent'
+                    onClick={this.refreshItem}
+                  >
+                    <RefreshIcon/>
+                  </button>
                 </div>
               </div>
               {this.renderRandomItem()}

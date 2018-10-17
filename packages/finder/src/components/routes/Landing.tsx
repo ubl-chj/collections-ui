@@ -13,18 +13,15 @@ import {
   Pagination,
   RefinementListFilter,
   ResetFilters,
-  SearchBox,
   SearchkitManager,
   SearchkitProvider,
   SideBar,
   SortingSelector,
-  TopBar,
 } from 'searchkit-fork'
-import {Domain, Routes} from '../../constants'
 import '../../styles/index.css'
 import {CollectionsListItem} from '../items'
 import {HeadMeta} from "../schema";
-import {AuthProfile, BMenu, CloseButton, FilterMenu, Logo, SearchIcon} from '../ui'
+import {BMenu, FilterMenu, Head} from '../ui'
 import {IRouteProps} from './IRouteProps'
 
 export class Landing extends React.Component<IRouteProps, any> {
@@ -85,54 +82,6 @@ export class Landing extends React.Component<IRouteProps, any> {
     }
   }
 
-  toggleSearchBox = () => {
-    this.setState((prevState) => {
-      return {searchBoxVisible: !prevState.searchBoxVisible};
-    })
-  }
-
-  buildSearchBox() {
-    const {routeConfig} = this.props
-    const {width} = this.state
-    const isMobile = width <= 500
-    if (isMobile) {
-      if (this.state.searchBoxVisible) {
-        return (
-          <TopBar>
-            <SearchBox
-              autofocus={true}
-              searchOnChange={true}
-              queryFields={routeConfig.queryFields}
-            />
-            <div className='JUQOtc'>
-              <button className='sbico-d' type="button" onClick={this.toggleSearchBox}>
-                <span className='z1asCe'>
-                  <CloseButton/>
-                </span>
-              </button>
-            </div>
-          </TopBar>
-        )
-      }
-      return (
-          <div className='JUQOtc'>
-            <button className='sbico-c' type="button" onClick={this.toggleSearchBox}>
-              <span className='z1asCe'>
-                <SearchIcon/>
-              </span>
-            </button>
-          </div>
-      )
-    } else {
-      return(
-      <SearchBox
-        autofocus={true}
-        searchOnChange={true}
-        queryFields={routeConfig.queryFields}
-      />)
-    }
-  }
-
   buildSideBar() {
     const { width } = this.state
     const isMobile = width <= 500
@@ -189,6 +138,7 @@ export class Landing extends React.Component<IRouteProps, any> {
   }
 
   render() {
+    const {routeConfig} = this.props
     const {width} = this.state;
     return (
          <SearchkitProvider searchkit={this.searchkit}>
@@ -197,30 +147,23 @@ export class Landing extends React.Component<IRouteProps, any> {
              <BMenu/>
              <div id='page-wrap'>
                <Layout>
-                 <TopBar>
-                   <div className='my-logo'>
-                     <Link className='my-logo' to={Routes.LANDING}>
-                       <Logo className='JUQOtf'/>
-                       <span className='JUQOtq'>{Domain.LOGO_TEXT}</span>
-                     </Link>
-                   </div>
-                   {this.buildSearchBox()}
-                   <AuthProfile width={width}/>
-                 </TopBar>
-                 <LayoutBody>
-                   {this.buildSideBar()}
-                   <LayoutResults>
-                     {this.buildActionBar()}
-                     <Hits
-                       hitsPerPage={50}
-                       highlightFields={["title"]}
-                       mod="sk-hits-list"
-                       itemComponent={CollectionsListItem}
-                     />
-                     <NoHits suggestionsField={'name'}/>
-                     <Pagination showNumbers={true}/>
-                   </LayoutResults>
-                 </LayoutBody>
+                 <Head width={width} routeConfig={routeConfig}/>
+                 <main>
+                   <LayoutBody>
+                     {this.buildSideBar()}
+                     <LayoutResults>
+                       {this.buildActionBar()}
+                       <Hits
+                         hitsPerPage={50}
+                         highlightFields={["title"]}
+                         mod="sk-hits-list"
+                         itemComponent={CollectionsListItem}
+                       />
+                       <NoHits suggestionsField={'name'}/>
+                       <Pagination showNumbers={true}/>
+                     </LayoutResults>
+                   </LayoutBody>
+                 </main>
                </Layout>
              </div>
            </div>

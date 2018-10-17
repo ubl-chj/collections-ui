@@ -1,25 +1,32 @@
 import * as React from 'react'
 import {Link, withRouter} from 'react-router-dom'
-import {ActionBar, Layout, LayoutBody, LayoutResults, SearchBox, SearchkitManager, SearchkitProvider, SideBar, TopBar} from 'searchkit-fork'
-import {Domain, Routes} from '../../constants';
+import {ActionBar, Layout, LayoutBody, LayoutResults, SearchkitManager, SearchkitProvider, SideBar} from 'searchkit-fork'
 import {AuthUserContext, withAuthorization, withDynamicLayout} from '../core'
-import {AuthProfile, BMenu, FavoritesList, Logo} from '../ui'
+import {BMenu, FavoritesList, Head} from '../ui'
+import {IRouteProps} from "./IRouteProps";
 
 const firebase = require("firebase/app")
-const host = process.env.REACT_APP_ELASTICSEARCH_HOST + process.env.REACT_APP_ATOMIC_INDEX
-const options = {timeout: 20000}
-const searchkit = new SearchkitManager(host, options)
 
-const queryFields = []
+export class AccountPage extends React.Component<IRouteProps, any> {
 
-export class AccountPage extends React.Component<any, any> {
+  static defaultProps = {
+    host: process.env.REACT_APP_ELASTICSEARCH_HOST,
+    options: {timeout: 20000},
+    routeConfig: require('./config/landing.json'),
+    searchkit: {},
+  }
 
+  searchkit: SearchkitManager
+  routeKey: string
   state: {
     width: number,
   }
 
   constructor(props) {
     super(props)
+    this.routeKey = this.props.routeConfig.indexName
+    const host = props.host + this.routeKey
+    this.searchkit = new SearchkitManager(host, props.options)
     this.state = {
       width: props.width,
     }
@@ -32,23 +39,15 @@ export class AccountPage extends React.Component<any, any> {
   }
 
   render() {
+      const {routeConfig} = this.props
       const {width} = this.state
       return (
-        <SearchkitProvider searchkit={searchkit}>
+        <SearchkitProvider searchkit={this.searchkit}>
           <div id='outer-container'>
             <BMenu/>
             <div id='page-wrap'>
               <Layout>
-                <TopBar>
-                  <div className='my-logo'>
-                    <Link className='my-logo' to={Routes.LANDING}>
-                      <Logo className='JUQOtf'/>
-                      <span className='JUQOtq'>{Domain.LOGO_TEXT}</span>
-                    </Link>
-                  </div>
-                  <SearchBox autofocus={true} searchOnChange={true} queryFields={queryFields}/>
-                  <AuthProfile width={width}/>
-                </TopBar>
+                <Head width={width} routeConfig={routeConfig}/>
                 <LayoutBody>
                   <SideBar/>
                   <LayoutResults>

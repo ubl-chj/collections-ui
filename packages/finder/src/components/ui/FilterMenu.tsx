@@ -62,7 +62,7 @@ export class FilterMenu extends React.Component<any, any> {
     }
   }
 
-  handleStateChange(state) {
+  handleStateChange = (state) => {
     this.setState({menuOpen: state.menuOpen})
   }
 
@@ -82,7 +82,7 @@ export class FilterMenu extends React.Component<any, any> {
           isOpen={this.state.menuOpen}
           noOverlay={true}
           right={true}
-          onStateChange={(state) => this.handleStateChange(state)}
+          onStateChange={this.handleStateChange}
           width='340px'
         ><br/>
             <RefinementListFilter
@@ -107,7 +107,12 @@ export class FilterMenu extends React.Component<any, any> {
             listComponent={ItemList}
           />
         </Menu>
-        <button type="button" className="btn btn-primary-outline btn-xs" onClick={this.toggleFilterMenu}>
+        <button
+          aria-label='toggle filters'
+          type="button"
+          className="btn btn-primary-outline btn-xs"
+          onClick={this.toggleFilterMenu}
+        >
           Filter »
         </button>
       </ActionBarRow>

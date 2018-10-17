@@ -3,7 +3,12 @@ import * as React from "react";
 export class HomeIcon extends React.Component<any, any> {
   render() {
     return (
-      <button id="reset" type="button" className="btn control-btn btn-primary-outline btn-xs">
+      <button
+        aria-label='reset to home'
+        id="reset"
+        type="button"
+        className="btn control-btn btn-primary-outline btn-xs"
+      >
           <svg className="JUQOtd" viewBox="0 0 59.465 59.465">
             <path
               style={{stroke: 'black', fill: 'black'}}

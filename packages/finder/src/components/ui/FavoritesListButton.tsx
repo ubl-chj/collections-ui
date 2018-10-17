@@ -57,7 +57,12 @@ export class FavoritesListButton extends React.Component<any, any> {
       return (
         <div className='button-right'>
         {isFavorite && favorite ?
-          (<button onClick={this.unsetFavorite} type="button" className="button-transparent__fav">
+          (<button
+            aria-label='unset favorite'
+            onClick={this.unsetFavorite}
+            type="button"
+            className="button-transparent__fav"
+          >
             <Star/>
           </button>)
           : null}

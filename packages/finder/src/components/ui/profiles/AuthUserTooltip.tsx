@@ -22,7 +22,12 @@ export class AuthUserTooltip extends React.Component<any, any> {
             <div className="gb_Bb">{firebase.auth().currentUser.displayName}</div>
             <div className="gb_Db">{firebase.auth().currentUser.email}</div>
             <Link className='btn btn-outline-secondary' to={Routes.ACCOUNT}>{Domain.ACCOUNT_TEXT}</Link>
-            <button className="btn btn-outline-secondary" onClick={this.signOut}>Sign-out</button>
+            <button
+              aria-label='sign out'
+              className="btn btn-outline-secondary"
+              onClick={this.signOut}
+            >Sign-out
+            </button>
           </div>
         </div> : null}
       </AuthUserContext.Consumer>)

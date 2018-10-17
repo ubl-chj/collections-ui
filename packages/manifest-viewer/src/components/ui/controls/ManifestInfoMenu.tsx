@@ -1,7 +1,7 @@
-import * as React from "react";
+import * as React from "react"
 import {slide as Menu} from 'react-burger-menu'
-import {MetadataItem} from "../osd";
-import {InfoIcon} from "../svg";
+import {MetadataItem} from "../osd"
+import {InfoIcon} from "../svg"
 
 const uuidv4 = require('uuid/v4')
 
@@ -16,7 +16,7 @@ export class ManifestInfoMenu extends React.Component<any, any> {
 
   static buildLogo(value) {
     if (value) {
-      const link = '<img src=' + value + '>'
+      const link = '<img crossorigin alt="logo" src=' + value + '>'
       return (
         <li className='list-group-item'>
           <div className='metadata-label'>Logo:</div>
@@ -157,7 +157,13 @@ export class ManifestInfoMenu extends React.Component<any, any> {
             {logoItem}
           </ul>
         </Menu>
-        <button title='Info' type="button" className="btn btn-primary-outline btn-xs" onClick={this.toggleMenu}>
+        <button
+          aria-label='toggle manifest information'
+          title='Info'
+          type="button"
+          className="btn btn-primary-outline btn-xs"
+          onClick={this.toggleMenu}
+        >
           <InfoIcon/>
         </button>
       </div>

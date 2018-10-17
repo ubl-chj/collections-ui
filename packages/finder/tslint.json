@@ -4,6 +4,8 @@
     "tslint-react"
   ],
   "rules": {
+    "no-console": false,
+    "jsx-no-multiline-js": false,
     "no-var-requires": false,
     "quotemark": false,
     "semicolon": false,

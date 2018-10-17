@@ -1,7 +1,6 @@
 import * as React from "react"
 import {withRouter} from "react-router"
 import Select from 'react-select'
-import {BackArrow} from "../svg";
 
 export class PageSelectorComponent extends React.Component<any, any> {
   static selectorStyles() {
@@ -91,6 +90,7 @@ export class PageSelectorComponent extends React.Component<any, any> {
         <div>
           <div className='selector'>
             <Select
+              aria-label='select page'
               value={selectedPage}
               isSearchable={Boolean(true)}
               onChange={this.handlePaging}

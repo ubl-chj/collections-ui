@@ -74,39 +74,47 @@ export class BMenu extends React.Component<any, any> {
           outerContainerId={'outer-container'}
         >
           <ListGroup>
-            <ListGroupItem
-              tag="a"
-              href="/api"
-              action={true}
-            >API
-              <span className='soon'>soon...</span>
-            </ListGroupItem>
-            <ListGroupItem
-              tag="a"
-              href="https://github.com/ubl-chj/collections-ui"
-              action={true}
-            >
-              <div className='title-flex'>
-                <div className='JUQOtt'>
-                  <Octicon/>
+            <li style={{ listStyle: 'none'}}>
+              <ListGroupItem
+                tag="a"
+                href="/api"
+                action={true}
+              >API
+                <span className='soon'>soon...</span>
+              </ListGroupItem>
+            </li>
+            <li style={{ listStyle: 'none'}}>
+              <ListGroupItem
+                tag="a"
+                href="https://github.com/ubl-chj/collections-ui"
+                action={true}
+              >
+                <div className='title-flex'>
+                  <div className='JUQOtt'>
+                    <Octicon/>
+                  </div>
+                  <span className='item-span'>Code Repository</span>
                 </div>
-                <span className='item-span'>Code Repository</span>
-              </div>
-            </ListGroupItem>
-            <ListGroupItem
-              tag="a"
-              href="/contact"
-              action={true}
-            >Contact
-              <span className='soon'>soon...</span>
-            </ListGroupItem>
-            <ListGroupItem
-              tag="a"
-              href="/docs"
-              action={true}
-            >Documentation
-              <span className='soon'>soon...</span>
-            </ListGroupItem>
+              </ListGroupItem>
+            </li>
+            <li style={{ listStyle: 'none'}}>
+              <ListGroupItem
+                tag="a"
+                href="/contact"
+                action={true}
+              >Contact
+                <span className='soon'>soon...</span>
+              </ListGroupItem>
+            </li>
+            <li style={{ listStyle: 'none'}}>
+              <ListGroupItem
+                tag="a"
+                href="/docs"
+                action={true}
+              >Documentation
+                <span className='soon'>soon...</span>
+              </ListGroupItem>
+            </li>
           </ListGroup>
         </Menu>
       )

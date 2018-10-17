@@ -1,9 +1,14 @@
-import * as React from "react";
+import * as React from "react"
 
 export class RotateRightIcon extends React.Component<any, any> {
   render() {
     return (
-      <button id="right" type="button" className="btn btn-primary-outline btn-xs">
+      <button
+        aria-label='rotate right'
+        id='right'
+        type='button'
+        className='btn btn-primary-outline btn-xs'
+      >
           <svg className="JUQOtd" viewBox="0 0 1792 1792">
             <path
               style={{stroke: 'black', fill: 'black'}}

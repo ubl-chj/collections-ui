@@ -90,17 +90,27 @@ export class FavoriteButton extends React.Component<any, any> {
         <div className='button-right'>
         {isFavorite && favorite ?
           (
-            <button type="button" onClick={() => {
+            <button
+              aria-label='remove favorite'
+              type="button"
+              onClick={() => {
               FavoriteButton.removeFavorite(this.authUser.uid, this.result);
               this.unsetFavorite()
-            }} className="button-transparent__fav">
+            }}
+              className="button-transparent__fav"
+            >
             <Star/>
             </button>)
           : (
-            <button type="button" onClick={() => {
+            <button
+              aria-label='set favorite'
+              type="button"
+              onClick={() => {
               FavoriteButton.writeFavorite(this.authUser.uid, this.result);
               this.setFavorite(this.result)
-            }} className="button-transparent__fav">
+            }}
+              className="button-transparent__fav"
+            >
               <EmptyStar/>
             </button>)
         }

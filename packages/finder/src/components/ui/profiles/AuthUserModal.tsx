@@ -13,8 +13,12 @@ export const AuthUserModal = (props) => {
       <ModalBody>
         <AuthUserContext.Consumer>
           {(authUser) => authUser ? <div>
-            <img className="account-image-profile" src={firebase.auth().currentUser.photoURL}
-              alt="Account's profile image" aria-hidden="true"/>
+            <img
+              className="account-image-profile"
+              src={firebase.auth().currentUser.photoURL}
+              alt="Account's profile image"
+              aria-hidden="true"
+            />
             <div className="gb_yb">
               <div className="gb_Bb">{firebase.auth().currentUser.displayName}</div>
               <div className="gb_Db">{firebase.auth().currentUser.email}</div>
@@ -24,9 +28,13 @@ export const AuthUserModal = (props) => {
         </AuthUserContext.Consumer>
       </ModalBody>
       <ModalFooter>
-        <a role="button" className="btn btn-outline-secondary"
-          onClick={() => firebase.auth().signOut()}>Sign-out</a>
-        <Button color="secondary" onClick={toggle}>Cancel</Button>
+        <a
+          aria-label='sign out'
+          role="button"
+          className="btn btn-outline-secondary"
+          onClick={() => firebase.auth().signOut()}>Sign-out
+        </a>
+        <Button aria-label='toggle modal' color="secondary" onClick={toggle}>Cancel</Button>
       </ModalFooter>
     </Modal>)
 }
