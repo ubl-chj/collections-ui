@@ -52,6 +52,27 @@ function cleanResponse (response) {
 // The development configuration is different and lives in a separate file.
 module.exports = {
   optimization: {
+    splitChunks: {
+      chunks: 'async',
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+        common: {
+          name: 'common',
+          minChunks: 2,
+        }
+      }
+    },
     minimizer: [new UglifyJsPlugin({
       cache: true,
       parallel: true,
@@ -73,7 +94,7 @@ module.exports = {
     filename: 'static/js/[name].[chunkhash:8].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
-    publicPath: publicPath,
+    publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
     //devtoolModuleFilenameTemplate: info =>
     //  path
@@ -211,7 +232,7 @@ module.exports = {
         // Match any request for Images
         urlPattern: /.*jpg/, handler: 'staleWhileRevalidate', options: {
           cacheableResponse: {
-            statuses: [0, 200]
+            statuses: [200]
           }, cacheName: 'images', expiration: {
             maxAgeSeconds: 7 * 24 * 60 * 60,
             purgeOnQuotaError: true,

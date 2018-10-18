@@ -154,7 +154,6 @@ export class ManifestInfoMenu extends React.Component<any, any> {
             {itemList}
             {manifestItem}
             {attribution}
-            {logoItem}
           </ul>
         </Menu>
         <button
