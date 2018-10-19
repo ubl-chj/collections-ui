@@ -1,19 +1,17 @@
 const path = require('path')
 const webpack = require('webpack')
-const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = {
   mode: 'production',
   optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true // set to true if you want JS source maps
-      }),
+    minimizer: [new TerserPlugin({
+      cache: true,
+      parallel: true,
+      sourceMap: false
+    }),
       new OptimizeCSSAssetsPlugin({})
     ]
   },
@@ -23,7 +21,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'release'),
-    filename: '[name].js',
+    filename: '[chunkhash:8].js',
     library:['Viewer'],
     libraryTarget:'umd',
     publicPath: ''

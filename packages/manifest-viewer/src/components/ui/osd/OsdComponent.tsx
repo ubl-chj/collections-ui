@@ -14,6 +14,7 @@ export interface IOsdComponentProps {
   region?: string
   viewer?: ViewerManager
   width: number
+  canvasLabels: any
 }
 
 export class OsdComponent extends React.Component<IOsdComponentProps, any> {
@@ -97,9 +98,10 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
 
   buildPageSelector() {
     const imageCount = this.getImages().length
+    const canvasLabels = this.props.canvasLabels
     const {currentCanvas} = this.state
     if (this.osd && imageCount > 1) {
-      return (<PageSelector currentCanvas={currentCanvas} imageCount={imageCount} osd={this.osd}/>)
+      return (<PageSelector currentCanvas={currentCanvas} canvasLabels={canvasLabels} imageCount={imageCount} osd={this.osd}/>)
     }
   }
 

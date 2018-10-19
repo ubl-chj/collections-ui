@@ -10,7 +10,7 @@ const {GenerateSW} = require('workbox-webpack-plugin')
 const eslintFormatter = require('react-dev-utils/eslintFormatter')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const paths = require('./paths')
 const getClientEnvironment = require('./env')
 
@@ -29,8 +29,6 @@ const publicUrl = publicPath.slice(0, -1)
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl)
 
-// Assert this just to be safe.
-// Development builds of React are slow and not intended for production.
 if (env.stringified['process.env'].NODE_ENV !== '"production"') {
   throw new Error('Production builds must have NODE_ENV=production.')
 }
@@ -47,15 +45,12 @@ function cleanResponse (response) {
   })
 }
 
-// This is the production configuration.
-// It compiles slowly and is focused on producing a fast and minimal bundle.
-// The development configuration is different and lives in a separate file.
 module.exports = {
   optimization: {
+    runtimeChunk: 'single',
     splitChunks: {
-      chunks: 'async',
-      minSize: 30000,
-      maxSize: 0,
+      chunks: 'all',
+      minSize: 0,
       minChunks: 1,
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
@@ -69,22 +64,22 @@ module.exports = {
         },
         common: {
           name: 'common',
+          chunks: 'initial',
           minChunks: 2,
+          reuseExistingChunk: true,
+          enforce: true
         }
       }
     },
-    minimizer: [new UglifyJsPlugin({
+    minimizer: [new TerserPlugin({
       cache: true,
       parallel: true,
-      sourceMap: false // set to true if you want JS source maps
+      sourceMap: false
     }),
-      new OptimizeCSSAssetsPlugin({})]
-  }, // Don't attempt to continue if there are any errors.
+    new OptimizeCSSAssetsPlugin({})]
+  },
+
   bail: true,
-  // We generate sourcemaps in production. This is slow but gives good results.
-  // You can exclude the *.map files from the build during deployment.
-  //devtool: shouldUseSourceMap ? 'source-map' : false,
-  // In production, we only want to load the polyfills and the app code.
   entry: [require.resolve('./polyfills'), paths.appIndexJs, './src/index.ts'],
   output: {
     // The build folder.
@@ -100,7 +95,8 @@ module.exports = {
     //  path
     //    .relative(paths.appSrc, info.absoluteResourcePath)
     //    .replace(/\\/g, '/'),
-  }, resolve: {
+  },
+  resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
@@ -185,7 +181,9 @@ module.exports = {
         // Make sure to add the new loader(s) before the "file" loader.
       ],
     },],
-  }, plugins: [new Dotenv(),
+  },
+  plugins: [
+    new Dotenv(),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
@@ -247,12 +245,7 @@ module.exports = {
         }
       }],
     }),
-    // Moment.js is an extremely popular library that bundles large locale files
-    // by default due to how Webpack interprets its code. This is a practical
-    // solution that requires the user to opt into importing specific locales.
-    // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
-    // You can remove this if you don't use Moment.js:
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),],
+  ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {

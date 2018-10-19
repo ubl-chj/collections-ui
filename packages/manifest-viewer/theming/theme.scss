@@ -294,7 +294,7 @@ body {
   &-row {
     display:flex;
     flex-flow: row wrap;
-    margin:0px 0 10px;
+    margin:0 0 10px;
 
     &:last-child {
       margin:0;
@@ -470,7 +470,7 @@ body {
   &__poster {
     width:200px;
     flex:0 0 200px;
-    padding:0px 20px;
+    padding:0 20px;
 
     img {
       max-width:100%;
@@ -596,37 +596,7 @@ body {
 }
 
 .selector {
-  width: 80px;
   margin-top: 48px;
-}
-
-.css-1aya2g8 {
-  align-items: center;
-  background-color: hsl(0,0%,98%);
-  border-color: #FFF;
-  border-radius: 4px;
-  border-style: solid;
-  border-width: 0;
-  cursor: default;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  min-height: 38px;
-  outline: 0 !important;
-  position: relative;
-  -webkit-transition: all 100ms;
-  transition: all 100ms;
-  box-sizing: border-box;
-}
-
-.css-z5z6cw {
-  background-color: #2684FF;
-  color: hsl(0, 0%, 100%);
-  cursor: default;
-  display: block;
-  font-size: inherit;
-  padding: 8px 12px;
-  width: 100%;
 }
 
 .list-group-item img {

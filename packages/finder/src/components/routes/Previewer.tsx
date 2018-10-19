@@ -16,7 +16,6 @@ class PreviewerComponent extends React.Component<any, any> {
   props: any
   region: any
   abstractRegion: any
-  coordinates: any
   image: string
   document: string
   source: object
@@ -80,7 +79,7 @@ class PreviewerComponent extends React.Component<any, any> {
               <Controls {...this.props} uuid={uuidv4()}/>
             </ActionBar>
             <LayoutBody>
-              <OsdComponent images={[this.document]} width={width}/>
+              <OsdComponent canvasLabels={null} images={[this.document]} width={width}/>
             </LayoutBody>
           </Layout>
         </ViewerProvider>)

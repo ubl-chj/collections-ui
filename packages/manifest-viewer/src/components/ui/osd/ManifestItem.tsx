@@ -10,14 +10,17 @@ export class ManifestItem extends React.Component<any, any> {
   }
 
   render() {
-    const {document, width, canvas} = this.props
+    const {document, width} = this.props
     if (document) {
       const manifest = manifesto.create(document)
       const sequences = manifest.getSequences()
       const imageIds = []
+      const canvasLabels = []
       sequences.forEach((seq) => {
         const canvases = seq.getCanvases()
         canvases.forEach((c) => {
+          const cLabel = manifesto.LanguageMap.getValue(c.getLabel())
+          canvasLabels.push(cLabel)
           const images = c.getImages()
           images.forEach((image) => {
             const resource = image.getResource()
@@ -31,7 +34,7 @@ export class ManifestItem extends React.Component<any, any> {
       return (
         <ViewerContext.Consumer>
           {(currentCanvas) =>
-            <OsdComponent currentCanvas={currentCanvas} width={width} images={imageIds}/>}
+            <OsdComponent currentCanvas={currentCanvas} canvasLabels={canvasLabels} width={width} images={imageIds}/>}
          </ViewerContext.Consumer>   )
     }
     return (null)
