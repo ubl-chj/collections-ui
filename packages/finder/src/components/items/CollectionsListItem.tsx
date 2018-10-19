@@ -97,7 +97,7 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
     const updated = new Date(source.dateUpdated).toDateString();
     const updatedKey = 'Last Updated'
     const totalDocsKey = 'Total Documents'
-    const logo = '<img alt="collection logo" width=170 src=' + source.logo + '>'
+    const logo = '<img crossorigin alt="collection logo" width=170 src=' + source.logo + '>'
     return (
       <ResultContext.Provider value={result}>
         <div className={bemBlocks.item().mix(bemBlocks.container('landing'))} data-qa='hit'>
