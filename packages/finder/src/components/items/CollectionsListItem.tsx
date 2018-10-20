@@ -1,4 +1,5 @@
 import * as React from "react";
+import Observer from 'react-intersection-observer'
 import {Link} from 'react-router-dom'
 import {Hits, SearchkitManager, SearchkitProvider} from "searchkit-fork";
 import {ResultContext} from "../core";
@@ -105,7 +106,14 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
             <div className='schema-list-flex'>
               <div className='collection-list__left'>
                 <span className='schema-list-key'><b>Collection:</b></span>
-                <div dangerouslySetInnerHTML={{__html: logo}}/>
+                <Observer>
+                  {({inView, ref }) => (
+                    <div ref={ref}>
+                      {inView ? (
+                      <div dangerouslySetInnerHTML={{__html: logo}}/>) : null}
+                    </div>
+                  )}
+                </Observer>
               </div>
               <div className='schema-list-value'>
                 <Link title='Browse this Collection' to={source.route}>{source.name}</Link>
