@@ -11,6 +11,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const {StatsWriterPlugin} = require('webpack-stats-plugin')
 const paths = require('./paths')
 const getClientEnvironment = require('./env')
 
@@ -57,9 +58,9 @@ module.exports = {
       automaticNameDelimiter: '~',
       name: true,
       cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
+        vendors: {
+          reuseExistingChunk: true,
+          test: /[\\/]node_modules[\\/](react|react-dom|manifest-viewer|searchkit-fork|@firebase|openseadragon|lodash|snapsvg-cjs)[\\/]/,
           chunks: 'all',
         },
         common: {
@@ -213,6 +214,11 @@ module.exports = {
     // In production, it will be an empty string unless you specify "homepage"
     // in `package.json`, in which case it will be the pathname of that URL.
     new InterpolateHtmlPlugin(env.raw),
+    new StatsWriterPlugin({
+      filename: 'stats.json',
+      fields: null,
+      stats: 'normal'
+    }),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css',
       chunkFilename: '[chunkhash:8].css',

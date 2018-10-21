@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {ViewerContext} from "../../../core/react"
-const manifesto = require('manifesto.js')
+const manifesto = require('manifesto-fork')
 
 export class ManifestItem extends React.Component<any, any> {
   state: {

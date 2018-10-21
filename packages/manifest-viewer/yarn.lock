@@ -5620,10 +5620,10 @@ makeerror@1.0.x:
   dependencies:
     tmpl "1.0.x"
 
-manifesto.js@^3.0.9:
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/manifesto.js/-/manifesto.js-3.0.9.tgz#ed16733795f7e02cddc90823f47248fb33f5d1fa"
-  integrity sha512-sblQSbDmPszfwqdcSVOZp0eXIFMg7vUYJKIVTGRoO65HBppjS9ipRZ+jReV3dt5WQhI5J58KXJL97z5mcKL/pA==
+manifesto-fork@^3.0.11:
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/manifesto-fork/-/manifesto-fork-3.0.11.tgz#57844666bef0bce4f0e8f407d037f209f3dde712"
+  integrity sha512-vaWtuhkSDOQxf9iN+3fu1sJLYQprAtZOzla4aY/2NNmlYN8ExJ2ACAyJ9CZj7URBj2dvsbCLDomLraUv7FkM+w==
   dependencies:
     exjs BSick7/exjs#0.5.0
     http-status-codes edsilv/http-status-codes#v0.0.7
