@@ -59,7 +59,7 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
     if (document) {
       const manifest = manifesto.create(document)
       const metadata = manifest.getMetadata()
-      const attributionText = manifesto.LanguageMap.getValue(manifest.getAttribution())
+      const attributionText = manifesto.LanguageMap.getValue(manifest.getRequiredStatement().value)
       const title = manifesto.LanguageMap.getValue(manifest.getLabel())
       const thumbnail = buildThumbnail(manifest)
       const href = buildContentUrl()

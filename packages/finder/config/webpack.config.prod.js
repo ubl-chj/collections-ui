@@ -73,10 +73,16 @@ module.exports = {
     },
     minimizer: [new TerserPlugin({
       cache: true,
+      extractComments: true,
       parallel: true,
       sourceMap: false
     }),
-    new OptimizeCSSAssetsPlugin({})]
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorPluginOptions: {
+          preset: ['default', { discardComments: { removeAll: true } }],
+        },
+      }),
+    ]
   },
 
   bail: true,
@@ -209,7 +215,7 @@ module.exports = {
     new InterpolateHtmlPlugin(env.raw),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css',
-      chunkFilename: '[id].css',
+      chunkFilename: '[chunkhash:8].css',
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
@@ -223,7 +229,6 @@ module.exports = {
       fileName: 'asset-manifest.json',
     }),
     new GenerateSW({
-      dontCacheBustUrlsMatching: /\.\w{8}\./,
       swDest: 'sw.js',
       skipWaiting: true,
       runtimeCaching: [{

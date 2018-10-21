@@ -1,15 +1,26 @@
 import * as React from 'react'
 import {ViewerContext} from "../../../core/react"
-import OsdComponent from './OsdComponent'
 const manifesto = require('manifesto.js')
 
 export class ManifestItem extends React.Component<any, any> {
+  state: {
+    OsdComponent: React.ComponentType<any>
+  }
 
   constructor(props) {
     super(props)
+    this.state = {
+      OsdComponent: null,
+    }
+  }
+
+  async componentWillMount() {
+    const {OsdComponent} = await import('./OsdComponent')
+    this.setState({OsdComponent})
   }
 
   render() {
+    const {OsdComponent} = this.state
     const {document, width} = this.props
     if (document) {
       const manifest = manifesto.create(document)
