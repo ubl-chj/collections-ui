@@ -6,7 +6,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const InterpolateHtmlPlugin = require('interpolate-html-plugin')
-const {GenerateSW} = require('workbox-webpack-plugin')
 const eslintFormatter = require('react-dev-utils/eslintFormatter')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
@@ -242,35 +241,6 @@ module.exports = {
     // having to parse `index.html`.
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
-    }),
-    new GenerateSW({
-      exclude: ['index.html'],
-      swDest: 'sw.js',
-      skipWaiting: true,
-      runtimeCaching: [
-        {
-          // Match any request for Images
-          urlPattern: /.*jpg/, handler: 'staleWhileRevalidate',
-          options: {
-            cacheableResponse: {
-              statuses: [200]
-            },
-            cacheName: 'images',
-            expiration: {
-              maxAgeSeconds: 7 * 24 * 60 * 60,
-              purgeOnQuotaError: true,
-            },
-          },
-        },
-        {
-          // Match any search request
-          urlPattern: new RegExp('^https:\/\/es\.iiif\.cloud\/'), handler: 'staleWhileRevalidate', options: {
-            cacheableResponse: {
-              statuses: [0, 200]
-            }
-          }
-        }
-      ],
     }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
