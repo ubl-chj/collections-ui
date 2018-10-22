@@ -7,7 +7,7 @@ import '../../styles/firebaseui-styling.global.css'
 import {AuthUserContext} from '../core'
 import {Logo} from "../ui/svg";
 
-const styles = require('../../styles/app.css')
+const styles = require('../../styles/firebase-auth.css')
 const firebase = require("firebase/app");
 const firebaseApiKey = process.env.REACT_APP_FIREBASE_KEY
 

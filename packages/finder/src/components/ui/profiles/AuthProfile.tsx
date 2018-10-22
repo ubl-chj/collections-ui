@@ -1,8 +1,9 @@
 import * as React from "react";
-import {AuthUserProfile} from "./AuthUserProfile";
-import {AuthUserTooltip} from "./AuthUserTooltip";
-const ReactTooltip = require('react-tooltip')
+import {AuthUserProfile} from "./AuthUserProfile"
+import {AuthUserTooltip} from "./AuthUserTooltip"
+import {AuthUserContext} from "../../core";
 
+const ReactTooltip = require('react-tooltip')
 export class AuthProfile extends React.Component<any, any> {
 
   state: {
@@ -33,17 +34,21 @@ export class AuthProfile extends React.Component<any, any> {
           <div data-tip='authUserProfile' data-for='authUserProfile' data-event='click focus'>
             <AuthUserProfile/>
           </div>
-          <ReactTooltip
-            id='authUserProfile'
-            offset={{left: 170}}
-            globalEventOff='click'
-            border={Boolean(true)}
-            place='bottom'
-            type='light'
-            effect='solid'
-            getContent={() => <AuthUserTooltip/>}
-          />
-        </div>)
+          <AuthUserContext.Consumer>
+            {(authUser) => authUser ?
+            <ReactTooltip
+              id='authUserProfile'
+              offset={{left: 170}}
+              globalEventOff='click'
+              border={Boolean(true)}
+              place='bottom'
+              type='light'
+              effect='solid'
+              getContent={() => <AuthUserTooltip/>}
+            /> : null
+            }
+          </AuthUserContext.Consumer>
+          </div>)
     }
   }
 }

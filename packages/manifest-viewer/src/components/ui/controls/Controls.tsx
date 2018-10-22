@@ -6,7 +6,7 @@ import {buildContentUrl, buildStructuredData, buildThumbnail, HeadMeta, Metadata
 import {ArrowLeftIcon, ArrowRightIcon, HomeIcon, RotateLeftIcon, RotateRightIcon, ZoomInIcon,
   ZoomOutIcon} from "../svg"
 import {ManifestInfoMenu} from "./ManifestInfoMenu"
-const manifesto = require('manifesto.js')
+const manifesto = require('manifesto-fork')
 
 export interface IMetadataProps {
   key: string,
@@ -59,7 +59,8 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
     if (document) {
       const manifest = manifesto.create(document)
       const metadata = manifest.getMetadata()
-      const attributionText = manifesto.LanguageMap.getValue(manifest.getAttribution())
+      // const tree = manifest.getDefaultTree()
+      const attributionText = manifesto.LanguageMap.getValue(manifest.getRequiredStatement().value)
       const title = manifesto.LanguageMap.getValue(manifest.getLabel())
       const thumbnail = buildThumbnail(manifest)
       const href = buildContentUrl()

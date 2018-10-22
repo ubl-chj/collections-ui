@@ -3,6 +3,7 @@ const path = require('path')
 const webpack = require('webpack')
 const Dotenv = require('dotenv-webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlCriticalWebpackPlugin = require('html-critical-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const InterpolateHtmlPlugin = require('interpolate-html-plugin')
@@ -11,6 +12,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const {StatsWriterPlugin} = require('webpack-stats-plugin')
 const paths = require('./paths')
 const getClientEnvironment = require('./env')
 
@@ -57,9 +59,9 @@ module.exports = {
       automaticNameDelimiter: '~',
       name: true,
       cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
+        vendors: {
+          reuseExistingChunk: true,
+          test: /[\\/]node_modules[\\/](react|react-dom|manifest-viewer|searchkit-fork|@firebase|openseadragon|lodash|snapsvg-cjs|manifesto-fork)[\\/]/,
           chunks: 'all',
         },
         common: {
@@ -71,12 +73,19 @@ module.exports = {
         }
       }
     },
-    minimizer: [new TerserPlugin({
-      cache: true,
-      parallel: true,
-      sourceMap: false
-    }),
-    new OptimizeCSSAssetsPlugin({})]
+    minimizer: [
+      new TerserPlugin({
+        cache: true,
+        extractComments: true,
+        parallel: true,
+        sourceMap: false
+      }),
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorPluginOptions: {
+          preset: ['default', { discardComments: { removeAll: true } }],
+        },
+      }),
+    ]
   },
 
   bail: true,
@@ -115,7 +124,8 @@ module.exports = {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
-    }, plugins: [
+    },
+    plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
       // This often causes confusion because we only process files within src/ with babel.
       // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
@@ -124,63 +134,70 @@ module.exports = {
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])],
   },
   module: {
-    strictExportPresence: true, rules: [{
-      test: /\.(js|jsx|mjs)$/, enforce: 'pre', use: [{
-        options: {
-          formatter: eslintFormatter, eslintPath: require.resolve('eslint')
-        },
-        loader: require.resolve('eslint-loader'),
-      }],
-      include: paths.appSrc,
-    },
+    strictExportPresence: true,
+    rules: [
       {
-      // "oneOf" will traverse all following loaders until one will
-      // match the requirements. When no loader matches it will fall
-      // back to the "file" loader at the end of the loader list.
-      oneOf: [
+        test: /\.(js|jsx|mjs)$/,
+        enforce: 'pre',
+        use: [{
+          options: {
+            formatter: eslintFormatter, eslintPath: require.resolve('eslint')
+          },
+          loader: require.resolve('eslint-loader'),
+        }],
+        include: paths.appSrc,
+        },
         {
-        test: /\.tsx?$/,
-          loader: require.resolve('ts-loader'),
-          exclude: /node_modules/
+        // "oneOf" will traverse all following loaders until one will
+        // match the requirements. When no loader matches it will fall
+        // back to the "file" loader at the end of the loader list.
+        oneOf: [
+          {
+          test: /\.tsx?$/,
+            loader: require.resolve('ts-loader'),
+            exclude: /node_modules/
+          },
+          // "url" loader works just like "file" loader but it also embeds
+          // assets smaller than specified size as data URLs to avoid requests.
+          {
+            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+            loader: require.resolve('url-loader'),
+            options: {
+              limit: 10000, name: 'static/media/[name].[hash:8].[ext]',
+            },
+          },
+          // Process JS with Babel.
+          {
+            test: /\.(js|jsx|mjs)$/,
+            include: paths.appSrc,
+            loader: require.resolve('babel-loader'), options: {
+             compact: true,
+            },
+          },
+          {
+            test: /\.(sa|sc|c)ss$/,
+            use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader',],
+          },
+          // "file" loader makes sure assets end up in the `build` folder.
+          // When you `import` an asset, you get its filename.
+          // This loader doesn't use a "test" so it will catch all modules
+          // that fall through the other loaders.
+          {
+            loader: require.resolve('file-loader'),
+            // Exclude `js` files to keep "css" loader working as it injects
+            // it's runtime that would otherwise processed through "file" loader.
+            // Also exclude `html` and `json` extensions so they get processed
+            // by webpacks internal loaders.
+            exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
+            options: {
+              name: 'static/media/[name].[hash:8].[ext]',
+            },
+          },
+          // ** STOP ** Are you adding a new loader?
+          // Make sure to add the new loader(s) before the "file" loader.
+        ],
       },
-        // "url" loader works just like "file" loader but it also embeds
-        // assets smaller than specified size as data URLs to avoid requests.
-        {
-          test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-          loader: require.resolve('url-loader'),
-          options: {
-            limit: 10000, name: 'static/media/[name].[hash:8].[ext]',
-          },
-        },
-        // Process JS with Babel.
-        {
-          test: /\.(js|jsx|mjs)$/,
-          include: paths.appSrc,
-          loader: require.resolve('babel-loader'), options: {
-           compact: true,
-          },
-        }, {
-          test: /\.(sa|sc|c)ss$/,
-          use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader',],
-        },
-        // "file" loader makes sure assets end up in the `build` folder.
-        // When you `import` an asset, you get its filename.
-        // This loader doesn't use a "test" so it will catch all modules
-        // that fall through the other loaders.
-        {
-          loader: require.resolve('file-loader'),
-          // Exclude `js` files to keep "css" loader working as it injects
-          // it's runtime that would otherwise processed through "file" loader.
-          // Also exclude `html` and `json` extensions so they get processed
-          // by webpacks internal loaders.
-          exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
-          options: {
-            name: 'static/media/[name].[hash:8].[ext]',
-          },
-        }, // ** STOP ** Are you adding a new loader?
-        // Make sure to add the new loader(s) before the "file" loader.
-      ],
-    },],
+    ],
   },
   plugins: [
     new Dotenv(),
@@ -201,15 +218,38 @@ module.exports = {
         minifyURLs: true,
       }
     }),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+      chunkFilename: '[chunkhash:8].css',
+    }),
+    new HtmlCriticalWebpackPlugin({
+      base: paths.appPublic,
+      src: 'index.html',
+      dest: 'index.html',
+      inline: true,
+      minify: true,
+      extract: true,
+      dimensions: [{
+        height: 200,
+        width: 500
+      }, {
+        height: 900,
+        width: 1200
+      }],
+      penthouse: {
+        blockJSRequests: false,
+      }
+    }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In production, it will be an empty string unless you specify "homepage"
     // in `package.json`, in which case it will be the pathname of that URL.
     new InterpolateHtmlPlugin(env.raw),
-    new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css',
-      chunkFilename: '[id].css',
+    new StatsWriterPlugin({
+      filename: 'stats.json',
+      fields: null,
+      stats: 'normal'
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
@@ -223,27 +263,32 @@ module.exports = {
       fileName: 'asset-manifest.json',
     }),
     new GenerateSW({
-      dontCacheBustUrlsMatching: /\.\w{8}\./,
       swDest: 'sw.js',
       skipWaiting: true,
-      runtimeCaching: [{
-        // Match any request for Images
-        urlPattern: /.*jpg/, handler: 'staleWhileRevalidate', options: {
-          cacheableResponse: {
-            statuses: [200]
-          }, cacheName: 'images', expiration: {
-            maxAgeSeconds: 7 * 24 * 60 * 60,
-            purgeOnQuotaError: true,
+      runtimeCaching: [
+        {
+          // Match any request for Images
+          urlPattern: /.*jpg/, handler: 'staleWhileRevalidate',
+          options: {
+            cacheableResponse: {
+              statuses: [200]
+            },
+            cacheName: 'images',
+            expiration: {
+              maxAgeSeconds: 7 * 24 * 60 * 60,
+              purgeOnQuotaError: true,
+            },
           },
         },
-      }, {
-        // Match any search request
-        urlPattern: new RegExp('^https:\/\/es\.iiif\.cloud\/'), handler: 'staleWhileRevalidate', options: {
-          cacheableResponse: {
-            statuses: [0, 200]
+        {
+          // Match any search request
+          urlPattern: new RegExp('^https:\/\/es\.iiif\.cloud\/'), handler: 'staleWhileRevalidate', options: {
+            cacheableResponse: {
+              statuses: [0, 200]
+            }
           }
         }
-      }],
+      ],
     }),
   ],
   // Some libraries import Node modules but don't use them in the browser.

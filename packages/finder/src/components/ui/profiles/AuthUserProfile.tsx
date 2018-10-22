@@ -2,12 +2,10 @@ import * as React from "react";
 import {Link} from 'react-router-dom'
 import {Col, Container, Row} from 'reactstrap';
 import {Domain, Routes} from '../../../constants'
-import {AuthUserContext} from "../../core";
-
+import {AuthUserContext} from "../../core"
 const firebase = require("firebase/app");
 
-export const AuthUserProfile = (props) => {
-  const {dataFor} = props
+export const AuthUserProfile = () => {
   const notFoundImageUri = 'https://upload.wikimedia.org/wikipedia/commons/9/9a/VisualEditor_icon_page-not-found-ltr.svg'
   return (
     <AuthUserContext.Consumer>
@@ -31,8 +29,9 @@ export const AuthUserProfile = (props) => {
         </div> :
         <div className="gb_Ng">
           <Link
-            className='btn btn-outline-secondary float-right'
-            to={Routes.SIGN_IN}>{Domain.LOGIN_TEXT}
+            className='btn btn-light float-right'
+            to={Routes.SIGN_IN}
+          >{Domain.LOGIN_TEXT}
           </Link>
         </div>}
     </AuthUserContext.Consumer>

@@ -92,7 +92,7 @@ export class ManifestInfoMenu extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.state = {
-      menuOpen: false,
+      menuOpen: true,
       uuid: null,
       width: props.width,
     }
@@ -131,8 +131,8 @@ export class ManifestInfoMenu extends React.Component<any, any> {
     const {attributionText, manifest, metadata} = this.props
     const manifestItem = ManifestInfoMenu.buildManifestLink(manifest.id)
 
-    const logo = manifest.getLogo()
-    const logoItem = ManifestInfoMenu.buildLogo(logo)
+    // const logo = manifest.getLogo()
+    // const logoItem = ManifestInfoMenu.buildLogo(logo)
 
     const attribution = ManifestInfoMenu.buildAttribution(attributionText)
 

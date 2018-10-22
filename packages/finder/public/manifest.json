@@ -16,7 +16,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/?utm_source=a2hs",
+  "start_url": "https://iiif.cloud/?utm_source=a2hs",
   "background_color": "#FFF",
   "display": "standalone",
   "scope": "/",

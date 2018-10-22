@@ -1,16 +1,5 @@
 @import "vars.scss";
 
-.osd-sidebar {
-  padding-top: 50px;
-  background-color: #262425;
-  width: 100%;
-}
-
-.osd-sidebar ul {
-  list-style: none;
-  margin: 0;
-}
-
 .navigator-wrapper {
   background: #000;
   overflow: hidden;
@@ -71,62 +60,6 @@
 
 .page-button {
   white-space: normal;
-}
-
-.osd-sidebar .nav {
-  font-size: .8em;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
-
-.osd-sidebar-header {
-  background-color: #262425;
-  padding: 10px;
-  text-align: center;
-}
-
-.osd-sidebar-footer {
-  height: 200px;
-}
-
-.osd-sidebar {
-  text-align: center;
-  height: 387px;
-  padding: 15px;
-  overflow: scroll;
-}
-
-.osd-sidebar .nav-tabs {
-  margin-bottom: 15px;
-}
-
-.osd-sidebar .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a
-{
-  margin-top: 1px;
-}
-.osd-sidebar .nav-tabs > li {
-  margin-bottom: 0;
-}
-.osd-sidebar .nav-tabs > li.active {
-  margin-bottom: -1px;
-}
-
-.osd-sidebar ul {
-  padding: 0;
-}
-
-.osd-sidebar .btn {
-  white-space: normal;
-}
-
-.osd-sidebar .btn:hover {
-  color: #337ab7;
-  background-color: #fff;
-}
-
-.osd-sidebar .page.active {
-  background-color: #ECEDF0;
 }
 
 .page-search .glyphicon-search {

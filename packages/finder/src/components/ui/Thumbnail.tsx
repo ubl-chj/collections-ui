@@ -1,4 +1,5 @@
 import * as React from "react"
+import Observer from 'react-intersection-observer'
 import {Link} from 'react-router-dom'
 import {ResultContext} from "../core";
 
@@ -33,22 +34,36 @@ export class Thumbnail extends React.Component<any, any> {
             title='Preview this image'
             to={this.imageLink}
           >
-          <img
-            crossOrigin=''
-            width={this.imageWidth}
-            onError={(e) => {this.handleMissingImage(e.target as HTMLImageElement)}}
-            alt='thumbnail'
-            src={this.imageSource}
-          />
+            <Observer>
+              {({inView, ref }) => (
+                <div ref={ref}>
+                  {inView ? (
+                  <img
+                    crossOrigin=''
+                    width={this.imageWidth}
+                    onError={(e) => {this.handleMissingImage(e.target as HTMLImageElement)}}
+                    alt='thumbnail'
+                    src={this.imageSource}
+                  />) : null}
+                </div>
+              )}
+            </Observer>
           </Link> :
           <a href={this.imageLink} target='_blank' rel='noopener noreferrer'>
-            <img
-              crossOrigin=''
-              width={this.imageWidth}
-              onError={(e) => {this.handleMissingImage(e.target as HTMLImageElement)}}
-              alt='thumbnail'
-              src={this.imageSource}
-            />
+            <Observer>
+              {({inView, ref }) => (
+                <div ref={ref}>
+                  {inView ? (
+                    <img
+                      crossOrigin=''
+                      width={this.imageWidth}
+                      onError={(e) => {this.handleMissingImage(e.target as HTMLImageElement)}}
+                      alt='thumbnail'
+                      src={this.imageSource}
+                    />) : null}
+                </div>
+              )}
+            </Observer>
           </a>}
       </ResultContext.Consumer>
     </div>)
