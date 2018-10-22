@@ -7,7 +7,7 @@ export class ZoomOutIcon extends React.Component<any, any> {
         aria-label='zoom out'
         id="zoom-out"
         type="button"
-        className="btn control-btn btn-primary-outline btn-xs">
+        className="btn-viewer btn-xs">
           <svg className="JUQOtd" viewBox="0 0 512 512">
             <path
               style={{stroke: 'black', fill: 'black'}}

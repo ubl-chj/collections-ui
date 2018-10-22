@@ -52,7 +52,7 @@ export class ManifestInfoMenu extends React.Component<any, any> {
       bmCrossButton: {
         height: '24px',
         right: '15px',
-        top: '5px',
+        top: '-20px',
         width: '24px',
       },
       bmItem: {
@@ -72,7 +72,7 @@ export class ManifestInfoMenu extends React.Component<any, any> {
         opacity: '1',
         padding: '2px',
         position: 'absolute',
-        top: '33px',
+        top: '8px',
         transform: 'translateX(0)',
         width: '100%',
         wordWrap: 'break-word',
@@ -92,7 +92,7 @@ export class ManifestInfoMenu extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.state = {
-      menuOpen: true,
+      menuOpen: false,
       uuid: null,
       width: props.width,
     }
@@ -160,7 +160,7 @@ export class ManifestInfoMenu extends React.Component<any, any> {
           aria-label='toggle manifest information'
           title='Info'
           type="button"
-          className="btn btn-primary-outline btn-xs"
+          className="btn-viewer btn-xs"
           onClick={this.toggleMenu}
         >
           <InfoIcon/>

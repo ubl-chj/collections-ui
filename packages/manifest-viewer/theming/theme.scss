@@ -459,6 +459,10 @@ body {
 
 }
 
+.bm-menu-wrap {
+  top: 85px;
+}
+
 .viewer-action-bar {
 
   .viewer-select, .viewer-toggle {
@@ -499,6 +503,21 @@ body {
   text-align: left !important;
   font-size: 16px;
   padding-right: 30px !important;
+}
+
+.btn-primary-outline {
+  border-color: #ccc;
+}
+
+.btn-viewer {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid #ff222200;
+  padding: 0.375rem 0.60rem;
 }
 
 .sub-title {

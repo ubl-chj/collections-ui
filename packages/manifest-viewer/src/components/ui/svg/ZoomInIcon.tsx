@@ -7,7 +7,7 @@ export class ZoomInIcon extends React.Component<any, any> {
         aria-label='zoom in'
         id="zoom-in"
         type="button"
-        className="btn control-btn btn-primary-outline btn-xs"
+        className="btn-viewer btn-xs"
       >
           <svg className="JUQOtd" viewBox="0 0 512 512">
             <path
