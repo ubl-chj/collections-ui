@@ -7,12 +7,17 @@ const TerserPlugin = require('terser-webpack-plugin')
 module.exports = {
   mode: 'production',
   optimization: {
-    minimizer: [new TerserPlugin({
+    minimizer: [
+      new TerserPlugin({
       cache: true,
       parallel: true,
       sourceMap: false
     }),
-      new OptimizeCSSAssetsPlugin({})
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorPluginOptions: {
+          preset: ['default', { discardComments: { removeAll: true } }],
+        },
+      }),
     ]
   },
   entry: {

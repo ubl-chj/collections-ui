@@ -3,7 +3,6 @@ const path = require('path')
 const webpack = require('webpack')
 const Dotenv = require('dotenv-webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const HtmlCriticalWebpackPlugin = require('html-critical-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const InterpolateHtmlPlugin = require('interpolate-html-plugin')
@@ -222,24 +221,6 @@ module.exports = {
       filename: '[name].[contenthash].css',
       chunkFilename: '[chunkhash:8].css',
     }),
-    new HtmlCriticalWebpackPlugin({
-      base: paths.appPublic,
-      src: 'index.html',
-      dest: 'index.html',
-      inline: true,
-      minify: true,
-      extract: true,
-      dimensions: [{
-        height: 200,
-        width: 500
-      }, {
-        height: 900,
-        width: 1200
-      }],
-      penthouse: {
-        blockJSRequests: false,
-      }
-    }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
@@ -263,6 +244,7 @@ module.exports = {
       fileName: 'asset-manifest.json',
     }),
     new GenerateSW({
+      exclude: ['index.html'],
       swDest: 'sw.js',
       skipWaiting: true,
       runtimeCaching: [

@@ -1,7 +1,7 @@
 import * as React from "react";
+import {AuthUserContext} from "../../core";
 import {AuthUserProfile} from "./AuthUserProfile"
 import {AuthUserTooltip} from "./AuthUserTooltip"
-import {AuthUserContext} from "../../core";
 
 const ReactTooltip = require('react-tooltip')
 export class AuthProfile extends React.Component<any, any> {
