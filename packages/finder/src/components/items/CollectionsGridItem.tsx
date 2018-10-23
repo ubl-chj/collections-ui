@@ -5,28 +5,11 @@ import {Hits, SearchkitManager, SearchkitProvider} from "searchkit-fork";
 import {ResultContext} from "../core";
 import {RefreshIcon} from "../ui/svg";
 import {ItemProps} from './ItemProps'
-import {RandomListLandingItem} from "./RandomListLandingItem";
+import {RandomGridLandingItem} from "./RandomGridLandingItem";
 
 const extend = require('lodash/extend')
 
-export const makeValue = (value) => {
-    return {__html: value}
-}
-
-export const ListCollectionEntry = (props) => {
-  const {label, value} = props
-  const val = makeValue(value)
-  return (
-    <div className='schema-list-flex'>
-      <div className='collection-list__left'>
-        <span className='schema-list-key'><b>{label}</b></span>
-      </div>
-      <div className='schema-list-value' dangerouslySetInnerHTML={val}/>
-    </div>
-  )
-}
-
-export class CollectionsListItem extends React.Component<ItemProps, any> {
+export class CollectionsGridItem extends React.Component<ItemProps, any> {
 
   static defaultProps = {
     host: process.env.REACT_APP_ELASTICSEARCH_HOST,
@@ -79,11 +62,9 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
   renderRandomItem() {
     if (this.state.refreshItem) {
       return (
-        <div className='schema-list-value'>
           <SearchkitProvider searchkit={this.searchkit2}>
-            <Hits hitsPerPage={1} highlightFields={["title"]} mod="sk-hits-list" itemComponent={RandomListLandingItem}/>
+            <Hits hitsPerPage={1} highlightFields={["title"]} mod="sk-hits-grid-landing" itemComponent={RandomGridLandingItem}/>
           </SearchkitProvider>
-        </div>
       )
     }
   }
@@ -94,32 +75,27 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
     const index = source.index
     const queryContext = this.host + index
     this.searchkit2 = new SearchkitManager(queryContext, this.options)
-    this.searchkit2.addDefaultQuery((query) => query.addQuery(CollectionsListItem.randomQuery()))
-    const updated = new Date(source.dateUpdated).toDateString();
-    const updatedKey = 'Last Updated'
-    const totalDocsKey = 'Total Documents'
+    this.searchkit2.addDefaultQuery((query) => query.addQuery(CollectionsGridItem.randomQuery()))
     const logo = '<img crossorigin alt="collection logo" width=170 src=' + source.logo + '>'
+    const title = 'Browse ' + source.name
     return (
       <ResultContext.Provider value={result}>
         <div className={bemBlocks.item().mix(bemBlocks.container('landing'))} data-qa='hit'>
           <div className={bemBlocks.item('details')}>
-            <div className='schema-list-flex'>
               <div className='collection-list__left'>
                 <span className='schema-list-key'><b>Collection:</b></span>
                 <Observer>
                   {({inView, ref }) => (
                     <div ref={ref}>
                       {inView ? (
-                      <div dangerouslySetInnerHTML={{__html: logo}}/>) : null}
+                        <Link title={title} to={source.route}>
+                          <div dangerouslySetInnerHTML={{__html: logo}}/>
+                        </Link>
+                      ) : null}
                     </div>
                   )}
                 </Observer>
-              </div>
-              <div className='schema-list-value'>
-                <Link title='Browse this Collection' to={source.route}>{source.name}</Link>
-              </div>
             </div>
-            <div className='schema-list-flex'>
               <div className='collection-list__left'>
                 <span className='schema-list-key'><b>Random Item:</b></span>
                 <div className='JUQOte'>
@@ -133,12 +109,9 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
                   </button>
                 </div>
               </div>
-              {this.renderRandomItem()}
             </div>
-            <ListCollectionEntry label={updatedKey} value={updated}/>
-            <ListCollectionEntry label={totalDocsKey} value={source.docCount}/>
+            {this.renderRandomItem()}
           </div>
-        </div>
       </ResultContext.Provider>)
   }
 }

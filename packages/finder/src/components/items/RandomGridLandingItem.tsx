@@ -1,16 +1,14 @@
 import * as React from "react";
 import {Link} from 'react-router-dom'
-import {ResultContext} from "../core";
-import {Thumbnail, Title} from "../ui";
-import {ListSchemaEntry} from '../ui/ListItemDisplay';
-import {resolveManifestId, resolveName} from './index';
+import {ResultContext} from "../core"
+import {Thumbnail, Title} from "../ui"
+import {resolveCreator, resolveManifestId, resolveName} from './index'
 import {ItemProps} from './ItemProps'
-import {buildImagePreview, buildImageView, buildRandomThumbnailReference, getSchema} from './ItemUtils';
+import {buildImagePreview, buildImageView, buildRandomThumbnailReference, getSchema} from './ItemUtils'
 
-const uuidv4 = require('uuid/v4');
 const extend = require('lodash/extend')
 
-export class RandomLandingItem extends React.Component<ItemProps, any> {
+export class RandomGridLandingItem extends React.Component<ItemProps, any> {
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
@@ -34,26 +32,22 @@ export class RandomLandingItem extends React.Component<ItemProps, any> {
     const viewUrl = buildImageView(viewerUrl, manifestId)
     const schema = getSchema(source, manifestId, thumbnail, null)
     const name = resolveName(schema)
-    const schemaFilterName = Object.entries(schema.mainEntity).filter((e) => e[0] === 'description' || e[0] === 'dateCreated'
-      || e[0] === 'datePublished' || e[0] === 'disambiguatingDescription' || e[0] === 'material.format' || e[0] === 'material'
-      || e[0] === 'creator')
     if (thumbnail) {
       return (
         <ResultContext.Provider value={result}>
-          <div className={bemBlocks.item().mix(bemBlocks.container('landing'))} data-qa='hit'>
+          <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
               <Thumbnail
+                imageWidth={170}
                 imageSource={thumbnail}
                 imageLink={imageLink}
-                className={'featured__poster'}
+                className={'poster'}
               />
-            <div className={bemBlocks.item('details')}>
               <Title
                 viewUrl={viewUrl}
                 className={bemBlocks.item('title')}
                 titleString={name}
               />
-              {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
-            </div>
+            <div className='sk-hits-grid-hit__author' dangerouslySetInnerHTML={resolveCreator(schema)}/>
           </div>
         </ResultContext.Provider>)
     } else {

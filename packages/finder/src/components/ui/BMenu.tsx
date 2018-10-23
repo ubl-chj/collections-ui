@@ -23,6 +23,7 @@ export class BMenu extends React.Component<any, any> {
       },
       bmCrossButton: {
         height: '24px',
+        left: '275px',
         width: '24px',
       },
       bmItem: {
@@ -41,10 +42,13 @@ export class BMenu extends React.Component<any, any> {
         opacity: '1',
         padding: '2px',
         position: 'absolute',
-        top: '0',
+        top: '25px',
         transform: 'translateX(0)',
         width: '100%',
         wordWrap: 'break-word',
+      },
+      bmMenuWrap: {
+        position: 'inherit',
       },
       bmMorphShape: {
         fill: '#373a47',

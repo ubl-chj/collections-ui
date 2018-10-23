@@ -109,6 +109,9 @@
   background-color: transparent;
   border: none;
 }
+.outer-container {
+  background: #efefef;
+}
 
 .container {
   position: fixed;
@@ -508,6 +511,13 @@
   background: #eeeeee;
 }
 
+.sk-hits-grid-landing {
+   margin: 0;
+}
+
+.sk-hits-grid__landing {
+  min-width: 310px;
+}
 @media (max-width: 500px) {
   .sk-hits-grid {
     background: #eeeeee;

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import {
   ActionBar,
   ActionBarRow,
-  GroupedSelectedFilters, Hits,
+  GroupedSelectedFilters,
   HitsStats,
   Layout,
   LayoutBody,
@@ -16,10 +16,10 @@ import {
   SearchkitManager,
   SearchkitProvider,
   SideBar,
-  SortingSelector,
+  SortingSelector, ViewSwitcherHits, ViewSwitcherToggle,
 } from 'searchkit-fork'
 import '../../styles/index.css'
-import {CollectionsListItem} from '../items'
+import {CollectionsGridItem, CollectionsListItem} from '../items'
 import {HeadMeta} from "../schema";
 import {BMenu, FilterMenu, Head} from '../ui'
 import {IRouteProps} from './IRouteProps'
@@ -110,6 +110,7 @@ export class Landing extends React.Component<IRouteProps, any> {
         <ActionBar>
           <ActionBarRow>
             <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
+            <ViewSwitcherToggle/>
             <SortingSelector options={routeConfig.sortingSelectorOptions}/>
           </ActionBarRow>
           <FilterMenu
@@ -126,6 +127,7 @@ export class Landing extends React.Component<IRouteProps, any> {
         <ActionBar>
           <ActionBarRow>
             <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
+            <ViewSwitcherToggle/>
             <SortingSelector options={routeConfig.sortingSelectorOptions}/>
           </ActionBarRow>
           <ActionBarRow>
@@ -139,10 +141,21 @@ export class Landing extends React.Component<IRouteProps, any> {
 
   render() {
     const {routeConfig} = this.props
-    const {width} = this.state;
+    const {width} = this.state
+    const gridObj = {
+      defaultOption: true,
+      itemComponent: CollectionsGridItem,
+      key: 'grid',
+      title: 'Grid',
+    }
+    const listObj = {
+      itemComponent: CollectionsListItem,
+      key: 'list',
+      title: 'List',
+    }
     return (
          <SearchkitProvider searchkit={this.searchkit}>
-           <div id='outer-container'>
+           <div className='outer-container' id='outer-container'>
              <HeadMeta/>
              <BMenu/>
              <div id='page-wrap'>
@@ -153,11 +166,11 @@ export class Landing extends React.Component<IRouteProps, any> {
                      {this.buildSideBar()}
                      <LayoutResults>
                        {this.buildActionBar()}
-                       <Hits
+                       <ViewSwitcherHits
                          hitsPerPage={50}
-                         highlightFields={["title"]}
-                         mod="sk-hits-list"
-                         itemComponent={CollectionsListItem}
+                         highlightFields={routeConfig.highlightFields}
+                         hitComponents={[listObj, gridObj]}
+                         scrollTo='body'
                        />
                        <NoHits suggestionsField={'name'}/>
                        <Pagination showNumbers={true}/>

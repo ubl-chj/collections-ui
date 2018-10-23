@@ -1,4 +1,5 @@
 export * from './ItemUtils'
 export * from './CollectionsListItem'
+export * from './CollectionsGridItem'
 export * from './StandardGridItem'
 export * from './StandardListItem'
