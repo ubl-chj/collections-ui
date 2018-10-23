@@ -1,9 +1,9 @@
 import * as React from "react";
 import Observer from 'react-intersection-observer'
 import {Link} from 'react-router-dom'
-import {Hits, SearchkitManager, SearchkitProvider} from "searchkit-fork";
-import {ResultContext} from "../core";
-import {RefreshIcon} from "../ui/svg";
+import {Hits, SearchkitManager, SearchkitProvider} from "searchkit-fork"
+import {ResultContext} from "../core"
+import {RefreshIcon} from "../ui/svg"
 import {ItemProps} from './ItemProps'
 import {RandomListLandingItem} from "./RandomListLandingItem";
 

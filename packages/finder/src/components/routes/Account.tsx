@@ -3,7 +3,7 @@ import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Layout, LayoutBody, LayoutResults, SearchkitManager, SearchkitProvider, SideBar} from 'searchkit-fork'
 import {AuthUserContext, withAuthorization, withDynamicLayout} from '../core'
 import {BMenu, FavoritesList, Head} from '../ui'
-import {IRouteProps} from "./IRouteProps";
+import {IRouteProps} from "./IRouteProps"
 
 const firebase = require("firebase/app")
 

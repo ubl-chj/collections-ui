@@ -13,11 +13,10 @@ import {
 } from 'manifest-viewer'
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
-import {Domain, Routes} from '../../constants'
 import {firebase} from '../../firebase'
 import '../../styles/index.css'
 import {withDynamicLayout} from "../core";
-import {AuthProfile, Logo} from '../ui'
+import {AuthProfile, LogoWrapper} from '../ui'
 
 const qs = require('query-string')
 const uuidv4 = require('uuid/v4')
@@ -81,12 +80,7 @@ class ViewerComponent extends React.Component<any, any> {
           <ViewerProvider viewer={this.viewer}>
             <Layout>
               <TopBar>
-                <div className='my-logo'>
-                  <Link title={Domain.LOGO_TEXT} className='my-logo' to={Routes.LANDING}>
-                    <Logo className='JUQOtf'/>
-                    <span className='JUQOtq'>{Domain.LOGO_TEXT}</span>
-                  </Link>
-                </div>
+                <LogoWrapper/>
                 <div className='header__mid'/>
                 <AuthProfile width={width}/>
               </TopBar>

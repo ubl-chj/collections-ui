@@ -3,8 +3,7 @@ import {HeadProvider, Meta, Title} from 'react-head'
 import {ScaleLoader} from "react-spinners"
 import {AnnotationsAccessor, ViewerComponent} from "../../../core"
 import {buildContentUrl, buildStructuredData, buildThumbnail, HeadMeta, MetadataSchemaAdapter} from '../../schema'
-import {ArrowLeftIcon, ArrowRightIcon, HomeIcon, RotateLeftIcon, RotateRightIcon, ZoomInIcon,
-  ZoomOutIcon} from "../svg"
+import {ButtonBar} from "./ButtonBar"
 import {ManifestInfoMenu} from "./ManifestInfoMenu"
 const manifesto = require('manifesto-fork')
 
@@ -54,6 +53,17 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
     }
   }
 
+  buildButtonBar() {
+    const {width} = this.state
+    const isMobile = width <= 500
+    if (isMobile) {
+      return null
+    } else {
+      return (<ButtonBar className='btn-group'/>
+      )
+    }
+  }
+
   render() {
     const document = this.getDocument()
     if (document) {
@@ -80,15 +90,7 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
             manifest={manifest}
             metadata={metadata}
           />
-          <div className="btn-group">
-            <ZoomInIcon/>
-            <ZoomOutIcon/>
-            <HomeIcon/>
-            <ArrowLeftIcon/>
-            <ArrowRightIcon/>
-            <RotateLeftIcon/>
-            <RotateRightIcon/>
-          </div>
+          {this.buildButtonBar()}
           <div className="window-manifest-title">
             <h2 className="window-manifest-title">{title}</h2>
           </div>

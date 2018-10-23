@@ -1,3 +1,4 @@
+export * from './ButtonBar'
 export * from './Controls'
 export * from './ImageFiltersMenu'
 export * from './ManifestInfoMenu'

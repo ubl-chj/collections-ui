@@ -26,7 +26,7 @@ export class ImageFiltersMenu extends React.Component<any, any> {
       bmCrossButton: {
         height: '24px',
         right: '7px',
-        top: '45px',
+        top: '65px',
         width: '24px',
       },
       bmItem: {

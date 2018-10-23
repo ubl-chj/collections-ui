@@ -1,10 +1,10 @@
-import * as React from "react";
-import {AuthUserContext} from "../core";
-import {resolveName} from '../items';
-import {FavoriteButton, Thumbnail, Title} from "./index";
+import * as React from "react"
+import {AuthUserContext} from "../core"
+import {resolveName} from '../items'
+import {FavoriteButton, Thumbnail, Title} from "./index"
 
-const uuidv4 = require('uuid/v4');
-const firebase = require("firebase/app");
+const uuidv4 = require('uuid/v4')
+const firebase = require("firebase/app")
 
 export interface IListItemDisplayProps {
   bemBlocks?: any

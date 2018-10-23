@@ -1,5 +1,7 @@
 export * from './ItemUtils'
 export * from './CollectionsListItem'
 export * from './CollectionsGridItem'
+export * from './RandomGridLandingItem'
+export * from './RandomListLandingItem'
 export * from './StandardGridItem'
 export * from './StandardListItem'

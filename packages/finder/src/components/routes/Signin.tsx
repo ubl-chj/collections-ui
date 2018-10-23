@@ -2,10 +2,9 @@ import * as React from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import {Link, withRouter} from 'react-router-dom'
 import {Layout, LayoutBody, LayoutResults, TopBar} from 'searchkit-fork'
-import {Domain, Routes} from '../../constants'
 import '../../styles/firebaseui-styling.global.css'
 import {AuthUserContext} from '../core'
-import {Logo} from "../ui/svg";
+import {LogoWrapper} from "../ui"
 
 const styles = require('../../styles/firebase-auth.css')
 const firebase = require("firebase/app")
@@ -39,12 +38,7 @@ export class SignIn extends React.Component {
     return (
       <Layout>
       <TopBar>
-        <div className='my-logo'>
-          <Link className='my-logo' to={Routes.LANDING}>
-            <Logo className='JUQOtf'/>
-            <span className='JUQOtq'>{Domain.LOGO_TEXT}</span>
-          </Link>
-        </div>
+        <LogoWrapper/>
       </TopBar>
       <LayoutBody>
         <LayoutResults>

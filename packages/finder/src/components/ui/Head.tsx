@@ -1,9 +1,9 @@
 import * as React from "react";
 import {Link} from 'react-router-dom'
-import {SearchBox, TopBar} from "searchkit-fork";
-import {Domain, Routes} from "../../constants";
-import {AuthProfile} from "./profiles";
-import {CloseButton, Logo, SearchIcon} from "./svg";
+import {SearchBox, TopBar} from "searchkit-fork"
+import {LogoWrapper} from "./LogoWrapper"
+import {AuthProfile} from "./profiles"
+import {CloseButton, SearchIcon} from "./svg"
 
 export class Head extends React.Component<any, any> {
   routeConfig: string
@@ -67,12 +67,7 @@ export class Head extends React.Component<any, any> {
     const {width} = this.state
     return(
       <TopBar>
-        <div className='my-logo'>
-          <Link className='my-logo' to={Routes.LANDING}>
-            <Logo className='JUQOtf'/>
-            <span className='JUQOtq'>{Domain.LOGO_TEXT}</span>
-          </Link>
-        </div>
+        <LogoWrapper/>
         {this.buildSearchBox()}
         <AuthProfile width={width}/>
       </TopBar>

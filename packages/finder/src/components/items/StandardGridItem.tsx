@@ -1,6 +1,6 @@
 import * as React from "react"
 import {ResultContext} from "../core"
-import {GridItemDisplay} from "../ui/GridItemDisplay";
+import {GridItemDisplay} from "../ui/GridItemDisplay"
 import {ItemProps} from "./ItemProps"
 import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveManifestId, shortenTitle} from './ItemUtils'
 

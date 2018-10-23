@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {findDOMNode} from 'react-dom'
 import {ViewerManager} from '../../../core'
-import {ImageFiltersMenu, PageSelector, ViewSelector} from '../controls'
+import {ButtonBar, ImageFiltersMenu, PageSelector, ViewSelector} from '../controls'
 import {BackArrow, FullScreenIcon} from '../svg'
 
 let openSeaDragon
@@ -99,9 +99,20 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
   buildPageSelector() {
     const imageCount = this.getImages().length
     const canvasLabels = this.props.canvasLabels
-    const {currentCanvas} = this.state
-    if (this.osd && imageCount > 1) {
-      return (<PageSelector currentCanvas={currentCanvas} canvasLabels={canvasLabels} imageCount={imageCount} osd={this.osd}/>)
+    const {currentCanvas, width} = this.state
+    const isMobile = width <= 500
+    if (!isMobile) {
+      if (this.osd && imageCount > 1) {
+        return (<PageSelector currentCanvas={currentCanvas} canvasLabels={canvasLabels} imageCount={imageCount} osd={this.osd}/>)
+      }
+    }
+  }
+
+  buildMobileControls() {
+    const {width} = this.state
+    const isMobile = width <= 500
+    if (isMobile) {
+      return <ButtonBar className='btn-group'/>
     }
   }
 
@@ -141,6 +152,7 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
             <FullScreenIcon/>
           </div>
           {this.buildPageSelector()}
+          {this.buildMobileControls()}
         </div>
         <div className='openseadragon' id='osd'/>
       </div>

@@ -1,6 +1,6 @@
-import * as React from "react";
+import * as React from "react"
 import {Link} from 'react-router-dom'
-import {ResultContext} from "../core";
+import {ResultContext} from "../core"
 
 export class Title extends React.Component<any, any> {
 

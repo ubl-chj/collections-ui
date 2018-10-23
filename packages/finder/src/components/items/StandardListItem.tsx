@@ -1,6 +1,6 @@
 import * as React from "react"
 import {ResultContext} from "../core"
-import {ListItemDisplay} from "../ui/ListItemDisplay";
+import {ListItemDisplay} from "../ui/ListItemDisplay"
 import {ItemProps} from "./ItemProps"
 import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveManifestId} from './ItemUtils'
 

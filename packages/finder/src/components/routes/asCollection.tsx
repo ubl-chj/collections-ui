@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom'
 
 export const asCollection = (Component) => {
 

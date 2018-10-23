@@ -1,7 +1,7 @@
 import * as React from "react"
 import Observer from 'react-intersection-observer'
 import {Link} from 'react-router-dom'
-import {ResultContext} from "../core";
+import {ResultContext} from "../core"
 
 export class Thumbnail extends React.Component<any, any> {
   imageSource: string
