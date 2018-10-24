@@ -1,7 +1,7 @@
 import * as React from 'react'
-import {findDOMNode} from 'react-dom'
 import {ViewerManager} from '../../../core'
-import {ButtonBar, ImageFiltersMenu, PageSelector, ViewSelector} from '../controls'
+import {ContentTreeMenu, ImageFiltersMenu, PageSelector, ViewSelector} from '../controls'
+import {PagingControls} from "../controls/PagingControls";
 import {BackArrow, FullScreenIcon} from '../svg'
 
 let openSeaDragon
@@ -19,19 +19,29 @@ export interface IOsdComponentProps {
 
 export class OsdComponent extends React.Component<IOsdComponentProps, any> {
 
-  static generateView(mountNode, config) {
-    const newConfig = Object.assign({ bindto: mountNode }, config)
-    return openSeaDragon(newConfig)
+  static generateView(config) {
+    return openSeaDragon(config)
+  }
+
+  static controlBarStyles() {
+    return {
+      backgroundColor: 'black',
+      width: '50px',
+      zindex: 1000,
+    }
   }
 
   state: any
-  private osd: any;
+  element: any = null
+  private osd: any
 
   constructor(props) {
     super(props)
     this.state = {
+      contentMenuOpen: false,
       currentCanvas: props.currentCanvas,
-      menuOpen: false,
+      filterMenuOpen: false,
+      pagingControlsVisible: true,
       width: props.width,
     }
   }
@@ -54,9 +64,9 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
       constrainDuringPan: false,
       crossOriginPolicy: 'Anonymous',
       defaultZoomLevel: 0,
+      element: this.element,
       fullPageButton: 'full-page',
       homeButton: 'reset',
-      id: 'osd',
       loadTilesWithAjax: true,
       maxZoomLevel: 10,
       minZoomLevel: 0,
@@ -81,17 +91,28 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     return this.props.images
   }
 
+  setRef = (el: any) => (this.element = el)
+
   updateViewer(config) {
     if (!this.osd) {
-      this.osd = OsdComponent.generateView(findDOMNode(this), config)
+      this.osd = OsdComponent.generateView(config)
     }
   }
 
   buildImageFilterMenu() {
-    const {menuOpen} = this.state
+    const {filterMenuOpen} = this.state
     if (this.osd) {
       return (
-          <ImageFiltersMenu isOpen={menuOpen} osd={this.osd}/>
+          <ImageFiltersMenu isOpen={filterMenuOpen} osd={this.osd}/>
+      )
+    }
+  }
+
+  buildContentTreeMenu() {
+    const {contentMenuOpen} = this.state
+    if (this.osd) {
+      return (
+        <ContentTreeMenu isOpen={contentMenuOpen} osd={this.osd}/>
       )
     }
   }
@@ -108,11 +129,15 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     }
   }
 
-  buildMobileControls() {
-    const {width} = this.state
-    const isMobile = width <= 500
-    if (isMobile) {
-      return <ButtonBar className='btn-group'/>
+  buildPagingControls() {
+    const {pagingControlsVisible, width} = this.state
+    if (pagingControlsVisible) {
+      const isMobile = width <= 500
+      if (isMobile) {
+        return <PagingControls/>
+      } else {
+        return <PagingControls/>
+      }
     }
   }
 
@@ -137,25 +162,24 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     }
   }
 
-  shouldComponentUpdate() {
-    return true
-  }
-
   render() {
     return (
-      <div>
+      <main>
         <div style={{display: 'flex'}}>
-          <div className='xjKiLd'>
-            <BackArrow/>
+          <div style={OsdComponent.controlBarStyles()}>
+            <div style={{display: 'flex', flexFlow: 'row', height: '40px'}}>
+              <BackArrow/>
+              {this.buildPageSelector()}
+            </div>
             {this.buildImageFilterMenu()}
             {this.buildViewSelector()}
+            {this.buildContentTreeMenu()}
             <FullScreenIcon/>
           </div>
-          {this.buildPageSelector()}
-          {this.buildMobileControls()}
+          {this.buildPagingControls()}
         </div>
-        <div className='openseadragon' id='osd'/>
-      </div>
+        <div className='openseadragon' ref={this.setRef}/>
+      </main>
     )
   }
 }

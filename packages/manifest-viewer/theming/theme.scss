@@ -86,7 +86,7 @@
   border: none;
   margin: 0;
   padding: 0;
-  position: absolute;
+  position: absolute !important;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -525,6 +525,10 @@ body {
   border-color: #ccc;
 }
 
+.paging-control {
+  position: absolute !important;
+}
+
 .btn-viewer {
   display: inline-block;
   font-weight: 400;
@@ -563,10 +567,6 @@ body {
   top: -48px;
 }
 
-.selector {
-  margin-top: 48px;
-}
-
 .list-group-item img {
   max-width: 100px;
 }
@@ -581,17 +581,10 @@ body {
   z-index: 1000;
 }
 
-.xjKiLd {
-  background-color: black;
-  position: relative;
-  z-index: 1000;
-  width: 50px;
-  padding: 5px;
-}
-
 .Hj59Ib {
   font-size: 13px;
   color: rgb(216,216,216);
   margin-bottom: -3px;
   padding-top: 15px;
 }
+

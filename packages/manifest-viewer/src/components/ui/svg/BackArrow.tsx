@@ -26,6 +26,7 @@ class BackArrowComponent extends React.Component<any, any> {
         <button
           aria-label='go back'
           className='button-transparent'
+          title='Go back'
           type="button"
           onClick={this.goBack}
         >

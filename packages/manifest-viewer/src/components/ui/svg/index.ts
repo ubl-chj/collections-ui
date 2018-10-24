@@ -1,6 +1,7 @@
 export * from './ArrowLeftIcon'
 export * from './ArrowRightIcon'
 export * from './BackArrow'
+export * from './ContentTreeIcon'
 export * from './FiltersIcon'
 export * from './FullScreenIcon'
 export * from './HomeIcon'

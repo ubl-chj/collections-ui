@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {ArrowLeftIcon, ArrowRightIcon, HomeIcon, RotateLeftIcon, RotateRightIcon, ZoomInIcon, ZoomOutIcon} from "../svg";
+import {HomeIcon, RotateLeftIcon, RotateRightIcon, ZoomInIcon, ZoomOutIcon} from "../svg"
 
 export class ButtonBar extends React.Component<any, any> {
 
@@ -13,8 +13,6 @@ export class ButtonBar extends React.Component<any, any> {
         <ZoomInIcon/>
         <ZoomOutIcon/>
         <HomeIcon/>
-        <ArrowLeftIcon/>
-        <ArrowRightIcon/>
         <RotateLeftIcon/>
         <RotateRightIcon/>
       </div>

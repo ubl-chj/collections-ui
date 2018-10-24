@@ -1,5 +1,6 @@
 import * as React from "react";
 import {ScrollIcon} from "../svg"
+import {PagingControls} from "./PagingControls";
 
 export class ViewSelector extends React.Component<any, any> {
 
@@ -30,6 +31,18 @@ export class ViewSelector extends React.Component<any, any> {
         })
       } else {
         this.state.osd.goToPage(0)
+      }
+    }
+  }
+
+  buildPagingControls() {
+    const {pagingControlsVisible, width} = this.state
+    if (pagingControlsVisible) {
+      const isMobile = width <= 500
+      if (isMobile) {
+        return <PagingControls/>
+      } else {
+        return <PagingControls/>
       }
     }
   }

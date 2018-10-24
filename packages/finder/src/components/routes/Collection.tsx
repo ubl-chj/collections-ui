@@ -189,7 +189,7 @@ class Collection extends React.Component<IRouteProps, any> {
       const listItem = components[1]
       return (
         <SearchkitProvider searchkit={this.searchkit}>
-          <div id='outer-container'>
+          <div className='outer-container' id='outer-container'>
             <HeadMeta/>
             <BMenu/>
             <div id='page-wrap'>
