@@ -11,12 +11,19 @@ export default {
       padding: 0,
     },
     node: {
-      activeLink: {
-        background: '#000',
-      },
       base: {
         border: '1px solid rgba(0, 0, 0, 0.125)',
         position: 'relative',
+      },
+      container: {
+        activeLink: {
+          background: '#000',
+        },
+        link: {
+          display: 'block',
+          padding: '0px 5px',
+          position: 'relative',
+        },
       },
       header: {
         base: {
@@ -36,7 +43,7 @@ export default {
           top: '0px',
           width: '2px',
         },
-        link: {
+        nodeLink: {
           '&:hover': {
             color: '#040677',
             textDecoration: 'underline',
@@ -49,12 +56,7 @@ export default {
           verticalAlign: 'middle',
         },
       },
-      link: {
-        cursor: 'grab',
-        display: 'block',
-        padding: '0px 5px',
-        position: 'relative',
-      },
+
       loading: {
         color: '#E2C089',
       },

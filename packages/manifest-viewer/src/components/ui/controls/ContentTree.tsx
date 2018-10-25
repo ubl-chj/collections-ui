@@ -113,15 +113,7 @@ export class ContentTree extends ViewerComponent<any, any> {
   }
 
   render() {
-    const decorators = {
-      Toggle: () => {
-        return (
-          <div>
-            Section
-          </div>
-        )
-      },
-    }
+    const styles = treeStyles
     const {children, cursor} = this.state
     if (children) {
        return (
@@ -129,7 +121,7 @@ export class ContentTree extends ViewerComponent<any, any> {
            <Treebeard
              animations={false}
              decorators={ContentTreeDecorators}
-             style={treeStyles}
+             style={styles}
              data={children}
              onToggle={this.onToggle}
            />

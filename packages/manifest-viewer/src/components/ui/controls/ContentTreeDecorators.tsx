@@ -21,13 +21,7 @@ const Toggle = ({style}) => {
   const points = `0,0 0,${height} ${width},${midHeight}`;
 
   return (
-    <Div style={style.base}>
-      <Div style={style.wrapper}>
-        <svg height={height} width={width}>
-        </svg>
-      </Div>
-    </Div>
-  )
+    <Div style={style.base}/>  )
 }
 
 Toggle.propTypes = {
@@ -38,7 +32,7 @@ const Header = ({node, style}) => {
   return (
     <Div style={style.base}>
       <Div style={style.title}>
-        <Div style={style.link}>{node.name}</Div>
+        <Div style={style.nodeLink}>{node.name}</Div>
       </Div>
     </Div>
   )
