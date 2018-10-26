@@ -16,5 +16,5 @@ services:
   - docker
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_1dff54b1fb99_key -iv $encrypted_1dff54b1fb99_iv -in ./packages/finder/.env.enc -out ./packages/finder/.env -d
+  - openssl aes-256-cbc -K $encrypted_1dff54b1fb99_key -iv $encrypted_1dff54b1fb99_iv -in ./packages/collections-ui-app/.env.enc -out ./packages/collections-ui-app/.env -d
   - docker build -t $APP_NAME:$TRAVIS_BUILD_ID .

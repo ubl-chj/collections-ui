@@ -10,11 +10,15 @@ Also provides an image viewer (WIP).
 In conjunction with [Elastic Manifests](https://github.com/ubl-chj/elastic-manifests),
 the UI provides access to dynamic keyword sourced manifest assembly.
 
-## Install Finder and Viewer
+## Install Packages
 ```bash
 $ cd packages/manifest-viewer
 $ yarn
-$ cd ../finder
+$ cd ../collections-ui-commons
+$ yarn
+$ cd ../manifest-uuid
+$ yarn
+$ cd ../collections-ui-app
 $ npm install
 ```
 
@@ -27,7 +31,7 @@ $ lerna run start
 
 ## Environment
 
-Create the file `packages/finder/.env`
+Create the file `packages/collections-ui-app/.env`
 Current reference implementation includes these required constants:
 
 ```bash

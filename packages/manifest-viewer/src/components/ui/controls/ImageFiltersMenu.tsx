@@ -159,17 +159,29 @@ export class ImageFiltersMenu extends React.Component<any, any> {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidMount() {
+    this.buildFilters()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.osd !== prevProps.osd) {
       this.setState({osd: this.props.osd})
     }
     if (this.props.isOpen !== prevProps.isOpen) {
       this.setState({menuOpen: this.props.isOpen})
     }
+    if (this.state.brightness !== prevState.brightness) {
+      this.buildFilters()
+    }
+    if (this.state.inverted !== prevState.inverted) {
+      this.buildFilters()
+    }
+    if (this.state.greyscale !== prevState.greyscale) {
+      this.buildFilters()
+    }
   }
 
   render() {
-    this.buildFilters()
     return (
       <div>
         <Menu
