@@ -61,12 +61,13 @@ class Container extends React.Component<any, any> {
   velocityRef: any
   render() {
     const {style, decorators, terminal, onClick, node} = this.props;
-
+    const {active} = node
+    const container = active ? style.container.activeLink : style.container.link
     return (
       <div
         onClick={onClick}
         ref={(ref) => this.clickableRef = ref}
-        style={style.container}
+        style={container}
       >
         {!terminal ? this.renderToggle() : null}
         <decorators.Header

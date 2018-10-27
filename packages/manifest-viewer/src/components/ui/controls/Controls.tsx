@@ -92,7 +92,7 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
           />
           {this.buildButtonBar()}
           <div className="window-manifest-title">
-            <h2 className="window-manifest-title">{title}</h2>
+            <h2 title={title} className="window-manifest-title">{title}</h2>
           </div>
         </div>
       )

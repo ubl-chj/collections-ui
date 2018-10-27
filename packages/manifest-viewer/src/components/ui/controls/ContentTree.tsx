@@ -105,7 +105,7 @@ export class ContentTree extends ViewerComponent<any, any> {
       if (cursor) {
         const index = cursor.startCanvas
         const canvasIndex = this.getCanvasIndex(index)
-        if (canvasIndex) {
+        if (canvasIndex || canvasIndex === 0) {
           this.props.osd.goToPage(canvasIndex)
         }
       }

@@ -92,7 +92,10 @@ export class ContentTreeMenu extends React.Component<any, any> {
           isOpen={this.state.menuOpen}
           onStateChange={this.handleStateChange}
         >
-          <ContentTree menuOpen={this.state.menuOpen} osd={this.state.osd}/>
+          <ContentTree
+            menuOpen={this.state.menuOpen}
+            osd={this.state.osd}
+          />
         </Menu>
         <button
           aria-label='toggle Content Tree'

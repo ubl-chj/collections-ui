@@ -160,6 +160,9 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     if (this.props.width !== prevProps.width) {
       this.setState({width: this.props.width})
     }
+    if (this.props.currentCanvas !== prevProps.currentCanvas) {
+      this.setState({currentCanvas: this.props.currentCanvas})
+    }
   }
 
   render() {

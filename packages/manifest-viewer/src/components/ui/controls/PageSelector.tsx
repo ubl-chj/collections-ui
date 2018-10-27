@@ -44,12 +44,12 @@ export class PageSelectorComponent extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.state = {
-      currentPage: null,
+      currentPage: props.currentCanvas,
       currentPageLabel: null,
       imageCount: props.imageCount,
       maxTextWidth: null,
       options: {},
-      selectedOption: props.currentCanvas,
+      selectedOption: {},
     }
   }
 

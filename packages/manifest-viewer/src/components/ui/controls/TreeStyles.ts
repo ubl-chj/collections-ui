@@ -17,7 +17,7 @@ export default {
       },
       container: {
         activeLink: {
-          background: '#000',
+          backgroundColor: 'silver',
         },
         link: {
           display: 'block',
