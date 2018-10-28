@@ -212,6 +212,7 @@ class Collection extends React.Component<IRouteProps, any> {
                           />
                         </div> : null
                       }
+                      <Pagination showNumbers={true}/>
                       <ViewSwitcherHits
                         hitsPerPage={50}
                         highlightFields={routeConfig.highlightFields}

@@ -24,10 +24,6 @@ const Toggle = ({style}) => {
     <Div style={style.base}/>  )
 }
 
-Toggle.propTypes = {
-  style: PropTypes.object,
-}
-
 const Header = ({node, style}) => {
   return (
     <Div style={style.base}>
@@ -36,11 +32,6 @@ const Header = ({node, style}) => {
       </Div>
     </Div>
   )
-}
-
-Header.propTypes = {
-  node: PropTypes.object.isRequired,
-  style: PropTypes.object,
 }
 
 class Container extends React.Component<any, any> {

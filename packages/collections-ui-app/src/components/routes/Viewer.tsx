@@ -19,14 +19,20 @@ import '../../styles/index.css'
 const qs = require('query-string')
 const uuidv4 = require('uuid/v4')
 
-class ViewerComponent extends React.Component<any, any> {
+export interface IMetadataProps {
+  key: any,
+  bemBlocks?: any
+  location: any
+  match: any
+  width: number
+}
+
+class ViewerComponent extends React.Component<IMetadataProps, any> {
   viewer: ViewerManager
-  props: any
   hasUnmounted: boolean
 
   constructor(props) {
     super(props)
-    this.props = props
     this.state = {
       currentCanvas: 0,
       width: props.width,

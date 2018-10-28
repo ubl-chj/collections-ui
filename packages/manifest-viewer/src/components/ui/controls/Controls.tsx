@@ -8,7 +8,7 @@ import {ManifestInfoMenu} from "./ManifestInfoMenu"
 const manifesto = require('manifesto-fork')
 
 export interface IMetadataProps {
-  key: string,
+  key: any,
   bemBlocks?: any
   location: any
   width: number
@@ -18,6 +18,7 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
 
   annotationsAccessor: AnnotationsAccessor
   document: any
+  key: any
   state: {
     uuid: string,
     loading: boolean,
