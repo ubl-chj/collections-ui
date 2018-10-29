@@ -37,6 +37,20 @@ getManifestForUUID = (uuid) => {
     })
 }
 
-getManifestUUID('https://iiif.harvardartmuseums.org/manifests/object/296562')
-getManifestForUUID('ff04c090-9d77-55eb-a567-bfa646b11ebf')
+pushManifestUUID = (manifest) => {
+  const ref = db.ref('manifestMap')
+  ref.update({
+    manifest
+  })
+}
 
+// getManifestUUID('https://iiif.harvardartmuseums.org/manifests/object/296562')
+// getManifestForUUID('ff04c090-9d77-55eb-a567-bfa646b11ebf')
+
+const manifest = {
+  "b697cf59-a9ec-5112-b287-b81b60fae036": {
+    "manifest": "https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb10001178/manifest"
+  }
+}
+
+pushManifestUUID(manifest)

@@ -1,0 +1,81 @@
+{
+  "indexName": "mdz1",
+  "queryFields": [
+    "Author",
+    "By",
+    "Contributor",
+    "Creation",
+    "Digital Object Identifier",
+    "Extent",
+    "Identifier",
+    "Language",
+    "Location",
+    "Note",
+    "Object Type",
+    "Preferred title of work",
+    "Title",
+    "attribution",
+    "manifest",
+    "license",
+    "seeAlso",
+    "thumbnail",
+    "title"
+  ],
+  "listItem": "StandardListItem",
+  "gridItem": "StandardGridItem",
+  "refinementListFilterDef1": {
+    "field": "Language.keyword",
+    "title": "Language",
+    "id": "language"
+  },
+  "refinementListFilterDef2": {
+    "field": "Note.keyword",
+    "title": "Note",
+    "id": "note"
+  },
+  "refinementListFilterDef3": {
+    "field": "By.keyword",
+    "title": "By",
+    "id": "by"
+  },
+  "sortingSelectorOptions": [
+    {
+      "label": "Title",
+      "field": "title.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Author",
+      "field": "Author.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Language",
+      "field": "Language.keyword",
+      "order": "asc"
+    }
+  ],
+  "highlightFields": [
+    "Author",
+    "By",
+    "Contributor",
+    "Creation",
+    "Digital Object Identifier",
+    "Extent",
+    "Identifier",
+    "Language",
+    "Location",
+    "Note",
+    "Object Type",
+    "Preferred title of work",
+    "Title",
+    "attribution",
+    "manifest",
+    "license",
+    "seeAlso",
+    "thumbnail",
+    "title"
+  ],
+  "suggestionField": "title"
+}
+

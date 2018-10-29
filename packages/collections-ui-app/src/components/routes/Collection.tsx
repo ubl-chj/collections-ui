@@ -1,3 +1,4 @@
+import {DynamicLayoutContext} from 'collections-ui-common'
 import * as React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {
@@ -184,6 +185,7 @@ class Collection extends React.Component<IRouteProps, any> {
   render() {
     const {routeConfig} = this.routeProps
     const {components, width} = this.state
+    const isMobile = width <= 500
     if (components.length >= 2 && components[0] !== 'undefined') {
       const gridItem = components[0]
       const listItem = components[1]
@@ -213,12 +215,14 @@ class Collection extends React.Component<IRouteProps, any> {
                         </div> : null
                       }
                       <Pagination showNumbers={true}/>
-                      <ViewSwitcherHits
-                        hitsPerPage={50}
-                        highlightFields={routeConfig.highlightFields}
-                        hitComponents={Collection.buildHitComponents(gridItem, listItem, routeConfig.listDefault)}
-                        scrollTo='body'
-                      />
+                      <DynamicLayoutContext.Provider value={isMobile}>
+                        <ViewSwitcherHits
+                          hitsPerPage={50}
+                          highlightFields={routeConfig.highlightFields}
+                          hitComponents={Collection.buildHitComponents(gridItem, listItem, routeConfig.listDefault)}
+                          scrollTo='body'
+                        />
+                      </DynamicLayoutContext.Provider>
                       <NoHits suggestionsField={routeConfig.suggestionField}/>
                       <Pagination showNumbers={true}/>
                     </LayoutResults>
