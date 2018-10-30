@@ -5,22 +5,22 @@ export const MetadataItem = (props) => {
   let typedLabel
   let typedValue
   if (Array.isArray(label)) {
-    label.forEach((l) => {
-      if (l['@language'] === 'en') {
-        typedLabel = l['@value']
-      } else {
-        typedLabel = ""
+    label.forEach((ll) => {
+      if (ll['@language'] === 'en') {
+        typedLabel = ll['@value']
       }
     })
   } else {
     typedLabel = label
   }
   if (Array.isArray(value)) {
-    value.forEach((l) => {
-      if (l['@language'] === 'en') {
-        typedValue = l['@value']
-      } else {
-        typedValue = ""
+    value.forEach((lv) => {
+      if (lv['@language'] === 'en') {
+        typedValue = lv['@value']
+      } else if (lv['@language'] === 'en' && typeof lv !== 'object') {
+        typedValue = lv.value
+      } else if (typeof value[0] !== 'object') {
+        typedValue = value[0]
       }
     })
   } else {

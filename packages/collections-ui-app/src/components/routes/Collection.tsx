@@ -23,7 +23,6 @@ import {
   ViewSwitcherHits,
   ViewSwitcherToggle,
 } from 'searchkit-fork'
-import '../../styles/index.css'
 import {StandardGridItem, StandardListItem} from '../items'
 import {HeadMeta} from "../schema";
 import {BMenu, FilterMenu, Head} from '../ui'

@@ -1,11 +1,9 @@
-import {AuthUserContext, LogoWrapper, withAuthorization} from 'collections-ui-common'
+import {AuthUserContext, LogoWrapper} from 'collections-ui-common'
 import 'firebase/auth'
 import * as React from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
-import {Link, withRouter} from 'react-router-dom'
 import {Layout, LayoutBody, LayoutResults, TopBar} from 'searchkit-fork'
 import '../../styles/firebaseui-styling.global.css'
-import {} from "../ui"
 
 const styles = require('../../styles/firebase-auth.css')
 const firebase = require("firebase/app")

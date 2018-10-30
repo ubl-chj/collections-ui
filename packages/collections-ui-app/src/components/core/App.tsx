@@ -1,10 +1,10 @@
 import {Routes, withAuthentication, withDynamicLayout} from 'collections-ui-common'
 import * as React from "react"
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import '../../styles/index.css'
 import {Landing, Previewer, SignIn, Viewer} from '../routes'
 import Account from '../routes/Account'
 import Collection from '../routes/Collection'
-
 class App extends React.Component<any> {
 
   render() {

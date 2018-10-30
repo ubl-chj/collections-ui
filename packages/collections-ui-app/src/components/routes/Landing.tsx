@@ -18,7 +18,6 @@ import {
   SideBar,
   SortingSelector, ViewSwitcherHits, ViewSwitcherToggle,
 } from 'searchkit-fork'
-import '../../styles/index.css'
 import {CollectionsGridItem, CollectionsListItem} from '../items'
 import {HeadMeta} from "../schema";
 import {BMenu, FilterMenu, Head} from '../ui'

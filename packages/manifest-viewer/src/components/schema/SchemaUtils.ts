@@ -1,4 +1,4 @@
-import {Domain} from '../../constants';
+import {Domain} from '../../constants'
 
 const tagManager = require('react-gtm-module')
 

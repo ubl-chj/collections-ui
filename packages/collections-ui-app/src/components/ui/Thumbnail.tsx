@@ -20,9 +20,6 @@ export class Thumbnail extends React.Component<any, any> {
     this.imageLink = props.imageLink
     this.className = props.className
     this.imageWidth = props.imageWidth
-    this.state = {
-      width: props.width,
-    }
   }
 
   handleMissingImage = (target) => {

@@ -1,21 +1,14 @@
 var firebase = require('firebase')
-
+var admin = require('firebase-admin')
+var serviceAccount = require('/home/christopher/collections-ui-88993f241585.json')
 const firebaseApiKey = process.env.REACT_APP_FIREBASE_KEY
 
-const config = {
-  apiKey: firebaseApiKey,
-  authDomain: 'collections-ui-1532736515660.firebaseapp.com',
-  databaseURL: 'https://collections-ui-1532736515660-d3c9c.firebaseio.com',
-  messagingSenderId: '851210977979',
-  projectId: 'collections-ui-1532736515660',
-  storageBucket: '',
-}
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://collections-ui-1532736515660-d3c9c.firebaseio.com'
+})
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(config)
-}
-
-const db = firebase.database()
+const db = admin.database()
 
 getManifestUUID = (manifest) => {
   const ref = db.ref('manifestMap')
@@ -39,18 +32,18 @@ getManifestForUUID = (uuid) => {
 
 pushManifestUUID = (manifest) => {
   const ref = db.ref('manifestMap')
-  ref.update({
-    manifest
+  ref.update(manifest, function(error) {
+    if (error) {
+      console.log('Data could not be saved.' + error);
+    } else {
+      console.log('Data saved successfully.');
+    }
   })
 }
 
 // getManifestUUID('https://iiif.harvardartmuseums.org/manifests/object/296562')
-// getManifestForUUID('ff04c090-9d77-55eb-a567-bfa646b11ebf')
+//console.log(getManifestForUUID('48c4c023-7501-5438-9e42-cd76305a8997'))
 
-const manifest = {
-  "b697cf59-a9ec-5112-b287-b81b60fae036": {
-    "manifest": "https://api.digitale-sammlungen.de/iiif/presentation/v2/bsb10001178/manifest"
-  }
-}
+const manifestIds = require('/tmp/mdz-uuids.json')
 
-pushManifestUUID(manifest)
+pushManifestUUID(manifestIds)

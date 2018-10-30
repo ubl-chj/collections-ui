@@ -3,7 +3,6 @@ import {UUIDResolver} from "manifest-uuid/"
 import {ViewerManager} from 'manifest-viewer'
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
-import '../../styles/index.css'
 const qs = require('query-string')
 const uuidv4 = require('uuid/v4')
 
