@@ -16,7 +16,7 @@ const userDbConfig = {
 const uuidDbConfig = {
   apiKey: firebaseApiKey,
   authDomain: 'collections-ui-1532736515660.firebaseapp.com',
-  databaseURL: 'https://collections-ui-1532736515660-d3c9c.firebaseio.com',
+  databaseURL: 'https://collections-ui-1532736515660-e42a7.firebaseio.com',
   messagingSenderId: '851210977979',
   projectId: 'collections-ui-1532736515660',
   storageBucket: '',
