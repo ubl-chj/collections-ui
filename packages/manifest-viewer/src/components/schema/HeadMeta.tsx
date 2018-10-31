@@ -1,7 +1,7 @@
-import * as React from 'react';
+import {Domain} from 'collections-ui-common'
+import * as React from 'react'
 import {HeadProvider, Meta, Title} from 'react-head'
-import {Domain} from '../../constants';
-import {buildDescription} from './SchemaUtils';
+import {buildDescription} from './SchemaUtils'
 
 export class HeadMeta extends React.Component<any, any> {
 

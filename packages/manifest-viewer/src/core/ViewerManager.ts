@@ -69,6 +69,10 @@ export class ViewerManager {
     this.accessors = new AccessorManager()
   }
 
+  getAccessorByType(type){
+    return this.accessors.getAccessorByType(type)
+  }
+
   guid(prefix) {
     return this.guidGenerator.guid(prefix)
   }

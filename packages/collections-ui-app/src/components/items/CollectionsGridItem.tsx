@@ -1,8 +1,8 @@
+import {ResultContext} from 'collections-ui-common'
 import * as React from "react"
 import Observer from 'react-intersection-observer'
 import {Link} from 'react-router-dom'
 import {Hits, SearchkitManager, SearchkitProvider} from "searchkit-fork"
-import {ResultContext} from "../core"
 import {RefreshIcon} from "../ui/svg"
 import {ItemProps} from './ItemProps'
 import {RandomGridLandingItem} from "./RandomGridLandingItem"
@@ -13,7 +13,7 @@ export class CollectionsGridItem extends React.Component<ItemProps, any> {
 
   static defaultProps = {
     host: process.env.REACT_APP_ELASTICSEARCH_HOST,
-    options: {timeout: 20000},
+    options: {timeout: 20000, defaultSize: 1},
     previewUrl: process.env.REACT_APP_OSD_BASE,
   }
 
@@ -24,6 +24,7 @@ export class CollectionsGridItem extends React.Component<ItemProps, any> {
         functions: [
           {
             random_score: {
+              field: '_seq_no',
               seed: val,
             },
           },
@@ -63,7 +64,7 @@ export class CollectionsGridItem extends React.Component<ItemProps, any> {
     if (this.state.refreshItem) {
       return (
           <SearchkitProvider searchkit={this.searchkit2}>
-            <Hits hitsPerPage={1} highlightFields={["title"]} mod="sk-hits-grid-landing" itemComponent={RandomGridLandingItem}/>
+            <Hits hitsPerPage={1} mod="sk-hits-grid-landing" itemComponent={RandomGridLandingItem}/>
           </SearchkitProvider>
       )
     }

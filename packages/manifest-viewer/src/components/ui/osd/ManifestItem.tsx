@@ -2,6 +2,7 @@ import * as React from 'react'
 import {ViewerContext} from "../../../core/react"
 const manifesto = require('manifesto-fork')
 import {OsdComponent} from './OsdComponent'
+
 export class ManifestItem extends React.Component<any, any> {
   state: {
     OsdComponent: React.ComponentType<any>,

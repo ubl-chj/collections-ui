@@ -1,4 +1,5 @@
 export * from './DocumentViewSwitcher'
 export * from './Annotations'
 export * from './AnnotationItem'
-export * from "./AnnotationList"
+export * from './AnnotationList'
+export * from './ViewSwitcherToggle'

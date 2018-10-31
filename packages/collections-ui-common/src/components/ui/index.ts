@@ -1,4 +1,6 @@
-export * from './DynamicLayoutContext'
+export * from '../contexts/DynamicLayoutContext'
 export * from './LogoWrapper'
 export * from './profiles'
+export * from './Thumbnail'
+export * from './Title'
 export * from './withDynamicLayout'

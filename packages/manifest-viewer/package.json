@@ -53,7 +53,6 @@
     "@types/react-dom": "^16.0.8",
     "@types/react-router": "^4.0.31",
     "@types/sinon": "^5.0.5",
-    "@types/source-map": "^0.5.0",
     "autoprefixer": "^9.0.1",
     "css-loader": "^1.0.0",
     "eslint": "^5.7.0",
@@ -88,6 +87,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "collections-ui-common": "file:../collections-ui-common",
     "immutability-helper": "^2.4.0",
     "lodash": "^4.17.10",
     "manifesto-fork": "^3.0.11",
@@ -101,6 +101,7 @@
     "react-select": "^2.0.0",
     "react-spinners": "^0.4.4",
     "react-treebeard": "^3.1.0",
+    "searchkit-fork": "^2.3.6",
     "uuid": "3.3.2"
   },
   "peerDependencies": {

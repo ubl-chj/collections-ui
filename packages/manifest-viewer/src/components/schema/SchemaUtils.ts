@@ -1,4 +1,4 @@
-import {Domain} from '../../constants'
+import {Domain} from 'collections-ui-common'
 
 const tagManager = require('react-gtm-module')
 

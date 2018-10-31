@@ -1,4 +1,3 @@
-export * from './ItemUtils'
 export * from './CollectionsListItem'
 export * from './CollectionsGridItem'
 export * from './RandomGridLandingItem'

@@ -19,8 +19,6 @@ WORKDIR /srv/collections-ui/packages/manifest-uuid
 RUN yarn
 WORKDIR /srv/collections-ui/packages/collections-ui-app
 RUN npm install
-# WORKDIR /srv/collections-ui/packages/annotations-viewer
-# RUN npm install
 WORKDIR /srv/collections-ui
 RUN lerna run build --ignore=annotations-viewer
 WORKDIR /srv/collections-ui/packages/collections-ui-app

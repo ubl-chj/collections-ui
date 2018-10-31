@@ -1,8 +1,6 @@
-import {Domain} from 'collections-ui-common'
+import {buildImagePreview, Domain, Thumbnail, Title} from 'collections-ui-common'
 import * as React from "react";
-import {Thumbnail, Title} from "../../ui"
 import {ItemProps} from "../ItemProps"
-import {buildImagePreview} from '../ItemUtils'
 
 const extend = require("lodash/extend")
 

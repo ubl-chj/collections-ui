@@ -7,16 +7,19 @@ import {
   Layout,
   LayoutBody,
   ManifestItem,
+  RelatedItems,
   TopBar,
   ViewerContext,
   ViewerManager,
   ViewerProvider,
+  ViewSwitcherToggle,
 } from 'manifest-viewer'
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 
 const qs = require('query-string')
 const uuidv4 = require('uuid/v4')
+const ManifestViewer = withDynamicLayout(ManifestItem)
 
 export interface IMetadataProps {
   key: any,
@@ -44,21 +47,11 @@ class ViewerComponent extends React.Component<IMetadataProps, any> {
       const uuid = this.props.match.params.uuid
       const currentCanvas = this.props.location.hash.substring(1)
       this.setState({currentCanvas})
-      if (firebase) {
-        const resolver = new UUIDResolver(uuid, firebase.uuidDb)
-        resolver.resolveManifest().then((manifest) => {
-          if (!this.hasUnmounted) {
-            this.viewer = new ViewerManager(manifest)
-            this.forceUpdate()
-          }
-        })
-      }
+      this.resolveManifest(uuid)
     } else if (Object.keys(params).length) {
       const doc = params.manifest
       const currentCanvas = this.props.location.hash.substring(1)
       this.setState({currentCanvas})
-      // const uuid = uuidv5('url', doc)
-      // this.props.history.replace(window.parent.location.pathname + uuid)
       if (!this.hasUnmounted) {
         this.viewer = new ViewerManager(doc)
         this.forceUpdate()
@@ -76,6 +69,28 @@ class ViewerComponent extends React.Component<IMetadataProps, any> {
     }
   }
 
+  resolveManifest(uuid) {
+    if (firebase) {
+      const resolver = new UUIDResolver(uuid, firebase.uuidDb)
+      resolver.resolveManifest().then((manifest) => {
+        if (!this.hasUnmounted) {
+          this.viewer = new ViewerManager(manifest)
+          this.forceUpdate()
+        }
+      })
+    }
+  }
+
+  buildViewSwitcherToggle() {
+    const {width} = this.state
+    const isMobile = width <= 500
+    if (isMobile) {
+      return null
+    } else {
+      return (<ViewSwitcherToggle/>)
+    }
+  }
+
   render() {
     const {width} = this.state
     if (this.viewer) {
@@ -85,6 +100,7 @@ class ViewerComponent extends React.Component<IMetadataProps, any> {
               <TopBar>
                 <LogoWrapper/>
                 <div className='header__mid'/>
+                {this.buildViewSwitcherToggle()}
                 <AuthProfile width={width}/>
               </TopBar>
               <ActionBar>
@@ -93,8 +109,8 @@ class ViewerComponent extends React.Component<IMetadataProps, any> {
               <LayoutBody>
                 <ViewerContext.Provider value={this.state.currentCanvas}>
                   <DocumentViewSwitcher
-                    viewerComponents={[{defaultOption: true, itemComponent: withDynamicLayout(ManifestItem), key: 'grid', title: 'Grid',
-                    }]}
+                    viewerComponents={[{defaultOption: true, itemComponent: ManifestViewer, key: 'list', title: 'Main',
+                    }, {itemComponent: RelatedItems, key: 'grid', title: 'Related'}]}
                   />
                 </ViewerContext.Provider>
               </LayoutBody>

@@ -6,5 +6,4 @@ export * from './FavoritesList'
 export * from './FavoriteListItem'
 export * from './FavoritesListButton'
 export * from './Head'
-export * from './Thumbnail'
-export * from './Title'
+

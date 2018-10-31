@@ -1,9 +1,7 @@
-import {firebase} from 'collections-ui-common'
+import {buildImagePreview, buildImageView, firebase, getSchema, resolveManifestId, resolveThumbnail,
+  resolveThumbnailSource, ResultContext} from 'collections-ui-common'
 import * as React from "react"
 import {block} from 'searchkit-fork'
-import {ResultContext} from "../core"
-import {buildImageView, getSchema, resolveManifestId, resolveThumbnail, resolveThumbnailSource} from "../items"
-import {buildImagePreview} from "../items"
 import {FavoritesListItemDisplay} from "./FavoritesListItemDisplay"
 const extend = require("lodash/extend")
 

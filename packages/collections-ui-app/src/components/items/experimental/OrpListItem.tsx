@@ -1,8 +1,7 @@
-import {AuthUserContext, Domain} from 'collections-ui-common'
+import {AuthUserContext, buildImagePreview, Domain, Thumbnail} from 'collections-ui-common'
 import * as React from "react";
-import {FavoriteButton, Thumbnail} from "../../ui"
+import {FavoriteButton, } from "../../ui"
 import {ItemProps} from "../ItemProps"
-import {buildImagePreview} from '../ItemUtils'
 
 const extend = require("lodash/extend")
 const firebase = require("firebase/app")

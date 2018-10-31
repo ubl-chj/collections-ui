@@ -1,8 +1,8 @@
+import {ResultContext} from 'collections-ui-common'
 import * as React from "react"
-import {ResultContext} from "../core"
 import {ListItemDisplay} from "../ui/ListItemDisplay"
 import {ItemProps} from "./ItemProps"
-import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveManifestId} from './ItemUtils'
+import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveManifestId} from 'collections-ui-common'
 
 const extend = require("lodash/extend")
 

@@ -8,4 +8,5 @@ export enum Domain {
   FULL_IMAGE_API_REQUEST = '/full/full/0/default.jpg',
   LANDING_THUMBNAIL_API_REQUEST = '/full/150,/0/default.jpg',
   RANDOM_THUMBNAIL_API_REQUEST = '/full/150,/0/default.jpg',
+  RELATED_INDICES = 'mdz1,t6,uc2,ox1,gt3,ga2,hvd2',
 }

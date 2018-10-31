@@ -1,10 +1,9 @@
+import {ResultContext} from 'collections-ui-common'
+import {buildImagePreview, buildImageView, buildRandomThumbnailReference, getSchema, resolveCreator,
+  resolveManifestId, resolveName, Thumbnail, Title} from 'collections-ui-common'
 import * as React from "react"
 import {Link} from 'react-router-dom'
-import {ResultContext} from "../core"
-import {Thumbnail, Title} from "../ui"
-import {resolveCreator, resolveManifestId, resolveName} from './index'
 import {ItemProps} from './ItemProps'
-import {buildImagePreview, buildImageView, buildRandomThumbnailReference, getSchema} from './ItemUtils'
 
 const extend = require('lodash/extend')
 

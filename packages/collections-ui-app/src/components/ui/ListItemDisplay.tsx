@@ -1,7 +1,6 @@
-import {AuthUserContext, firebase} from 'collections-ui-common'
+import {AuthUserContext, firebase, resolveName, Thumbnail, Title} from 'collections-ui-common'
 import * as React from "react"
-import {resolveName} from '../items'
-import {FavoriteButton, Thumbnail, Title} from "./index"
+import {FavoriteButton} from "./index"
 
 const uuidv4 = require('uuid/v4')
 

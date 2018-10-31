@@ -1,6 +1,6 @@
-import {Domain, Routes} from '../../constants'
 import * as React from "react";
 import {Link} from 'react-router-dom'
+import {Domain, Routes} from '../../constants'
 import {Logo} from "./svg"
 
 export const LogoWrapper = () => {
