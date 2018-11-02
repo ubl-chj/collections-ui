@@ -25,8 +25,9 @@ export class RelatedItems extends React.Component<any, any> {
   static multiMatchQuery(terms) {
     return {
       multi_match: {
-        fields: [ "title", "Title", "author^0.8", "Author^0.8", "description^0.3" ],
-        query:  terms,
+        analyzer: "stop",
+        fields: ["title", "Title", "author^0.8", "Author^0.8", "description^0.3"],
+        query: terms,
       },
     }
   }
@@ -41,8 +42,6 @@ export class RelatedItems extends React.Component<any, any> {
     this.options = props.options
     this.searchkit = new SearchkitManager(host, this.options)
   }
-
-
 
   render() {
     const {document} = this.props

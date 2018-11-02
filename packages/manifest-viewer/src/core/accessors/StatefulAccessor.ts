@@ -44,5 +44,4 @@ export class StatefulAccessor<T extends State<any>> extends Accessor {
   resetState() {
     this.state = this.state.clear()
   }
-
 }

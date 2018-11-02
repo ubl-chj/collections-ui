@@ -13,7 +13,14 @@ export class RelatedHits extends SearchkitComponent<any, any> {
         </div>
       )
     } else {
-      return (<Hits hitsPerPage={20} highlightFields={["title"]} mod="sk-hits-grid" itemComponent={SimpleGridItem}/>)
+      return (
+        <Hits
+          hitsPerPage={20}
+          highlightFields={["title", "Title", "Author", "creators", "Artist"]}
+          mod="sk-hits-grid"
+          itemComponent={SimpleGridItem}
+        />
+      )
     }
   }
 }

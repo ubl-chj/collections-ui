@@ -24,6 +24,7 @@ const ManifestViewer = withDynamicLayout(ManifestItem)
 export interface IMetadataProps {
   key: any,
   bemBlocks?: any
+  history: any
   location: any
   match: any
   width: number
@@ -49,13 +50,20 @@ class ViewerComponent extends React.Component<IMetadataProps, any> {
       this.setState({currentCanvas})
       this.resolveManifest(uuid)
     } else if (Object.keys(params).length) {
-      const doc = params.manifest
-      const currentCanvas = this.props.location.hash.substring(1)
-      this.setState({currentCanvas})
-      if (!this.hasUnmounted) {
-        this.viewer = new ViewerManager(doc)
-        this.forceUpdate()
-      }
+        if (params.p) {
+          const path = this.props.location.pathname
+          const uuid = path.split('/')[2]
+          this.resolveManifest(uuid)
+          this.props.history.replace(window.parent.location.pathname)
+        } else if (params.manifest) {
+          const doc = params.manifest
+          const currentCanvas = this.props.location.hash.substring(1)
+          this.setState({currentCanvas})
+          if (!this.hasUnmounted) {
+            this.viewer = new ViewerManager(doc)
+            this.forceUpdate()
+          }
+        }
     }
   }
 

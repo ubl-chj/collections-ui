@@ -1,3 +1,4 @@
+import {DynamicLayoutContext} from 'collections-ui-common'
 import * as _ from "lodash"
 import * as React from 'react'
 import {Link} from 'react-router-dom'
@@ -141,6 +142,7 @@ export class Landing extends React.Component<IRouteProps, any> {
   render() {
     const {routeConfig} = this.props
     const {width} = this.state
+    const isMobile = width <= 500
     const gridObj = {
       defaultOption: true,
       itemComponent: CollectionsGridItem,
@@ -165,12 +167,14 @@ export class Landing extends React.Component<IRouteProps, any> {
                      {this.buildSideBar()}
                      <LayoutResults>
                        {this.buildActionBar()}
-                       <ViewSwitcherHits
-                         hitsPerPage={50}
-                         highlightFields={routeConfig.highlightFields}
-                         hitComponents={[listObj, gridObj]}
-                         scrollTo='body'
-                       />
+                       <DynamicLayoutContext.Provider value={isMobile}>
+                         <ViewSwitcherHits
+                           hitsPerPage={50}
+                           highlightFields={routeConfig.highlightFields}
+                           hitComponents={[listObj, gridObj]}
+                           scrollTo='body'
+                         />
+                       </DynamicLayoutContext.Provider>
                        <NoHits suggestionsField={'name'}/>
                        <Pagination showNumbers={true}/>
                      </LayoutResults>

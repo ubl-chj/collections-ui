@@ -4,7 +4,7 @@ import {DocumentViewAccessor, RenderComponentPropType, RenderComponentType, View
 
 import {IAnnotationItemProps} from "./AnnotationItem";
 import {IAnnotationListProps} from "./AnnotationList";
-import {Annotations} from "./Annotations";
+import {Annotations} from "./Annotations"
 
 const defaults = require("lodash/defaults")
 
@@ -55,3 +55,4 @@ export class DocumentViewSwitcher extends ViewerComponent<IDocumentViewSwitcherP
     }
   }
 }
+

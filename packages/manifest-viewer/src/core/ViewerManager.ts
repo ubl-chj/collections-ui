@@ -1,7 +1,7 @@
-import {AccessorManager} from "./AccessorManager";
+import {AccessorManager} from "./AccessorManager"
 import {DocumentRequest} from "./DocumentRequest"
-import {EventEmitter, GuidGenerator} from "./support";
-import {AxiosManifestTransport, ManifestTransport} from "./transport";
+import {EventEmitter, GuidGenerator} from "./support"
+import {AxiosManifestTransport, ManifestTransport} from "./transport"
 import {VERSION} from "./ViewerVersion"
 
 const defaults = require("lodash/defaults")
@@ -69,7 +69,7 @@ export class ViewerManager {
     this.accessors = new AccessorManager()
   }
 
-  getAccessorByType(type){
+  getAccessorByType(type) {
     return this.accessors.getAccessorByType(type)
   }
 
@@ -138,5 +138,4 @@ export class ViewerManager {
     this.initialLoading = false
     this.emitter.trigger()
   }
-
 }

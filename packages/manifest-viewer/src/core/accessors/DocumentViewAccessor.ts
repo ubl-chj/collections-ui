@@ -28,7 +28,6 @@ export class DocumentViewAccessor extends StatefulAccessor<ValueState> {
       }
       this.search()
     }
-
   }
 
   search() {

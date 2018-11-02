@@ -1,6 +1,6 @@
 var firebase = require('firebase')
 var admin = require('firebase-admin')
-var serviceAccount = require('/home/christopher/collections-ui-54c7a8766a8d.json')
+var serviceAccount = require('/home/christopher/collections-ui-88993f241585.json')
 const firebaseApiKey = process.env.REACT_APP_FIREBASE_KEY
 
 admin.initializeApp({
@@ -26,6 +26,7 @@ getManifestUUID = (manifest) => {
 getManifestForUUID = (uuid) => {
   db.ref('/manifestMap/' + uuid).once('value')
     .then((snapshot) => {
+      console.log(snapshot.val().manifest)
       return snapshot.val().manifest
     })
 }
@@ -42,8 +43,9 @@ pushManifestUUID = (manifest) => {
 }
 
 // getManifestUUID('https://iiif.harvardartmuseums.org/manifests/object/296562')
-//console.log(getManifestForUUID('48c4c023-7501-5438-9e42-cd76305a8997'))
+getManifestForUUID('f15f9d56-5c7d-5583-9530-296cd6914ed3')
 
-const manifestIds = require('/home/christopher/Downloads/export5.json')
 
-pushManifestUUID(manifestIds)
+//const manifestIds = require('/tmp/mdz-uuids3.json')
+
+//pushManifestUUID(manifestIds)

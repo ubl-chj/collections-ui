@@ -12,15 +12,15 @@ COPY packages/collections-ui-app/.env packages/collections-ui-app/.env
 RUN npm i npm@latest -g
 RUN npm install --global lerna
 WORKDIR /srv/collections-ui/packages/manifest-viewer
-RUN yarn
+RUN npm install
 WORKDIR /srv/collections-ui/packages/collections-ui-common
-RUN yarn
+RUN npm install
 WORKDIR /srv/collections-ui/packages/manifest-uuid
-RUN yarn
+RUN npm install
 WORKDIR /srv/collections-ui/packages/collections-ui-app
 RUN npm install
 WORKDIR /srv/collections-ui
-RUN lerna run build --ignore=annotations-viewer
+RUN lerna run build
 WORKDIR /srv/collections-ui/packages/collections-ui-app
 RUN yarn global add serve
 

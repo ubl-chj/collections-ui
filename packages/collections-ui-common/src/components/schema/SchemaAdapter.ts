@@ -47,7 +47,7 @@ export class SchemaAdapter extends React.Component<IStructuredDataImageObjectPro
   getMappingProps(source) {
     const mappingProps = Object.getOwnPropertyNames(mapping)
     const sourceKeys = Object.getOwnPropertyNames(source)
-    return mappingProps.filter((x) => sourceKeys.includes(x));
+    return mappingProps.filter((x) => sourceKeys.includes(x))
   }
 
   buildStructuredData() {
