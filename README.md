@@ -13,11 +13,11 @@ the UI provides access to dynamic keyword sourced manifest assembly.
 ## Install Packages
 ```bash
 $ cd packages/manifest-viewer
-$ yarn
+$ npm install
 $ cd ../collections-ui-commons
-$ yarn
+$ npm install
 $ cd ../manifest-uuid
-$ yarn
+$ npm install
 $ cd ../collections-ui-app
 $ npm install
 ```

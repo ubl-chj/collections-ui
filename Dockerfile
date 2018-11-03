@@ -1,21 +1,21 @@
-FROM node:latest
+FROM node:10
 
 MAINTAINER Christopher Johnson <chjohnson39@gmail.com>
 LABEL description = "Collections UI Web Application"
 
 WORKDIR /srv/collections-ui
-
+#ENV NODE_ENV=production
 # Download and Install collections-ui (master)
 RUN git clone https://github.com/ub-leipzig/collections-ui.git ./
 COPY packages/collections-ui-app/.env packages/collections-ui-app/.env
 ##Install
 RUN npm i npm@latest -g
 RUN npm install --global lerna
-WORKDIR /srv/collections-ui/packages/manifest-viewer
+WORKDIR /srv/collections-ui/packages/manifest-uuid
 RUN npm install
 WORKDIR /srv/collections-ui/packages/collections-ui-common
 RUN npm install
-WORKDIR /srv/collections-ui/packages/manifest-uuid
+WORKDIR /srv/collections-ui/packages/manifest-viewer
 RUN npm install
 WORKDIR /srv/collections-ui/packages/collections-ui-app
 RUN npm install
