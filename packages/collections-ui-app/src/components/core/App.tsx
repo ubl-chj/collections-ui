@@ -17,7 +17,9 @@ class App extends React.Component<any> {
               <Route exact={t} path={Routes.ACCOUNT} component={Account}/>
               <Route exact={t} path={Routes.SIGN_IN} component={SignIn}/>
               <Route exact={t} path='/collection/:id' component={withDynamicLayout(Collection)}/>
-              <Route exact={t} path='/view/:uuid?' component={withDynamicLayout(Viewer)}/>
+              <Route exact={t} path='/view/:uuid?' component={ (props) => (
+                <Viewer timestamp={new Date().toString()} {...props} />
+              )}/>
               <Route exact={t} path='/preview/:uuid?' component={withDynamicLayout(Previewer)}/>
             </Switch>
          </BrowserRouter>)

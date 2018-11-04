@@ -11,6 +11,7 @@ export interface IMetadataProps {
   key: any,
   bemBlocks?: any
   location: any
+  uuid: any
   width: number
 }
 

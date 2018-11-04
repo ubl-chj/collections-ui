@@ -3,10 +3,12 @@ import {buildImagePreview, buildImageView, buildRandomThumbnailReference, getSch
 import * as React from "react"
 import {Link} from 'react-router-dom'
 import {ItemProps} from './ItemProps'
+import {ViewerComponent} from "../../../core/react"
+import {DocumentViewAccessor} from "../../../core/accessors"
 
 const extend = require('lodash/extend')
 
-export class SimpleGridItem extends React.Component<ItemProps, any> {
+export class SimpleGridItem extends ViewerComponent<ItemProps, any> {
 
   static defaultProps = {
     previewUrl: process.env.REACT_APP_OSD_BASE,
@@ -21,6 +23,17 @@ export class SimpleGridItem extends React.Component<ItemProps, any> {
     super(props)
   }
 
+  getViewOptionsSwitcherAccessor() {
+    return this.viewer.getAccessorByType(DocumentViewAccessor)
+  }
+
+  setView =(view) => {
+    this.getViewOptionsSwitcherAccessor().setView(view)
+    this.setState((prevState) => {
+      return {didUpdate: !prevState.didUpdate};
+    })
+  }
+
   render() {
     const {result, bemBlocks, previewUrl, viewerUrl} = this.props
     const source = extend({}, result._source, result.highlight)
@@ -30,22 +43,27 @@ export class SimpleGridItem extends React.Component<ItemProps, any> {
     const viewUrl = buildImageView(viewerUrl, manifestId)
     const schema = getSchema(source, manifestId, thumbnail, null)
     const name = resolveName(schema)
-    if (thumbnail) {
-      return (
-        <ResultContext.Provider value={result}>
-          <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-            <Thumbnail
-              imageWidth={170}
-              imageSource={thumbnail}
-              imageLink={imageLink}
-              className={'poster'}
-            />
-            <a href={viewUrl} title='View this Item' target='_blank' rel='noopener noreferrer'>
-              <div data-qa='title' className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: name}}/>
-            </a>
-            <div className='sk-hits-grid-hit__author' dangerouslySetInnerHTML={resolveCreator(schema)}/>
-          </div>
-        </ResultContext.Provider>)
+    const viewOptionsAccessor = this.getViewOptionsSwitcherAccessor()
+    if (viewOptionsAccessor) {
+      if (thumbnail) {
+        return (
+          <ResultContext.Provider value={result}>
+            <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
+              <Thumbnail
+                imageWidth={170}
+                imageSource={thumbnail}
+                imageLink={imageLink}
+                className={'poster'}
+              />
+              <Link to={viewUrl}>
+                <div onClick={() => this.setView('list')} title='View this Item' data-qa='title' className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: name}}/>
+              </Link>
+              <div className='sk-hits-grid-hit__author' dangerouslySetInnerHTML={resolveCreator(schema)}/>
+            </div>
+          </ResultContext.Provider>)
+      } else {
+        return null
+      }
     } else {
       return null
     }

@@ -1,4 +1,6 @@
-export interface ItemProps {
+import {IViewerComponentProps} from "../../../core/react"
+
+export interface ItemProps extends IViewerComponentProps {
   bemBlocks: {
     item: Function
     container: Function

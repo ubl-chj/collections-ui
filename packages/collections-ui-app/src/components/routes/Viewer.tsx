@@ -21,18 +21,20 @@ const qs = require('query-string')
 const uuidv4 = require('uuid/v4')
 const ManifestViewer = withDynamicLayout(ManifestItem)
 
-export interface IMetadataProps {
+export interface IViewerRouteComponentProps {
   key: any,
   bemBlocks?: any
   history: any
   location: any
   match: any
+  timestamp: any
   width: number
 }
 
-class ViewerComponent extends React.Component<IMetadataProps, any> {
+class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, any> {
   viewer: ViewerManager
   hasUnmounted: boolean
+
 
   constructor(props) {
     super(props)
@@ -40,31 +42,11 @@ class ViewerComponent extends React.Component<IMetadataProps, any> {
       currentCanvas: 0,
       width: props.width,
     }
+    this.viewer = null
   }
 
   componentDidMount() {
-    const params = qs.parse(this.props.location.search)
-    if (this.props.match.params.uuid && !Object.keys(params).length) {
-      const uuid = this.props.match.params.uuid
-      const currentCanvas = this.props.location.hash.substring(1)
-      this.setState({currentCanvas})
-      this.resolveManifest(uuid)
-    } else if (Object.keys(params).length) {
-        if (params.p) {
-          const path = this.props.location.pathname
-          const uuid = path.split('/')[2]
-          this.resolveManifest(uuid)
-          this.props.history.replace(window.parent.location.pathname)
-        } else if (params.manifest) {
-          const doc = params.manifest
-          const currentCanvas = this.props.location.hash.substring(1)
-          this.setState({currentCanvas})
-          if (!this.hasUnmounted) {
-            this.viewer = new ViewerManager(doc)
-            this.forceUpdate()
-          }
-        }
-    }
+    this.resolveParams()
   }
 
   componentWillUnmount() {
@@ -74,6 +56,37 @@ class ViewerComponent extends React.Component<IMetadataProps, any> {
   componentDidUpdate(prevProps) {
     if (this.props.width !== prevProps.width) {
       this.setState({width: this.props.width})
+    }
+    if (this.props.timestamp !== prevProps.timestamp) {
+      if (this.props.match.params.uuid !== prevProps.match.params.uuid) {
+        this.viewer = null
+        this.resolveParams()
+      }
+    }
+  }
+
+  resolveParams() {
+    const params = qs.parse(this.props.location.search)
+    if (this.props.match.params.uuid && !Object.keys(params).length) {
+      const uuid = this.props.match.params.uuid
+      const currentCanvas = this.props.location.hash.substring(1)
+      this.setState({currentCanvas})
+      this.resolveManifest(uuid)
+    } else if (Object.keys(params).length) {
+      if (params.p) {
+        const path = this.props.location.pathname
+        const uuid = path.split('/')[2]
+        this.resolveManifest(uuid)
+        this.props.history.replace(window.parent.location.pathname)
+      } else if (params.manifest) {
+        const doc = params.manifest
+        const currentCanvas = this.props.location.hash.substring(1)
+        this.setState({currentCanvas})
+        if (!this.hasUnmounted) {
+          this.viewer = new ViewerManager(doc)
+          this.forceUpdate()
+        }
+      }
     }
   }
 
@@ -130,4 +143,4 @@ class ViewerComponent extends React.Component<IMetadataProps, any> {
   }
 }
 
-export const Viewer = withRouter(ViewerComponent)
+export const Viewer = withRouter(withDynamicLayout(ViewerRouteComponent))

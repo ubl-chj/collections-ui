@@ -9,7 +9,6 @@ export class RelatedItems extends React.Component<any, any> {
   static defaultProps = {
     host: process.env.REACT_APP_ELASTICSEARCH_HOST,
     options: {timeout: 20000},
-    previewUrl: process.env.REACT_APP_OSD_BASE,
   }
 
   static simpleQuery(terms) {
