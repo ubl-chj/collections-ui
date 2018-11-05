@@ -25,7 +25,8 @@ export class RelatedItems extends React.Component<any, any> {
     return {
       multi_match: {
         analyzer: "stop",
-        fields: ["title", "Title", "author^0.8", "Author^0.8", "description^0.3"],
+        fields: ["author^1.1", "Author^1.1", "Artist^1.1", "creators^1.1", "Creator(s)^1.1", "People^1.1", "title^0.8", "Title^0.8",
+          "description^0.3"],
         query: terms,
       },
     }

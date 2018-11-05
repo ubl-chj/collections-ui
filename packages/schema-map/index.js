@@ -16,6 +16,7 @@ export const mapping = {
   "Collection Name": "isPartOf",
   "Contributor": "acquiredFrom",
   "creators" : "creator",
+  "Creator(s)" : "creator",
   "Creation" : "dateCreated",
   "Credit Line": "funder",
   "Culture & Date": "dateCreated",

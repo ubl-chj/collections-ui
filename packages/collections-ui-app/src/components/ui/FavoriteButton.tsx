@@ -1,6 +1,5 @@
-import {firebase} from 'collections-ui-common'
+import {EmptyStar, firebase, Star} from 'collections-ui-common'
 import * as React from "react"
-import {EmptyStar, Star} from './svg'
 
 export class FavoriteButton extends React.Component<any, any> {
 

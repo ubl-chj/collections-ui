@@ -1,10 +1,10 @@
-import {buildImagePreview, buildImageView, buildRandomThumbnailReference, getSchema, resolveCreator,
+import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveCreator,
   resolveManifestId, resolveName, ResultContext, Thumbnail} from 'collections-ui-common'
 import * as React from "react"
 import {Link} from 'react-router-dom'
-import {ItemProps} from './ItemProps'
-import {ViewerComponent} from "../../../core/react"
 import {DocumentViewAccessor} from "../../../core/accessors"
+import {ViewerComponent} from "../../../core/react"
+import {ItemProps} from './ItemProps'
 
 const extend = require('lodash/extend')
 
@@ -27,7 +27,7 @@ export class SimpleGridItem extends ViewerComponent<ItemProps, any> {
     return this.viewer.getAccessorByType(DocumentViewAccessor)
   }
 
-  setView =(view) => {
+  setView = (view) => {
     this.getViewOptionsSwitcherAccessor().setView(view)
     this.setState((prevState) => {
       return {didUpdate: !prevState.didUpdate};
@@ -38,7 +38,7 @@ export class SimpleGridItem extends ViewerComponent<ItemProps, any> {
     const {result, bemBlocks, previewUrl, viewerUrl} = this.props
     const source = extend({}, result._source, result.highlight)
     const manifestId = resolveManifestId(source)
-    const thumbnail = buildRandomThumbnailReference(source.thumbnail)
+    const thumbnail = buildThumbnailReference(source.thumbnail)
     const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
     const viewUrl = buildImageView(viewerUrl, manifestId)
     const schema = getSchema(source, manifestId, thumbnail, null)
@@ -56,7 +56,13 @@ export class SimpleGridItem extends ViewerComponent<ItemProps, any> {
                 className={'poster'}
               />
               <Link to={viewUrl}>
-                <div onClick={() => this.setView('list')} title='View this Item' data-qa='title' className={bemBlocks.item('title')} dangerouslySetInnerHTML={{__html: name}}/>
+                <div
+                  onClick={() => this.setView('list')}
+                  title='View this Item'
+                  data-qa='title'
+                  className={bemBlocks.item('title')}
+                  dangerouslySetInnerHTML={{__html: name}}
+                />
               </Link>
               <div className='sk-hits-grid-hit__author' dangerouslySetInnerHTML={resolveCreator(schema)}/>
             </div>

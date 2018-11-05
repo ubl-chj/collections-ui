@@ -26,6 +26,11 @@
   "hasRangeFilter": false,
   "sortingSelectorOptions": [
     {
+      "label": "Updated",
+      "field": "dateUpdated",
+      "order": "desc"
+    },
+    {
       "label": "Name",
       "field": "name.keyword",
       "order": "asc"
@@ -34,11 +39,6 @@
       "label": "Size",
       "field": "docCount",
       "order": "asc"
-    },
-    {
-      "label": "Updated",
-      "field": "dateUpdated",
-      "order": "desc"
     }
   ],
   "highlightFields": [

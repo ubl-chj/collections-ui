@@ -43,9 +43,9 @@ pushManifestUUID = (manifest) => {
 }
 
 // getManifestUUID('https://iiif.harvardartmuseums.org/manifests/object/296562')
-getManifestForUUID('f15f9d56-5c7d-5583-9530-296cd6914ed3')
+//getManifestForUUID('f15f9d56-5c7d-5583-9530-296cd6914ed3')
 
 
-//const manifestIds = require('/tmp/mdz-uuids3.json')
+const manifestIds = require('/tmp/yale-uuids3.json')
 
-//pushManifestUUID(manifestIds)
+pushManifestUUID(manifestIds)

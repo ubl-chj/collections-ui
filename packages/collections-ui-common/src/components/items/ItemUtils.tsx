@@ -66,23 +66,11 @@ export function buildThumbnailReference(thumbnail) {
   if (thumbnail) {
     if (thumbnail.includes('/full')) {
       thumbnailLink = thumbnail
+      // support image api v1 providers (this should not be a long list)
+    } else if (thumbnail.includes('yale')) {
+     thumbnailLink = thumbnail + Domain.THUMBNAIL_NATIVE_API_REQUEST
     } else {
       thumbnailLink = thumbnail + Domain.THUMBNAIL_API_REQUEST
-    }
-  } else {
-    thumbnailLink = thumbnail
-  }
-  return thumbnailLink
-}
-
-export function buildRandomThumbnailReference(thumbnail) {
-  let thumbnailLink
-  if (thumbnail) {
-    // hack for Getty ...
-    if (thumbnail.includes('/full')) {
-      thumbnailLink = thumbnail
-    } else {
-      thumbnailLink = thumbnail + Domain.RANDOM_THUMBNAIL_API_REQUEST
     }
   } else {
     thumbnailLink = thumbnail

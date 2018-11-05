@@ -28,7 +28,7 @@ export class Thumbnail extends React.Component<any, any> {
   buildImage() {
     return (
       <img
-        crossOrigin=''
+       // crossOrigin=''
         width={this.imageWidth}
         onError={(e) => {
           this.handleMissingImage(e.target as HTMLImageElement)

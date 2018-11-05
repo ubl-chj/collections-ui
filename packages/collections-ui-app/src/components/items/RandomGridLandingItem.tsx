@@ -1,5 +1,5 @@
 import {ResultContext} from 'collections-ui-common'
-import {buildImagePreview, buildImageView, buildRandomThumbnailReference, getSchema, resolveCreator,
+import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveCreator,
   resolveManifestId, resolveName, Thumbnail, Title} from 'collections-ui-common'
 import * as React from "react"
 import {Link} from 'react-router-dom'
@@ -26,7 +26,7 @@ export class RandomGridLandingItem extends React.Component<ItemProps, any> {
     const {result, bemBlocks, previewUrl, viewerUrl} = this.props
     const source = extend({}, result._source, result.highlight)
     const manifestId = resolveManifestId(source)
-    const thumbnail = buildRandomThumbnailReference(source.thumbnail)
+    const thumbnail = buildThumbnailReference(source.thumbnail)
     const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
     const viewUrl = buildImageView(viewerUrl, manifestId)
     const schema = getSchema(source, manifestId, thumbnail, null)

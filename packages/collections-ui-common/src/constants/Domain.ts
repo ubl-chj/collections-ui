@@ -5,8 +5,9 @@ export enum Domain {
   META_DESCRIPTION = 'A data and discovery service provider for IIIF Collections',
   ACCOUNT_TEXT = 'Account',
   THUMBNAIL_API_REQUEST = '/full/90,/0/default.jpg',
+  THUMBNAIL_NATIVE_API_REQUEST = '/full/90,/0/native.jpg',
   FULL_IMAGE_API_REQUEST = '/full/full/0/default.jpg',
   LANDING_THUMBNAIL_API_REQUEST = '/full/150,/0/default.jpg',
   RANDOM_THUMBNAIL_API_REQUEST = '/full/150,/0/default.jpg',
-  RELATED_INDICES = 'mdz1,uc2,ox1,gt3,ga2,hvd2',
+  RELATED_INDICES = 'mdz1,uc2,ox1,gt3,ga2,hvd2,yba1,ec9',
 }
