@@ -69,12 +69,14 @@ export class Thumbnail extends React.Component<any, any> {
             <div className={this.className}>
               <ResultContext.Consumer>
                 {(result) => result ?
-                  <Link title='Preview this image' to={this.imageLink}>
+                  <div style={{height: '100%', position: 'relative', background: '#FFF'}}>
                     {this.buildImage()}
-                  </Link> :
-                  <a href={this.imageLink} target='_blank' rel='noopener noreferrer'>
-                    {this.buildImage()}
-                  </a>}
+                    <Link title='Preview this image' to={this.imageLink}/>
+                  </div> :
+                    <a href={this.imageLink} target='_blank' rel='noopener noreferrer'>
+                      {this.buildImage()}
+                    </a>
+                   }
               </ResultContext.Consumer>
             </div>
           }
