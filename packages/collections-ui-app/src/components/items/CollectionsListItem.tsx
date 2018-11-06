@@ -1,4 +1,4 @@
-import {ResultContext} from 'collections-ui-common'
+import {DynamicLayoutContext, ResultContext} from 'collections-ui-common'
 import * as React from "react"
 import Observer from 'react-intersection-observer'
 import {Link} from 'react-router-dom'
@@ -100,6 +100,7 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
     const updatedKey = 'Last Updated'
     const totalDocsKey = 'Total Documents'
     const logo = '<img crossorigin alt="collection logo" width=170 src=' + source.logo + '>'
+    const title = 'Browse ' + source.name
     return (
       <ResultContext.Provider value={result}>
         <div className={bemBlocks.item().mix(bemBlocks.container('landing'))} data-qa='hit'>
@@ -111,31 +112,40 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
                   {({inView, ref }) => (
                     <div ref={ref}>
                       {inView ? (
-                      <div dangerouslySetInnerHTML={{__html: logo}}/>) : null}
+                        <Link title={title} to={source.route}>
+                          <div dangerouslySetInnerHTML={{__html: logo}}/>
+                        </Link>
+                      ) : null}
                     </div>
                   )}
                 </Observer>
               </div>
               <div className='schema-list-value'>
-                <Link title='Browse this Collection' to={source.route}>{source.name}</Link>
+                <Link title={title} to={source.route}>{source.name}</Link>
               </div>
             </div>
-            <div className='schema-list-flex'>
-              <div className='collection-list__left'>
-                <span className='schema-list-key'><b>Random Item:</b></span>
-                <div className='JUQOte'>
-                  <button
-                    aria-label='refresh item'
-                    title='Refresh this Item'
-                    className='button-transparent'
-                    onClick={this.refreshItem}
-                  >
-                    <RefreshIcon/>
-                  </button>
+            <DynamicLayoutContext.Consumer>
+              {(isMobile) => isMobile ?
+                <div className='schema-list-flex'>
+                  {this.renderRandomItem()}
+                </div> :
+              <div className='schema-list-flex'>
+                <div className='collection-list__left'>
+                  <span className='schema-list-key'><b>Random Item:</b></span>
+                  <div className='JUQOte'>
+                    <button
+                      aria-label='refresh item'
+                      title='Refresh this Item'
+                      className='button-transparent'
+                      onClick={this.refreshItem}
+                    >
+                      <RefreshIcon/>
+                    </button>
+                  </div>
                 </div>
-              </div>
-              {this.renderRandomItem()}
-            </div>
+                {this.renderRandomItem()}
+              </div>}
+            </DynamicLayoutContext.Consumer>
             <ListCollectionEntry label={updatedKey} value={updated}/>
             <ListCollectionEntry label={totalDocsKey} value={source.docCount}/>
           </div>

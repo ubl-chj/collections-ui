@@ -39,7 +39,7 @@ export class RandomGridLandingItem extends React.Component<ItemProps, any> {
                 imageWidth={170}
                 imageSource={thumbnail}
                 imageLink={imageLink}
-                className={'poster'}
+                className={'sk-hits-grid-hit__poster'}
               />
               <Title
                 viewUrl={viewUrl}

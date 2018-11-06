@@ -16,7 +16,7 @@ export class RelatedHits extends SearchkitComponent<any, any> {
       return (
         <Hits
           hitsPerPage={20}
-          highlightFields={["title", "Title", "Author", "creators", "Creator(s)", "Artist", "People"]}
+          highlightFields={["title", "Title", "Titles", "Title (English)", "Author", "creators", "Creator(s)", "Artist", "People"]}
           mod="sk-hits-grid"
           itemComponent={SimpleGridItem}
         />

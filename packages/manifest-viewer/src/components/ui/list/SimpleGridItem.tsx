@@ -53,7 +53,7 @@ export class SimpleGridItem extends ViewerComponent<ItemProps, any> {
                 imageWidth={170}
                 imageSource={thumbnail}
                 imageLink={imageLink}
-                className={'poster'}
+                className={'sk-hits-grid-hit__poster'}
               />
               <Link to={viewUrl}>
                 <div

@@ -88,6 +88,7 @@ export const mapping = {
   "Technique": "genre",
   "Text Language": "inLanguage",
   "Title": "name",
+  "Titles": "name",
   "Title (English)": "name",
   "title": "alternateName",
   "types": "additionalType",

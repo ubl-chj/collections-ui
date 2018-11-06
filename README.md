@@ -3,7 +3,7 @@
 
 An interface that sources ElasticSearch indices and provides collections of IIIF manifests.
 
-See it live at [https://collections.iiif.cloud](https://collections.iiif.cloud/?utm_source=github&utm_medium=referral&utm_campaign=iiif)
+See it live at [https://iiif.cloud](https://iiif.cloud/?utm_source=github&utm_medium=referral&utm_campaign=iiif)
 
 Also provides an image viewer (WIP).
 
@@ -12,15 +12,16 @@ the UI provides access to dynamic keyword sourced manifest assembly.
 
 ## Install Packages
 ```bash
-$ cd packages/manifest-viewer
+$ cd packages/manifest-uuid
 $ npm install
 $ cd ../collections-ui-commons
 $ npm install
-$ cd ../manifest-uuid
+$ cd ../manifest-viewer
 $ npm install
 $ cd ../collections-ui-app
 $ npm install
 ```
+* Note that if you are using Node >= v11, run npm install with the --build-from-source flag.  See Dockerfile for reference.
 
 ## Build and Run (from root directory)
 

@@ -1,6 +1,6 @@
 import {ResultContext} from 'collections-ui-common'
 import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveManifestId,
-  shortenTitle} from 'collections-ui-common'
+  resolveName, shortenTitle} from 'collections-ui-common'
 import * as React from "react"
 import {GridItemDisplay} from "../ui/GridItemDisplay"
 import {ItemProps} from "./ItemProps"
@@ -27,7 +27,8 @@ export class StandardGridItem extends React.Component<ItemProps, any> {
       const schema = getSchema(source, manifestId, thumbnail, null)
       const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
       const viewUrl = buildImageView(viewerUrl, manifestId)
-      const titleString = shortenTitle(source)
+      const name = resolveName(schema)
+      const titleString = shortenTitle(name)
       return (
         <ResultContext.Provider value={result}>
           <GridItemDisplay

@@ -1,21 +1,15 @@
-import {Domain} from '../../constants'
 import {UUIDResolver} from 'manifest-uuid'
 import * as React from 'react'
+import {Domain} from '../../constants'
 import {SchemaAdapter} from '../schema'
 
 const uuidv5 = require('uuidv5')
 
-export function shortenTitle(source) {
-  let title
-  if (source.title) {
-    title = source.title
-  } else if (source.Title) {
-    title = source.Title
-  }
-  if (title.length >= 80) {
-    return title.substr(0, 80) + "... "
+export function shortenTitle(name) {
+  if (name >= 80) {
+    return name.substr(0, 80) + "... "
   } else {
-    return title;
+    return name;
   }
 }
 
@@ -107,16 +101,4 @@ export function resolveManifestId(source) {
   } else if (source.Manifest) {
     return uuidv5('url', source.Manifest)
   }
-}
-
-export function resolveThumbnailSource(source) {
-  if (source.thumbnail) {
-    return source.thumbnail
-  } else if (source.iiifService) {
-    return source.iiifService
-  }
-}
-
-export function resolveThumbnail(thumbnail) {
-  return thumbnail + Domain.THUMBNAIL_API_REQUEST
 }
