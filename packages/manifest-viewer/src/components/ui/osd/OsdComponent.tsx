@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {ViewerManager} from '../../../core'
 import {ContentTreeMenu, ImageFiltersMenu, PageSelector, ViewSelector} from '../controls'
-import {PagingControls} from "../controls/PagingControls";
+import {PagingControls} from '../controls/PagingControls'
 import {BackArrow, FullScreenIcon} from '../svg'
 
 let openSeaDragon

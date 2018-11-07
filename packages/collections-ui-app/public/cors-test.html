@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script>
+    function writeURL () {
+      var url = document.getElementById('imageURL').value
+      var crossorigin = document.querySelector('input[value="crossorigin"]')
+      var image = document.getElementById('image')
+      image.setAttribute('src', url)
+      if (crossorigin.checked) {
+        image.setAttribute('crossorigin', 'anonymous')
+      } else {
+        image.removeAttribute('crossorigin')
+      }
+      reload()
+      logToPage()
+    }
+    function reload(){
+      var imageContainer = document.getElementById("image-div")
+      imageContainer.innerHTML = imageContainer.innerHTML
+      var debugLogContainer = document.getElementById("debugDiv")
+      debugLogContainer.innerHTML = debugLogContainer.innerHTML
+    }
+
+    function doXHR() {
+      var preflight = document.querySelector('input[value="preflight"]')
+      var url = document.getElementById('imageURL').value
+      var xhr = new XMLHttpRequest()
+      xhr.addEventListener("progress", updateProgress);
+      xhr.addEventListener("loadend", transferComplete);
+      xhr.addEventListener("error", transferFailed);
+      xhr.addEventListener("abort", transferCanceled);
+      xhr.onload = logToPage()
+      xhr.open('GET', url, true)
+      if (preflight.checked) {
+        xhr.setRequestHeader("x-requested-with", "XMLHttpRequest")
+      }
+      xhr.send()
+      function updateProgress (oEvent) {
+        if (oEvent.lengthComputable) {
+          var percentComplete = oEvent.loaded / oEvent.total * 100;
+        } else {
+        }
+      }
+
+      function transferComplete(evt) {
+        console.log(new Date().toISOString() + ": The transfer is complete.")
+      }
+
+      function transferFailed(evt) {
+        console.log(new Date().toISOString() + ": An error occurred while transferring the file. See console for message")
+      }
+
+      function transferCanceled(evt) {
+        console.log("The transfer has been canceled by the user.")
+      }
+      reload()
+    }
+    function logError() {
+      console.log(new Date().toISOString() + ": Access to the image has been blocked. See console for message")
+    }
+
+    function logToPage() {
+      var debugDiv = document.getElementById('debugDiv')
+      if (debugDiv) {
+        console.log = function (message) {
+          debugDiv.innerHTML += ('<span>' + message + '</span><br/>')
+        }
+        console.error = console.debug = console.info = console.log
+      }
+    }
+  </script>
+</head>
+<body>
+<h1>IIIF CORS Support Test Interface</h1>
+  <div>
+    <label for="imageURL">Enter JSON or IIIF Image URL</label>
+    <span>{scheme}://{server}{/prefix}/{identifier}/{region}/{size}/{rotation}/{quality}.{format}</span>
+    <br/>
+    <br/>
+    <input size='150' type="text" id="imageURL" name="image">
+  </div>
+<br/>
+  <div id="image-div">
+    <img id="image" onError="logError()"/>
+  </div>
+  <div>
+    <br/>
+    <button onclick="writeURL()">GET as Image Element</button>
+  </div>
+  <div>
+    <input type="checkbox" id="crossorigin" name="crossorigin" value="crossorigin"/>
+    <label for="crossorigin">Enable Cross Origin</label>
+  </div>
+  <div>
+    <br/>
+    <button onclick="doXHR()">GET as XHR</button>
+  </div>
+  <div>
+    <input type="checkbox" id="preflight" name="preflight" value="preflight"/>
+    <label for="preflight">Preflight w/OPTIONS</label>
+  </div>
+  <br/>
+  <div id="debugDiv">
+  </div>
+</body>
+</html>

@@ -42,7 +42,7 @@ export class AccountPage extends React.Component<IRouteProps, any> {
       const {width} = this.state
       return (
         <SearchkitProvider searchkit={this.searchkit}>
-          <div className='outer-container' id='outer-container'>
+          <div style={{background: '#efefef'}} id='outer-container'>
             <BMenu/>
             <div id='page-wrap'>
               <Layout>

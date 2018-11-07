@@ -2,6 +2,5 @@ export * from './Account'
 export * from './asCollection'
 export * from './Collection'
 export * from './Landing'
-export * from './Previewer'
 export * from './SignIn'
-export * from './Viewer'
+

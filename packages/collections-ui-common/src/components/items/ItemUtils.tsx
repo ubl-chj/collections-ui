@@ -6,10 +6,12 @@ import {SchemaAdapter} from '../schema'
 const uuidv5 = require('uuidv5')
 
 export function shortenTitle(name) {
-  if (name >= 80) {
-    return name.substr(0, 80) + "... "
-  } else {
-    return name;
+  if (name) {
+    if (name.length >= 80) {
+      return name.substr(0, 80) + "... "
+    } else {
+      return name;
+    }
   }
 }
 

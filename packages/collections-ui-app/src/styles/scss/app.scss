@@ -109,9 +109,6 @@
   background-color: transparent;
   border: none;
 }
-.outer-container {
-  background: #efefef;
-}
 
 .container {
   position: fixed;
@@ -317,13 +314,6 @@
   width: 36px;
   height: 36px;
   vertical-align: middle;
-}
-
-.header__mid {
-  border-radius: 3px;
-  position: relative;
-  display: flex;
-  flex: 1 1;
 }
 
 .button-transparent__fav {
@@ -610,6 +600,9 @@
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
 }
 
+.sk-layout__results {
+  margin: 11px;
+}
 
 .my-logo {
   color:white;

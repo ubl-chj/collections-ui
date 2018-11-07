@@ -156,7 +156,7 @@ export class Landing extends React.Component<IRouteProps, any> {
     }
     return (
          <SearchkitProvider searchkit={this.searchkit}>
-           <div className='outer-container' id='outer-container'>
+           <div style={{background: '#efefef'}} id='outer-container'>
              <HeadMeta/>
              <BMenu/>
              <div id='page-wrap'>

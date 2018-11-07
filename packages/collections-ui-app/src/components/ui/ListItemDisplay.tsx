@@ -36,6 +36,23 @@ export const ListSchemaEntry = (props) => {
 
 export class ListItemDisplay extends React.Component<IListItemDisplayProps, any> {
 
+  static buildTitle(bemBlocks, contentUrl, name) {
+    return(
+      <Title
+        viewUrl={contentUrl}
+        className={bemBlocks.item('title')}
+        titleString={name}
+      />
+    )
+  }
+
+  buildFavoriteButton(result) {
+    return(
+    <AuthUserContext.Consumer>
+      {(authUser) => authUser ? <FavoriteButton authUser={firebase.auth.currentUser} result={result}/> : null}
+    </AuthUserContext.Consumer>)
+  }
+
   render() {
     const {bemBlocks, contentUrl, imageLink, result, thumbnail, schema} = this.props
     const schemaFilterName = Object.entries(schema.mainEntity).filter((e) => e[0] !== 'name')
@@ -46,14 +63,8 @@ export class ListItemDisplay extends React.Component<IListItemDisplayProps, any>
         {(isMobile) => isMobile ?
           <div className='sk-hits-grid-landing__item' data-qa='hit'>
             <div className='title-flex'>
-              <AuthUserContext.Consumer>
-                {(authUser) => authUser ? <FavoriteButton authUser={firebase.auth.currentUser} result={result}/> : null}
-              </AuthUserContext.Consumer>
-              <Title
-                viewUrl={contentUrl}
-                className={bemBlocks.item('title')}
-                titleString={name}
-              />
+              {this.buildFavoriteButton(result)}
+              {ListItemDisplay.buildTitle(bemBlocks, contentUrl, name)}
             </div>
               <Thumbnail
                 imageWidth={170}
@@ -74,14 +85,8 @@ export class ListItemDisplay extends React.Component<IListItemDisplayProps, any>
             />
             <div className={bemBlocks.item('details')}>
               <div className='title-flex'>
-                <AuthUserContext.Consumer>
-                  {(authUser) => authUser ? <FavoriteButton authUser={firebase.auth.currentUser} result={result}/> : null}
-                </AuthUserContext.Consumer>
-                <Title
-                  viewUrl={contentUrl}
-                  className={bemBlocks.item('title')}
-                  titleString={name}
-                />
+                {this.buildFavoriteButton(result)}
+                {ListItemDisplay.buildTitle(bemBlocks, contentUrl, name)}
               </div>
               {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
             </div>

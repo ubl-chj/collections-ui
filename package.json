@@ -22,7 +22,9 @@
         "url": "https://github.com/ubl-chj/collections-ui.git"
     },
     "scripts": {
-        "lerna": "lerna"
+        "bootstrap": "lerna bootstrap",
+        "build": "lerna run build",
+        "init": "lerna init"
     },
     "authors": [
         {

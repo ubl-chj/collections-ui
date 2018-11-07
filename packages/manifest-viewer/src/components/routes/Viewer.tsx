@@ -1,21 +1,10 @@
 import {AuthProfile, firebase, LogoWrapper, withDynamicLayout} from 'collections-ui-common'
 import {UUIDResolver} from 'manifest-uuid'
-import {
-  ActionBar,
-  Controls,
-  DocumentViewSwitcher,
-  Layout,
-  LayoutBody,
-  ManifestItem,
-  RelatedItems,
-  TopBar,
-  ViewerContext,
-  ViewerManager,
-  ViewerProvider,
-  ViewSwitcherToggle,
-} from 'manifest-viewer'
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
+import {ViewerContext, ViewerManager, ViewerProvider} from '../../core'
+import {DocumentViewSwitcher, ViewSwitcherToggle} from '../display'
+import {ActionBar, Controls, Layout, LayoutBody, ManifestItem, RelatedItems, TopBar} from '../ui'
 
 const qs = require('query-string')
 const uuidv4 = require('uuid/v4')
@@ -35,11 +24,11 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
   viewer: ViewerManager
   hasUnmounted: boolean
 
-
   constructor(props) {
     super(props)
     this.state = {
       currentCanvas: 0,
+      view: null,
       width: props.width,
     }
     this.viewer = null
@@ -67,11 +56,19 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
 
   resolveParams() {
     const params = qs.parse(this.props.location.search)
-    if (this.props.match.params.uuid && !Object.keys(params).length) {
-      const uuid = this.props.match.params.uuid
-      const currentCanvas = this.props.location.hash.substring(1)
-      this.setState({currentCanvas})
-      this.resolveManifest(uuid)
+    if (this.props.match.params.uuid) {
+      if (!Object.keys(params).length) {
+        const uuid = this.props.match.params.uuid
+        const currentCanvas = this.props.location.hash.substring(1)
+        this.setState({currentCanvas})
+        this.resolveManifest(uuid)
+      } else {
+        if (params.view) {
+          const uuid = this.props.match.params.uuid
+          this.resolveManifest(uuid)
+          this.setState({view: params.view})
+        }
+      }
     } else if (Object.keys(params).length) {
       if (params.p) {
         const path = this.props.location.pathname
@@ -113,14 +110,14 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
   }
 
   render() {
-    const {width} = this.state
+    const {view, width} = this.state
     if (this.viewer) {
       return (
           <ViewerProvider viewer={this.viewer}>
             <Layout>
               <TopBar>
                 <LogoWrapper/>
-                <div className='header__mid'/>
+                <div style={{display: 'flex', flex: '1 1'}}/>
                 {this.buildViewSwitcherToggle()}
                 <AuthProfile width={width}/>
               </TopBar>
@@ -130,6 +127,7 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
               <LayoutBody>
                 <ViewerContext.Provider value={this.state.currentCanvas}>
                   <DocumentViewSwitcher
+                    view={view}
                     viewerComponents={[{defaultOption: true, itemComponent: ManifestViewer, key: 'list', title: 'Main',
                     }, {itemComponent: RelatedItems, key: 'grid', title: 'Related'}]}
                   />
