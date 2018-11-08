@@ -46,6 +46,6 @@ pushManifestUUID = (manifest) => {
 //getManifestForUUID('f15f9d56-5c7d-5583-9530-296cd6914ed3')
 
 
-const manifestIds = require('/tmp/yale-uuids5.json')
+const manifestIds = require('/tmp/mdz-uuids4.json')
 
 pushManifestUUID(manifestIds)

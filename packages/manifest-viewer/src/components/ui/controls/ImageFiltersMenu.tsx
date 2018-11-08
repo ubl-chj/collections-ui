@@ -78,7 +78,7 @@ export class ImageFiltersMenu extends React.Component<any, any> {
     })
   }
 
-  onSliderChange = (brightness) => {
+  onBrightnessChange = (brightness) => {
     this.setState({
       brightness,
     });
@@ -105,7 +105,7 @@ export class ImageFiltersMenu extends React.Component<any, any> {
           min={-255}
           max={255}
           value={this.state.brightness}
-          onChange={this.onSliderChange}
+          onChange={this.onBrightnessChange}
         />
         <div className='Hj59Ib'>Invert</div>
         <Checkbox

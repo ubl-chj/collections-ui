@@ -62,20 +62,11 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
         const currentCanvas = this.props.location.hash.substring(1)
         this.setState({currentCanvas})
         this.resolveManifest(uuid)
-      } else {
-        if (params.view) {
-          const uuid = this.props.match.params.uuid
-          this.resolveManifest(uuid)
-          this.setState({view: params.view})
-        }
       }
-    } else if (Object.keys(params).length) {
-      if (params.p) {
-        const path = this.props.location.pathname
-        const uuid = path.split('/')[2]
-        this.resolveManifest(uuid)
-        this.props.history.replace(window.parent.location.pathname)
-      } else if (params.manifest) {
+    }
+
+    if (Object.keys(params).length) {
+      if (params.manifest) {
         const doc = params.manifest
         const currentCanvas = this.props.location.hash.substring(1)
         this.setState({currentCanvas})

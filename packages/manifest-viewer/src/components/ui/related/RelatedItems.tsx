@@ -1,14 +1,15 @@
 import * as React from 'react'
 const manifesto = require('manifesto-fork')
 import {Domain, resolveCreator} from "collections-ui-common"
-import {NoHits, Pagination, SearchkitManager, SearchkitProvider} from "searchkit-fork"
+import {  ActionBar, ActionBarRow, HitsStats, NoHits, PageSizeSelector, Pagination, SearchkitManager, SearchkitProvider,
+  Select} from "searchkit-fork"
 import {RelatedHits} from './RelatedHits'
 
 export class RelatedItems extends React.Component<any, any> {
 
   static defaultProps = {
     host: process.env.REACT_APP_ELASTICSEARCH_HOST,
-    options: {timeout: 20000},
+    options: {timeout: 20000, useHistory: false},
   }
 
   static simpleQuery(terms) {
@@ -52,6 +53,12 @@ export class RelatedItems extends React.Component<any, any> {
       return (
         <SearchkitProvider searchkit={this.searchkit}>
           <main>
+            <ActionBar>
+              <ActionBarRow>
+                <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
+                <PageSizeSelector options={[10.0, 20.0, 50.0]} listComponent={Select}/>
+              </ActionBarRow>
+            </ActionBar>
             <Pagination showNumbers={true}/>
             <div style={{display: 'flex'}}>
               <RelatedHits/>

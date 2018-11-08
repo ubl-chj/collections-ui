@@ -6,13 +6,19 @@ import {SchemaAdapter} from '../schema'
 const uuidv5 = require('uuidv5')
 
 export function shortenTitle(name) {
+  let shortTitle
   if (name) {
-    if (name.length >= 80) {
-      return name.substr(0, 80) + "... "
+    if (!Array.isArray(name)) {
+      if (name.length >= 80) {
+        shortTitle =  name.substr(0, 80) + "... "
+      } else {
+        return name;
+      }
     } else {
-      return name;
+      shortTitle =  name[0]
     }
   }
+  return shortTitle
 }
 
 export function buildImagePreview(previewUrl: string, thumbnail: string, manifest?: string) {

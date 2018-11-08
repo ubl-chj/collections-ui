@@ -14,7 +14,7 @@ the UI provides access to dynamic keyword sourced manifest assembly.
 ```bash
 $ lerna init
 $ npm run bootstrap
-$ cd ../collections-ui-commons
+$ cd packages/collections-ui-commons
 $ npm install
 $ cd ../manifest-viewer
 $ npm install

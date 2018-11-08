@@ -1,6 +1,7 @@
 import * as React from "react"
 import Observer from 'react-intersection-observer'
 import {Link} from 'react-router-dom'
+import {Domain} from "../../constants"
 import {DynamicLayoutContext, ResultContext} from '../contexts'
 
 export class Thumbnail extends React.Component<any, any> {
@@ -22,7 +23,7 @@ export class Thumbnail extends React.Component<any, any> {
   }
 
   handleMissingImage = (target) => {
-    return target.src = 'https://upload.wikimedia.org/wikipedia/commons/9/9a/VisualEditor_icon_page-not-found-ltr.svg'
+    return target.src = Domain.THUMBNAIL_NOTFOUND_SVG
   }
 
   buildImage() {
