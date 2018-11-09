@@ -1,3 +1,4 @@
+export * from "./CanvasContext"
 export * from "./ViewerContext"
 export * from "./ViewerProvider"
 export * from "./ViewerComponent"

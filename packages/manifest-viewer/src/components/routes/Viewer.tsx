@@ -2,7 +2,7 @@ import {AuthProfile, firebase, LogoWrapper, withDynamicLayout} from 'collections
 import {UUIDResolver} from 'manifest-uuid'
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
-import {ViewerContext, ViewerManager, ViewerProvider} from '../../core'
+import {CanvasContext, ViewerManager, ViewerProvider} from '../../core'
 import {DocumentViewSwitcher, ViewSwitcherToggle} from '../display'
 import {ActionBar, Controls, Layout, LayoutBody, ManifestItem, RelatedItems, TopBar} from '../ui'
 
@@ -101,7 +101,7 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
   }
 
   render() {
-    const {view, width} = this.state
+    const {width} = this.state
     if (this.viewer) {
       return (
           <ViewerProvider viewer={this.viewer}>
@@ -116,13 +116,12 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
                 <Controls {...this.props} uuid={uuidv4()}/>
               </ActionBar>
               <LayoutBody>
-                <ViewerContext.Provider value={this.state.currentCanvas}>
+                <CanvasContext.Provider value={this.state.currentCanvas}>
                   <DocumentViewSwitcher
-                    view={view}
                     viewerComponents={[{defaultOption: true, itemComponent: ManifestViewer, key: 'list', title: 'Main',
                     }, {itemComponent: RelatedItems, key: 'grid', title: 'Related'}]}
                   />
-                </ViewerContext.Provider>
+                </CanvasContext.Provider>
               </LayoutBody>
             </Layout>
           </ViewerProvider>)

@@ -9,7 +9,6 @@ import {Annotations} from "./Annotations"
 const defaults = require("lodash/defaults")
 
 export interface IDocumentViewSwitcherProps {
-  view: string
   viewerComponents?: Array<{
     key: string,
     title: string,

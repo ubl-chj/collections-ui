@@ -1,5 +1,6 @@
 import {ManifestTransport} from "./transport"
 import {ViewerManager} from "./ViewerManager";
+const manifesto = require('manifesto-fork')
 
 export class DocumentRequest {
 
@@ -23,7 +24,8 @@ export class DocumentRequest {
 
   setResults(document) {
     if (this.active) {
-      this.viewer.setDocument(document)
+      const manifest = manifesto.create(document)
+      this.viewer.setDocument(manifest)
     }
   }
 

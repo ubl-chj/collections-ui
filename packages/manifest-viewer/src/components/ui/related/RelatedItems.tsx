@@ -1,9 +1,9 @@
-import * as React from 'react'
-const manifesto = require('manifesto-fork')
 import {Domain, resolveCreator} from "collections-ui-common"
-import {  ActionBar, ActionBarRow, HitsStats, NoHits, PageSizeSelector, Pagination, SearchkitManager, SearchkitProvider,
+import * as React from 'react'
+import {ActionBar, ActionBarRow, HitsStats, NoHits, PageSizeSelector, Pagination, SearchkitManager, SearchkitProvider,
   Select} from "searchkit-fork"
 import {RelatedHits} from './RelatedHits'
+const manifesto = require('manifesto-fork')
 
 export class RelatedItems extends React.Component<any, any> {
 
@@ -47,8 +47,7 @@ export class RelatedItems extends React.Component<any, any> {
   render() {
     const {document} = this.props
     if (document) {
-      const manifest = manifesto.create(document)
-      const title = manifesto.LanguageMap.getValue(manifest.getLabel())
+      const title = manifesto.LanguageMap.getValue(document.getLabel())
       this.searchkit.addDefaultQuery((query) => query.addQuery(RelatedItems.multiMatchQuery(title)))
       return (
         <SearchkitProvider searchkit={this.searchkit}>
@@ -56,7 +55,7 @@ export class RelatedItems extends React.Component<any, any> {
             <ActionBar>
               <ActionBarRow>
                 <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
-                <PageSizeSelector options={[10.0, 20.0, 50.0]} listComponent={Select}/>
+                <PageSizeSelector options={[10, 20, 50]} listComponent={Select}/>
               </ActionBarRow>
             </ActionBar>
             <Pagination showNumbers={true}/>

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {ViewerContext} from "../../../core/react"
+import {CanvasContext} from "../../../core/react"
 const manifesto = require('manifesto-fork')
 import {OsdComponent} from './OsdComponent'
 
@@ -8,8 +8,7 @@ export class ManifestItem extends React.Component<any, any> {
   render() {
     const {document, width} = this.props
     if (document) {
-      const manifest = manifesto.create(document)
-      const sequences = manifest.getSequences()
+      const sequences = document.getSequences()
       const imageIds = []
       const canvasLabels = []
       sequences.forEach((seq) => {
@@ -28,10 +27,10 @@ export class ManifestItem extends React.Component<any, any> {
         })
       })
       return (
-        <ViewerContext.Consumer>
+        <CanvasContext.Consumer>
           {(currentCanvas) =>
             <OsdComponent currentCanvas={currentCanvas} canvasLabels={canvasLabels} width={width} images={imageIds}/>}
-         </ViewerContext.Consumer>   )
+         </CanvasContext.Consumer>   )
     }
     return (null)
   }
