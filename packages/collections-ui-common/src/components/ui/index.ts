@@ -1,3 +1,4 @@
+export * from './NavMenu'
 export * from '../contexts/DynamicLayoutContext'
 export * from './LogoWrapper'
 export * from './profiles'

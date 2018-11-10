@@ -1,6 +1,7 @@
 import * as React from "react"
 import Observer from 'react-intersection-observer'
 import {Link} from 'react-router-dom'
+import {Domain} from "../../constants"
 import {DynamicLayoutContext, ResultContext} from '../contexts'
 
 export class Thumbnail extends React.Component<any, any> {
@@ -22,13 +23,13 @@ export class Thumbnail extends React.Component<any, any> {
   }
 
   handleMissingImage = (target) => {
-    return target.src = 'https://upload.wikimedia.org/wikipedia/commons/9/9a/VisualEditor_icon_page-not-found-ltr.svg'
+    return target.src = Domain.THUMBNAIL_NOTFOUND_SVG
   }
 
   buildImage() {
     return (
       <img
-       // crossOrigin=''
+        // crossOrigin=''
         width={this.imageWidth}
         onError={(e) => {
           this.handleMissingImage(e.target as HTMLImageElement)
@@ -43,10 +44,10 @@ export class Thumbnail extends React.Component<any, any> {
     return (
       <DynamicLayoutContext.Consumer>
           {(isMobile) => isMobile ?
-            <div className={this.className}>
+            <div className='poster'>
               <ResultContext.Consumer>
                 {(result) => result ?
-                  <Link title='Preview this image' to={this.imageLink}>
+                  <Link title='View this Item' to={this.imageLink}>
                     <Observer>
                       {({inView, ref}) => (
                         <div ref={ref}>
@@ -69,9 +70,9 @@ export class Thumbnail extends React.Component<any, any> {
             <div className={this.className}>
               <ResultContext.Consumer>
                 {(result) => result ?
-                  <div style={{height: '100%', position: 'relative', background: '#FFF'}}>
+                  <div style={{height: '100%', position: 'relative', background: '#eeeeee'}}>
                     {this.buildImage()}
-                    <Link title='Preview this image' to={this.imageLink}/>
+                    <Link title='View this Item' to={this.imageLink}/>
                   </div> :
                     <a href={this.imageLink} target='_blank' rel='noopener noreferrer'>
                       {this.buildImage()}

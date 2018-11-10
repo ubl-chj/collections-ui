@@ -55,11 +55,9 @@
     "collections-ui-common": "file:../collections-ui-common",
     "firebase": "^5.5.5",
     "fs-extra": "^7.0.0",
-    "manifest-uuid": "file:../manifest-uuid",
     "manifest-viewer": "file:../manifest-viewer",
     "object-assign": "4.1.1",
     "promise": "^8.0.2",
-    "query-string": "^6.2.0",
     "react": "^16.4.2",
     "react-burger-menu": "^2.5.2",
     "react-dev-utils": "^6.0.5",
@@ -72,7 +70,7 @@
     "react-loadable": "^5.5.0",
     "react-router-dom": "^4.3.1",
     "reactstrap": "^6.0.1",
-    "searchkit-fork": "^2.3.6",
+    "searchkit-fork": "^2.3.8",
     "whatwg-fetch": "^3.0.0"
   },
   "scripts": {

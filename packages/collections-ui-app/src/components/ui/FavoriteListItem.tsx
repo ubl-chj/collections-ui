@@ -1,5 +1,5 @@
-import {buildImagePreview, buildImageView, firebase, getSchema, resolveManifestId, resolveThumbnail,
-  resolveThumbnailSource, ResultContext} from 'collections-ui-common'
+import {buildImagePreview, buildImageView, buildThumbnailReference, firebase, getSchema, resolveManifestId,
+  ResultContext} from 'collections-ui-common'
 import * as React from "react"
 import {block} from 'searchkit-fork'
 import {FavoritesListItemDisplay} from "./FavoritesListItemDisplay"
@@ -9,7 +9,6 @@ export class FavoriteListItem extends React.Component<any, any> {
 
   static defaultProps = {
     mod: "sk-hits-list",
-    previewUrl: process.env.REACT_APP_OSD_BASE,
     viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
   }
 
@@ -52,35 +51,30 @@ export class FavoriteListItem extends React.Component<any, any> {
     const {previewUrl, viewerUrl} = this.props
     const manifestId = resolveManifestId(source)
 
-    // hack around Getty level 0
-    let thumbnailSource
-    let thumbnail
-    if (source.thumbnail.includes('/full')) {
-      thumbnailSource = source.thumbnail.split('/full')[0]
-      thumbnail = source.thumbnail
+    const thumbnail = buildThumbnailReference(source.thumbnail)
+    if (thumbnail) {
+      // const imageLink = buildImagePreview(previewUrl, thumbnail, manifestId)
+      const viewUrl = buildImageView(viewerUrl, manifestId)
+      const schema = getSchema(source, manifestId, thumbnail, source.imageIndex)
+      if (viewUrl && schema && thumbnail) {
+        return (
+          <ResultContext.Provider value={result}>
+            <FavoritesListItemDisplay
+              contentUrl={viewUrl}
+              imageLink={viewUrl}
+              schema={schema}
+              thumbnail={thumbnail}
+              bemBlocks={bemBlocks}
+              result={result}
+              unsetFavorite={this.unsetFavorite}
+              {...this.props}
+            />
+          </ResultContext.Provider>)
+      } else {
+        return ("Metadata Display not Defined")
+      }
     } else {
-      thumbnailSource = resolveThumbnailSource(source)
-      thumbnail = resolveThumbnail(thumbnailSource)
-    }
-    const imageLink = buildImagePreview(previewUrl, thumbnailSource, manifestId)
-    const viewUrl = buildImageView(viewerUrl, manifestId)
-    const schema = getSchema(source, manifestId, thumbnailSource, source.imageIndex)
-    if (viewUrl && schema && imageLink && thumbnail) {
-      return (
-        <ResultContext.Provider value={result}>
-          <FavoritesListItemDisplay
-            contentUrl={viewUrl}
-            imageLink={imageLink}
-            schema={schema}
-            thumbnail={thumbnail}
-            bemBlocks={bemBlocks}
-            result={result}
-            unsetFavorite={this.unsetFavorite}
-            {...this.props}
-          />
-        </ResultContext.Provider>)
-    } else {
-      return ("Metadata Display not Defined")
+      return null
     }
   }
 

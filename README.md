@@ -12,9 +12,9 @@ the UI provides access to dynamic keyword sourced manifest assembly.
 
 ## Install Packages
 ```bash
-$ cd packages/manifest-uuid
-$ npm install
-$ cd ../collections-ui-commons
+$ lerna init
+$ npm run bootstrap
+$ cd packages/collections-ui-common
 $ npm install
 $ cd ../manifest-viewer
 $ npm install

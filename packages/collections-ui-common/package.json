@@ -28,10 +28,12 @@
   "dependencies": {
     "firebase": "^5.5.3",
     "manifest-uuid": "file:../manifest-uuid",
+    "react-burger-menu": "^2.5.2",
     "react-intersection-observer": "^6.2.3",
+    "reactstrap": "^6.0.1",
     "react-tooltip": "^3.6.1",
     "schema-map": "file:../schema-map",
-    "typescript": "^3.0.1",
+    "typescript": "^3.1.6",
     "uuidv5": "^1.0.0"
   }
 }

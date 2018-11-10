@@ -2,6 +2,7 @@ import * as React from "react"
 import {push as Menu} from 'react-burger-menu'
 import {ContentTreeIcon} from "../svg"
 import {ContentTree} from './ContentTree'
+
 export class ContentTreeMenu extends React.Component<any, any> {
 
   static menuStyles() {

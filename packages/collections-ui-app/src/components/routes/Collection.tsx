@@ -1,4 +1,4 @@
-import {DynamicLayoutContext} from 'collections-ui-common'
+import {NavMenu, DynamicLayoutContext} from 'collections-ui-common'
 import * as React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {
@@ -25,7 +25,7 @@ import {
 } from 'searchkit-fork'
 import {StandardGridItem, StandardListItem} from '../items'
 import {HeadMeta} from "../schema";
-import {BMenu, FilterMenu, Head} from '../ui'
+import {FilterMenu, Head} from '../ui'
 import {asCollection} from './asCollection'
 import {IRouteProps} from './IRouteProps'
 
@@ -190,10 +190,10 @@ class Collection extends React.Component<IRouteProps, any> {
       const listItem = components[1]
       return (
         <SearchkitProvider searchkit={this.searchkit}>
-          <div className='outer-container' id='outer-container'>
+          <div style={{background: '#efefef'}} id='outer'>
             <HeadMeta/>
-            <BMenu/>
-            <div id='page-wrap'>
+            <NavMenu/>
+            <div id='inner'>
               <Layout>
                 <Head width={width} routeConfig={routeConfig}/>
                 <main>

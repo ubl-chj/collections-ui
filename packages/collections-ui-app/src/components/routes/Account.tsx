@@ -1,8 +1,8 @@
-import {AuthUserContext, firebase, withAuthorization, withDynamicLayout} from 'collections-ui-common'
+import {AuthUserContext, NavMenu, firebase, withAuthorization, withDynamicLayout} from 'collections-ui-common'
 import * as React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Layout, LayoutBody, LayoutResults, SearchkitManager, SearchkitProvider, SideBar} from 'searchkit-fork'
-import {BMenu, FavoritesList, Head} from '../ui'
+import {FavoritesList, Head} from '../ui'
 import {IRouteProps} from "./IRouteProps"
 
 export class AccountPage extends React.Component<IRouteProps, any> {
@@ -42,9 +42,9 @@ export class AccountPage extends React.Component<IRouteProps, any> {
       const {width} = this.state
       return (
         <SearchkitProvider searchkit={this.searchkit}>
-          <div className='outer-container' id='outer-container'>
-            <BMenu/>
-            <div id='page-wrap'>
+          <div style={{background: '#efefef'}} id='outer'>
+            <NavMenu/>
+            <div id='inner'>
               <Layout>
                 <Head width={width} routeConfig={routeConfig}/>
                 <LayoutBody>

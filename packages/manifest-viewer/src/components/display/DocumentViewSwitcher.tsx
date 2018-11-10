@@ -34,6 +34,17 @@ export class DocumentViewSwitcher extends ViewerComponent<IDocumentViewSwitcherP
   }, Annotations.propTypes)
   accessor: DocumentViewAccessor
 
+  state: {
+    selectedOption: any,
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      selectedOption: null,
+    }
+  }
+
   defineAccessor() {
     return new DocumentViewAccessor("view", this.props.viewerComponents)
   }
@@ -55,4 +66,3 @@ export class DocumentViewSwitcher extends ViewerComponent<IDocumentViewSwitcherP
     }
   }
 }
-

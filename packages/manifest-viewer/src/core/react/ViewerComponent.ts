@@ -46,6 +46,7 @@ export class ViewerComponent<P extends IViewerComponentProps, S> extends React.C
   stateListenerUnsubscribe: Function
   translations: object = {}
   unmounted = false
+  context: any
 
   constructor(props?) {
     super(props)

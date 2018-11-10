@@ -1,21 +1,10 @@
-import {AuthProfile, firebase, LogoWrapper, withDynamicLayout} from 'collections-ui-common'
+import {AuthProfile, NavMenu, firebase, LogoWrapper, withDynamicLayout} from 'collections-ui-common'
 import {UUIDResolver} from 'manifest-uuid'
-import {
-  ActionBar,
-  Controls,
-  DocumentViewSwitcher,
-  Layout,
-  LayoutBody,
-  ManifestItem,
-  RelatedItems,
-  TopBar,
-  ViewerContext,
-  ViewerManager,
-  ViewerProvider,
-  ViewSwitcherToggle,
-} from 'manifest-viewer'
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
+import {CanvasContext, ViewerManager, ViewerProvider} from '../../core'
+import {DocumentViewSwitcher, ViewSwitcherToggle} from '../display'
+import {ActionBar, Controls, Layout, LayoutBody, ManifestItem, RelatedItems, TopBar} from '../ui'
 
 const qs = require('query-string')
 const uuidv4 = require('uuid/v4')
@@ -35,11 +24,11 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
   viewer: ViewerManager
   hasUnmounted: boolean
 
-
   constructor(props) {
     super(props)
     this.state = {
       currentCanvas: 0,
+      view: null,
       width: props.width,
     }
     this.viewer = null
@@ -67,18 +56,17 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
 
   resolveParams() {
     const params = qs.parse(this.props.location.search)
-    if (this.props.match.params.uuid && !Object.keys(params).length) {
-      const uuid = this.props.match.params.uuid
-      const currentCanvas = this.props.location.hash.substring(1)
-      this.setState({currentCanvas})
-      this.resolveManifest(uuid)
-    } else if (Object.keys(params).length) {
-      if (params.p) {
-        const path = this.props.location.pathname
-        const uuid = path.split('/')[2]
+    if (this.props.match.params.uuid) {
+      if (!Object.keys(params).length) {
+        const uuid = this.props.match.params.uuid
+        const currentCanvas = this.props.location.hash.substring(1)
+        this.setState({currentCanvas})
         this.resolveManifest(uuid)
-        this.props.history.replace(window.parent.location.pathname)
-      } else if (params.manifest) {
+      }
+    }
+
+    if (Object.keys(params).length) {
+      if (params.manifest) {
         const doc = params.manifest
         const currentCanvas = this.props.location.hash.substring(1)
         this.setState({currentCanvas})
@@ -117,25 +105,30 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
     if (this.viewer) {
       return (
           <ViewerProvider viewer={this.viewer}>
-            <Layout>
-              <TopBar>
-                <LogoWrapper/>
-                <div className='header__mid'/>
-                {this.buildViewSwitcherToggle()}
-                <AuthProfile width={width}/>
-              </TopBar>
-              <ActionBar>
-                <Controls {...this.props} uuid={uuidv4()}/>
-              </ActionBar>
-              <LayoutBody>
-                <ViewerContext.Provider value={this.state.currentCanvas}>
-                  <DocumentViewSwitcher
-                    viewerComponents={[{defaultOption: true, itemComponent: ManifestViewer, key: 'list', title: 'Main',
-                    }, {itemComponent: RelatedItems, key: 'grid', title: 'Related'}]}
-                  />
-                </ViewerContext.Provider>
-              </LayoutBody>
-            </Layout>
+            <div id='outer' style={{background: '#efefef', position: 'absolute', height: '100%', width: '100%'}}>
+              <NavMenu/>
+              <div id='inner' style={{height: '100%'}}>
+                <Layout>
+                  <TopBar>
+                    <LogoWrapper/>
+                    <div style={{display: 'flex', flex: '1 1'}}/>
+                    {this.buildViewSwitcherToggle()}
+                    <AuthProfile width={width}/>
+                  </TopBar>
+                  <ActionBar>
+                    <Controls {...this.props} uuid={uuidv4()}/>
+                  </ActionBar>
+                  <LayoutBody>
+                    <CanvasContext.Provider value={this.state.currentCanvas}>
+                      <DocumentViewSwitcher
+                        viewerComponents={[{defaultOption: true, itemComponent: ManifestViewer, key: 'list', title: 'Main',
+                        }, {itemComponent: RelatedItems, key: 'grid', title: 'Related'}]}
+                      />
+                    </CanvasContext.Provider>
+                  </LayoutBody>
+                </Layout>
+              </div>
+            </div>
           </ViewerProvider>)
     } else {
       return null

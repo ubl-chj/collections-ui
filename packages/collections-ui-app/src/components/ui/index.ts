@@ -1,5 +1,4 @@
 export * from './svg'
-export * from './BMenu'
 export * from './FilterMenu'
 export * from './FavoriteButton'
 export * from './FavoritesList'

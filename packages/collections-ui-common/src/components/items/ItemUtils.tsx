@@ -1,22 +1,24 @@
-import {Domain} from '../../constants'
 import {UUIDResolver} from 'manifest-uuid'
 import * as React from 'react'
+import {Domain} from '../../constants'
 import {SchemaAdapter} from '../schema'
 
 const uuidv5 = require('uuidv5')
 
-export function shortenTitle(source) {
-  let title
-  if (source.title) {
-    title = source.title
-  } else if (source.Title) {
-    title = source.Title
+export function shortenTitle(name) {
+  let shortTitle
+  if (name) {
+    if (!Array.isArray(name)) {
+      if (name.length >= 80) {
+        shortTitle =  name.substr(0, 80) + "... "
+      } else {
+        return name;
+      }
+    } else {
+      shortTitle =  name[0]
+    }
   }
-  if (title.length >= 80) {
-    return title.substr(0, 80) + "... "
-  } else {
-    return title;
-  }
+  return shortTitle
 }
 
 export function buildImagePreview(previewUrl: string, thumbnail: string, manifest?: string) {
@@ -107,16 +109,4 @@ export function resolveManifestId(source) {
   } else if (source.Manifest) {
     return uuidv5('url', source.Manifest)
   }
-}
-
-export function resolveThumbnailSource(source) {
-  if (source.thumbnail) {
-    return source.thumbnail
-  } else if (source.iiifService) {
-    return source.iiifService
-  }
-}
-
-export function resolveThumbnail(thumbnail) {
-  return thumbnail + Domain.THUMBNAIL_API_REQUEST
 }

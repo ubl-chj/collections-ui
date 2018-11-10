@@ -1,4 +1,4 @@
-import {AuthUserContext, firebase, resolveName, Thumbnail, Title} from 'collections-ui-common'
+import {AuthUserContext, DynamicLayoutContext, firebase, resolveName, Thumbnail, Title} from 'collections-ui-common'
 import * as React from "react"
 import {FavoriteButton} from "./index"
 
@@ -36,33 +36,62 @@ export const ListSchemaEntry = (props) => {
 
 export class ListItemDisplay extends React.Component<IListItemDisplayProps, any> {
 
+  static buildTitle(bemBlocks, contentUrl, name) {
+    return(
+      <Title
+        viewUrl={contentUrl}
+        className={bemBlocks.item('title')}
+        titleString={name}
+      />
+    )
+  }
+
+  buildFavoriteButton(result) {
+    return(
+    <AuthUserContext.Consumer>
+      {(authUser) => authUser ? <FavoriteButton authUser={firebase.auth.currentUser} result={result}/> : null}
+    </AuthUserContext.Consumer>)
+  }
+
   render() {
     const {bemBlocks, contentUrl, imageLink, result, thumbnail, schema} = this.props
     const schemaFilterName = Object.entries(schema.mainEntity).filter((e) => e[0] !== 'name')
     const name = resolveName(schema)
 
     return (
-      <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-        <Thumbnail
-          imageWidth={170}
-          imageSource={thumbnail}
-          imageLink={imageLink}
-          className={bemBlocks.item('poster')}
-        />
-        <div className={bemBlocks.item('details')}>
-          <div className='title-flex'>
-            <AuthUserContext.Consumer>
-              {(authUser) => authUser ? <FavoriteButton authUser={firebase.auth.currentUser} result={result}/> : null}
-            </AuthUserContext.Consumer>
-            <Title
-              viewUrl={contentUrl}
-              className={bemBlocks.item('title')}
-              titleString={name}
+      <DynamicLayoutContext.Consumer>
+        {(isMobile) => isMobile ?
+          <div className='sk-hits-grid-landing__item' data-qa='hit'>
+            <div className='title-flex'>
+              {this.buildFavoriteButton(result)}
+              {ListItemDisplay.buildTitle(bemBlocks, contentUrl, name)}
+            </div>
+              <Thumbnail
+                imageWidth={170}
+                imageSource={thumbnail}
+                imageLink={imageLink}
+                className={bemBlocks.item('sk-hits-grid-hit__poster')}
+              />
+              <div className={bemBlocks.item('details')}>
+                  {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
+              </div>
+          </div> :
+          <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
+            <Thumbnail
+              imageWidth={170}
+              imageSource={thumbnail}
+              imageLink={imageLink}
+              className={bemBlocks.item('poster')}
             />
-          </div>
-            {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
-        </div>
-      </div>
+            <div className={bemBlocks.item('details')}>
+              <div className='title-flex'>
+                {this.buildFavoriteButton(result)}
+                {ListItemDisplay.buildTitle(bemBlocks, contentUrl, name)}
+              </div>
+              {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
+            </div>
+          </div>}
+      </DynamicLayoutContext.Consumer>
     )
   }
 }

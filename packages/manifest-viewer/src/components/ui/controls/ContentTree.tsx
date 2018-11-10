@@ -4,7 +4,6 @@ import {Treebeard} from 'react-treebeard'
 import {ViewerComponent} from "../../../core/react"
 import ContentTreeDecorators from './ContentTreeDecorators'
 import treeStyles from './TreeStyles'
-const manifesto = require('manifesto-fork')
 
 const Div = styled('div', {
   shouldForwardProp: (prop) => ['className', 'children'].indexOf(prop) !== -1,
@@ -51,14 +50,12 @@ export class ContentTree extends ViewerComponent<any, any> {
 
   getCanvasIndex(index) {
     const {document} = this.state
-    const manifest = manifesto.create(document)
-    const sequence = manifest.getSequences()[0]
+    const sequence = document.getSequences()[0]
     return sequence.getCanvasIndexById(index)
   }
 
   buildStructures(document) {
-    const manifest = manifesto.create(document)
-    const tree = manifest.getDefaultTree()
+    const tree = document.getDefaultTree()
     const children = []
     tree.nodes.forEach((node) => {
       if (node.nodes.length) {

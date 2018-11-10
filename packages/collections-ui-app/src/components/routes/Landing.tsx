@@ -1,4 +1,4 @@
-import {DynamicLayoutContext} from 'collections-ui-common'
+import {NavMenu, DynamicLayoutContext} from 'collections-ui-common'
 import * as _ from "lodash"
 import * as React from 'react'
 import {Link} from 'react-router-dom'
@@ -21,7 +21,7 @@ import {
 } from 'searchkit-fork'
 import {CollectionsGridItem, CollectionsListItem} from '../items'
 import {HeadMeta} from "../schema";
-import {BMenu, FilterMenu, Head} from '../ui'
+import {FilterMenu, Head} from '../ui'
 import {IRouteProps} from './IRouteProps'
 
 export class Landing extends React.Component<IRouteProps, any> {
@@ -156,10 +156,10 @@ export class Landing extends React.Component<IRouteProps, any> {
     }
     return (
          <SearchkitProvider searchkit={this.searchkit}>
-           <div className='outer-container' id='outer-container'>
+           <div style={{background: '#efefef'}} id='outer'>
              <HeadMeta/>
-             <BMenu/>
-             <div id='page-wrap'>
+             <NavMenu/>
+             <div id='inner'>
                <Layout>
                  <Head width={width} routeConfig={routeConfig}/>
                  <main>

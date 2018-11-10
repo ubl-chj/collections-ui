@@ -1,3 +1,7 @@
+export * from './API'
 export * from './EmptyStar'
+export * from './Help'
 export * from './Logo'
+export * from './Octicon'
+export * from './Settings'
 export * from './Star'

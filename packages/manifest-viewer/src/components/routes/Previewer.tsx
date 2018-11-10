@@ -1,51 +1,31 @@
 import {AuthProfile, firebase, LogoWrapper} from 'collections-ui-common'
-import {UUIDResolver} from "manifest-uuid/"
-import {ViewerManager} from 'manifest-viewer'
+import {UUIDResolver} from 'manifest-uuid'
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
+import {ViewerManager, ViewerProvider} from '../../core'
 const qs = require('query-string')
 const uuidv4 = require('uuid/v4')
+import {ActionBar, Controls, Layout, LayoutBody, OsdComponent, TopBar} from '../ui'
+import {IViewerRouteComponentProps} from "./Viewer";
 
-class PreviewerComponent extends React.Component<any, any> {
+class PreviewerComponent extends React.Component<IViewerRouteComponentProps, any> {
   viewer: ViewerManager
+  hasUnmounted: boolean
   manifest: string
-  props: any
   region: any
   abstractRegion: any
   image: string
   document: string
   source: object
   state: {
-    ActionBar: React.ComponentType<any>
-    Controls: React.ComponentType<any>
-    Layout: React.ComponentType<any>
-    LayoutBody: React.ComponentType<any>
-    OsdComponent: React.ComponentType<any>
-    TopBar: React.ComponentType<any>
-    ViewerManager: React.ComponentType<any>
-    ViewerProvider: React.ComponentType<any>
     width: number,
   }
 
   constructor(props) {
     super(props)
-    this.props = props
     this.state = {
-      ActionBar: null,
-      Controls: null,
-      Layout: null,
-      LayoutBody: null,
-      OsdComponent: null,
-      TopBar: null,
-      ViewerManager: null,
-      ViewerProvider: null,
       width: props.width,
     }
-  }
-
-  async componentWillMount() {
-    const {ActionBar, Controls, Layout, LayoutBody, OsdComponent, TopBar, ViewerProvider} = await import(`manifest-viewer`)
-    this.setState({ActionBar, Controls, Layout, LayoutBody, OsdComponent, TopBar, ViewerProvider})
   }
 
   componentDidMount() {
@@ -60,14 +40,20 @@ class PreviewerComponent extends React.Component<any, any> {
       }
     }
     const uuid = this.props.match.params.uuid
+    this.resolveManifest(uuid)
+    this.document = image + '/info.json'
+  }
+
+  resolveManifest(uuid) {
     if (firebase) {
       const resolver = new UUIDResolver(uuid, firebase.uuidDb)
       resolver.resolveManifest().then((manifest) => {
-        this.viewer = new ViewerManager(manifest)
-        this.forceUpdate()
+        if (!this.hasUnmounted) {
+          this.viewer = new ViewerManager(manifest)
+          this.forceUpdate()
+        }
       })
     }
-    this.document = image + '/info.json'
   }
 
   componentDidUpdate(prevProps) {
@@ -76,15 +62,19 @@ class PreviewerComponent extends React.Component<any, any> {
     }
   }
 
+  componentWillUnmount() {
+    this.hasUnmounted = true
+  }
+
   render() {
-    const {ActionBar, Controls, Layout, LayoutBody, OsdComponent, TopBar, ViewerProvider, width} = this.state
+    const {width} = this.state
     if (this.viewer) {
       return (
         <ViewerProvider viewer={this.viewer}>
           <Layout>
             <TopBar>
               <LogoWrapper/>
-              <div className='header__mid'/>
+              <div style={{display: 'flex', flex: '1 1'}}/>
               <AuthProfile width={width}/>
             </TopBar>
             <ActionBar>

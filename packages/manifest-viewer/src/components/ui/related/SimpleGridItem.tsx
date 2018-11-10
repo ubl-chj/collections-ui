@@ -1,5 +1,5 @@
 import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveCreator,
-  resolveManifestId, resolveName, ResultContext, Thumbnail} from 'collections-ui-common'
+  resolveManifestId, resolveName, ResultContext, shortenTitle, Thumbnail} from 'collections-ui-common'
 import * as React from "react"
 import {Link} from 'react-router-dom'
 import {DocumentViewAccessor} from "../../../core/accessors"
@@ -43,6 +43,7 @@ export class SimpleGridItem extends ViewerComponent<ItemProps, any> {
     const viewUrl = buildImageView(viewerUrl, manifestId)
     const schema = getSchema(source, manifestId, thumbnail, null)
     const name = resolveName(schema)
+    const titleString = shortenTitle(name)
     const viewOptionsAccessor = this.getViewOptionsSwitcherAccessor()
     if (viewOptionsAccessor) {
       if (thumbnail) {
@@ -53,7 +54,7 @@ export class SimpleGridItem extends ViewerComponent<ItemProps, any> {
                 imageWidth={170}
                 imageSource={thumbnail}
                 imageLink={imageLink}
-                className={'poster'}
+                className={'sk-hits-grid-hit__poster'}
               />
               <Link to={viewUrl}>
                 <div
@@ -61,7 +62,7 @@ export class SimpleGridItem extends ViewerComponent<ItemProps, any> {
                   title='View this Item'
                   data-qa='title'
                   className={bemBlocks.item('title')}
-                  dangerouslySetInnerHTML={{__html: name}}
+                  dangerouslySetInnerHTML={{__html: titleString}}
                 />
               </Link>
               <div className='sk-hits-grid-hit__author' dangerouslySetInnerHTML={resolveCreator(schema)}/>

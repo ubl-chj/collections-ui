@@ -14,7 +14,6 @@ export class CollectionsGridItem extends React.Component<ItemProps, any> {
   static defaultProps = {
     host: process.env.REACT_APP_ELASTICSEARCH_HOST,
     options: {timeout: 20000, defaultSize: 1},
-    previewUrl: process.env.REACT_APP_OSD_BASE,
   }
 
   static randomQuery() {

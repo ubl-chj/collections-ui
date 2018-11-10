@@ -9,7 +9,6 @@ const extend = require("lodash/extend")
 export class StandardListItem extends React.Component<ItemProps, any> {
 
   static defaultProps = {
-    previewUrl: process.env.REACT_APP_OSD_BASE,
     viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
   }
 
@@ -18,19 +17,19 @@ export class StandardListItem extends React.Component<ItemProps, any> {
   }
 
   render() {
-    const {previewUrl, viewerUrl, result} = this.props
+    const {viewerUrl, result} = this.props
     const source = extend({}, result._source, result.highlight)
     const manifestId = resolveManifestId(source)
     const thumbnail = buildThumbnailReference(source.thumbnail)
     if (thumbnail) {
       const schema = getSchema(source, manifestId, thumbnail, null)
-      const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
+      // const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
       const viewUrl = buildImageView(viewerUrl, manifestId)
       return (
         <ResultContext.Provider value={result}>
           <ListItemDisplay
             contentUrl={viewUrl}
-            imageLink={imageLink}
+            imageLink={viewUrl}
             schema={schema}
             thumbnail={thumbnail}
             {...this.props}
