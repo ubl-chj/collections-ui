@@ -53,17 +53,19 @@ export class ViewSelector extends React.Component<any, any> {
     })
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.osd !== prevProps.osd) {
       this.setState({osd: this.props.osd})
     }
     if (this.props.images !== prevProps.images) {
       this.setState({images: this.props.images})
     }
+    if (this.state.scrollView !== prevState.scrollView) {
+      this.buildScrollView()
+    }
   }
 
   render() {
-    this.buildScrollView()
     return (
       <button
         aria-label='toggle scroll view'

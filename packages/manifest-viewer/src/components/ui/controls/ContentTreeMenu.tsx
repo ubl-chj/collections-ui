@@ -85,6 +85,7 @@ export class ContentTreeMenu extends React.Component<any, any> {
     return (
       <div>
         <Menu
+          disableCloseOnEsc={Boolean(true)}
           width='275px'
           styles={ContentTreeMenu.menuStyles()}
           noOverlay={true}

@@ -134,9 +134,9 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     if (pagingControlsVisible) {
       const isMobile = width <= 500
       if (isMobile) {
-        return <PagingControls/>
+        return <PagingControls osd={this.osd}/>
       } else {
-        return <PagingControls/>
+        return <PagingControls osd={this.osd}/>
       }
     }
   }
@@ -155,6 +155,7 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     }
     this.setState({ menuOpen: false })
   }
+
 
   componentDidUpdate(prevProps) {
     if (this.props.width !== prevProps.width) {

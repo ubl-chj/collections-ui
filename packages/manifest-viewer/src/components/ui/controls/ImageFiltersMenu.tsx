@@ -185,6 +185,7 @@ export class ImageFiltersMenu extends React.Component<any, any> {
     return (
       <div>
         <Menu
+          disableCloseOnEsc={Boolean(true)}
           width='275px'
           styles={ImageFiltersMenu.menuStyles()}
           noOverlay={true}

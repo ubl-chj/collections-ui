@@ -105,7 +105,7 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
     if (this.viewer) {
       return (
           <ViewerProvider viewer={this.viewer}>
-            <div id='outer' style={{background: '#efefef', position: 'absolute', height: '100%', width: '100%'}}>
+            <div id='outer' style={{background: '#efefef', overflowX: 'hidden', position: 'absolute', height: '100%', width: '100%'}}>
               <NavMenu/>
               <div id='inner' style={{height: '100%'}}>
                 <Layout>

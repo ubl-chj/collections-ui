@@ -11,7 +11,6 @@ const extend = require('lodash/extend')
 export class SimpleGridItem extends ViewerComponent<ItemProps, any> {
 
   static defaultProps = {
-    previewUrl: process.env.REACT_APP_OSD_BASE,
     viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
   }
 
@@ -35,11 +34,11 @@ export class SimpleGridItem extends ViewerComponent<ItemProps, any> {
   }
 
   render() {
-    const {result, bemBlocks, previewUrl, viewerUrl} = this.props
+    const {result, bemBlocks, viewerUrl} = this.props
     const source = extend({}, result._source, result.highlight)
     const manifestId = resolveManifestId(source)
     const thumbnail = buildThumbnailReference(source.thumbnail)
-    const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
+    // const imageLink = buildImagePreview(previewUrl, source.thumbnail, manifestId)
     const viewUrl = buildImageView(viewerUrl, manifestId)
     const schema = getSchema(source, manifestId, thumbnail, null)
     const name = resolveName(schema)
@@ -53,7 +52,7 @@ export class SimpleGridItem extends ViewerComponent<ItemProps, any> {
               <Thumbnail
                 imageWidth={170}
                 imageSource={thumbnail}
-                imageLink={imageLink}
+                imageLink={viewUrl}
                 className={'sk-hits-grid-hit__poster'}
               />
               <Link to={viewUrl}>

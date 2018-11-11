@@ -73,6 +73,7 @@ export class NavMenu extends React.Component<any, any> {
     return (
       <Menu
         styles={NavMenu.styles()}
+        disableCloseOnEsc={Boolean(true)}
         isOpen={this.state.menuOpen}
         noOverlay={true}
         onStateChange={this.handleStateChange}
