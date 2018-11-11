@@ -1,7 +1,7 @@
+import {AuthProfile, LogoWrapper, NavMenu, withDynamicLayout} from 'collections-ui-common'
 import * as React from "react"
-import {IRouteProps} from "./IRouteProps"
 import {Layout, LayoutBody, LayoutResults, SideBar, TopBar} from "searchkit-fork"
-import {AuthProfile, NavMenu, LogoWrapper, withDynamicLayout} from 'collections-ui-common'
+import {IRouteProps} from "./IRouteProps"
 
 export class Services extends React.Component<IRouteProps, any> {
 

@@ -1,9 +1,9 @@
+import {AuthProfile, LogoWrapper, NavMenu, withAuthorization, withDynamicLayout} from 'collections-ui-common'
 import * as React from "react"
-import {IRouteProps} from "./IRouteProps"
 import {Layout, LayoutBody, LayoutResults, SideBar, TopBar} from "searchkit-fork"
-import {AuthProfile, NavMenu, LogoWrapper, withDynamicLayout} from 'collections-ui-common'
+import {IRouteProps} from "./IRouteProps"
 
-export class Settings extends React.Component<IRouteProps, any> {
+export class SettingsPage extends React.Component<IRouteProps, any> {
 
   constructor(props) {
     super(props)
@@ -42,3 +42,6 @@ export class Settings extends React.Component<IRouteProps, any> {
     )
   }
 }
+
+const authCondition = (authUser) => !!authUser
+export default withAuthorization(authCondition)(withDynamicLayout(SettingsPage))

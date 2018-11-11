@@ -142,6 +142,7 @@ export class ManifestInfoMenu extends React.Component<any, any> {
     return(
       <div className="btn-group">
         <Menu
+          disableCloseOnEsc={Boolean(true)}
           width='380px'
           styles={ManifestInfoMenu.menuStyles()}
           noOverlay={true}

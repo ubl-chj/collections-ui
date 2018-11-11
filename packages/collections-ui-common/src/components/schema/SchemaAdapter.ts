@@ -10,7 +10,6 @@ export interface IStructuredDataImageObjectProps {
 
 export class SchemaAdapter extends React.Component<IStructuredDataImageObjectProps, any> {
   mainEntity: any
-  mappingFileName: string
   source: any
   private readonly contentUrl: any;
   private readonly thumbnail: any;

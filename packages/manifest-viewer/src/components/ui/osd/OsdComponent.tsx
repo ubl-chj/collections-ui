@@ -103,7 +103,10 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     const {filterMenuOpen} = this.state
     if (this.osd) {
       return (
-          <ImageFiltersMenu isOpen={filterMenuOpen} osd={this.osd}/>
+          <ImageFiltersMenu
+            isOpen={filterMenuOpen}
+            osd={this.osd}
+          />
       )
     }
   }
@@ -112,7 +115,10 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     const {contentMenuOpen} = this.state
     if (this.osd) {
       return (
-        <ContentTreeMenu isOpen={contentMenuOpen} osd={this.osd}/>
+        <ContentTreeMenu
+          isOpen={contentMenuOpen}
+          osd={this.osd}
+        />
       )
     }
   }
@@ -124,7 +130,13 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     const isMobile = width <= 500
     if (!isMobile) {
       if (this.osd && imageCount > 1) {
-        return (<PageSelector currentCanvas={currentCanvas} canvasLabels={canvasLabels} imageCount={imageCount} osd={this.osd}/>)
+        return (
+          <PageSelector
+            currentCanvas={currentCanvas}
+            canvasLabels={canvasLabels}
+            imageCount={imageCount}
+            osd={this.osd}
+          />)
       }
     }
   }
@@ -134,9 +146,9 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     if (pagingControlsVisible) {
       const isMobile = width <= 500
       if (isMobile) {
-        return <PagingControls/>
+        return <PagingControls osd={this.osd}/>
       } else {
-        return <PagingControls/>
+        return <PagingControls osd={this.osd}/>
       }
     }
   }
@@ -144,7 +156,11 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
   buildViewSelector() {
     const images = this.getImages()
     if (this.osd && images.length > 1) {
-      return (<ViewSelector images={images} osd={this.osd}/>)
+      return (
+        <ViewSelector
+          images={images}
+          osd={this.osd}
+        />)
     }
   }
 
@@ -186,5 +202,3 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     )
   }
 }
-
-export default OsdComponent

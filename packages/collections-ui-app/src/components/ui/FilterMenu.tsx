@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {push as Menu} from 'react-burger-menu'
-import {ListGroup, ListGroupItem} from 'reactstrap'
 import {ActionBarRow, ItemList, RefinementListFilter} from "searchkit-fork"
 
 export class FilterMenu extends React.Component<any, any> {

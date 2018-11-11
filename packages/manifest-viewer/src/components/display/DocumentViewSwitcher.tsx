@@ -1,9 +1,8 @@
 import * as PropTypes from "prop-types"
-import * as React from "react";
+import * as React from "react"
 import {DocumentViewAccessor, RenderComponentPropType, RenderComponentType, ViewerComponent} from "../../core"
-
-import {IAnnotationItemProps} from "./AnnotationItem";
-import {IAnnotationListProps} from "./AnnotationList";
+import {IAnnotationItemProps} from "./AnnotationItem"
+import {IAnnotationListProps} from "./AnnotationList"
 import {Annotations} from "./Annotations"
 
 const defaults = require("lodash/defaults")

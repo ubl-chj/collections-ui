@@ -73,6 +73,7 @@ export class NavMenu extends React.Component<any, any> {
     return (
       <Menu
         styles={NavMenu.styles()}
+        disableCloseOnEsc={Boolean(true)}
         isOpen={this.state.menuOpen}
         noOverlay={true}
         onStateChange={this.handleStateChange}
@@ -84,34 +85,34 @@ export class NavMenu extends React.Component<any, any> {
         <ListGroup>
           <li style={{listStyle: 'none'}}>
             <ListGroupItem
-              tag="a" href="https://github.com/ubl-chj/collections-ui"
-              target='_blank' rel='noopener noreferrer'
+              tag="a"
+              href="https://github.com/ubl-chj/collections-ui"
+              target='_blank'
+              rel='noopener noreferrer'
               action={true}
             >
               <div className='title-flex'>
-                <div className='JUQOtt'>
                   <Octicon/>
-                </div>
                 <span className='item-span'>Code Repository</span>
               </div>
             </ListGroupItem>
           </li>
-          <li style={{listStyle: 'none'}}>
-            <ListGroupItem tag="a" href="/support" action={true}>
-              <div className='title-flex'>
-                  <Help/>
-                <div className='item-span'>Help & Feedback</div>
-              </div>
+            <ListGroupItem action={true}>
+              <Link className='bmenu-list' title='Support' to='/support'>
+                <div className='title-flex'>
+                    <Help/>
+                  <div className='item-span'>Help & Feedback</div>
+                </div>
+              </Link>
             </ListGroupItem>
-          </li>
-          <li style={{listStyle: 'none'}}>
-            <ListGroupItem tag="a" href="/services" action={true}>
-              <div className='title-flex'>
-                <API/>
-                <div className='item-span'>API & Services</div>
-              </div>
+            <ListGroupItem action={true}>
+              <Link className='bmenu-list' title='Services' to='/services'>
+                <div className='title-flex'>
+                  <API/>
+                  <div className='item-span'>API & Services</div>
+                </div>
+              </Link>
             </ListGroupItem>
-          </li>
             <ListGroupItem action={true}>
               <Link className='bmenu-list' title='Settings' to='/settings'>
                 <div className='title-flex'>

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 
 import {
   AnnotationsAccessor,
@@ -8,8 +8,8 @@ import {
   RenderComponentType,
   ViewerComponent,
 } from "../../core"
-import {IAnnotationItemProps} from "./AnnotationItem";
-import {AnnotationList} from "./AnnotationList";
+import {IAnnotationItemProps} from "./AnnotationItem"
+import {AnnotationList} from "./AnnotationList"
 
 const defaults = require("lodash/defaults")
 

@@ -34,7 +34,7 @@ export class RelatedItems extends React.Component<any, any> {
   }
 
   host: string
-  options; any
+  options: any
   searchkit: SearchkitManager
 
   constructor(props) {
