@@ -53,7 +53,6 @@ export class FavoriteListItem extends React.Component<any, any> {
 
     const thumbnail = buildThumbnailReference(source.thumbnail)
     if (thumbnail) {
-      // const imageLink = buildImagePreview(previewUrl, thumbnail, manifestId)
       const viewUrl = buildImageView(viewerUrl, manifestId)
       const schema = getSchema(source, manifestId, thumbnail, source.imageIndex)
       if (viewUrl && schema && thumbnail) {

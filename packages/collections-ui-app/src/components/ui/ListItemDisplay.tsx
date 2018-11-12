@@ -1,6 +1,5 @@
-import {AuthUserContext, DynamicLayoutContext, firebase, resolveName, Thumbnail, Title} from 'collections-ui-common'
+import {AuthUserContext, DynamicLayoutContext, FavoriteButton, firebase, resolveName, Thumbnail, Title} from 'collections-ui-common'
 import * as React from "react"
-import {FavoriteButton} from "./index"
 
 const uuidv4 = require('uuid/v4')
 
@@ -49,7 +48,12 @@ export class ListItemDisplay extends React.Component<IListItemDisplayProps, any>
   buildFavoriteButton(result) {
     return(
     <AuthUserContext.Consumer>
-      {(authUser) => authUser ? <FavoriteButton authUser={firebase.auth.currentUser} result={result}/> : null}
+      {(authUser) => authUser ?
+        <FavoriteButton
+          authUser={firebase.auth.currentUser}
+          className='button-transparent__fav'
+          result={result}
+        /> : null}
     </AuthUserContext.Consumer>)
   }
 

@@ -20,7 +20,7 @@ export class Title extends React.Component<any, any> {
     return (
       <ResultContext.Consumer>
         {(result) => result ?
-          <Link to={this.viewUrl}>
+          <Link to={{pathname: this.viewUrl, state: {result}}}>
             <div  title={this.titleString} data-qa='title' className={this.className} dangerouslySetInnerHTML={{__html: this.titleString}}/>
           </Link> :
           <a href={this.viewUrl} title={this.titleString} target='_blank' rel='noopener noreferrer'>

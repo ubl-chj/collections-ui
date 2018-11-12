@@ -1,5 +1,6 @@
-import {EmptyStar, firebase, Star} from 'collections-ui-common'
 import * as React from "react"
+import {firebase} from '../firebase'
+import {EmptyStar, Star} from './svg'
 
 export class FavoriteButton extends React.Component<any, any> {
 
@@ -79,6 +80,7 @@ export class FavoriteButton extends React.Component<any, any> {
 
   render() {
     const {error, isLoaded, favorite, isFavorite} = this.state
+    const {className} = this.props
     if (error) {
       return <div>Error: {error}</div>;
     } else if (!isLoaded) {
@@ -90,24 +92,26 @@ export class FavoriteButton extends React.Component<any, any> {
           (
             <button
               aria-label='remove favorite'
+              title='Favorite'
               type="button"
               onClick={() => {
               FavoriteButton.removeFavorite(this.authUser.uid, this.result);
               this.unsetFavorite()
             }}
-              className="button-transparent__fav"
+              className={className}
             >
             <Star/>
             </button>)
           : (
             <button
               aria-label='set favorite'
+              title='Favorite'
               type="button"
               onClick={() => {
               FavoriteButton.writeFavorite(this.authUser.uid, this.result);
               this.setFavorite(this.result)
             }}
-              className="button-transparent__fav"
+              className={className}
             >
               <EmptyStar/>
             </button>)

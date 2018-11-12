@@ -3,25 +3,20 @@ import * as _ from "lodash"
 import * as React from 'react'
 import {Link} from 'react-router-dom'
 import {
-  ActionBar,
-  ActionBarRow,
-  GroupedSelectedFilters,
-  HitsStats,
   Layout,
   LayoutBody,
   LayoutResults,
   NoHits,
   Pagination,
   RefinementListFilter,
-  ResetFilters,
   SearchkitManager,
   SearchkitProvider,
   SideBar,
-  SortingSelector, ViewSwitcherHits, ViewSwitcherToggle,
+  ViewSwitcherHits,
 } from 'searchkit-fork'
 import {CollectionsGridItem, CollectionsListItem} from '../items'
 import {HeadMeta} from "../schema";
-import {FilterMenu, Head} from '../ui'
+import {ActionBarComponent, Head} from '../ui'
 import {IRouteProps} from './IRouteProps'
 
 export class Landing extends React.Component<IRouteProps, any> {
@@ -101,44 +96,6 @@ export class Landing extends React.Component<IRouteProps, any> {
     }
   }
 
-  buildActionBar() {
-    const {routeConfig} = this.props
-    const {width} = this.state
-    const isMobile = width <= 500
-    if (isMobile) {
-      return (
-        <ActionBar>
-          <ActionBarRow>
-            <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
-            <ViewSwitcherToggle/>
-            <SortingSelector options={routeConfig.sortingSelectorOptions}/>
-          </ActionBarRow>
-          <FilterMenu
-            routeConfig={routeConfig}
-          />
-          <ActionBarRow>
-            <GroupedSelectedFilters/>
-            <ResetFilters/>
-          </ActionBarRow>
-        </ActionBar>
-      )
-    } else {
-      return (
-        <ActionBar>
-          <ActionBarRow>
-            <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
-            <ViewSwitcherToggle/>
-            <SortingSelector options={routeConfig.sortingSelectorOptions}/>
-          </ActionBarRow>
-          <ActionBarRow>
-            <GroupedSelectedFilters/>
-            <ResetFilters/>
-          </ActionBarRow>
-        </ActionBar>
-      )
-    }
-  }
-
   render() {
     const {routeConfig} = this.props
     const {width} = this.state
@@ -166,7 +123,10 @@ export class Landing extends React.Component<IRouteProps, any> {
                    <LayoutBody>
                      {this.buildSideBar()}
                      <LayoutResults>
-                       {this.buildActionBar()}
+                       <ActionBarComponent
+                         width={width}
+                         routeConfig={routeConfig}
+                       />
                        <DynamicLayoutContext.Provider value={isMobile}>
                          <ViewSwitcherHits
                            hitsPerPage={50}
