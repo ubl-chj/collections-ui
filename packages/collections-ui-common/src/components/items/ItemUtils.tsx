@@ -69,7 +69,7 @@ export function buildThumbnailReference(thumbnail) {
     if (thumbnail.includes('/full')) {
       thumbnailLink = thumbnail
       // support image api v1 providers (this should not be a long list)
-    } else if (thumbnail.includes('yale')) {
+    } else if (thumbnail.includes(Domain.LEGACY_API_COLLECTIONS)) {
      thumbnailLink = thumbnail + Domain.THUMBNAIL_NATIVE_API_REQUEST
     } else {
       thumbnailLink = thumbnail + Domain.THUMBNAIL_API_REQUEST

@@ -23,6 +23,7 @@ const env = getClientEnvironment(publicUrl);
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
 module.exports = {
+  target: 'web',
   mode: 'development',
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
@@ -151,13 +152,13 @@ module.exports = {
             test: /\.scss$/,
             use: [
               {
-                loader: "style-loader" // creates style nodes from JS strings
+                loader: 'style-loader' // creates style nodes from JS strings
               },
               {
-                loader: "css-loader" // translates CSS into CommonJS
+                loader: 'css-loader' // translates CSS into CommonJS
               },
               {
-                loader: "sass-loader" // compiles Sass to CSS
+                loader: 'sass-loader' // compiles Sass to CSS
               }
             ]
           },
@@ -254,6 +255,7 @@ module.exports = {
   node: {
     dgram: 'empty',
     fs: 'empty',
+    http2: true,
     net: 'empty',
     tls: 'empty',
     child_process: 'empty',

@@ -48,7 +48,7 @@ export class FavoriteListItem extends React.Component<any, any> {
 
   renderFavoriteContent(bemBlocks, result) {
     const source = extend({}, result._source, result.highlight)
-    const {previewUrl, viewerUrl} = this.props
+    const {viewerUrl} = this.props
     const manifestId = resolveManifestId(source)
 
     const thumbnail = buildThumbnailReference(source.thumbnail)
