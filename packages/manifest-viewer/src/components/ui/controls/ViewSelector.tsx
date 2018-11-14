@@ -1,6 +1,6 @@
-import * as React from "react";
+import * as React from "react"
 import {ScrollIcon} from "../svg"
-import {PagingControls} from "./PagingControls";
+import {PagingControls} from "./PagingControls"
 
 export class ViewSelector extends React.Component<any, any> {
 

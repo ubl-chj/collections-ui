@@ -1,6 +1,7 @@
+import {AuthUserContext} from "collections-ui-common";
 import * as React from 'react'
 import {ViewerManager} from '../../../core'
-import {ContentTreeMenu, ImageFiltersMenu, PageSelector, ViewSelector} from '../controls'
+import {ContentTreeMenu, ImageFiltersMenu, PageSelector, ViewSelector, VisionMenu} from '../controls'
 import {PagingControls} from '../controls/PagingControls'
 import {BackArrow, FullScreenIcon} from '../svg'
 
@@ -40,8 +41,10 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     this.state = {
       contentMenuOpen: false,
       currentCanvas: props.currentCanvas,
+      currentResourceURI: null,
       filterMenuOpen: false,
       pagingControlsVisible: true,
+      visionMenuOpen: false,
       width: props.width,
     }
   }
@@ -99,11 +102,44 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     }
   }
 
+  setCurrentResourceURI() {
+    if (!this.state.currentCanvas) {
+      this.setState({currentResourceURI: this.props.images[0]})
+    } else if (this.state.currentCanvas) {
+      this.setState({currentResourceURI: this.props.images[this.state.currentCanvas]})
+    }
+    this.osd.addHandler("page", (data) => {
+      if (this.state.currentCanvas !== data.page) {
+        this.setState({currentResourceURI: this.props.images[data.page]})
+      }
+    })
+  }
+
   buildImageFilterMenu() {
     const {filterMenuOpen} = this.state
     if (this.osd) {
       return (
-          <ImageFiltersMenu isOpen={filterMenuOpen} osd={this.osd}/>
+          <ImageFiltersMenu
+            isOpen={filterMenuOpen}
+            osd={this.osd}
+          />
+      )
+    }
+  }
+
+  buildVisionMenu() {
+    const {currentResourceURI, visionMenuOpen} = this.state
+    if (this.osd) {
+      return (
+        <AuthUserContext.Consumer>
+          {(authUser) => authUser ?
+            <VisionMenu
+              currentResourceURI={currentResourceURI}
+              isOpen={visionMenuOpen}
+              osd={this.osd}
+            /> : null
+          }
+        </AuthUserContext.Consumer>
       )
     }
   }
@@ -112,7 +148,10 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     const {contentMenuOpen} = this.state
     if (this.osd) {
       return (
-        <ContentTreeMenu isOpen={contentMenuOpen} osd={this.osd}/>
+        <ContentTreeMenu
+          isOpen={contentMenuOpen}
+          osd={this.osd}
+        />
       )
     }
   }
@@ -124,7 +163,13 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     const isMobile = width <= 500
     if (!isMobile) {
       if (this.osd && imageCount > 1) {
-        return (<PageSelector currentCanvas={currentCanvas} canvasLabels={canvasLabels} imageCount={imageCount} osd={this.osd}/>)
+        return (
+          <PageSelector
+            currentCanvas={currentCanvas}
+            canvasLabels={canvasLabels}
+            imageCount={imageCount}
+            osd={this.osd}
+          />)
       }
     }
   }
@@ -144,7 +189,11 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
   buildViewSelector() {
     const images = this.getImages()
     if (this.osd && images.length > 1) {
-      return (<ViewSelector images={images} osd={this.osd}/>)
+      return (
+        <ViewSelector
+          images={images}
+          osd={this.osd}
+        />)
     }
   }
 
@@ -154,6 +203,7 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
       this.updateViewer(this.defaultOsdProps())
     }
     this.setState({ menuOpen: false })
+    this.setCurrentResourceURI()
   }
 
 
@@ -178,6 +228,7 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
             {this.buildImageFilterMenu()}
             {this.buildViewSelector()}
             {this.buildContentTreeMenu()}
+            {this.buildVisionMenu()}
             <FullScreenIcon/>
           </div>
           {this.buildPagingControls()}
@@ -187,5 +238,3 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     )
   }
 }
-
-export default OsdComponent

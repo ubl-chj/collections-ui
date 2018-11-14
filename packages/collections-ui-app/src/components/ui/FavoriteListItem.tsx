@@ -48,12 +48,11 @@ export class FavoriteListItem extends React.Component<any, any> {
 
   renderFavoriteContent(bemBlocks, result) {
     const source = extend({}, result._source, result.highlight)
-    const {previewUrl, viewerUrl} = this.props
+    const {viewerUrl} = this.props
     const manifestId = resolveManifestId(source)
 
     const thumbnail = buildThumbnailReference(source.thumbnail)
     if (thumbnail) {
-      // const imageLink = buildImagePreview(previewUrl, thumbnail, manifestId)
       const viewUrl = buildImageView(viewerUrl, manifestId)
       const schema = getSchema(source, manifestId, thumbnail, source.imageIndex)
       if (viewUrl && schema && thumbnail) {

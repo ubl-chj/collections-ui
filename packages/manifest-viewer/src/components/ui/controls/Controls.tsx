@@ -21,6 +21,7 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
   document: any
   key: any
   state: {
+    locationState: any,
     uuid: string,
     loading: boolean,
     width: number,
@@ -31,6 +32,7 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
     super(props)
     this.state = {
       loading: true,
+      locationState: props.location.state,
       uuid: null,
       width: props.width,
     }
@@ -56,12 +58,13 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
   }
 
   buildButtonBar() {
-    const {width} = this.state
+    const {locationState, width} = this.state
     const isMobile = width <= 500
     if (isMobile) {
       return null
     } else {
-      return (<ButtonBar className='btn-group'/>
+      return (
+        <ButtonBar className='btn-group' locationState={locationState}/>
       )
     }
   }

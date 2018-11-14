@@ -1,11 +1,7 @@
-import {NavMenu, DynamicLayoutContext} from 'collections-ui-common'
+import {DynamicLayoutContext, NavMenu} from 'collections-ui-common'
 import * as React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {
-  ActionBar,
-  ActionBarRow,
-  GroupedSelectedFilters,
-  HitsStats,
   ItemList,
   Layout,
   LayoutBody,
@@ -15,17 +11,14 @@ import {
   Panel,
   RangeFilter,
   RefinementListFilter,
-  ResetFilters,
   SearchkitManager,
   SearchkitProvider,
   SideBar,
-  SortingSelector,
   ViewSwitcherHits,
-  ViewSwitcherToggle,
 } from 'searchkit-fork'
 import {StandardGridItem, StandardListItem} from '../items'
 import {HeadMeta} from "../schema";
-import {FilterMenu, Head} from '../ui'
+import {ActionBarComponent, FilterMenu, Head} from '../ui'
 import {asCollection} from './asCollection'
 import {IRouteProps} from './IRouteProps'
 
@@ -143,44 +136,6 @@ class Collection extends React.Component<IRouteProps, any> {
    }
   }
 
-  buildActionBar() {
-    const {routeConfig} = this.routeProps
-    const {width} = this.state
-    const isMobile = width <= 500
-    if (isMobile) {
-      return (
-        <ActionBar>
-          <ActionBarRow>
-            <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
-            <ViewSwitcherToggle/>
-            <SortingSelector options={routeConfig.sortingSelectorOptions}/>
-          </ActionBarRow>
-          <FilterMenu
-            routeConfig={routeConfig}
-          />
-          <ActionBarRow>
-            <GroupedSelectedFilters/>
-            <ResetFilters/>
-          </ActionBarRow>
-        </ActionBar>
-      )
-    } else {
-      return (
-        <ActionBar>
-          <ActionBarRow>
-            <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
-            <ViewSwitcherToggle/>
-            <SortingSelector options={routeConfig.sortingSelectorOptions}/>
-          </ActionBarRow>
-          <ActionBarRow>
-            <GroupedSelectedFilters/>
-            <ResetFilters/>
-          </ActionBarRow>
-        </ActionBar>
-      )
-    }
-  }
-
   render() {
     const {routeConfig} = this.routeProps
     const {components, width} = this.state
@@ -200,7 +155,10 @@ class Collection extends React.Component<IRouteProps, any> {
                   <LayoutBody>
                     {this.buildSideBar()}
                     <LayoutResults>
-                      {this.buildActionBar()}
+                      <ActionBarComponent
+                        width={width}
+                        routeConfig={routeConfig}
+                      />
                       {routeConfig.hasRangeFilter ?
                         <div className='ex1'>
                           <RangeFilter

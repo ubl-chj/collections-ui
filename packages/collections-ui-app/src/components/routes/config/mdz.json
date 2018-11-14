@@ -34,9 +34,9 @@
     "id": "note"
   },
   "refinementListFilterDef3": {
-    "field": "By.keyword",
-    "title": "By",
-    "id": "by"
+    "field": "Creation.keyword",
+    "title": "Creation",
+    "id": "creation"
   },
   "sortingSelectorOptions": [
     {

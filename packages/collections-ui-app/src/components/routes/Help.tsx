@@ -1,7 +1,7 @@
+import {AuthProfile, firebase, LogoWrapper, NavMenu, withDynamicLayout} from 'collections-ui-common'
 import * as React from "react"
-import {IRouteProps} from "./IRouteProps"
 import {Layout, LayoutBody, LayoutResults, SideBar, TopBar} from "searchkit-fork"
-import {AuthProfile, NavMenu, firebase, LogoWrapper, withDynamicLayout} from 'collections-ui-common'
+import {IRouteProps} from "./IRouteProps"
 
 export class Help extends React.Component<IRouteProps, any> {
 
@@ -33,7 +33,7 @@ export class Help extends React.Component<IRouteProps, any> {
             <LayoutBody>
               <SideBar/>
               <LayoutResults>
-                Help (Work in Progress)
+                Help & Feedback (Work in Progress)
               </LayoutResults>
             </LayoutBody>
           </Layout>

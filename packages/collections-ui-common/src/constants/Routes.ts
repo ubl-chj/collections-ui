@@ -6,5 +6,4 @@ export enum Routes {
   HELP = '/support',
   SETTINGS = '/settings',
   SERVICES = '/services',
-  PASSWORD_FORGET = '/pw-forget',
 }

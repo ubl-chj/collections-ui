@@ -3,10 +3,10 @@ import {UUIDResolver} from 'manifest-uuid'
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ViewerManager, ViewerProvider} from '../../core'
+import {ActionBar, Controls, Layout, LayoutBody, OsdComponent, TopBar} from '../ui'
+import {IViewerRouteComponentProps} from "./Viewer"
 const qs = require('query-string')
 const uuidv4 = require('uuid/v4')
-import {ActionBar, Controls, Layout, LayoutBody, OsdComponent, TopBar} from '../ui'
-import {IViewerRouteComponentProps} from "./Viewer";
 
 class PreviewerComponent extends React.Component<IViewerRouteComponentProps, any> {
   viewer: ViewerManager

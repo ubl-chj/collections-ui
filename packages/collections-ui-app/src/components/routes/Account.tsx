@@ -1,4 +1,4 @@
-import {AuthUserContext, NavMenu, firebase, withAuthorization, withDynamicLayout} from 'collections-ui-common'
+import {AuthUserContext, firebase, NavMenu, withAuthorization, withDynamicLayout} from 'collections-ui-common'
 import * as React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Layout, LayoutBody, LayoutResults, SearchkitManager, SearchkitProvider, SideBar} from 'searchkit-fork'

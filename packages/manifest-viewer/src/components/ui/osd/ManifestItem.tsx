@@ -29,7 +29,12 @@ export class ManifestItem extends React.Component<any, any> {
       return (
         <CanvasContext.Consumer>
           {(currentCanvas) =>
-            <OsdComponent currentCanvas={currentCanvas} canvasLabels={canvasLabels} width={width} images={imageIds}/>}
+            <OsdComponent
+              currentCanvas={currentCanvas}
+              canvasLabels={canvasLabels}
+              width={width}
+              images={imageIds}
+            />}
          </CanvasContext.Consumer>   )
     }
     return (null)

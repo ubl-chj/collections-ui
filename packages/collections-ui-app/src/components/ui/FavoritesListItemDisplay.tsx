@@ -1,6 +1,6 @@
-import {AuthUserContext, resolveName, Thumbnail, Title} from 'collections-ui-common'
+import {AuthUserContext, resolveName, ResultContext, Thumbnail, Title} from 'collections-ui-common'
 import * as React from "react"
-import {FavoritesListButton, } from "./index"
+import {FavoritesListButton} from "./index"
 
 const uuidv4 = require('uuid/v4');
 
@@ -67,31 +67,33 @@ export class FavoritesListItemDisplay extends React.Component<IListItemDisplayPr
     const name = resolveName(schema)
 
     return (
-      <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
-        <Thumbnail
-          imageWidth={140}
-          imageSource={thumbnail}
-          imageLink={imageLink}
-          className={bemBlocks.item('poster')}
-        />
-        <div className={bemBlocks.item('details')}>
-          <div className='title-flex'>
-            <AuthUserContext.Consumer>
-              {(authUser) => authUser ? <FavoritesListButton
-                authUser={this.authUser}
-                result={result}
-                unsetFavorite={unsetFavorite}
-              /> : null}
-            </AuthUserContext.Consumer>
-            <Title
-              viewUrl={contentUrl}
-              className={bemBlocks.item('title')}
-              titleString={name}
-            />
+      <ResultContext.Provider value={result}>
+        <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
+          <Thumbnail
+            imageWidth={140}
+            imageSource={thumbnail}
+            imageLink={imageLink}
+            className={bemBlocks.item('poster')}
+          />
+          <div className={bemBlocks.item('details')}>
+            <div className='title-flex'>
+              <AuthUserContext.Consumer>
+                {(authUser) => authUser ? <FavoritesListButton
+                  authUser={this.authUser}
+                  result={result}
+                  unsetFavorite={unsetFavorite}
+                /> : null}
+              </AuthUserContext.Consumer>
+              <Title
+                viewUrl={contentUrl}
+                className={bemBlocks.item('title')}
+                titleString={name}
+              />
+            </div>
+            {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
           </div>
-          {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
         </div>
-      </div>
+      </ResultContext.Provider>
     )
   }
 }

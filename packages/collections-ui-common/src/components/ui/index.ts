@@ -1,3 +1,4 @@
+export * from './FavoriteButton'
 export * from './NavMenu'
 export * from '../contexts/DynamicLayoutContext'
 export * from './LogoWrapper'

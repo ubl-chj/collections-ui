@@ -1,4 +1,4 @@
-import {AuthProfile, NavMenu, firebase, LogoWrapper, withDynamicLayout} from 'collections-ui-common'
+import {AuthProfile, firebase, LogoWrapper, NavMenu, withDynamicLayout} from 'collections-ui-common'
 import {UUIDResolver} from 'manifest-uuid'
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'

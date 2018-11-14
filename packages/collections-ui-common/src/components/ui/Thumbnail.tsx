@@ -47,7 +47,7 @@ export class Thumbnail extends React.Component<any, any> {
             <div className='poster'>
               <ResultContext.Consumer>
                 {(result) => result ?
-                  <Link title='View this Item' to={this.imageLink}>
+                  <Link title='View this Item' to={{pathname: this.imageLink, state: {result}}}>
                     <Observer>
                       {({inView, ref}) => (
                         <div ref={ref}>
@@ -72,7 +72,10 @@ export class Thumbnail extends React.Component<any, any> {
                 {(result) => result ?
                   <div style={{height: '100%', position: 'relative', background: '#eeeeee'}}>
                     {this.buildImage()}
-                    <Link title='View this Item' to={this.imageLink}/>
+                    <Link
+                      title='View this Item'
+                      to={{pathname: this.imageLink, state: {result}}}
+                    />
                   </div> :
                     <a href={this.imageLink} target='_blank' rel='noopener noreferrer'>
                       {this.buildImage()}

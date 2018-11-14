@@ -58,10 +58,10 @@ export class SimpleGridItem extends ViewerComponent<ItemProps, any> {
               <Link to={viewUrl}>
                 <div
                   onClick={() => this.setView('list')}
-                  title='View this Item'
+                  title={titleString}
                   data-qa='title'
                   className={bemBlocks.item('title')}
-                  dangerouslySetInnerHTML={{__html: titleString}}
+                  dangerouslySetInnerHTML={{__html: name}}
                 />
               </Link>
               <div className='sk-hits-grid-hit__author' dangerouslySetInnerHTML={resolveCreator(schema)}/>
