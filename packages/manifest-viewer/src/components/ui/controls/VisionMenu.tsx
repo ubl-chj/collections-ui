@@ -1,10 +1,13 @@
 import axios from 'axios'
+import {AuthTokenContext} from 'collections-ui-common'
 import {Domain} from 'collections-ui-common'
 import Checkbox from 'rc-checkbox'
-import * as React from "react"
+import * as React from 'react'
 import {push as Menu} from 'react-burger-menu'
-import {CircleLoader} from "react-spinners"
+import {CircleLoader} from 'react-spinners'
 import {EyeIcon} from '../svg'
+import menuStylesDark from './styles/menuStylesDark'
+
 const uuidv4 = require('uuid/v4')
 
 export enum VisionFeatureTypes {
@@ -18,53 +21,6 @@ export class VisionMenu extends React.Component<any, any> {
 
   static defaultProps = {
     apiKey: process.env.REACT_APP_VISION_API_KEY,
-  }
-
-  static menuStyles() {
-    return {
-      bmBurgerBars: {
-        background: 'white',
-        height: '10%',
-      },
-      bmBurgerButton: {
-        height: '18px',
-        left: '24px',
-        position: 'fixed',
-        top: '24px',
-        width: '24px',
-      },
-      bmCross: {
-        background: '#666',
-      },
-      bmCrossButton: {
-        height: '24px',
-        right: '20px',
-        top: '59px',
-        width: '24px',
-      },
-      bmItem: {
-        display: 'inline-block',
-      },
-      bmItemList: {
-        color: '#000',
-        padding: '0.8em',
-      },
-      bmMenu: {
-        backgroundColor: '#242424',
-        bottom: '30px',
-        boxSizing: 'border-box',
-        height: '90%',
-        opacity: '1',
-        position: 'relative',
-        top: '45px',
-        transform: 'translateX(0)',
-        width: '100%',
-        wordWrap: 'break-word',
-      },
-      bmMorphShape: {
-        fill: '#373a47',
-      },
-    }
   }
 
   static buildCloudVisionRequestBody(imageURI, visionFeatureType) {
@@ -92,11 +48,15 @@ export class VisionMenu extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.state = {
+      currentCanvas: props.currentCanvas,
+      currentResourceURI: props.currentResourceURI,
       detectLabels: false,
       detectText: false,
       detectWeb: false,
       imageProperties: false,
+      images: props.images,
       menuOpen: props.isOpen,
+      osd: props.osd,
       visionResponse: null,
     }
   }
@@ -163,7 +123,7 @@ export class VisionMenu extends React.Component<any, any> {
   }
 
   buildImageURI() {
-    const {currentResourceURI} = this.props
+    const {currentResourceURI} = this.state
     let imageURI
     if (currentResourceURI) {
       const parts = currentResourceURI.split('/info.json')
@@ -218,13 +178,22 @@ export class VisionMenu extends React.Component<any, any> {
   makeAxiosRequest(req) {
     axios(req).then((res) => {
       this.setState({visionResponse: res.data.responses[0]})
-      console.log(res)
     }).catch((err) => {
       console.error('ERROR:', err);
     })
   }
 
+  componentDidMount() {
+    const {osd} = this.props
+    osd.addHandler("page", (data) => {
+      if (this.props.currentCanvas !== data.page) {
+        this.setState({currentResourceURI: this.state.images[data.page]})
+      }
+    })
+  }
+
   componentDidUpdate(prevProps, prevState) {
+    const pp = prevProps
     if (this.state.detectLabels !== prevState.detectLabels) {
       if (this.state.detectLabels) {
         this.buildCloudVisionRequest()
@@ -249,7 +218,7 @@ export class VisionMenu extends React.Component<any, any> {
       }
       this.setState({visionResponse: null})
     }
-    if (this.props.currentResourceURI !== prevProps.currentResourceURI) {
+    if (this.state.currentResourceURI !== prevState.currentResourceURI) {
       if (this.state.detectText || this.state.detectLabels) {
         this.setState({visionResponse: null})
         this.buildCloudVisionRequest()
@@ -324,30 +293,34 @@ export class VisionMenu extends React.Component<any, any> {
 
   render() {
     return (
-      <div>
-        <Menu
-          disableCloseOnEsc={Boolean(true)}
-          width='380px'
-          styles={VisionMenu.menuStyles()}
-          noOverlay={true}
-          right={false}
-          customBurgerIcon={false}
-          isOpen={this.state.menuOpen}
-          onStateChange={this.handleStateChange}
-        >
-          {this.buildFeatureTypes()}
-          {this.buildVisionPresentation()}
-        </Menu>
-        <button
-          aria-label='toggle Cloud Vision'
-          title='Cloud Vision'
-          type="button"
-          className="button-transparent"
-          onClick={this.toggleVisionMenu}
-        >
-          <EyeIcon />
-        </button>
-      </div>
+      <AuthTokenContext.Consumer>
+        {(idTokenResult) => idTokenResult && idTokenResult.claims.admin ?
+          <div>
+            <Menu
+              disableCloseOnEsc={Boolean(true)}
+              width='380px'
+              styles={menuStylesDark}
+              noOverlay={true}
+              right={false}
+              customBurgerIcon={false}
+              isOpen={this.state.menuOpen}
+              onStateChange={this.handleStateChange}
+            >
+              {this.buildFeatureTypes()}
+              {this.buildVisionPresentation()}
+            </Menu>
+            <button
+              aria-label='Cloud Vision'
+              title='Cloud Vision'
+              type="button"
+              className="button-transparent"
+              onClick={this.toggleVisionMenu}
+            >
+              <EyeIcon />
+            </button>
+          </div> : null
+        }
+      </AuthTokenContext.Consumer>
     )
   }
 }

@@ -67,6 +67,7 @@
     "react-head": "3.0.1",
     "react-intersection-observer": "^6.2.3",
     "react-loadable": "^5.5.0",
+    "react-markdown": "^4.0.3",
     "react-router-dom": "^4.3.1",
     "searchkit-fork": "^2.3.8",
     "whatwg-fetch": "^3.0.0"

@@ -1,4 +1,3 @@
-import {AuthUserContext} from "collections-ui-common";
 import * as React from 'react'
 import {ViewerManager} from '../../../core'
 import {ContentTreeMenu, ImageFiltersMenu, PageSelector, ViewSelector, VisionMenu} from '../controls'
@@ -14,7 +13,7 @@ export interface IOsdComponentProps {
   document?: object
   region?: string
   viewer?: ViewerManager
-  width: number
+  isMobile: boolean
   canvasLabels: any
 }
 
@@ -43,15 +42,14 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
       currentCanvas: props.currentCanvas,
       currentResourceURI: null,
       filterMenuOpen: false,
+      isMobile: props.isMobile,
       pagingControlsVisible: true,
       visionMenuOpen: false,
-      width: props.width,
     }
   }
 
   defaultOsdProps() {
-    const {width} = this.state
-    const isMobile = width <= 500
+    const {isMobile} = this.state
     let showNavigator = true
     let showReferenceStrip = true
     if (isMobile) {
@@ -108,11 +106,6 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     } else if (this.state.currentCanvas) {
       this.setState({currentResourceURI: this.props.images[this.state.currentCanvas]})
     }
-    this.osd.addHandler("page", (data) => {
-      if (this.state.currentCanvas !== data.page) {
-        this.setState({currentResourceURI: this.props.images[data.page]})
-      }
-    })
   }
 
   buildImageFilterMenu() {
@@ -128,18 +121,16 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
   }
 
   buildVisionMenu() {
-    const {currentResourceURI, visionMenuOpen} = this.state
+    const {currentCanvas, currentResourceURI, visionMenuOpen} = this.state
     if (this.osd) {
       return (
-        <AuthUserContext.Consumer>
-          {(authUser) => authUser ?
-            <VisionMenu
-              currentResourceURI={currentResourceURI}
-              isOpen={visionMenuOpen}
-              osd={this.osd}
-            /> : null
-          }
-        </AuthUserContext.Consumer>
+          <VisionMenu
+            currentCanvas={currentCanvas}
+            currentResourceURI={currentResourceURI}
+            images={this.getImages()}
+            isOpen={visionMenuOpen}
+            osd={this.osd}
+          />
       )
     }
   }
@@ -159,8 +150,7 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
   buildPageSelector() {
     const imageCount = this.getImages().length
     const canvasLabels = this.props.canvasLabels
-    const {currentCanvas, width} = this.state
-    const isMobile = width <= 500
+    const {currentCanvas, isMobile} = this.state
     if (!isMobile) {
       if (this.osd && imageCount > 1) {
         return (
@@ -175,9 +165,8 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
   }
 
   buildPagingControls() {
-    const {pagingControlsVisible, width} = this.state
+    const {pagingControlsVisible, isMobile} = this.state
     if (pagingControlsVisible) {
-      const isMobile = width <= 500
       if (isMobile) {
         return <PagingControls osd={this.osd}/>
       } else {
@@ -208,11 +197,12 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
 
 
   componentDidUpdate(prevProps) {
-    if (this.props.width !== prevProps.width) {
-      this.setState({width: this.props.width})
+    if (this.props.isMobile !== prevProps.isMobile) {
+      this.setState({isMobile: this.props.isMobile})
     }
     if (this.props.currentCanvas !== prevProps.currentCanvas) {
       this.setState({currentCanvas: this.props.currentCanvas})
+      this.setCurrentResourceURI()
     }
   }
 

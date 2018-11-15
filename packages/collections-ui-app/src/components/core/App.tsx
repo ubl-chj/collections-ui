@@ -1,4 +1,4 @@
-import {Routes, withAuthentication, withDynamicLayout} from 'collections-ui-common'
+import {Routes, withAuthentication, withDynamicLayout, withIdToken} from 'collections-ui-common'
 import {Previewer, Viewer} from 'manifest-viewer'
 import * as React from 'react'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
@@ -39,4 +39,4 @@ class App extends React.Component<any> {
   }
 }
 
-export default withAuthentication(App);
+export default withAuthentication(withIdToken(App));

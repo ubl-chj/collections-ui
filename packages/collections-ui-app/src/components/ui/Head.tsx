@@ -11,14 +11,14 @@ export class Head extends React.Component<any, any> {
     super(props)
     this.routeConfig = props.routeConfig
     this.state = {
+      isMobile: props.isMobile,
       searchBoxVisible: false,
-      width: props.width,
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.width !== prevProps.width) {
-      this.setState({width: this.props.width})
+    if (this.props.isMobile !== prevProps.isMobile) {
+      this.setState({isMobile: this.props.isMobile})
     }
   }
 
@@ -30,8 +30,7 @@ export class Head extends React.Component<any, any> {
 
   buildSearchBox() {
     const {routeConfig} = this.props
-    const {width} = this.state
-    const isMobile = width <= 500
+    const {isMobile} = this.state
     if (isMobile) {
       if (this.state.searchBoxVisible) {
         return (
@@ -63,12 +62,12 @@ export class Head extends React.Component<any, any> {
   }
 
   render() {
-    const {width} = this.state
+    const {isMobile} = this.state
     return(
       <TopBar>
         <LogoWrapper/>
         {this.buildSearchBox()}
-        <AuthProfile width={width}/>
+        <AuthProfile isMobile={isMobile}/>
       </TopBar>
     )
   }

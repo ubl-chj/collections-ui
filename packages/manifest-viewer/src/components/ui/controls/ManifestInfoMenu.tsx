@@ -2,6 +2,7 @@ import * as React from "react"
 import {push as Menu} from 'react-burger-menu'
 import {MetadataItem} from "../osd"
 import {InfoIcon} from "../svg"
+import infoMenuStyle from './styles/infoMenuStyle'
 
 const uuidv4 = require('uuid/v4')
 
@@ -33,60 +34,9 @@ export class ManifestInfoMenu extends React.Component<any, any> {
       </li>)
   }
 
-  static menuStyles() {
-    return {
-      bmBurgerBars: {
-        background: 'white',
-        height: '10%',
-      },
-      bmBurgerButton: {
-        height: '18px',
-        left: '24px',
-        position: 'fixed',
-        top: '24px',
-        width: '24px',
-      },
-      bmCross: {
-        background: '#000',
-      },
-      bmCrossButton: {
-        height: '24px',
-        right: '15px',
-        top: '-20px',
-        width: '24px',
-      },
-      bmItem: {
-        display: 'inline-block',
-      },
-      bmItemList: {
-        color: '#000',
-        padding: '0.8em',
-      },
-      bmMenu: {
-        backgroundColor: '#efefef',
-        borderRight: '1px solid lightgray',
-        bottom: '30px',
-        boxSizing: 'border-box',
-        height: '90%',
-        left: '0',
-        opacity: '1',
-        padding: '2px',
-        position: 'absolute',
-        top: '8px',
-        transform: 'translateX(0)',
-        width: '100%',
-        wordWrap: 'break-word',
-      },
-      bmMorphShape: {
-        fill: '#373a47',
-      },
-    }
-  }
-
   state: {
     menuOpen: boolean,
     uuid: string,
-    width: number,
   }
 
   constructor(props) {
@@ -94,7 +44,6 @@ export class ManifestInfoMenu extends React.Component<any, any> {
     this.state = {
       menuOpen: false,
       uuid: null,
-      width: props.width,
     }
     this.state.uuid = uuidv4()
   }
@@ -144,7 +93,7 @@ export class ManifestInfoMenu extends React.Component<any, any> {
         <Menu
           disableCloseOnEsc={Boolean(true)}
           width='380px'
-          styles={ManifestInfoMenu.menuStyles()}
+          styles={infoMenuStyle}
           noOverlay={true}
           right={true}
           customBurgerIcon={false}

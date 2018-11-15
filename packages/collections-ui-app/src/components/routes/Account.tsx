@@ -17,7 +17,7 @@ export class AccountPage extends React.Component<IRouteProps, any> {
   searchkit: SearchkitManager
   routeKey: string
   state: {
-    width: number,
+    isMobile: boolean,
   }
 
   constructor(props) {
@@ -26,27 +26,27 @@ export class AccountPage extends React.Component<IRouteProps, any> {
     const host = props.host + this.routeKey
     this.searchkit = new SearchkitManager(host, props.options)
     this.state = {
-      width: props.width,
+      isMobile: props.isMobile,
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.width !== prevProps.width) {
-      this.setState({width: this.props.width})
+    if (this.props.isMobile !== prevProps.isMobile) {
+      this.setState({isMobile: this.props.isMobile})
     }
   }
 
   render() {
     if (firebase) {
       const {routeConfig} = this.props
-      const {width} = this.state
+      const {isMobile} = this.state
       return (
         <SearchkitProvider searchkit={this.searchkit}>
           <div style={{background: '#efefef'}} id='outer'>
             <NavMenu/>
             <div id='inner'>
               <Layout>
-                <Head width={width} routeConfig={routeConfig}/>
+                <Head isMobile={isMobile} routeConfig={routeConfig}/>
                 <LayoutBody>
                   <SideBar/>
                   <LayoutResults>

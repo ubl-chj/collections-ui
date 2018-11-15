@@ -8,18 +8,18 @@ export class Services extends React.Component<IRouteProps, any> {
   constructor(props) {
     super(props)
     this.state = {
-      width: props.width,
+      isMobile: props.isMobile,
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.width !== prevProps.width) {
-      this.setState({width: this.props.width})
+    if (this.props.isMobile !== prevProps.isMobile) {
+      this.setState({isMobile: this.props.isMobile})
     }
   }
 
   render() {
-    const {width} = this.state
+    const {isMobile} = this.state
     return(
       <div id='outer' style={{background: '#efefef', position: 'absolute', height: '100%', width: '100%'}}>
         <NavMenu/>
@@ -28,7 +28,7 @@ export class Services extends React.Component<IRouteProps, any> {
             <TopBar>
               <LogoWrapper/>
               <div style={{display: 'flex', flex: '1 1'}}/>
-              <AuthProfile width={width}/>
+              <AuthProfile isMobile={isMobile}/>
             </TopBar>
           </Layout>
           <LayoutBody>

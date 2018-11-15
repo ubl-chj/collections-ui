@@ -52,7 +52,7 @@ class Collection extends React.Component<IRouteProps, any> {
     components: [any, any],
     filterMenuVisible: boolean,
     searchBoxVisible: boolean,
-    width: number,
+    isMobile: boolean,
   }
   searchkit: SearchkitManager
   cachedHits: any
@@ -65,8 +65,8 @@ class Collection extends React.Component<IRouteProps, any> {
     this.state = {
       components: [StandardGridItem, StandardListItem],
       filterMenuVisible: false,
+      isMobile: props.isMobile,
       searchBoxVisible: false,
-      width: props.width,
     }
     this.routeProps = props.config
     this.routeKey = props.config.routeConfig.indexName
@@ -93,15 +93,14 @@ class Collection extends React.Component<IRouteProps, any> {
 
   componentDidUpdate(prevProps) {
     this.dataLayer = (window as any).schemaDataLayer ? (window as any).schemaDataLayer : null
-    if (this.props.width !== prevProps.width) {
-      this.setState({width: this.props.width})
+    if (this.props.isMobile !== prevProps.isMobile) {
+      this.setState({isMobile: this.props.isMobile})
     }
   }
 
   buildSideBar() {
     const {routeConfig} = this.routeProps
-    const {width} = this.state
-    const isMobile = width <= 500
+    const {isMobile} = this.state
     if (isMobile) {
       return null
     } else {
@@ -138,8 +137,7 @@ class Collection extends React.Component<IRouteProps, any> {
 
   render() {
     const {routeConfig} = this.routeProps
-    const {components, width} = this.state
-    const isMobile = width <= 500
+    const {components, isMobile} = this.state
     if (components.length >= 2 && components[0] !== 'undefined') {
       const gridItem = components[0]
       const listItem = components[1]
@@ -150,13 +148,13 @@ class Collection extends React.Component<IRouteProps, any> {
             <NavMenu/>
             <div id='inner'>
               <Layout>
-                <Head width={width} routeConfig={routeConfig}/>
+                <Head isMobile={isMobile} routeConfig={routeConfig}/>
                 <main>
                   <LayoutBody>
                     {this.buildSideBar()}
                     <LayoutResults>
                       <ActionBarComponent
-                        width={width}
+                        isMobile={isMobile}
                         routeConfig={routeConfig}
                       />
                       {routeConfig.hasRangeFilter ?

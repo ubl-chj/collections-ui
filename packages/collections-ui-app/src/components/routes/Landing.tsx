@@ -35,7 +35,7 @@ export class Landing extends React.Component<IRouteProps, any> {
     components: [],
     filterMenuVisible: boolean,
     searchBoxVisible: boolean,
-    width: number,
+    isMobile: boolean,
   }
 
   constructor(props) {
@@ -46,8 +46,8 @@ export class Landing extends React.Component<IRouteProps, any> {
     this.state = {
       components: [],
       filterMenuVisible: false,
+      isMobile: props.isMobile,
       searchBoxVisible: false,
-      width: props.width,
     }
   }
 
@@ -59,8 +59,8 @@ export class Landing extends React.Component<IRouteProps, any> {
     if (this.props.searchkit !== prevProps.searchkit) {
       this.setState({refreshItem: true})
     }
-    if (this.props.width !== prevProps.width) {
-      this.setState({width: this.props.width})
+    if (this.props.isMobile !== prevProps.isMobile) {
+      this.setState({isMobile: this.props.isMobile})
     }
   }
 
@@ -78,8 +78,7 @@ export class Landing extends React.Component<IRouteProps, any> {
   }
 
   buildSideBar() {
-    const { width } = this.state
-    const isMobile = width <= 500
+    const {isMobile} = this.state
     if (isMobile) {
       return null
     } else {
@@ -98,8 +97,7 @@ export class Landing extends React.Component<IRouteProps, any> {
 
   render() {
     const {routeConfig} = this.props
-    const {width} = this.state
-    const isMobile = width <= 500
+    const {isMobile} = this.state
     const gridObj = {
       defaultOption: true,
       itemComponent: CollectionsGridItem,
@@ -118,13 +116,13 @@ export class Landing extends React.Component<IRouteProps, any> {
              <NavMenu/>
              <div id='inner'>
                <Layout>
-                 <Head width={width} routeConfig={routeConfig}/>
+                 <Head isMobile={isMobile} routeConfig={routeConfig}/>
                  <main>
                    <LayoutBody>
                      {this.buildSideBar()}
                      <LayoutResults>
                        <ActionBarComponent
-                         width={width}
+                         isMobile={isMobile}
                          routeConfig={routeConfig}
                        />
                        <DynamicLayoutContext.Provider value={isMobile}>

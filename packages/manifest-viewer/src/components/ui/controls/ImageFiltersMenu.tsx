@@ -4,56 +4,9 @@ import * as React from "react"
 import {slide as Menu} from 'react-burger-menu'
 import {BRIGHTNESS, Filtering, GREYSCALE, INVERT} from "../../filtering"
 import {FiltersIcon} from "../svg"
+import menuStylesDark from './styles/menuStylesDark'
 
 export class ImageFiltersMenu extends React.Component<any, any> {
-
-  static menuStyles() {
-    return {
-      bmBurgerBars: {
-        background: 'white',
-        height: '10%',
-      },
-      bmBurgerButton: {
-        height: '18px',
-        left: '24px',
-        position: 'fixed',
-        top: '24px',
-        width: '24px',
-      },
-      bmCross: {
-        background: '#d8d8d8',
-      },
-      bmCrossButton: {
-        height: '24px',
-        right: '7px',
-        top: '65px',
-        width: '24px',
-      },
-      bmItem: {
-        display: 'inline-block',
-      },
-      bmItemList: {
-        color: '#000',
-        padding: '0.8em',
-      },
-      bmMenu: {
-        backgroundColor: '#242424',
-        bottom: '30px',
-        boxSizing: 'border-box',
-        height: '90%',
-        opacity: '1',
-        padding: '24px',
-        position: 'relative',
-        top: '45px',
-        transform: 'translateX(0)',
-        width: '100%',
-        wordWrap: 'break-word',
-      },
-      bmMorphShape: {
-        fill: '#373a47',
-      },
-    }
-  }
 
   state: any
 
@@ -187,7 +140,7 @@ export class ImageFiltersMenu extends React.Component<any, any> {
         <Menu
           disableCloseOnEsc={Boolean(true)}
           width='275px'
-          styles={ImageFiltersMenu.menuStyles()}
+          styles={menuStylesDark}
           noOverlay={true}
           right={false}
           customBurgerIcon={false}

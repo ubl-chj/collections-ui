@@ -17,7 +17,7 @@ export interface IViewerRouteComponentProps {
   location: any
   match: any
   timestamp: any
-  width: number
+  isMobile: boolean
 }
 
 class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, any> {
@@ -28,8 +28,8 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
     super(props)
     this.state = {
       currentCanvas: 0,
+      isMobile: props.isMobile,
       view: null,
-      width: props.width,
     }
     this.viewer = null
   }
@@ -43,8 +43,8 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.width !== prevProps.width) {
-      this.setState({width: this.props.width})
+    if (this.props.isMobile !== prevProps.isMobile) {
+      this.setState({isMobile: this.props.isMobile})
     }
     if (this.props.timestamp !== prevProps.timestamp) {
       if (this.props.match.params.uuid !== prevProps.match.params.uuid) {
@@ -91,8 +91,7 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
   }
 
   buildViewSwitcherToggle() {
-    const {width} = this.state
-    const isMobile = width <= 500
+    const {isMobile} = this.state
     if (isMobile) {
       return null
     } else {
@@ -101,7 +100,7 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
   }
 
   render() {
-    const {width} = this.state
+    const {isMobile} = this.state
     if (this.viewer) {
       return (
           <ViewerProvider viewer={this.viewer}>
@@ -113,7 +112,7 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
                     <LogoWrapper/>
                     <div style={{display: 'flex', flex: '1 1'}}/>
                     {this.buildViewSwitcherToggle()}
-                    <AuthProfile width={width}/>
+                    <AuthProfile isMobile={isMobile}/>
                   </TopBar>
                   <ActionBar>
                     <Controls {...this.props} uuid={uuidv4()}/>
