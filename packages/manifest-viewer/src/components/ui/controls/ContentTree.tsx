@@ -3,7 +3,7 @@ import React from 'react'
 import {Treebeard} from 'react-treebeard'
 import {ViewerComponent} from "../../../core/react"
 import ContentTreeDecorators from './ContentTreeDecorators'
-import treeStyles from './TreeStyles'
+import treeStyles from './styles/treeStyles'
 
 const Div = styled('div', {
   shouldForwardProp: (prop) => ['className', 'children'].indexOf(prop) !== -1,
@@ -97,7 +97,7 @@ export class ContentTree extends ViewerComponent<any, any> {
     }
   }
 
-  goToSection(cursor) {
+  goToSection = (cursor) => {
     if (this.props.osd) {
       if (cursor) {
         const index = cursor.startCanvas

@@ -1,12 +1,12 @@
 import * as React from 'react'
-import {CanvasContext} from "../../../core/react"
-const manifesto = require('manifesto-fork')
+import {CanvasContext} from '../../../core/react'
 import {OsdComponent} from './OsdComponent'
+const manifesto = require('manifesto-fork')
 
 export class ManifestItem extends React.Component<any, any> {
 
   render() {
-    const {document, width} = this.props
+    const {document, isMobile} = this.props
     if (document) {
       const sequences = document.getSequences()
       const imageIds = []
@@ -32,10 +32,11 @@ export class ManifestItem extends React.Component<any, any> {
             <OsdComponent
               currentCanvas={currentCanvas}
               canvasLabels={canvasLabels}
-              width={width}
+              isMobile={isMobile}
               images={imageIds}
             />}
-         </CanvasContext.Consumer>   )
+         </CanvasContext.Consumer>
+      )
     }
     return (null)
   }

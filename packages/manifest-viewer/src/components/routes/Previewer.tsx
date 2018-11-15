@@ -18,13 +18,13 @@ class PreviewerComponent extends React.Component<IViewerRouteComponentProps, any
   document: string
   source: object
   state: {
-    width: number,
+    isMobile: boolean,
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      width: props.width,
+      isMobile: props.isMobile,
     }
   }
 
@@ -57,8 +57,8 @@ class PreviewerComponent extends React.Component<IViewerRouteComponentProps, any
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.width !== prevProps.width) {
-      this.setState({width: this.props.width})
+    if (this.props.isMobile !== prevProps.isMobile) {
+      this.setState({isMobile: this.props.isMobile})
     }
   }
 
@@ -67,7 +67,7 @@ class PreviewerComponent extends React.Component<IViewerRouteComponentProps, any
   }
 
   render() {
-    const {width} = this.state
+    const {isMobile} = this.state
     if (this.viewer) {
       return (
         <ViewerProvider viewer={this.viewer}>
@@ -75,13 +75,13 @@ class PreviewerComponent extends React.Component<IViewerRouteComponentProps, any
             <TopBar>
               <LogoWrapper/>
               <div style={{display: 'flex', flex: '1 1'}}/>
-              <AuthProfile width={width}/>
+              <AuthProfile isMobile={isMobile}/>
             </TopBar>
             <ActionBar>
               <Controls {...this.props} uuid={uuidv4()}/>
             </ActionBar>
             <LayoutBody>
-              <OsdComponent canvasLabels={null} images={[this.document]} width={width}/>
+              <OsdComponent canvasLabels={null} images={[this.document]} isMobile={isMobile}/>
             </LayoutBody>
           </Layout>
         </ViewerProvider>)

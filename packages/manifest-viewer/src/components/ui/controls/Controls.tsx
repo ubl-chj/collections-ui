@@ -12,7 +12,7 @@ export interface IMetadataProps {
   bemBlocks?: any
   location: any
   uuid: any
-  width: number
+  isMobile: boolean
 }
 
 export class Controls extends ViewerComponent<IMetadataProps, any> {
@@ -24,17 +24,17 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
     locationState: any,
     uuid: string,
     loading: boolean,
-    width: number,
+    isMobile: boolean,
   }
   schema: any
 
   constructor(props) {
     super(props)
     this.state = {
+      isMobile: props.isMobile,
       loading: true,
       locationState: props.location.state,
       uuid: null,
-      width: props.width,
     }
   }
 
@@ -46,8 +46,8 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.width !== prevProps.width) {
-      this.setState({width: this.props.width})
+    if (this.props.isMobile !== prevProps.isMobile) {
+      this.setState({isMobile: this.props.isMobile})
     }
   }
 
@@ -58,8 +58,7 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
   }
 
   buildButtonBar() {
-    const {locationState, width} = this.state
-    const isMobile = width <= 500
+    const {locationState, isMobile} = this.state
     if (isMobile) {
       return null
     } else {

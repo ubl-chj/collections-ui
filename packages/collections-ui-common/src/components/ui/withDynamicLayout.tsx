@@ -27,7 +27,8 @@ export const withDynamicLayout = (Component): any => {
     }
 
     render() {
-      return (<Component {...this.props} width={this.state.width}/>)
+      const isMobile = this.state.width <= 500
+      return (<Component {...this.props} isMobile={isMobile}/>)
     }
   }
   return DynamicLayout

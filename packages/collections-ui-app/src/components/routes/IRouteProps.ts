@@ -30,7 +30,7 @@ export interface IRouteProps {
     },
   },
   searchkit: any,
-  width: number,
+  isMobile: boolean,
   location: any
   items: any
 }
