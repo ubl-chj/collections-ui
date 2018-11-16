@@ -1,0 +1,59 @@
+{
+  "indexName": "lcn1",
+  "queryFields": [
+    "title",
+    "description",
+    "Subjects",
+    "Original Format",
+    "Online Format",
+    "Created Published",
+    "Contributors",
+    "APA Citation Style",
+    "Chicago Citation Style",
+    "attribution",
+    "manifest",
+    "thumbnail",
+    "seeAlso",
+    "Item Url"
+  ],
+  "listItem": "StandardListItem",
+  "gridItem": "StandardGridItem",
+  "refinementListFilterDef1": {
+    "field": "Subjects.keyword",
+    "title": "Subjects",
+    "id": "subjects"
+  },
+  "refinementListFilterDef2": {
+    "field": "Contributors.keyword",
+    "title": "Contributors",
+    "id": "contributors"
+  },
+  "refinementListFilterDef3": {
+    "field": "Original Format.keyword",
+    "title": "Original Format",
+    "id": "format"
+  },
+  "sortingSelectorOptions": [
+    {
+      "label": "Title",
+      "field": "title.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Contributors",
+      "field": "Contributors.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Original Format",
+      "field": "Original Format.keyword",
+      "order": "asc"
+    }
+  ],
+  "highlightFields": [
+    "title",
+    "Contributors"
+  ],
+  "suggestionField": "title"
+}
+
