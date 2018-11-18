@@ -9,6 +9,7 @@ import {EyeIcon} from '../svg'
 import menuStylesDark from './styles/menuStylesDark'
 
 const uuidv4 = require('uuid/v4')
+const uuidv5 = require('uuidv5')
 
 export enum VisionFeatureTypes {
   IMAGE_PROPERTIES = 'IMAGE_PROPERTIES',
@@ -21,6 +22,8 @@ export class VisionMenu extends React.Component<any, any> {
 
   static defaultProps = {
     apiKey: process.env.REACT_APP_VISION_API_KEY,
+    REDIS_BASE: 'http://127.0.0.1:7379/',
+    VISION_API_BASE: 'https://vision.googleapis.com/v1/images:annotate?key='
   }
 
   static buildCloudVisionRequestBody(imageURI, visionFeatureType) {
@@ -49,6 +52,7 @@ export class VisionMenu extends React.Component<any, any> {
     super(props)
     this.state = {
       currentCanvas: props.currentCanvas,
+      currentRedisObject: null,
       currentResourceURI: props.currentResourceURI,
       detectLabels: false,
       detectText: false,
@@ -57,6 +61,7 @@ export class VisionMenu extends React.Component<any, any> {
       images: props.images,
       menuOpen: props.isOpen,
       osd: props.osd,
+      redisObjIsSet: false,
       visionResponse: null,
     }
   }
@@ -138,45 +143,99 @@ export class VisionMenu extends React.Component<any, any> {
   }
 
   buildCloudVisionRequest() {
-    const {apiKey} = this.props
+    const {apiKey, REDIS_BASE, VISION_API_BASE} = this.props
     const imageURI = this.buildImageURI()
     if (imageURI) {
-      const requestURI = 'https://vision.googleapis.com/v1/images:annotate?key=' + apiKey
-      let req
+      const requestURI = VISION_API_BASE + apiKey
+      let axiosGetReq
+      let redisGetReq
       if (this.state.detectLabels) {
-        req = {
+        const uuid = uuidv5('url', imageURI + '#labels')
+        const redisGETRequestURI = REDIS_BASE + 'GET/' + uuid
+        redisGetReq = {
+          method: 'get',
+          url: redisGETRequestURI,
+        }
+        axiosGetReq = {
           data: VisionMenu.buildCloudVisionRequestBody(imageURI, VisionFeatureTypes.LABEL_DETECTION),
           method: 'post',
           url: requestURI,
         }
-        this.makeAxiosRequest(req)
+        this.makeRedisGetRequest(redisGetReq, axiosGetReq)
+        this.setState({currentRedisObject: uuid})
       } else if (this.state.detectText) {
-        req = {
+        const uuid = uuidv5('url', imageURI + '#text')
+        const redisGETRequestURI = REDIS_BASE + 'GET/' + uuid
+        redisGetReq = {
+          method: 'get',
+          url: redisGETRequestURI,
+        }
+        axiosGetReq = {
           data: VisionMenu.buildCloudVisionRequestBody(imageURI, VisionFeatureTypes.TEXT_DETECTION),
           method: 'post',
           url: requestURI,
         }
-        this.makeAxiosRequest(req)
+        this.makeRedisGetRequest(redisGetReq, axiosGetReq)
+        this.setState({currentRedisObject: uuid})
       } else if (this.state.imageProperties) {
-        req = {
+        const uuid = uuidv5('url', imageURI + '#imageProps')
+        const redisGETRequestURI = REDIS_BASE + 'GET/' + uuid
+        redisGetReq = {
+          method: 'get',
+          url: redisGETRequestURI,
+        }
+        axiosGetReq = {
           data: VisionMenu.buildCloudVisionRequestBody(imageURI, VisionFeatureTypes.IMAGE_PROPERTIES),
           method: 'post',
           url: requestURI,
         }
-        this.makeAxiosRequest(req)
+        this.makeRedisGetRequest(redisGetReq, axiosGetReq)
+        this.setState({currentRedisObject: uuid})
       } else if (this.state.detectWeb) {
-        req = {
+        const uuid = uuidv5('url', imageURI + '#web')
+        const redisGETRequestURI = REDIS_BASE + 'GET/' + uuid
+        redisGetReq = {
+          method: 'get',
+          url: redisGETRequestURI,
+        }
+        axiosGetReq = {
           data: VisionMenu.buildCloudVisionRequestBody(imageURI, VisionFeatureTypes.WEB_DETECTION),
           method: 'post',
           url: requestURI,
         }
-        this.makeAxiosRequest(req)
+        this.makeRedisGetRequest(redisGetReq, axiosGetReq)
+        this.setState({currentRedisObject: uuid})
       }
     }
   }
 
-  makeAxiosRequest(req) {
+  makeRedisGetRequest = (redisGetReq, axiosGetReq) => {
+    axios(redisGetReq).then((res) => {
+      if (!res.data.GET) {
+        this.setState({redisObjIsSet: false})
+        return this.makeAxiosRequest(axiosGetReq)
+      } else {
+        console.log('Redis GET returned ' + res.status)
+        const obj = JSON.parse(res.data.GET)
+        this.setState({visionResponse: obj})
+      }
+    }).catch((err) => {
+      console.error('ERROR:', err);
+    })
+  }
+
+  makeRedisSetRequest = (redisSetReq) => {
+    axios(redisSetReq).then((res) => {
+      console.log('Redis SET returned ' + res.status)
+      this.setState({redisObjIsSet: true})
+    }).catch((err) => {
+      console.error('ERROR:', err);
+    })
+  }
+
+  makeAxiosRequest = (req) => {
     axios(req).then((res) => {
+      console.log('Vision API request returned ' + res.status)
       this.setState({visionResponse: res.data.responses[0]})
     }).catch((err) => {
       console.error('ERROR:', err);
@@ -219,14 +278,22 @@ export class VisionMenu extends React.Component<any, any> {
       this.setState({visionResponse: null})
     }
     if (this.state.currentResourceURI !== prevState.currentResourceURI) {
-      if (this.state.detectText || this.state.detectLabels) {
+      if (this.state.detectText || this.state.detectLabels || this.state.detectWeb || this.state.imageProperties) {
         this.setState({visionResponse: null})
         this.buildCloudVisionRequest()
       }
     }
 
     if (this.state.visionResponse !== prevState.visionResponse) {
-      this.forceUpdate()
+      if (!this.state.redisObjIsSet) {
+        const redisSetURI = this.props.REDIS_BASE + 'SET/' + this.state.currentRedisObject
+        const redisSetReq = {
+          method: 'put',
+          url: redisSetURI,
+          data: this.state.visionResponse
+        }
+        this.makeRedisSetRequest(redisSetReq)
+      }
     }
   }
 

@@ -30,7 +30,7 @@ export default {
     backgroundColor: '#efefef',
     bottom: '30px',
     boxSizing: 'border-box',
-    height: '90%',
+    height: '85%',
     opacity: '1',
     position: 'relative',
     top: '45px',

@@ -17,7 +17,7 @@ export class ManifestInfoMenu extends React.Component<any, any> {
 
   static buildLogo(value) {
     if (value) {
-      const link = '<img crossorigin alt="logo" src=' + value + '>'
+      const link = '<img alt="logo" src=' + value + '>'
       return (
         <li className='list-group-item'>
           <div className='metadata-label'>Logo:</div>
@@ -80,8 +80,8 @@ export class ManifestInfoMenu extends React.Component<any, any> {
     const {attributionText, manifest, metadata} = this.props
     const manifestItem = ManifestInfoMenu.buildManifestLink(manifest.id)
 
-    // const logo = manifest.getLogo()
-    // const logoItem = ManifestInfoMenu.buildLogo(logo)
+    const logo = manifest.getLogo()
+    const logoItem = ManifestInfoMenu.buildLogo(logo)
 
     const attribution = ManifestInfoMenu.buildAttribution(attributionText)
 
@@ -104,6 +104,7 @@ export class ManifestInfoMenu extends React.Component<any, any> {
             {itemList}
             {manifestItem}
             {attribution}
+            {logoItem}
           </ul>
         </Menu>
         <button

@@ -31,7 +31,7 @@ export default {
     borderRight: '1px solid lightgray',
     bottom: '30px',
     boxSizing: 'border-box',
-    height: '90%',
+    height: '85%',
     left: '0',
     opacity: '1',
     padding: '2px',

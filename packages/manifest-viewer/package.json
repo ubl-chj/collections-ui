@@ -102,7 +102,8 @@
     "react-spinners": "^0.4.4",
     "react-treebeard": "^3.1.0",
     "searchkit-fork": "^2.3.8",
-    "uuid": "3.3.2"
+    "uuid": "3.3.2",
+    "uuidv5": "^1.0.0"
   },
   "peerDependencies": {
     "react": "^16.0.0-0",
