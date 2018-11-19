@@ -1,0 +1,35 @@
+version: "3.2"
+
+services:
+  redis:
+    image: ubleipzig/redis:latest
+    container_name: redis
+    ports:
+    - 6379
+    networks:
+      esnet:
+        aliases:
+        - es.iiif.cloud
+    volumes:
+    - redis-data-volume:/data
+    - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+
+  webdis:
+    image: mesosphere/webdis
+    container_name: webdis
+    ports:
+    - 7379:7379
+    networks:
+      esnet:
+        aliases:
+        - es.iiif.cloud
+    volumes:
+    - ./redis/webdis.json:/etc/webdis.json
+
+volumes:
+  redis-data-volume:
+    driver: local
+
+networks:
+  esnet:
+

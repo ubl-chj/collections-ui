@@ -21,9 +21,9 @@ export enum VisionFeatureTypes {
 export class VisionMenu extends React.Component<any, any> {
 
   static defaultProps = {
-    apiKey: process.env.REACT_APP_VISION_API_KEY,
-    REDIS_BASE: 'http://127.0.0.1:7379/',
-    VISION_API_BASE: 'https://vision.googleapis.com/v1/images:annotate?key='
+    REDIS_BASE: process.env.REACT_APP_REDIS_BASE,
+    VISION_API_BASE: process.env.REACT_APP_VISION_API_BASE,
+    VISION_API_KEY: process.env.REACT_APP_VISION_API_KEY,
   }
 
   static buildCloudVisionRequestBody(imageURI, visionFeatureType) {
@@ -143,10 +143,10 @@ export class VisionMenu extends React.Component<any, any> {
   }
 
   buildCloudVisionRequest() {
-    const {apiKey, REDIS_BASE, VISION_API_BASE} = this.props
+    const {VISION_API_KEY, REDIS_BASE, VISION_API_BASE} = this.props
     const imageURI = this.buildImageURI()
     if (imageURI) {
-      const requestURI = VISION_API_BASE + apiKey
+      const requestURI = VISION_API_BASE + VISION_API_KEY
       let axiosGetReq
       let redisGetReq
       if (this.state.detectLabels) {
@@ -288,9 +288,9 @@ export class VisionMenu extends React.Component<any, any> {
       if (!this.state.redisObjIsSet) {
         const redisSetURI = this.props.REDIS_BASE + 'SET/' + this.state.currentRedisObject
         const redisSetReq = {
+          data: this.state.visionResponse,
           method: 'put',
           url: redisSetURI,
-          data: this.state.visionResponse
         }
         this.makeRedisSetRequest(redisSetReq)
       }

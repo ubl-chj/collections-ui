@@ -10,8 +10,6 @@ COPY packages/collections-ui-app/.env packages/collections-ui-app/.env
 ##Install
 RUN npm i npm@latest -g
 RUN npm install --global lerna
-WORKDIR /srv/collections-ui/packages/cloud-vision-api
-RUN npm install
 WORKDIR /srv/collections-ui/packages/manifest-uuid
 RUN npm install --build-from-source
 WORKDIR /srv/collections-ui/packages/collections-ui-common
