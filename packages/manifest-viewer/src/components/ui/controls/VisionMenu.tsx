@@ -1,6 +1,5 @@
 import axios from 'axios'
-import {AuthTokenContext} from 'collections-ui-common'
-import {Domain} from 'collections-ui-common'
+import {AuthTokenContext, Domain} from 'collections-ui-common'
 import Checkbox from 'rc-checkbox'
 import * as React from 'react'
 import {push as Menu} from 'react-burger-menu'
@@ -42,6 +41,22 @@ export class VisionMenu extends React.Component<any, any> {
           },
         },
       ],
+    }
+  }
+
+  static resolveImage(page) {
+    if (page.fullMatchingImages) {
+      return (<img width='170' src={page.fullMatchingImages[0].url}/>)
+    } else if (page.partialMatchingImages) {
+      return (<img width='170' src={page.partialMatchingImages[0].url}/>)
+    }
+  }
+
+  static buildWebDetectHeader(type) {
+    if (type === 'matching') {
+      return (<h6 style={{padding: '15px'}}>Matching on Web</h6>)
+    } else if (type === 'similar') {
+      return (<h6 style={{padding: '15px'}}>Similar on Web</h6>)
     }
   }
 
@@ -134,7 +149,7 @@ export class VisionMenu extends React.Component<any, any> {
       const parts = currentResourceURI.split('/info.json')
       // workaround 1.1
       if (!currentResourceURI.includes(Domain.LEGACY_API_COLLECTIONS)) {
-        imageURI = parts[0] + '/full/full/0/default.jpg'
+        imageURI = parts[0] + Domain.FULL_IMAGE_API_REQUEST
       } else {
         imageURI = parts[0] + '/full/full/0/native.jpg'
       }
@@ -302,7 +317,7 @@ export class VisionMenu extends React.Component<any, any> {
       if (this.state.visionResponse.labelAnnotations) {
         return (
           <div style={{backgroundColor: '#FFF', display: 'block'}}>
-            <h5 style={{padding: '15px'}}>Label Annotations</h5>
+            <h6 style={{padding: '15px'}}>Label Annotations</h6>
             <ul>
               {this.state.visionResponse.labelAnnotations.map((label) => <li key={uuidv4()}>{label.description}</li>)}
             </ul>
@@ -310,23 +325,34 @@ export class VisionMenu extends React.Component<any, any> {
       } else if (this.state.visionResponse.textAnnotations) {
         return (
         <div style={{backgroundColor: '#FFF', display: 'block'}}>
-          <h5 style={{padding: '15px'}}>Text Annotations</h5>
+          <h6 style={{padding: '15px'}}>Text Annotations</h6>
           <p style={{padding: '15px'}}>
             {this.state.visionResponse.textAnnotations[0].description}
           </p>
         </div>)
       } else if (this.state.visionResponse.webDetection) {
-        if (this.state.visionResponse.webDetection.visuallySimilarImages) {
           return (
             <div style={{backgroundColor: '#FFF', display: 'block'}}>
-              <h5 style={{padding: '15px'}}>Similar on Web</h5>
+              {this.state.visionResponse.webDetection.visuallySimilarImages ?
+                VisionMenu.buildWebDetectHeader('similar') : null}
               <ul style={{listStyle: 'none'}}>
-                {this.state.visionResponse.webDetection.visuallySimilarImages.map((page) =>
-                  <li key={uuidv4()}><a href={page.url} target='_blank' rel='noopener noreferrer'><img width='170' src={page.url}/></a>
-                  </li>)}
+                {this.state.visionResponse.webDetection.visuallySimilarImages ?
+                  this.state.visionResponse.webDetection.visuallySimilarImages.map((page) =>
+                    <li key={uuidv4()}><a href={page.url} target='_blank' rel='noopener noreferrer'>
+                      <img width='170' src={page.url}/></a>
+                    </li>) : null}
+              </ul>
+              {this.state.visionResponse.webDetection.pagesWithMatchingImages ?
+                VisionMenu.buildWebDetectHeader('matching') : null}
+              <ul style={{listStyle: 'none'}}>
+                {this.state.visionResponse.webDetection.pagesWithMatchingImages ?
+                  this.state.visionResponse.webDetection.pagesWithMatchingImages.map((page) =>
+                  <li key={uuidv4()}><a href={page.url} target='_blank' rel='noopener noreferrer'>
+                    {VisionMenu.resolveImage(page)}</a>
+                    <div dangerouslySetInnerHTML={{__html: page.pageTitle}}/>
+                  </li>) : null}
               </ul>
             </div>)
-        }
       } else if (this.state.visionResponse.imagePropertiesAnnotation) {
         return (
           <div style={{backgroundColor: '#FFF', display: 'block'}}>
