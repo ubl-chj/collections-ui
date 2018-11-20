@@ -76,7 +76,7 @@ export class CollectionsGridItem extends React.Component<ItemProps, any> {
     const queryContext = this.host + index
     this.searchkit2 = new SearchkitManager(queryContext, this.options)
     this.searchkit2.addDefaultQuery((query) => query.addQuery(CollectionsGridItem.randomQuery()))
-    const logo = '<img crossorigin alt="collection logo" width=170 src=' + source.logo + '>'
+    const logo = '<img crossorigin alt="collection logo" src=' + source.logo + '>'
     const title = 'Browse ' + source.name
     return (
       <ResultContext.Provider value={result}>

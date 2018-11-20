@@ -1,5 +1,5 @@
 {
-  "indexName": "nga1",
+  "indexName": "nga2",
   "queryFields": [
     "title",
     "Accession Number",
@@ -28,6 +28,13 @@
     "field": "description.keyword",
     "title": "description",
     "id": "description"
+  },
+  "hasRangeFilter": true,
+  "rangeFilter": {
+    "field": "Creation Year.raw",
+    "id": "date",
+    "min": 1400,
+    "max": 1975
   },
   "sortingSelectorOptions": [
     {

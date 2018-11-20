@@ -43,7 +43,7 @@
     "id": "collection"
   },
   "refinementListFilterDef3": {
-    "field": "Place.keyword",
+    "field": "Place of publication.keyword",
     "title": "Place",
     "id": "place"
   },

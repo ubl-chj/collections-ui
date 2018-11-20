@@ -42,10 +42,10 @@ pushManifestUUID = (manifest) => {
   })
 }
 
-// getManifestUUID('https://iiif.harvardartmuseums.org/manifests/object/296562')
+//getManifestUUID('https://iiif.ub.uni-leipzig.de/0000011246/manifest.json')
 //getManifestForUUID('f15f9d56-5c7d-5583-9530-296cd6914ed3')
 
 
-const manifestIds = require('/tmp/nga-ids1.json')
+const manifestIds = require('/tmp/ubl-ids1.json')
 
 pushManifestUUID(manifestIds)
