@@ -269,7 +269,6 @@ body {
   }
 
   input.viewer-search-box__text {
-    -webkit-box-shadow: none;
     box-shadow: none;
     background:transparent;
     color:#fff;
@@ -587,3 +586,17 @@ body {
   padding-top: 15px;
 }
 
+.highlight {
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+  outline: 12px auto #0A7EbE;
+}
+
+.extraClass {
+  font-size: 20px !important;
+  pointer-events: auto !important;
+  &:hover {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}

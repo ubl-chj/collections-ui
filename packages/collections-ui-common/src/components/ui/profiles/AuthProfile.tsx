@@ -36,6 +36,7 @@ export class AuthProfile extends React.Component<any, any> {
           <AuthUserContext.Consumer>
             {(authUser) => authUser ?
             <ReactTooltip
+              className='authUserTooltip'
               id='authUserProfile'
               offset={{left: 170}}
               globalEventOff='click'
