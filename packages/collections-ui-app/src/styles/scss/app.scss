@@ -45,14 +45,13 @@
   white-space: nowrap;
 }
 
-.__react_component_tooltip.show {
+.authUserTooltip {
   border-radius: 3px;
   opacity: 1 !important;
   top: 44px;
   left: 79% !important;
   width: 20%;
   right: 0;
-  visibility: visible;
   position: absolute !important;
   display: inline-block !important;
   white-space: nowrap;

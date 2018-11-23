@@ -97,6 +97,7 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
   updateViewer(config) {
     if (!this.osd) {
       this.osd = OsdComponent.generateView(config)
+      this.osd.viewport.goHome(true)
     }
   }
 
@@ -195,7 +196,6 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     this.setCurrentResourceURI()
   }
 
-
   componentDidUpdate(prevProps) {
     if (this.props.isMobile !== prevProps.isMobile) {
       this.setState({isMobile: this.props.isMobile})
@@ -209,21 +209,21 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
   render() {
     return (
       <main>
-        <div style={{display: 'flex'}}>
-          <div style={OsdComponent.controlBarStyles()}>
-            <div style={{display: 'flex', flexFlow: 'row', height: '40px'}}>
-              <BackArrow/>
-              {this.buildPageSelector()}
+          <div style={{display: 'flex'}}>
+            <div style={OsdComponent.controlBarStyles()}>
+              <div style={{display: 'flex', flexFlow: 'row', height: '40px'}}>
+                <BackArrow/>
+                {this.buildPageSelector()}
+              </div>
+              {this.buildImageFilterMenu()}
+              {this.buildViewSelector()}
+              {this.buildContentTreeMenu()}
+              {this.buildVisionMenu()}
+              <FullScreenIcon/>
             </div>
-            {this.buildImageFilterMenu()}
-            {this.buildViewSelector()}
-            {this.buildContentTreeMenu()}
-            {this.buildVisionMenu()}
-            <FullScreenIcon/>
+            {this.buildPagingControls()}
           </div>
-          {this.buildPagingControls()}
-        </div>
-        <div className='openseadragon' ref={this.setRef}/>
+          <div className='openseadragon' ref={this.setRef}/>
       </main>
     )
   }
