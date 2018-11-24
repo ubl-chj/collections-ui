@@ -15,15 +15,6 @@
   padding-right: 0 !important;
 }
 
-.extraClass {
-  font-size: 20px !important;
-  pointer-events: auto !important;
-  &:hover {
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-}
-
 .gb_tb {
   border-radius: 3px;
   display: inline-block;

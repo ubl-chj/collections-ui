@@ -7,6 +7,7 @@ import {CircleLoader} from 'react-spinners'
 import {ViewerComponent} from "../../../core/react"
 import {EyeIcon} from '../svg'
 import menuStylesDark from './styles/menuStylesDark'
+import ReactDOM from "react-dom"
 
 const uuidv4 = require('uuid/v4')
 const uuidv5 = require('uuidv5')
@@ -76,6 +77,7 @@ export class VisionMenu extends ViewerComponent<any, any> {
       detectWeb: false,
       imageProperties: false,
       images: props.images,
+      isHighlighted: false,
       menuOpen: props.isOpen,
       osd: props.osd,
       redisObjIsSet: false,
@@ -90,6 +92,13 @@ export class VisionMenu extends ViewerComponent<any, any> {
   toggleVisionMenu = () => {
     this.setState((prevState) => {
       return {menuOpen: !prevState.menuOpen};
+    })
+    this.setState({
+      imageProperties: false,
+      detectLabels: false,
+      detectText: false,
+      detectWeb: false,
+      isHighlighted: false
     })
   }
 
@@ -262,6 +271,7 @@ export class VisionMenu extends ViewerComponent<any, any> {
       if (this.props.currentCanvas !== data.page) {
         this.setState({currentResourceURI: this.state.images[data.page]})
         this.setImageDimensions(data.page)
+        this.setState({isHighlighted: false})
         osd.clearOverlays()
       }
     })
@@ -311,6 +321,10 @@ export class VisionMenu extends ViewerComponent<any, any> {
         this.makeRedisSetRequest(redisSetReq)
       }
     }
+
+    if (this.state.highlightedId !== prevState.highlightedId) {
+      this.setState({isHighlighted: true})
+    }
   }
 
   addOverlay(xywh, eltId) {
@@ -320,7 +334,7 @@ export class VisionMenu extends ViewerComponent<any, any> {
     const elt = document.createElement('div')
     const dataTip = document.createAttribute('data-tip')
     const dataTarget = document.createAttribute('data-for')
-    dataTarget.value = eltId
+    dataTarget.value = 'tt_' + eltId
     elt.setAttributeNode(dataTip)
     elt.setAttributeNode(dataTarget)
     elt.id = eltId
@@ -341,7 +355,7 @@ export class VisionMenu extends ViewerComponent<any, any> {
     if (this.state.visionResponse) {
       const textAnnos = this.state.visionResponse.textAnnotations
       if (textAnnos) {
-        return (textAnnos.slice(1).map((anno) => {
+        return (textAnnos.slice(1).map((anno, index) => {
           const desc = anno.description
           const vertices = anno.boundingPoly.vertices
           const xywh = {
@@ -350,13 +364,13 @@ export class VisionMenu extends ViewerComponent<any, any> {
             x: vertices[0].x,
             y: vertices[0].y,
           }
-          const eltId = uuidv4()
+          const eltId = 'overlay' + index.toString().padStart(5, '0')
           this.addOverlay(xywh, eltId)
           return (
             <ReactTooltip
               className='extraClass'
-              key={eltId}
-              id={eltId}
+              key={uuidv4()}
+              id={'tt_' + eltId}
               effect='solid'
               delayHide={500}
               delayShow={500}
@@ -367,6 +381,43 @@ export class VisionMenu extends ViewerComponent<any, any> {
             >
               {desc}
             </ReactTooltip>)
+        }))
+      }
+    }
+  }
+
+  addHighlightLabel = (id) => {
+    if (this.state.isHighlighted) {
+      const eltId = 'overlay' + id
+      const overlay = document.getElementById(eltId)
+      return ReactDOM.createPortal(
+        <div style={{backgroundColor: '#000', height: '100%', zIndex: 1000, width: '100%'}}>X</div>,
+        overlay
+      )
+    }
+  }
+
+  toggleHighlighter = (id) => {
+    this.setState({
+      highlightedId: id,
+      isHighlighted: true
+    })
+  }
+
+  buildTextAnnotations() {
+    if (this.state.visionResponse) {
+      const textAnnos = this.state.visionResponse.textAnnotations
+      if (textAnnos) {
+        return (textAnnos.slice(1).map((anno, index) => {
+          const desc = anno.description
+          const id = index.toString().padStart(5, '0')
+          return (
+            <span
+              onClick={() => this.toggleHighlighter(id)}
+              className='text'
+              key={uuidv4()}
+              dangerouslySetInnerHTML={{__html: '&nbsp;' + desc}}
+            />)
         }))
       }
     }
@@ -387,7 +438,8 @@ export class VisionMenu extends ViewerComponent<any, any> {
         <div style={{backgroundColor: '#FFF', display: 'block'}}>
           <h6 style={{padding: '15px'}}>Text Annotations</h6>
           <p style={{padding: '15px'}}>
-            {this.state.visionResponse.textAnnotations[0].description}
+            {this.buildTextAnnotations()}
+            {this.state.isHighlighted ? this.addHighlightLabel(this.state.highlightedId) : null}
           </p>
         </div>)
       } else if (this.state.visionResponse.webDetection) {
