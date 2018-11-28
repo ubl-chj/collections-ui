@@ -72,12 +72,14 @@ export class VisionMenu extends ViewerComponent<any, any> {
       currentCanvas: props.currentCanvas,
       currentRedisObject: null,
       currentResourceURI: props.currentResourceURI,
+      dataPage: 0,
       detectLabels: false,
       detectText: false,
       detectWeb: false,
       imageProperties: false,
       images: props.images,
       isHighlighted: false,
+      maxRequestSize: null,
       menuOpen: props.isOpen,
       osd: props.osd,
       redisObjIsSet: false,
@@ -154,15 +156,15 @@ export class VisionMenu extends ViewerComponent<any, any> {
   }
 
   buildImageURI() {
-    const {currentResourceURI} = this.state
+    const {currentResourceURI, maxRequestSize} = this.state
     let imageURI
-    if (currentResourceURI) {
+    if (currentResourceURI && maxRequestSize) {
       const parts = currentResourceURI.split('/info.json')
       // workaround 1.1
       if (!currentResourceURI.includes(Domain.LEGACY_API_COLLECTIONS)) {
-        imageURI = parts[0] + Domain.FULL_IMAGE_API_REQUEST
+        imageURI = parts[0] + '/full/' + maxRequestSize.width + "," + maxRequestSize.height + '/0/default.jpg'
       } else {
-        imageURI = parts[0] + '/full/full/0/native.jpg'
+        imageURI = parts[0] + '/full/' + maxRequestSize.width + "," + maxRequestSize.height + '/0/native.jpg'
       }
     }
     return imageURI
@@ -251,16 +253,49 @@ export class VisionMenu extends ViewerComponent<any, any> {
     })
   }
 
+  getMaxRequestSize(tiledImage, size) {
+    // this is ugly :(
+    let maxRequestSize
+    const aspectRatio = size.x / size.y
+    if (tiledImage.source.profile !== 'undefined' && Array.isArray(tiledImage.source.profile)) {
+      if (tiledImage.source.profile[1].maxHeight && aspectRatio < 1) {
+        maxRequestSize = {
+          height: tiledImage.source.profile[1].maxHeight,
+          width: '',
+        }
+      } else if (tiledImage.source.profile[1].maxWidth && aspectRatio > 1) {
+        maxRequestSize = {
+          height: '',
+          width: tiledImage.source.profile[1].maxWidth,
+        }
+      } else if (typeof tiledImage.source.sizes !== 'undefined' && Array.isArray(tiledImage.source.sizes)) {
+        const maxWidth = Math.max(...tiledImage.source.sizes.map((dims) => dims.width), 0)
+        const sizes = tiledImage.source.sizes
+        maxRequestSize = sizes.filter((dim) => {
+          return dim.width === maxWidth
+        })[0]
+      } else {
+        maxRequestSize = {
+          height: size.y,
+          width: size.x,
+        }
+      }
+    }
+    return maxRequestSize
+  }
+
   componentDidMount() {
     const {osd} = this.props
     osd.addHandler("open", () => {
       const tiledImage = osd.world.getItemAt(0)
       if (tiledImage) {
         const size = tiledImage.getContentSize()
+        const maxRequestSize = this.getMaxRequestSize(tiledImage, size)
         const width = size.x
         const height = size.y
         this.setState({width})
         this.setState({height})
+        this.setState({maxRequestSize})
       }
     })
     osd.addHandler("page", (data) => {
@@ -273,43 +308,45 @@ export class VisionMenu extends ViewerComponent<any, any> {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const {currentRedisObject, currentResourceURI, detectLabels, detectText, detectWeb, highlightedId, imageProperties, redisObjIsSet,
+      visionResponse} = this.state
     const pp = prevProps
-    if (this.state.detectLabels !== prevState.detectLabels) {
-      if (this.state.detectLabels) {
+    if (detectLabels !== prevState.detectLabels) {
+      if (detectLabels) {
         this.buildCloudVisionRequest()
       }
       this.setState({visionResponse: null})
     }
-    if (this.state.detectText !== prevState.detectText) {
-      if (this.state.detectText) {
+    if (detectText !== prevState.detectText) {
+      if (detectText) {
         this.buildCloudVisionRequest()
       }
       this.setState({visionResponse: null})
     }
-    if (this.state.imageProperties !== prevState.imageProperties) {
-      if (this.state.imageProperties) {
+    if (imageProperties !== prevState.imageProperties) {
+      if (imageProperties) {
         this.buildCloudVisionRequest()
       }
       this.setState({visionResponse: null})
     }
-    if (this.state.detectWeb !== prevState.detectWeb) {
-      if (this.state.detectWeb) {
+    if (detectWeb !== prevState.detectWeb) {
+      if (detectWeb) {
         this.buildCloudVisionRequest()
       }
       this.setState({visionResponse: null})
     }
-    if (this.state.currentResourceURI !== prevState.currentResourceURI) {
-      if (this.state.detectText || this.state.detectLabels || this.state.detectWeb || this.state.imageProperties) {
+    if (currentResourceURI !== prevState.currentResourceURI) {
+      if (detectText || detectLabels || detectWeb || imageProperties) {
         this.setState({visionResponse: null})
         this.buildCloudVisionRequest()
       }
     }
 
-    if (this.state.visionResponse !== prevState.visionResponse) {
-      if (!this.state.redisObjIsSet) {
-        const redisSetURI = this.props.REDIS_BASE + 'SET/' + this.state.currentRedisObject
+    if (visionResponse !== prevState.visionResponse) {
+      if (!redisObjIsSet) {
+        const redisSetURI = this.props.REDIS_BASE + 'SET/' + currentRedisObject
         const redisSetReq = {
-          data: this.state.visionResponse,
+          data: visionResponse,
           method: 'put',
           url: redisSetURI,
         }
@@ -317,14 +354,15 @@ export class VisionMenu extends ViewerComponent<any, any> {
       }
     }
 
-    if (this.state.highlightedId !== prevState.highlightedId) {
+    if (highlightedId !== prevState.highlightedId) {
       this.setState({isHighlighted: true})
     }
   }
 
   addOverlay(xywh, eltId) {
     const {osd} = this.props
-    const {width, height} = this.state
+    const {width, height, maxRequestSize} = this.state
+    const scaleRatio = width / maxRequestSize.width
     const aspectRatio = height / width
     const elt = document.createElement('div')
     const dataTip = document.createAttribute('data-tip')
@@ -335,10 +373,10 @@ export class VisionMenu extends ViewerComponent<any, any> {
     elt.id = eltId
     elt.className = 'highlight'
     if (osd && xywh && width) {
-      const x = xywh.x / width
-      const y = xywh.y / height * aspectRatio
-      const w = xywh.w / width
-      const h = xywh.h / height * aspectRatio
+      const x = xywh.x / width * scaleRatio
+      const y = xywh.y / height * aspectRatio * scaleRatio
+      const w = xywh.w / width * scaleRatio
+      const h = xywh.h / height * aspectRatio * scaleRatio
       osd.addOverlay({
         element: elt,
         location: new openSeaDragon.Rect(x, y, w, h),
@@ -385,10 +423,12 @@ export class VisionMenu extends ViewerComponent<any, any> {
     if (this.state.isHighlighted) {
       const eltId = 'overlay' + id
       const overlay = document.getElementById(eltId)
-      return ReactDOM.createPortal(
-        <div style={{backgroundColor: '#000', height: '100%', zIndex: 1000, width: '100%'}}>X</div>,
-        overlay,
-      )
+      if (overlay) {
+        return ReactDOM.createPortal(
+          <div style={{backgroundColor: '#000', height: '100%', zIndex: 1000, width: '100%'}}>X</div>,
+          overlay,
+        )
+      }
     }
   }
 
@@ -419,53 +459,54 @@ export class VisionMenu extends ViewerComponent<any, any> {
   }
 
   buildVisionPresentation() {
-    if (this.state.visionResponse) {
-      if (this.state.visionResponse.labelAnnotations) {
+    const {highlightedId, isHighlighted, visionResponse} = this.state
+    if (visionResponse) {
+      if (visionResponse.labelAnnotations) {
         return (
           <div style={{backgroundColor: '#FFF', display: 'block'}}>
             <h6 style={{padding: '15px'}}>Label Annotations</h6>
             <ul>
-              {this.state.visionResponse.labelAnnotations.map((label) => <li key={uuidv4()}>{label.description}</li>)}
+              {visionResponse.labelAnnotations.map((label) => <li key={uuidv4()}>{label.description}</li>)}
             </ul>
           </div>)
-      } else if (this.state.visionResponse.textAnnotations) {
+      } else if (visionResponse.textAnnotations) {
         return (
           <div style={{backgroundColor: '#FFF', display: 'block'}}>
             <h6 style={{padding: '15px'}}>Text Annotations</h6>
             <p style={{padding: '15px'}}>
               {this.buildTextAnnotations()}
-              {this.state.isHighlighted ? this.addHighlightLabel(this.state.highlightedId) : null}
+              {isHighlighted && highlightedId ? this.addHighlightLabel(highlightedId) : null}
             </p>
           </div>)
-      } else if (this.state.visionResponse.webDetection) {
+      } else if (visionResponse.webDetection) {
         return (
           <div style={{backgroundColor: '#FFF', display: 'block'}}>
-            {this.state.visionResponse.webDetection.visuallySimilarImages ?
+            {visionResponse.webDetection.visuallySimilarImages ?
               VisionMenu.buildWebDetectHeader('similar') : null}
             <ul style={{listStyle: 'none'}}>
-              {this.state.visionResponse.webDetection.visuallySimilarImages ?
-                this.state.visionResponse.webDetection.visuallySimilarImages.map((page) =>
+              {visionResponse.webDetection.visuallySimilarImages ?
+                visionResponse.webDetection.visuallySimilarImages.map((page) =>
                   <li key={uuidv4()}><a href={page.url} target='_blank' rel='noopener noreferrer'>
                     <img alt='' width='170' src={page.url}/></a>
                   </li>) : null}
             </ul>
-            {this.state.visionResponse.webDetection.pagesWithMatchingImages ?
+            {visionResponse.webDetection.pagesWithMatchingImages ?
               VisionMenu.buildWebDetectHeader('matching') : null}
             <ul style={{listStyle: 'none'}}>
-              {this.state.visionResponse.webDetection.pagesWithMatchingImages ?
-                this.state.visionResponse.webDetection.pagesWithMatchingImages.map((page) =>
+              {visionResponse.webDetection.pagesWithMatchingImages ?
+                visionResponse.webDetection.pagesWithMatchingImages.map((page) =>
                   <li key={uuidv4()}><a href={page.url} target='_blank' rel='noopener noreferrer'>
                     {VisionMenu.resolveImage(page)}</a>
                     <div dangerouslySetInnerHTML={{__html: page.pageTitle}}/>
                   </li>) : null}
             </ul>
           </div>)
-      } else if (this.state.visionResponse.imagePropertiesAnnotation) {
+      } else if (visionResponse.imagePropertiesAnnotation) {
         return (
           <div style={{backgroundColor: '#FFF', display: 'block'}}>
             <h5 style={{padding: '15px'}}>Image Properties</h5>
             <ul style={{listStyle: 'none'}}>
-              {this.state.visionResponse.imagePropertiesAnnotation.dominantColors.colors.map((color) => {
+              {visionResponse.imagePropertiesAnnotation.dominantColors.colors.map((color) => {
                 const red = color.color.red
                 const blue = color.color.blue
                 const green = color.color.green
@@ -474,7 +515,7 @@ export class VisionMenu extends ViewerComponent<any, any> {
               })}
             </ul>
           </div>)
-      } else if (this.state.visionResponse.error) {
+      } else if (visionResponse.error) {
         return (
           <div style={{backgroundColor: '#FFF', display: 'block'}}>
             <p style={{padding: '15px'}}>

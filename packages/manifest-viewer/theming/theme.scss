@@ -598,6 +598,7 @@ body {
   &:hover {
     visibility: visible !important;
     opacity: 1 !important;
+    z-index: 2000;
   }
 }
 
