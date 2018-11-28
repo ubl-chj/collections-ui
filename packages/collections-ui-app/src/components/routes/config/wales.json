@@ -1,0 +1,59 @@
+{
+  "indexName": "wales1",
+  "queryFields": [
+    "Alternate Title",
+    "Author",
+    "Date",
+    "License",
+    "Permalink",
+    "Physical Description",
+    "Repository",
+    "Title",
+    "attribution",
+    "description",
+    "manifest",
+    "thumbnail",
+    "title"
+  ],
+  "listItem": "StandardListItem",
+  "gridItem": "StandardGridItem",
+  "refinementListFilterDef1": {
+    "field": "Author.keyword",
+    "title": "Author",
+    "id": "author"
+  },
+  "refinementListFilterDef2": {
+    "field": "Date.keyword",
+    "title": "Date",
+    "id": "date"
+  },
+  "refinementListFilterDef3": {
+    "field": "description.keyword",
+    "title": "Description",
+    "id": "description"
+  },
+  "hasRangeFilter": false,
+  "sortingSelectorOptions": [
+    {
+      "label": "Title",
+      "field": "title.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Date",
+      "field": "Date.keyword",
+      "order": "asc"
+    },
+    {
+      "label": "Author",
+      "field": "Author.keyword",
+      "order": "asc"
+    }
+  ],
+  "highlightFields": [
+    "title",
+    "Author"
+  ],
+  "suggestionField": "title"
+}
+

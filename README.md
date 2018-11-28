@@ -38,8 +38,11 @@ Current reference implementation includes these required constants:
 ```bash
 REACT_APP_BASEURL=https://collections.iiif.cloud
 REACT_APP_ELASTICSEARCH_HOST=https://es.iiif.cloud/
-REACT_APP_OSD_BASE=/preview
 REACT_APP_OSD_COMPONENT_BASE=/view
+REACT_APP_FIREBASE_KEY=
+REACT_APP_VISION_API_KEY=
+REACT_APP_REDIS_BASE=https://redis.iiif.cloud/
+REACT_APP_VISION_API_BASE=https://vision.googleapis.com/v1/images:annotate?key=
 ``` 
 
 ## Docker Compose

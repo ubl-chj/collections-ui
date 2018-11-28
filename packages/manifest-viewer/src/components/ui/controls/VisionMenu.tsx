@@ -3,6 +3,7 @@ import {AuthTokenContext, Domain} from 'collections-ui-common'
 import Checkbox from 'rc-checkbox'
 import * as React from 'react'
 import {push as Menu} from 'react-burger-menu'
+import ReactDOM from "react-dom"
 import {CircleLoader} from 'react-spinners'
 import {ViewerComponent} from "../../../core/react"
 import {EyeIcon} from '../svg'
@@ -49,9 +50,9 @@ export class VisionMenu extends ViewerComponent<any, any> {
 
   static resolveImage(page) {
     if (page.fullMatchingImages) {
-      return (<img width='170' src={page.fullMatchingImages[0].url}/>)
+      return (<img alt='' width='170' src={page.fullMatchingImages[0].url}/>)
     } else if (page.partialMatchingImages) {
-      return (<img width='170' src={page.partialMatchingImages[0].url}/>)
+      return (<img alt='' width='170' src={page.partialMatchingImages[0].url}/>)
     }
   }
 
@@ -76,6 +77,7 @@ export class VisionMenu extends ViewerComponent<any, any> {
       detectWeb: false,
       imageProperties: false,
       images: props.images,
+      isHighlighted: false,
       menuOpen: props.isOpen,
       osd: props.osd,
       redisObjIsSet: false,
@@ -90,6 +92,13 @@ export class VisionMenu extends ViewerComponent<any, any> {
   toggleVisionMenu = () => {
     this.setState((prevState) => {
       return {menuOpen: !prevState.menuOpen};
+    })
+    this.setState({
+      detectLabels: false,
+      detectText: false,
+      detectWeb: false,
+      imageProperties: false,
+      isHighlighted: false,
     })
   }
 
@@ -242,31 +251,22 @@ export class VisionMenu extends ViewerComponent<any, any> {
     })
   }
 
-  setImageDimensions() {
-    const document = this.getDocument()
-    if (document) {
-      const sequences = document.getSequences()
-      const firstSeq = sequences[0]
-      let currentCanvas
-      if (!this.props.currentCanvas) {
-        currentCanvas = 0
-      } else {
-        currentCanvas = this.props.currentCanvas
-      }
-      const canvas = firstSeq.getCanvasByIndex(currentCanvas)
-      const width = canvas.getWidth()
-      const height = canvas.getHeight()
-      this.setState({width})
-      this.setState({height})
-    }
-  }
-
   componentDidMount() {
-    this.setImageDimensions()
     const {osd} = this.props
+    osd.addHandler("open", () => {
+      const tiledImage = osd.world.getItemAt(0)
+      if (tiledImage) {
+        const size = tiledImage.getContentSize()
+        const width = size.x
+        const height = size.y
+        this.setState({width})
+        this.setState({height})
+      }
+    })
     osd.addHandler("page", (data) => {
       if (this.props.currentCanvas !== data.page) {
         this.setState({currentResourceURI: this.state.images[data.page]})
+        this.setState({isHighlighted: false})
         osd.clearOverlays()
       }
     })
@@ -316,6 +316,10 @@ export class VisionMenu extends ViewerComponent<any, any> {
         this.makeRedisSetRequest(redisSetReq)
       }
     }
+
+    if (this.state.highlightedId !== prevState.highlightedId) {
+      this.setState({isHighlighted: true})
+    }
   }
 
   addOverlay(xywh, eltId) {
@@ -325,7 +329,7 @@ export class VisionMenu extends ViewerComponent<any, any> {
     const elt = document.createElement('div')
     const dataTip = document.createAttribute('data-tip')
     const dataTarget = document.createAttribute('data-for')
-    dataTarget.value = eltId
+    dataTarget.value = 'tt_' + eltId
     elt.setAttributeNode(dataTip)
     elt.setAttributeNode(dataTarget)
     elt.id = eltId
@@ -346,7 +350,7 @@ export class VisionMenu extends ViewerComponent<any, any> {
     if (this.state.visionResponse) {
       const textAnnos = this.state.visionResponse.textAnnotations
       if (textAnnos) {
-        return (textAnnos.slice(1).map((anno) => {
+        return (textAnnos.slice(1).map((anno, index) => {
           const desc = anno.description
           const vertices = anno.boundingPoly.vertices
           const xywh = {
@@ -355,13 +359,13 @@ export class VisionMenu extends ViewerComponent<any, any> {
             x: vertices[0].x,
             y: vertices[0].y,
           }
-          const eltId = uuidv4()
+          const eltId = 'overlay' + index.toString().padStart(5, '0')
           this.addOverlay(xywh, eltId)
           return (
             <ReactTooltip
               className='extraClass'
-              key={eltId}
-              id={eltId}
+              key={uuidv4()}
+              id={'tt_' + eltId}
               effect='solid'
               delayHide={500}
               delayShow={500}
@@ -372,6 +376,43 @@ export class VisionMenu extends ViewerComponent<any, any> {
             >
               {desc}
             </ReactTooltip>)
+        }))
+      }
+    }
+  }
+
+  addHighlightLabel = (id) => {
+    if (this.state.isHighlighted) {
+      const eltId = 'overlay' + id
+      const overlay = document.getElementById(eltId)
+      return ReactDOM.createPortal(
+        <div style={{backgroundColor: '#000', height: '100%', zIndex: 1000, width: '100%'}}>X</div>,
+        overlay,
+      )
+    }
+  }
+
+  toggleHighlighter = (id) => {
+    this.setState({
+      highlightedId: id,
+      isHighlighted: true,
+    })
+  }
+
+  buildTextAnnotations() {
+    if (this.state.visionResponse) {
+      const textAnnos = this.state.visionResponse.textAnnotations
+      if (textAnnos) {
+        return (textAnnos.slice(1).map((anno, index) => {
+          const desc = anno.description
+          const id = index.toString().padStart(5, '0')
+          return (
+            <span
+              onClick={() => this.toggleHighlighter(id)}
+              className='text'
+              key={uuidv4()}
+              dangerouslySetInnerHTML={{__html: '&nbsp;' + desc}}
+            />)
         }))
       }
     }
@@ -389,35 +430,36 @@ export class VisionMenu extends ViewerComponent<any, any> {
           </div>)
       } else if (this.state.visionResponse.textAnnotations) {
         return (
-        <div style={{backgroundColor: '#FFF', display: 'block'}}>
-          <h6 style={{padding: '15px'}}>Text Annotations</h6>
-          <p style={{padding: '15px'}}>
-            {this.state.visionResponse.textAnnotations[0].description}
-          </p>
-        </div>)
+          <div style={{backgroundColor: '#FFF', display: 'block'}}>
+            <h6 style={{padding: '15px'}}>Text Annotations</h6>
+            <p style={{padding: '15px'}}>
+              {this.buildTextAnnotations()}
+              {this.state.isHighlighted ? this.addHighlightLabel(this.state.highlightedId) : null}
+            </p>
+          </div>)
       } else if (this.state.visionResponse.webDetection) {
-          return (
-            <div style={{backgroundColor: '#FFF', display: 'block'}}>
+        return (
+          <div style={{backgroundColor: '#FFF', display: 'block'}}>
+            {this.state.visionResponse.webDetection.visuallySimilarImages ?
+              VisionMenu.buildWebDetectHeader('similar') : null}
+            <ul style={{listStyle: 'none'}}>
               {this.state.visionResponse.webDetection.visuallySimilarImages ?
-                VisionMenu.buildWebDetectHeader('similar') : null}
-              <ul style={{listStyle: 'none'}}>
-                {this.state.visionResponse.webDetection.visuallySimilarImages ?
-                  this.state.visionResponse.webDetection.visuallySimilarImages.map((page) =>
-                    <li key={uuidv4()}><a href={page.url} target='_blank' rel='noopener noreferrer'>
-                      <img width='170' src={page.url}/></a>
-                    </li>) : null}
-              </ul>
+                this.state.visionResponse.webDetection.visuallySimilarImages.map((page) =>
+                  <li key={uuidv4()}><a href={page.url} target='_blank' rel='noopener noreferrer'>
+                    <img alt='' width='170' src={page.url}/></a>
+                  </li>) : null}
+            </ul>
+            {this.state.visionResponse.webDetection.pagesWithMatchingImages ?
+              VisionMenu.buildWebDetectHeader('matching') : null}
+            <ul style={{listStyle: 'none'}}>
               {this.state.visionResponse.webDetection.pagesWithMatchingImages ?
-                VisionMenu.buildWebDetectHeader('matching') : null}
-              <ul style={{listStyle: 'none'}}>
-                {this.state.visionResponse.webDetection.pagesWithMatchingImages ?
-                  this.state.visionResponse.webDetection.pagesWithMatchingImages.map((page) =>
+                this.state.visionResponse.webDetection.pagesWithMatchingImages.map((page) =>
                   <li key={uuidv4()}><a href={page.url} target='_blank' rel='noopener noreferrer'>
                     {VisionMenu.resolveImage(page)}</a>
                     <div dangerouslySetInnerHTML={{__html: page.pageTitle}}/>
                   </li>) : null}
-              </ul>
-            </div>)
+            </ul>
+          </div>)
       } else if (this.state.visionResponse.imagePropertiesAnnotation) {
         return (
           <div style={{backgroundColor: '#FFF', display: 'block'}}>

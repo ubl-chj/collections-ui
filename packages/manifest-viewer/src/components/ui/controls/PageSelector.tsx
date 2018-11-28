@@ -1,6 +1,6 @@
 import measureText from 'measure-text'
-import * as React from "react"
-import {withRouter} from "react-router"
+import * as React from 'react'
+import {withRouter} from 'react-router'
 import Select from 'react-select'
 
 export class PageSelectorComponent extends React.Component<any, any> {
@@ -89,7 +89,7 @@ export class PageSelectorComponent extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    this.props.osd.addHandler("page", (data) => {
+    this.props.osd.addHandler('page', (data) => {
       this.setState({currentPage: data.page})
       this.setState({currentPageLabel: this.props.canvasLabels[data.page]})
     })
@@ -104,7 +104,7 @@ export class PageSelectorComponent extends React.Component<any, any> {
     }
     if (prevState.currentPage !== this.state.currentPage) {
         this.props.history.replace(window.parent.location.pathname + '#' + this.state.currentPage)
-        this.props.osd.addHandler("page", (data) => {
+        this.props.osd.addHandler('page', (data) => {
           if (this.state.currentPage !== data.page) {
             this.setState({currentPage: data.page})
             this.setState({currentPageLabel: this.props.canvasLabels[data.page]})

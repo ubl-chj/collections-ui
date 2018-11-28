@@ -589,7 +589,7 @@ body {
 .highlight {
   opacity: 0.4;
   filter: alpha(opacity=40);
-  outline: 12px auto #0A7EbE;
+  outline: 12px auto silver;
 }
 
 .extraClass {
@@ -600,3 +600,12 @@ body {
     opacity: 1 !important;
   }
 }
+
+.text {
+  display: inline-block;
+  &:hover {
+    visibility: visible !important;
+    background-color: silver;
+  }
+}
+

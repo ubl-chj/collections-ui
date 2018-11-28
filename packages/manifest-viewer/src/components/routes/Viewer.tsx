@@ -54,13 +54,22 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
     }
   }
 
+  setCurrentCanvas() {
+    let currentCanvas
+    if (this.props.location.hash) {
+      currentCanvas = this.props.location.hash.substring(1)
+    } else {
+      currentCanvas = 0
+    }
+    this.setState({currentCanvas})
+  }
+
   resolveParams() {
     const params = qs.parse(this.props.location.search)
     if (this.props.match.params.uuid) {
       if (!Object.keys(params).length) {
         const uuid = this.props.match.params.uuid
-        const currentCanvas = this.props.location.hash.substring(1)
-        this.setState({currentCanvas})
+        this.setCurrentCanvas()
         this.resolveManifest(uuid)
       }
     }
@@ -68,8 +77,7 @@ class ViewerRouteComponent extends React.Component<IViewerRouteComponentProps, a
     if (Object.keys(params).length) {
       if (params.manifest) {
         const doc = params.manifest
-        const currentCanvas = this.props.location.hash.substring(1)
-        this.setState({currentCanvas})
+        this.setCurrentCanvas()
         if (!this.hasUnmounted) {
           this.viewer = new ViewerManager(doc)
           this.forceUpdate()
