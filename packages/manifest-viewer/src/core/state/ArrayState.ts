@@ -1,7 +1,7 @@
-import {State} from "./State"
+import {State} from './State'
 
-const indexOf = require("lodash/indexOf")
-const without = require("lodash/without")
+const indexOf = require('lodash/indexOf')
+const without = require('lodash/without')
 
 export class ArrayState extends State<Array<string | number>> {
   getValue() {

@@ -1,5 +1,5 @@
-import {ManifestTransport} from "./transport"
-import {ViewerManager} from "./ViewerManager"
+import {ManifestTransport} from './transport'
+import {ViewerManager} from './ViewerManager'
 const manifesto = require('manifesto-fork')
 
 export class DocumentRequest {

@@ -1,4 +1,4 @@
-import {ViewerManager} from "../ViewerManager";
+import {ViewerManager} from '../ViewerManager'
 
 export class Accessor {
   viewer: ViewerManager

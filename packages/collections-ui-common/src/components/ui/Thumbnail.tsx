@@ -1,7 +1,7 @@
-import * as React from "react"
+import * as React from 'react'
 import Observer from 'react-intersection-observer'
 import {Link} from 'react-router-dom'
-import {Domain} from "../../constants"
+import {Domain} from '../../constants'
 import {DynamicLayoutContext, ResultContext} from '../contexts'
 
 export class Thumbnail extends React.Component<any, any> {

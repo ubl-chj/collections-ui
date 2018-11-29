@@ -1,7 +1,7 @@
 import {DynamicLayoutContext, ResultContext} from 'collections-ui-common'
 import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveManifestId,
   resolveName, Thumbnail, Title} from 'collections-ui-common'
-import * as React from "react"
+import * as React from 'react'
 import {Link} from 'react-router-dom'
 import {ListSchemaEntry} from '../ui/ListItemDisplay'
 import {ItemProps} from './ItemProps'

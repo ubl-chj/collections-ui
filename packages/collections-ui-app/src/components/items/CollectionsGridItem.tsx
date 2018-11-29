@@ -1,11 +1,11 @@
 import {ResultContext} from 'collections-ui-common'
-import * as React from "react"
+import * as React from 'react'
 import Observer from 'react-intersection-observer'
 import {Link} from 'react-router-dom'
-import {Hits, SearchkitManager, SearchkitProvider} from "searchkit-fork"
-import {RefreshIcon} from "../ui/svg"
+import {Hits, SearchkitManager, SearchkitProvider} from 'searchkit-fork'
+import {RefreshIcon} from '../ui/svg'
 import {ItemProps} from './ItemProps'
-import {RandomGridLandingItem} from "./RandomGridLandingItem"
+import {RandomGridLandingItem} from './RandomGridLandingItem'
 
 const extend = require('lodash/extend')
 

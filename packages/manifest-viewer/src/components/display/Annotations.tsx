@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react'
 
 import {
   AnnotationsAccessor,
@@ -7,11 +7,11 @@ import {
   RenderComponentPropType,
   RenderComponentType,
   ViewerComponent,
-} from "../../core"
-import {IAnnotationItemProps} from "./AnnotationItem"
-import {AnnotationList} from "./AnnotationList"
+} from '../../core'
+import {IAnnotationItemProps} from './AnnotationItem'
+import {AnnotationList} from './AnnotationList'
 
-const defaults = require("lodash/defaults")
+const defaults = require('lodash/defaults')
 
 export interface IAnnotationsProps extends IViewerComponentProps {
   hitsPerPage?: number
@@ -31,7 +31,7 @@ export class Annotations extends ViewerComponent<IAnnotationsProps, any> {
 
   static defaultProps = {
     listComponent: AnnotationList,
-    scrollTo: "body",
+    scrollTo: 'body',
   }
   annotationsAccessor: AnnotationsAccessor
 

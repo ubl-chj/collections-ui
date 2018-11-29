@@ -3,9 +3,10 @@ import {AuthTokenContext, Domain} from 'collections-ui-common'
 import Checkbox from 'rc-checkbox'
 import * as React from 'react'
 import {push as Menu} from 'react-burger-menu'
-import ReactDOM from "react-dom"
+import ReactDOM from 'react-dom'
 import {CircleLoader} from 'react-spinners'
-import {ViewerComponent} from "../../../core/react"
+import {ViewerComponent} from '../../../core/react'
+import {VisionFeatureType} from '../../enums'
 import {EyeIcon} from '../svg'
 import menuStylesDark from './styles/menuStylesDark'
 
@@ -13,13 +14,6 @@ const uuidv4 = require('uuid/v4')
 const uuidv5 = require('uuidv5')
 const openSeaDragon = require('openseadragon')
 const ReactTooltip = require('react-tooltip')
-
-export enum VisionFeatureTypes {
-  IMAGE_PROPERTIES = 'IMAGE_PROPERTIES',
-  LABEL_DETECTION = 'LABEL_DETECTION',
-  TEXT_DETECTION = 'DOCUMENT_TEXT_DETECTION',
-  WEB_DETECTION = 'WEB_DETECTION',
-}
 
 export class VisionMenu extends ViewerComponent<any, any> {
 
@@ -62,6 +56,25 @@ export class VisionMenu extends ViewerComponent<any, any> {
     } else if (type === 'similar') {
       return (<h6 style={{padding: '15px'}}>Similar on Web</h6>)
     }
+  }
+
+  static getMaxSizeFromProfile(tiledImage, size) {
+    let maxRequestSize
+    const aspectRatio = size.x / size.y
+    if (tiledImage.source.profile !== 'undefined' && Array.isArray(tiledImage.source.profile)) {
+      if (tiledImage.source.profile[1].maxHeight && aspectRatio < 1) {
+        maxRequestSize = {
+          height: tiledImage.source.profile[1].maxHeight,
+          width: '',
+        }
+      } else if (tiledImage.source.profile[1].maxWidth && aspectRatio > 1) {
+        maxRequestSize = {
+          height: '',
+          width: tiledImage.source.profile[1].maxWidth,
+        }
+      }
+    }
+    return maxRequestSize
   }
 
   state: any
@@ -162,9 +175,9 @@ export class VisionMenu extends ViewerComponent<any, any> {
       const parts = currentResourceURI.split('/info.json')
       // workaround 1.1
       if (!currentResourceURI.includes(Domain.LEGACY_API_COLLECTIONS)) {
-        imageURI = parts[0] + '/full/' + maxRequestSize.width + "," + maxRequestSize.height + '/0/default.jpg'
+        imageURI = parts[0] + '/full/' + maxRequestSize.width + ',' + maxRequestSize.height + '/0/default.jpg'
       } else {
-        imageURI = parts[0] + '/full/' + maxRequestSize.width + "," + maxRequestSize.height + '/0/native.jpg'
+        imageURI = parts[0] + '/full/' + maxRequestSize.width + ',' + maxRequestSize.height + '/0/native.jpg'
       }
     }
     return imageURI
@@ -195,25 +208,25 @@ export class VisionMenu extends ViewerComponent<any, any> {
       if (this.state.detectLabels) {
         const uuid = uuidv5('url', imageURI + '#labels')
         const redisGetReq = this.buildRedisGetRequest(uuid)
-        const visionApiReq = this.buildVisionApiRequest(imageURI, VisionFeatureTypes.LABEL_DETECTION)
+        const visionApiReq = this.buildVisionApiRequest(imageURI, VisionFeatureType.LABEL_DETECTION)
         this.makeRedisGetRequest(redisGetReq, visionApiReq)
         this.setState({currentRedisObject: uuid})
       } else if (this.state.detectText) {
         const uuid = uuidv5('url', imageURI + '#text')
         const redisGetReq = this.buildRedisGetRequest(uuid)
-        const visionApiReq = this.buildVisionApiRequest(imageURI, VisionFeatureTypes.TEXT_DETECTION)
+        const visionApiReq = this.buildVisionApiRequest(imageURI, VisionFeatureType.TEXT_DETECTION)
         this.makeRedisGetRequest(redisGetReq, visionApiReq)
         this.setState({currentRedisObject: uuid})
       } else if (this.state.imageProperties) {
         const uuid = uuidv5('url', imageURI + '#imageProps')
         const redisGetReq = this.buildRedisGetRequest(uuid)
-        const visionApiReq = this.buildVisionApiRequest(imageURI, VisionFeatureTypes.IMAGE_PROPERTIES)
+        const visionApiReq = this.buildVisionApiRequest(imageURI, VisionFeatureType.IMAGE_PROPERTIES)
         this.makeRedisGetRequest(redisGetReq, visionApiReq)
         this.setState({currentRedisObject: uuid})
       } else if (this.state.detectWeb) {
         const uuid = uuidv5('url', imageURI + '#web')
         const redisGetReq = this.buildRedisGetRequest(uuid)
-        const visionApiReq = this.buildVisionApiRequest(imageURI, VisionFeatureTypes.WEB_DETECTION)
+        const visionApiReq = this.buildVisionApiRequest(imageURI, VisionFeatureType.WEB_DETECTION)
         this.makeRedisGetRequest(redisGetReq, visionApiReq)
         this.setState({currentRedisObject: uuid})
       }
@@ -256,19 +269,9 @@ export class VisionMenu extends ViewerComponent<any, any> {
   getMaxRequestSize(tiledImage, size) {
     // this is ugly :(
     let maxRequestSize
-    const aspectRatio = size.x / size.y
-    if (tiledImage.source.profile !== 'undefined' && Array.isArray(tiledImage.source.profile)) {
-      if (tiledImage.source.profile[1].maxHeight && aspectRatio < 1) {
-        maxRequestSize = {
-          height: tiledImage.source.profile[1].maxHeight,
-          width: '',
-        }
-      } else if (tiledImage.source.profile[1].maxWidth && aspectRatio > 1) {
-        maxRequestSize = {
-          height: '',
-          width: tiledImage.source.profile[1].maxWidth,
-        }
-      } else if (typeof tiledImage.source.sizes !== 'undefined' && Array.isArray(tiledImage.source.sizes)) {
+    maxRequestSize = VisionMenu.getMaxSizeFromProfile(tiledImage, size)
+    if (!maxRequestSize) {
+      if (typeof tiledImage.source.sizes !== 'undefined' && Array.isArray(tiledImage.source.sizes)) {
         const maxWidth = Math.max(...tiledImage.source.sizes.map((dims) => dims.width), 0)
         const sizes = tiledImage.source.sizes
         maxRequestSize = sizes.filter((dim) => {
@@ -286,7 +289,7 @@ export class VisionMenu extends ViewerComponent<any, any> {
 
   componentDidMount() {
     const {osd} = this.props
-    osd.addHandler("open", () => {
+    osd.addHandler('open', () => {
       const tiledImage = osd.world.getItemAt(0)
       if (tiledImage) {
         const size = tiledImage.getContentSize()
@@ -298,7 +301,7 @@ export class VisionMenu extends ViewerComponent<any, any> {
         this.setState({maxRequestSize})
       }
     })
-    osd.addHandler("page", (data) => {
+    osd.addHandler('page', (data) => {
       if (this.props.currentCanvas !== data.page) {
         this.setState({currentResourceURI: this.state.images[data.page]})
         this.setState({isHighlighted: false})
@@ -452,6 +455,7 @@ export class VisionMenu extends ViewerComponent<any, any> {
               className='text'
               key={uuidv4()}
               dangerouslySetInnerHTML={{__html: '&nbsp;' + desc}}
+              role='button'
             />)
         }))
       }
@@ -463,7 +467,7 @@ export class VisionMenu extends ViewerComponent<any, any> {
     if (visionResponse) {
       if (visionResponse.labelAnnotations) {
         return (
-          <div style={{backgroundColor: '#FFF', display: 'block'}}>
+          <div className='annotationDisplay'>
             <h6 style={{padding: '15px'}}>Label Annotations</h6>
             <ul>
               {visionResponse.labelAnnotations.map((label) => <li key={uuidv4()}>{label.description}</li>)}
@@ -471,7 +475,7 @@ export class VisionMenu extends ViewerComponent<any, any> {
           </div>)
       } else if (visionResponse.textAnnotations) {
         return (
-          <div style={{backgroundColor: '#FFF', display: 'block'}}>
+          <div className='annotationDisplay'>
             <h6 style={{padding: '15px'}}>Text Annotations</h6>
             <p style={{padding: '15px'}}>
               {this.buildTextAnnotations()}
@@ -480,7 +484,7 @@ export class VisionMenu extends ViewerComponent<any, any> {
           </div>)
       } else if (visionResponse.webDetection) {
         return (
-          <div style={{backgroundColor: '#FFF', display: 'block'}}>
+          <div className='annotationDisplay'>
             {visionResponse.webDetection.visuallySimilarImages ?
               VisionMenu.buildWebDetectHeader('similar') : null}
             <ul style={{listStyle: 'none'}}>
@@ -503,8 +507,8 @@ export class VisionMenu extends ViewerComponent<any, any> {
           </div>)
       } else if (visionResponse.imagePropertiesAnnotation) {
         return (
-          <div style={{backgroundColor: '#FFF', display: 'block'}}>
-            <h5 style={{padding: '15px'}}>Image Properties</h5>
+          <div className='annotationDisplay'>
+            <h6 style={{padding: '15px'}}>Image Properties</h6>
             <ul style={{listStyle: 'none'}}>
               {visionResponse.imagePropertiesAnnotation.dominantColors.colors.map((color) => {
                 const red = color.color.red
@@ -517,7 +521,7 @@ export class VisionMenu extends ViewerComponent<any, any> {
           </div>)
       } else if (visionResponse.error) {
         return (
-          <div style={{backgroundColor: '#FFF', display: 'block'}}>
+          <div className='annotationDisplay'>
             <p style={{padding: '15px'}}>
               This Image cannot be accessed by Cloud Vision
             </p>

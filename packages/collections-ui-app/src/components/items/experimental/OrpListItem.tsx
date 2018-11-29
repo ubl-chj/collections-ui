@@ -1,9 +1,9 @@
 import {AuthUserContext, buildImagePreview, Domain, FavoriteButton, Thumbnail} from 'collections-ui-common'
-import * as React from "react"
-import {ItemProps} from "../ItemProps"
+import * as React from 'react'
+import {ItemProps} from '../ItemProps'
 
-const extend = require("lodash/extend")
-const firebase = require("firebase/app")
+const extend = require('lodash/extend')
+const firebase = require('firebase/app')
 
 export class OrpListItem extends React.Component<ItemProps, any> {
 

@@ -1,4 +1,4 @@
-import {ManifestTransport} from "./ManifestTransport";
+import {ManifestTransport} from './ManifestTransport'
 
 export class MockESTransport extends ManifestTransport {
 

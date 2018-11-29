@@ -1,7 +1,7 @@
-import * as PropTypes from "prop-types";
-import * as React from "react";
-import {block, renderComponent, RenderComponentPropType, RenderComponentType} from "../../core/react"
-import {AnnotationItem, IAnnotationItemProps} from "./AnnotationItem";
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
+import {block, renderComponent, RenderComponentPropType, RenderComponentType} from '../../core/react'
+import {AnnotationItem, IAnnotationItemProps} from './AnnotationItem'
 
 export interface IAnnotationListProps {
   mod?: string,
@@ -14,7 +14,7 @@ export class AnnotationList extends React.PureComponent<IAnnotationListProps, an
 
   static defaultProps = {
     itemComponent: AnnotationItem,
-    mod: "sk-hits",
+    mod: 'sk-hits',
   }
 
   static propTypes = {

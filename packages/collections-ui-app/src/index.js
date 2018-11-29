@@ -1,4 +1,4 @@
-import 'babel-polyfill';
+import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/core/App'
@@ -16,8 +16,7 @@ const tagManagerArgs = {
 
 TagManager.initialize(tagManagerArgs)
 
-ReactDOM.render((
-  <App/>), document.getElementById('container'))
+ReactDOM.render((<App/>), document.getElementById('container'))
 
 if(window.navigator && navigator.serviceWorker) {
   navigator.serviceWorker.getRegistrations()

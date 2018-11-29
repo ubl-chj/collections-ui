@@ -17,8 +17,8 @@ import {
   ViewSwitcherHits,
 } from 'searchkit-fork'
 import {StandardGridItem, StandardListItem} from '../items'
-import {HeadMeta} from "../schema";
-import {ActionBarComponent, FilterMenu, Head} from '../ui'
+import {HeadMeta} from '../schema'
+import {ActionBarComponent, Head} from '../ui'
 import {asCollection} from './asCollection'
 import {IRouteProps} from './IRouteProps'
 

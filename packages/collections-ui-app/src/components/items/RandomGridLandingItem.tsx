@@ -1,7 +1,7 @@
 import {ResultContext} from 'collections-ui-common'
 import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveCreator,
   resolveManifestId, resolveName, Thumbnail, Title} from 'collections-ui-common'
-import * as React from "react"
+import * as React from 'react'
 import {Link} from 'react-router-dom'
 import {ItemProps} from './ItemProps'
 

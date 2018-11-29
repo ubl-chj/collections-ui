@@ -10,7 +10,7 @@ export function shortenTitle(name) {
   if (name) {
     if (!Array.isArray(name)) {
       if (name.length >= 80) {
-        shortTitle =  name.substr(0, 80) + "... "
+        shortTitle =  name.substr(0, 80) + '... '
       } else {
         return name;
       }
@@ -60,7 +60,7 @@ export function getSchema(result, contentUrl, thumbnail, position) {
 }
 
 export function buildGenerator(generatorUrl: string, index: string) {
-  return generatorUrl + "?type=atomic&index=" + index + "&q="
+  return generatorUrl + '?type=atomic&index=' + index + '&q='
 }
 
 export function buildThumbnailReference(thumbnail) {

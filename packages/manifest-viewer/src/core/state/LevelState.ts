@@ -1,11 +1,11 @@
-import {State} from "./State"
+import {State} from './State'
 
-const isArray = require("lodash/isArray")
-const take = require("lodash/take")
-const size = require("lodash/size")
-const without = require("lodash/without")
-const indexOf = require("lodash/indexOf")
-const update = require("immutability-helper")
+const isArray = require('lodash/isArray')
+const take = require('lodash/take')
+const size = require('lodash/size')
+const without = require('lodash/without')
+const indexOf = require('lodash/indexOf')
+const update = require('immutability-helper')
 
 export class LevelState extends State<any[]> {
   value: any[]

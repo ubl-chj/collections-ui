@@ -1,4 +1,4 @@
-const assign = require("lodash/assign")
+const assign = require('lodash/assign')
 /* jshint validthis: true */
 
 var is = 'is-',

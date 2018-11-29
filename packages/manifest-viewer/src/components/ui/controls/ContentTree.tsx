@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import {Treebeard} from 'react-treebeard'
-import {ViewerComponent} from "../../../core/react"
+import {ViewerComponent} from '../../../core/react'
 import ContentTreeDecorators from './ContentTreeDecorators'
 import treeStyles from './styles/treeStyles'
 

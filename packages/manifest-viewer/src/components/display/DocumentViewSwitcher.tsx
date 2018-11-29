@@ -1,11 +1,11 @@
-import * as PropTypes from "prop-types"
-import * as React from "react"
-import {DocumentViewAccessor, RenderComponentPropType, RenderComponentType, ViewerComponent} from "../../core"
-import {IAnnotationItemProps} from "./AnnotationItem"
-import {IAnnotationListProps} from "./AnnotationList"
-import {Annotations} from "./Annotations"
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
+import {DocumentViewAccessor, RenderComponentPropType, RenderComponentType, ViewerComponent} from '../../core'
+import {IAnnotationItemProps} from './AnnotationItem'
+import {IAnnotationListProps} from './AnnotationList'
+import {Annotations} from './Annotations'
 
-const defaults = require("lodash/defaults")
+const defaults = require('lodash/defaults')
 
 export interface IDocumentViewSwitcherProps {
   viewerComponents?: Array<{
@@ -45,7 +45,7 @@ export class DocumentViewSwitcher extends ViewerComponent<IDocumentViewSwitcherP
   }
 
   defineAccessor() {
-    return new DocumentViewAccessor("view", this.props.viewerComponents)
+    return new DocumentViewAccessor('view', this.props.viewerComponents)
   }
 
   render() {

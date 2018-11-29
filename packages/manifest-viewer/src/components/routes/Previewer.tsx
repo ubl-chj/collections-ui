@@ -4,7 +4,7 @@ import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ViewerManager, ViewerProvider} from '../../core'
 import {ActionBar, Controls, Layout, LayoutBody, OsdComponent, TopBar} from '../ui'
-import {IViewerRouteComponentProps} from "./Viewer"
+import {IViewerRouteComponentProps} from './Viewer'
 const qs = require('query-string')
 const uuidv4 = require('uuid/v4')
 

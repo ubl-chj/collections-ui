@@ -1,7 +1,7 @@
-import {Domain, resolveCreator} from "collections-ui-common"
+import {Domain, resolveCreator} from 'collections-ui-common'
 import * as React from 'react'
 import {ActionBar, ActionBarRow, HitsStats, NoHits, PageSizeSelector, Pagination, SearchkitManager, SearchkitProvider,
-  Select} from "searchkit-fork"
+  Select} from 'searchkit-fork'
 import {RelatedHits} from './RelatedHits'
 const manifesto = require('manifesto-fork')
 
@@ -15,7 +15,7 @@ export class RelatedItems extends React.Component<any, any> {
   static simpleQuery(terms) {
     return {
       simple_query_string: {
-        analyzer: "stop",
+        analyzer: 'stop',
         default_operator: 'or',
         query: terms,
       },
@@ -25,9 +25,9 @@ export class RelatedItems extends React.Component<any, any> {
   static multiMatchQuery(terms) {
     return {
       multi_match: {
-        analyzer: "stop",
-        fields: ["author^1.1", "Author^1.1", "Artist^1.1", "creators^1.1", "Creator(s)^1.1", "People^1.1", "title^0.8", "Title^0.8",
-          "Titles^0.8", "Title (English)", "description^0.3"],
+        analyzer: 'stop',
+        fields: ['author^1.1', 'Author^1.1', 'Artist^1.1', 'creators^1.1', 'Creator(s)^1.1', 'People^1.1', 'title^0.8', 'Title^0.8',
+          'Titles^0.8', 'Title (English)', 'description^0.3'],
         query: terms,
       },
     }

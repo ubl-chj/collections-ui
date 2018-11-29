@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react'
 
 export interface IAnnotationItemProps {
   key: string,
@@ -10,7 +10,7 @@ export class AnnotationItem extends React.PureComponent<IAnnotationItemProps, an
 
   render() {
     return (
-      <div data-qa="hit" className={this.props.bemBlocks.item().mix(this.props.bemBlocks.container("item"))}>
+      <div data-qa="hit" className={this.props.bemBlocks.item().mix(this.props.bemBlocks.container('item'))}>
         {this.props.document}
       </div>
     )

@@ -1,10 +1,10 @@
 import {ResultContext} from 'collections-ui-common'
 import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveManifestId} from 'collections-ui-common'
-import * as React from "react"
-import {ListItemDisplay} from "../ui/ListItemDisplay"
-import {ItemProps} from "./ItemProps"
+import * as React from 'react'
+import {ListItemDisplay} from '../ui/ListItemDisplay'
+import {ItemProps} from './ItemProps'
 
-const extend = require("lodash/extend")
+const extend = require('lodash/extend')
 
 export class StandardListItem extends React.Component<ItemProps, any> {
 

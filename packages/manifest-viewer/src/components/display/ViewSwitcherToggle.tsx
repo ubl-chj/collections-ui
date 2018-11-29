@@ -5,11 +5,11 @@ import {
   RenderComponentPropType,
   RenderComponentType,
   ViewerComponent,
-} from "../../core"
+} from '../../core'
 
-import {ListProps, Toggle} from "searchkit-fork"
+import {ListProps, Toggle} from 'searchkit-fork'
 
-const defaults = require("lodash/defaults")
+const defaults = require('lodash/defaults')
 
 export interface IViewSwitcherProps extends IViewerComponentProps {
   listComponent?: RenderComponentType<ListProps>

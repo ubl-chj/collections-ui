@@ -1,6 +1,6 @@
-import * as React from "react";
-import {ScaleLoader} from "react-spinners"
-import {Hits, SearchkitComponent} from "searchkit-fork"
+import * as React from 'react';
+import {ScaleLoader} from 'react-spinners'
+import {Hits, SearchkitComponent} from 'searchkit-fork'
 import {SimpleGridItem} from './SimpleGridItem'
 
 export class RelatedHits extends SearchkitComponent<any, any> {
@@ -16,7 +16,7 @@ export class RelatedHits extends SearchkitComponent<any, any> {
       return (
         <Hits
           hitsPerPage={20}
-          highlightFields={["title", "Title", "Titles", "Title (English)", "Author", "creators", "Creator(s)", "Artist", "People"]}
+          highlightFields={['title', 'Title', 'Titles', 'Title (English)', 'Author', 'creators', 'Creator(s)', 'Artist', 'People']}
           mod="sk-hits-grid"
           itemComponent={SimpleGridItem}
         />

@@ -1,7 +1,7 @@
 import {AuthProfile, firebase, LogoWrapper, NavMenu, withDynamicLayout} from 'collections-ui-common'
-import * as React from "react"
-import {Layout, LayoutBody, LayoutResults, SideBar, TopBar} from "searchkit-fork"
-import {IRouteProps} from "./IRouteProps"
+import * as React from 'react'
+import {Layout, LayoutBody, LayoutResults, SideBar, TopBar} from 'searchkit-fork'
+import {IRouteProps} from './IRouteProps'
 
 export class Help extends React.Component<IRouteProps, any> {
 
