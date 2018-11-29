@@ -1,13 +1,13 @@
-import {Accessor, StatefulAccessor} from "./accessors"
-import {Utils} from "./support"
+import {Accessor, StatefulAccessor} from './accessors'
+import {Utils} from './support'
 
-const filter = require("lodash/filter")
-const values = require("lodash/values")
-const reduce = require("lodash/reduce")
-const assign = require("lodash/assign")
-const each = require("lodash/each")
-const without = require("lodash/without")
-const find = require("lodash/find")
+const filter = require('lodash/filter')
+const values = require('lodash/values')
+const reduce = require('lodash/reduce')
+const assign = require('lodash/assign')
+const each = require('lodash/each')
+const without = require('lodash/without')
+const find = require('lodash/find')
 
 type StatefulAccessors = Array<StatefulAccessor<any>>
 

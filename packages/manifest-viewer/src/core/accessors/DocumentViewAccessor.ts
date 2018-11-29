@@ -1,8 +1,8 @@
-const head = require("lodash/head")
-const find = require("lodash/find")
+const head = require('lodash/head')
+const find = require('lodash/find')
 
-import {ValueState} from "../state"
-import {StatefulAccessor} from "./StatefulAccessor"
+import {ValueState} from '../state'
+import {StatefulAccessor} from './StatefulAccessor'
 
 export class DocumentViewAccessor extends StatefulAccessor<ValueState> {
   state = new ValueState()

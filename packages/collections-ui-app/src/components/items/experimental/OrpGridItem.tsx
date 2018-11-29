@@ -1,8 +1,8 @@
 import {buildImagePreview, Domain, Thumbnail, Title} from 'collections-ui-common'
-import * as React from "react";
-import {ItemProps} from "../ItemProps"
+import * as React from 'react'
+import {ItemProps} from '../ItemProps'
 
-const extend = require("lodash/extend")
+const extend = require('lodash/extend')
 
 export class OrpGridItem extends React.Component<ItemProps, any> {
 

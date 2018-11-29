@@ -1,7 +1,7 @@
-import axios, {AxiosInstance, AxiosResponse} from "axios"
-import {ManifestTransport} from "./ManifestTransport"
+import axios, {AxiosInstance, AxiosResponse} from 'axios'
+import {ManifestTransport} from './ManifestTransport'
 
-const defaults = require("lodash/defaults")
+const defaults = require('lodash/defaults')
 
 export interface IManifestTransportOptions {
   headers?: object,
@@ -24,7 +24,7 @@ export class AxiosManifestTransport extends ManifestTransport {
       withCredentials: false,
      }
     if (options.basicAuth !== undefined) {
-       const parsed = options.basicAuth.split(":")
+       const parsed = options.basicAuth.split(':')
        credentials.auth = {username: parsed[0], password: parsed[1]}
     }
     if (options.withCredentials) {

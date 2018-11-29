@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import React from 'react'
 import {VelocityComponent} from 'velocity-react'
 
@@ -58,6 +58,7 @@ class Container extends React.Component<any, any> {
       <div
         onClick={onClick}
         ref={(ref) => this.clickableRef = ref}
+        role='link'
         style={container}
       >
         {!terminal ? this.renderToggle() : null}

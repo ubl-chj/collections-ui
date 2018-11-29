@@ -9,7 +9,7 @@ export class GuidGenerator {
     this.counter = 0
   }
 
-  guid(prefix = "") {
+  guid(prefix = '') {
     const id = ++this.counter
     return prefix.toString() + id
   }

@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react'
 import TagManager from 'react-gtm-module'
 
 export interface IStructuredDataItemList {
@@ -15,9 +15,9 @@ export class StructuredDataCollection extends React.Component<IStructuredDataIte
     const {hasPart} = this.props
     const schema = {
       dataLayer: {
-        "@context": "http://schema.org",
-        "@type": "Collection",
-        "hasPart": hasPart,
+        '@context': 'http://schema.org',
+        '@type': 'Collection',
+        hasPart,
         },
       dataLayerName: 'schemaDataLayer',
     }

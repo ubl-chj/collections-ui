@@ -1,9 +1,10 @@
-import * as PropTypes from "prop-types"
-import * as React from "react"
-import {ViewerManager} from "../ViewerManager"
-const mapValues = require("lodash/mapValues")
-import {Accessor} from "../accessors";
-import {block} from "./block"
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
+import {Accessor} from '../accessors'
+import {ViewerManager} from '../ViewerManager'
+import {block} from './block'
+
+const mapValues = require('lodash/mapValues')
 
 export interface IViewerComponentProps {
   mod?: string
@@ -73,7 +74,7 @@ export class ViewerComponent<P extends IViewerComponentProps, S> extends React.C
         }
       })
     } else {
-      console.warn("No viewer found in props or context for " + this.constructor.name)
+      console.warn('No viewer found in props or context for ' + this.constructor.name)
     }
   }
 

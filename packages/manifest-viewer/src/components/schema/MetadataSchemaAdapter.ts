@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {mapping} from 'schema-map'
 
 export interface IMetadataSchemaAdapterProps {
@@ -30,7 +30,7 @@ export class MetadataSchemaAdapter extends React.Component<IMetadataSchemaAdapte
     Object.defineProperty(this.mainEntity, '@type',
       {
         enumerable: true,
-        value: "CreativeWork",
+        value: 'CreativeWork',
       })
 
     const mappingProps = this.getMappingProps(source)
@@ -69,12 +69,12 @@ export class MetadataSchemaAdapter extends React.Component<IMetadataSchemaAdapte
     });
     return {
       dataLayer: {
-        "@context": "http://schema.org",
-        "@type": "ImageObject",
-        "contentUrl": this.contentUrl,
-        "mainEntity": ordered,
-        "name": this.name,
-        "thumbnail": this.thumbnail,
+        '@context': 'http://schema.org',
+        '@type': 'ImageObject',
+        'contentUrl': this.contentUrl,
+        'mainEntity': ordered,
+        'name': this.name,
+        'thumbnail': this.thumbnail,
       },
       dataLayerName: 'schemaDataLayer',
     }

@@ -1,5 +1,5 @@
 import {DynamicLayoutContext, NavMenu} from 'collections-ui-common'
-import * as _ from "lodash"
+import * as _ from 'lodash'
 import * as React from 'react'
 import {Link} from 'react-router-dom'
 import {
@@ -15,7 +15,7 @@ import {
   ViewSwitcherHits,
 } from 'searchkit-fork'
 import {CollectionsGridItem, CollectionsListItem} from '../items'
-import {HeadMeta} from "../schema";
+import {HeadMeta} from '../schema'
 import {ActionBarComponent, Head} from '../ui'
 import {IRouteProps} from './IRouteProps'
 

@@ -1,7 +1,7 @@
-import * as React from "react"
+import * as React from 'react'
 import {push as Menu} from 'react-burger-menu'
-import {MetadataItem} from "../osd"
-import {InfoIcon} from "../svg"
+import {MetadataItem} from '../osd'
+import {InfoIcon} from '../svg'
 import infoMenuStyle from './styles/infoMenuStyle'
 
 const uuidv4 = require('uuid/v4')

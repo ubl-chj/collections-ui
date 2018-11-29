@@ -1,6 +1,6 @@
-import * as React from "react"
+import * as React from 'react'
 import {push as Menu} from 'react-burger-menu'
-import {ContentTreeIcon} from "../svg"
+import {ContentTreeIcon} from '../svg'
 import {ContentTree} from './ContentTree'
 import contentTreeMenuStyle from './styles/contentTreeMenuStyle'
 

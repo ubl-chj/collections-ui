@@ -1,8 +1,8 @@
-import * as PropTypes from "prop-types"
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-const omitBy = require("lodash/omitBy")
-const isUndefined = require("lodash/isUndefined")
+const omitBy = require('lodash/omitBy')
+const isUndefined = require('lodash/isUndefined')
 
 export type RenderFunction = (props?: any, children?: any) => Element
 export type Element = React.ReactElement<any>
@@ -35,6 +35,6 @@ export function renderComponent(component: RenderComponentType<any>, props= {}, 
       omitBy(props, isUndefined), children,
     );
   }
-  console.warn("Invalid component", component)
+  console.warn('Invalid component', component)
   return null
 }

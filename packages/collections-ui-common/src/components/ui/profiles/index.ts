@@ -1,3 +1,3 @@
 export * from './AuthProfile'
-export * from "./AuthUserProfile"
-export * from "./AuthUserTooltip"
+export * from './AuthUserProfile'
+export * from './AuthUserTooltip'

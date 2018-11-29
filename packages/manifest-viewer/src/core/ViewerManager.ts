@@ -1,10 +1,10 @@
-import {AccessorManager} from "./AccessorManager"
-import {DocumentRequest} from "./DocumentRequest"
-import {EventEmitter, GuidGenerator} from "./support"
-import {AxiosManifestTransport, ManifestTransport} from "./transport"
-import {VERSION} from "./ViewerVersion"
+import {AccessorManager} from './AccessorManager'
+import {DocumentRequest} from './DocumentRequest'
+import {EventEmitter, GuidGenerator} from './support'
+import {AxiosManifestTransport, ManifestTransport} from './transport'
+import {VERSION} from './ViewerVersion'
 
-const defaults = require("lodash/defaults")
+const defaults = require('lodash/defaults')
 
 export interface IViewerOptions {
   useHistory?: boolean

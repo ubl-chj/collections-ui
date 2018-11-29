@@ -1,4 +1,4 @@
-import {IViewerComponentProps} from "../../../core/react"
+import {IViewerComponentProps} from '../../../core/react'
 
 export interface ItemProps extends IViewerComponentProps {
   bemBlocks: {

@@ -1,5 +1,5 @@
-import * as React from "react"
-import {ArrowLeftIcon, ArrowRightIcon} from "../svg"
+import * as React from 'react'
+import {ArrowLeftIcon, ArrowRightIcon} from '../svg'
 
 export class PagingControls extends React.Component<any, any> {
 

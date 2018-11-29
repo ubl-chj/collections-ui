@@ -71,7 +71,7 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
       loadTilesWithAjax: true,
       maxZoomLevel: 10,
       minZoomLevel: 0,
-      navigatorPosition: "BOTTOM_RIGHT",
+      navigatorPosition: 'BOTTOM_RIGHT',
       nextButton: 'sidebar-next',
       previousButton: 'sidebar-previous',
       referenceStripScroll: 'vertical',

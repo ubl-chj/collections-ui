@@ -1,10 +1,10 @@
-import * as React from "react"
+import * as React from 'react'
 import {HeadProvider, Meta, Title} from 'react-head'
-import {ScaleLoader} from "react-spinners"
-import {AnnotationsAccessor, ViewerComponent} from "../../../core"
+import {ScaleLoader} from 'react-spinners'
+import {AnnotationsAccessor, ViewerComponent} from '../../../core'
 import {buildContentUrl, buildStructuredData, buildThumbnail, HeadMeta, MetadataSchemaAdapter} from '../../schema'
-import {ButtonBar} from "./ButtonBar"
-import {ManifestInfoMenu} from "./ManifestInfoMenu"
+import {ButtonBar} from './ButtonBar'
+import {ManifestInfoMenu} from './ManifestInfoMenu'
 const manifesto = require('manifesto-fork')
 
 export interface IMetadataProps {

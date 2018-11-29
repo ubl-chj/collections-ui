@@ -1,4 +1,4 @@
-import {Accessor} from "./Accessor";
+import {Accessor} from './Accessor'
 
 export interface IAnnotationsOptions {
   scrollTo: string | boolean

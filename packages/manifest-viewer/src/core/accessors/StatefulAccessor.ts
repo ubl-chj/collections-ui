@@ -1,5 +1,5 @@
-import {State} from "../state"
-import {Accessor} from "./Accessor"
+import {State} from '../state'
+import {Accessor} from './Accessor'
 
 export class StatefulAccessor<T extends State<any>> extends Accessor {
   key: string
@@ -10,7 +10,7 @@ export class StatefulAccessor<T extends State<any>> extends Accessor {
   constructor(key, urlString?) {
     super()
     this.key = key
-    this.urlKey = urlString || key && key.replace(/\./g, "_")
+    this.urlKey = urlString || key && key.replace(/\./g, '_')
   }
 
   fromQueryObject(ob) {

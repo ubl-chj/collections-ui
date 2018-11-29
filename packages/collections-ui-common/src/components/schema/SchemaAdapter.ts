@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react'
 import {mapping} from 'schema-map'
 
 export interface IStructuredDataImageObjectProps {
@@ -28,7 +28,7 @@ export class SchemaAdapter extends React.Component<IStructuredDataImageObjectPro
     Object.defineProperty(this.mainEntity, '@type',
       {
         enumerable: true,
-        value: "CreativeWork",
+        value: 'CreativeWork',
       })
 
     const mappingProps = this.getMappingProps(source)
@@ -57,11 +57,11 @@ export class SchemaAdapter extends React.Component<IStructuredDataImageObjectPro
     });
     return {
       dataLayer: {
-        "@context": "http://schema.org",
-        "@type": "ImageObject",
-        "contentUrl": this.contentUrl,
-        "mainEntity": ordered,
-        "thumbnail": this.thumbnail,
+        '@context': 'http://schema.org',
+        '@type': 'ImageObject',
+        'contentUrl': this.contentUrl,
+        'mainEntity': ordered,
+        'thumbnail': this.thumbnail,
       },
       dataLayerName: 'schemaDataLayer',
     }

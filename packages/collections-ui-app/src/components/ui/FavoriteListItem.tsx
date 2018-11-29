@@ -1,14 +1,14 @@
 import {buildImagePreview, buildImageView, buildThumbnailReference, firebase, getSchema, resolveManifestId,
   ResultContext} from 'collections-ui-common'
-import * as React from "react"
+import * as React from 'react'
 import {block} from 'searchkit-fork'
-import {FavoritesListItemDisplay} from "./FavoritesListItemDisplay"
-const extend = require("lodash/extend")
+import {FavoritesListItemDisplay} from './FavoritesListItemDisplay'
+const extend = require('lodash/extend')
 
 export class FavoriteListItem extends React.Component<any, any> {
 
   static defaultProps = {
-    mod: "sk-hits-list",
+    mod: 'sk-hits-list',
     viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
   }
 
@@ -70,7 +70,7 @@ export class FavoriteListItem extends React.Component<any, any> {
             />
           </ResultContext.Provider>)
       } else {
-        return ("Metadata Display not Defined")
+        return ('Metadata Display not Defined')
       }
     } else {
       return null

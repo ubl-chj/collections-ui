@@ -3,7 +3,7 @@ import * as React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {ActionBar, Layout, LayoutBody, LayoutResults, SearchkitManager, SearchkitProvider, SideBar} from 'searchkit-fork'
 import {FavoritesList, Head} from '../ui'
-import {IRouteProps} from "./IRouteProps"
+import {IRouteProps} from './IRouteProps'
 
 export class AccountPage extends React.Component<IRouteProps, any> {
 

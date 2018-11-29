@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react'
 
 export class ZoomOutIcon extends React.Component<any, any> {
   render() {

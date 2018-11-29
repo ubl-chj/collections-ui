@@ -1,9 +1,9 @@
 import Checkbox from 'rc-checkbox'
 import Slider from 'rc-slider'
-import * as React from "react"
+import * as React from 'react'
 import {slide as Menu} from 'react-burger-menu'
-import {BRIGHTNESS, Filtering, GREYSCALE, INVERT} from "../../filtering"
-import {FiltersIcon} from "../svg"
+import {BRIGHTNESS, Filtering, GREYSCALE, INVERT} from '../../filtering'
+import {FiltersIcon} from '../svg'
 import menuStylesDark from './styles/menuStylesDark'
 
 export class ImageFiltersMenu extends React.Component<any, any> {

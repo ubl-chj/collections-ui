@@ -1,8 +1,8 @@
-import {AuthProfile, LogoWrapper} from "collections-ui-common"
-import * as React from "react"
+import {AuthProfile, LogoWrapper} from 'collections-ui-common'
+import * as React from 'react'
 import {Link} from 'react-router-dom'
-import {SearchBox, TopBar} from "searchkit-fork"
-import {CloseButton, SearchIcon} from "./svg"
+import {SearchBox, TopBar} from 'searchkit-fork'
+import {CloseButton, SearchIcon} from './svg'
 
 export class Head extends React.Component<any, any> {
   routeConfig: string
