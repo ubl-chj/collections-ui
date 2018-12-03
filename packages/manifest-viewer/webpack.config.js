@@ -24,7 +24,7 @@ module.exports = {
     ]
   },
   entry: {
-    'ignore':['./theming/index.ts'],
+    'ignore':['./theming/index.js'],
     'bundle':['./src/index.ts']
   },
   output: {

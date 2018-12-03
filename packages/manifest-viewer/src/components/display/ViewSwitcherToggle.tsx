@@ -33,7 +33,7 @@ export class ViewSwitcherToggle extends ViewerComponent<IViewSwitcherProps, any>
     this.getViewOptionsSwitcherAccessor().setView(view)
   }
 
-  render() {
+  render(): any {
     const viewOptionsAccessor = this.getViewOptionsSwitcherAccessor()
     if (viewOptionsAccessor) {
       const options = viewOptionsAccessor.options

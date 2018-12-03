@@ -33,7 +33,7 @@
     "reactstrap": "^6.0.1",
     "react-tooltip": "^3.6.1",
     "schema-map": "file:../schema-map",
-    "typescript": "^3.1.6",
+    "typescript": "^3.2.1",
     "uuidv5": "^1.0.0"
   }
 }
