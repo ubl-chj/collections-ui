@@ -1,7 +1,5 @@
-var firebase = require('firebase')
 var admin = require('firebase-admin')
 var serviceAccount = require('/home/christopher/collections-ui-88993f241585.json')
-const firebaseApiKey = process.env.REACT_APP_FIREBASE_KEY
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),

@@ -25,7 +25,7 @@ export class AnnotationList extends React.PureComponent<IAnnotationListProps, an
   }
 
   render() {
-    const {document, mod, className, itemComponent} = this.props
+    const {document, mod, className, itemComponent}: Readonly<{ children?: React.ReactNode }> & Readonly<IAnnotationListProps> = this.props
     const bemBlocks = {
       container: block(mod).el,
       item: block(`${mod}-hit`).el,
