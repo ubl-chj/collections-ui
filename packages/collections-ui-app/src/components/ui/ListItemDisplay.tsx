@@ -58,7 +58,7 @@ export class ListItemDisplay extends React.Component<IListItemDisplayProps, any>
     <AuthUserContext.Consumer>
       {(authUser) => authUser ?
         <FavoriteButton
-          authUser={firebase.auth.currentUser}
+          authUser={firebase.auth().currentUser}
           className='button-transparent__fav'
           result={result}
         /> : null}

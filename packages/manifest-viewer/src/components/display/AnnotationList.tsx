@@ -1,17 +1,16 @@
 import * as PropTypes from 'prop-types'
 import React from 'react'
-import {block, renderComponent, RenderComponentPropType, RenderComponentType} from '../../core/react'
+import {RenderComponentPropType, RenderComponentType, block, renderComponent} from '../../core/react'
 import {AnnotationItem, IAnnotationItemProps} from './AnnotationItem'
 
 export interface IAnnotationListProps {
-  mod?: string,
-  className?: string,
-  itemComponent?: RenderComponentType<IAnnotationItemProps>,
-  document: object
+  mod?: string;
+  className?: string;
+  itemComponent?: RenderComponentType<IAnnotationItemProps>;
+  document: object;
 }
 
 export class AnnotationList extends React.PureComponent<IAnnotationListProps, any> {
-
   static defaultProps = {
     itemComponent: AnnotationItem,
     mod: 'sk-hits',
@@ -31,7 +30,7 @@ export class AnnotationList extends React.PureComponent<IAnnotationListProps, an
       item: block(`${mod}-hit`).el,
     }
     return (
-      <div data-qa="document" className={bemBlocks.container().mix(className)}>
+      <div className={bemBlocks.container().mix(className)} data-qa="document">
         {renderComponent(itemComponent, {document, bemBlocks})}
       </div>
     )

@@ -3,10 +3,10 @@ import React from 'react'
 import {
   AnnotationsAccessor,
   IViewerComponentProps,
-  renderComponent,
   RenderComponentPropType,
   RenderComponentType,
   ViewerComponent,
+  renderComponent,
 } from '../../core'
 import {IAnnotationItemProps} from './AnnotationItem'
 import {AnnotationList} from './AnnotationList'
@@ -14,16 +14,15 @@ import {AnnotationList} from './AnnotationList'
 const defaults = require('lodash/defaults')
 
 export interface IAnnotationsProps extends IViewerComponentProps {
-  hitsPerPage?: number
-  highlightFields?: string[]
-  customHighlight?: any
-  itemComponent?: RenderComponentType<IAnnotationItemProps>
-  listComponent?: RenderComponentType<IAnnotationItemProps>
-  scrollTo?: boolean | string
+  hitsPerPage?: number;
+  highlightFields?: string[];
+  customHighlight?: any;
+  itemComponent?: RenderComponentType<IAnnotationItemProps>;
+  listComponent?: RenderComponentType<IAnnotationItemProps>;
+  scrollTo?: boolean | string;
 }
 
 export class Annotations extends ViewerComponent<IAnnotationsProps, any> {
-
   static propTypes = defaults({
     itemComponent: RenderComponentPropType,
     listComponent: RenderComponentPropType,

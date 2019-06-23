@@ -1,4 +1,4 @@
-import {ActionBarRow, ItemList, RefinementListFilter} from 'searchkit-fork'
+import {ActionBarRow, ItemList, RefinementListFilter} from 'searchkit'
 import {push as Menu} from 'react-burger-menu'
 import React from 'react'
 

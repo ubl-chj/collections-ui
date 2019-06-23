@@ -3,7 +3,6 @@ import React from 'react'
 import {HomeIcon, RotateLeftIcon, RotateRightIcon, ZoomInIcon, ZoomOutIcon} from '../svg'
 
 export class ButtonBar extends React.Component<any, any> {
-
   constructor(props) {
     super(props)
   }
@@ -15,7 +14,7 @@ export class ButtonBar extends React.Component<any, any> {
         <AuthUserContext.Consumer>
           {(authUser) => authUser ?
             <FavoriteButton
-              authUser={firebase.auth.currentUser}
+              authUser={firebase.auth().currentUser}
               className='btn-viewer btn-xs'
               result={locationState.result}
             /> : null}

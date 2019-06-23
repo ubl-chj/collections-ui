@@ -6,7 +6,7 @@ import {
   ResetFilters,
   SortingSelector,
   ViewSwitcherToggle,
-} from 'searchkit-fork'
+} from 'searchkit'
 import {FilterMenu} from './FilterMenu'
 import React from 'react'
 

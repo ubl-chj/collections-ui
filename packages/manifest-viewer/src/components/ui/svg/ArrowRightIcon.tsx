@@ -1,7 +1,6 @@
 import React from 'react'
 
 export class ArrowRightIcon extends React.Component<any, any> {
-
   static arrowRightStyle() {
     return {
       background: 'rgba(66,66,66,0.54)',
@@ -28,16 +27,16 @@ export class ArrowRightIcon extends React.Component<any, any> {
     return (
       <button
         aria-label='next item'
-        id="sidebar-next"
-        type="button"
         className='paging-control'
+        id="sidebar-next"
         style={ArrowRightIcon.arrowRightStyle()}
+        type="button"
       >
         <svg
-          width="36px"
           height="36px"
           style={ArrowRightIcon.svgStyle()}
           viewBox="0 0 24 24"
+          width="36px"
         >
           <path d='M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z'/>
         </svg>

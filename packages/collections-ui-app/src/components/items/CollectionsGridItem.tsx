@@ -1,4 +1,4 @@
-import {Hits, SearchkitManager, SearchkitProvider} from 'searchkit-fork'
+import {Hits, SearchkitManager, SearchkitProvider} from 'searchkit'
 import {Link} from 'react-router-dom'
 import {RefreshIcon} from '../ui/svg'
 import {ItemProps} from './ItemProps'

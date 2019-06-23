@@ -1,6 +1,6 @@
 import {AuthProfile, LogoWrapper, NavMenu} from 'collections-ui-common'
 import React from 'react'
-import {Layout, LayoutBody, LayoutResults, SideBar, TopBar} from 'searchkit-fork'
+import {Layout, LayoutBody, LayoutResults, SideBar, TopBar} from 'searchkit'
 import {IRouteProps} from './IRouteProps'
 
 const ReactMarkdown = require('react-markdown')

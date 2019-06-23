@@ -3,7 +3,6 @@ import {ScrollIcon} from '../svg'
 import {PagingControls} from './PagingControls'
 
 export class ViewSelector extends React.Component<any, any> {
-
   constructor(props) {
     super(props)
     this.state = {
@@ -69,10 +68,10 @@ export class ViewSelector extends React.Component<any, any> {
     return (
       <button
         aria-label='toggle scroll view'
-        title='Scroll View'
-        type="button"
         className="button-transparent"
         onClick={this.toggleScrollView}
+        title='Scroll View'
+        type="button"
       >
         <ScrollIcon/>
       </button>

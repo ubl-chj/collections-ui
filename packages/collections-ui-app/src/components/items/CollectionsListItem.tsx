@@ -1,5 +1,5 @@
 import {DynamicLayoutContext, ResultContext} from 'collections-ui-common'
-import {Hits, SearchkitManager, SearchkitProvider} from 'searchkit-fork'
+import {Hits, SearchkitManager, SearchkitProvider} from 'searchkit'
 import {ItemProps} from './ItemProps'
 import {Link} from 'react-router-dom'
 import Observer from 'react-intersection-observer'

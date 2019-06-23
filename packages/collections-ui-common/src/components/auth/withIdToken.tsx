@@ -15,9 +15,9 @@ export const withIdToken = (Component) =>
     }
 
     componentDidMount() {
-      firebase.auth.onAuthStateChanged((authUser) => {
+      firebase.auth().onAuthStateChanged((authUser) => {
         authUser
-          ? firebase.auth.currentUser.getIdTokenResult().then((idTokenResult) => {
+          ? firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
             this.setState({idTokenResult})
           })
           : this.setState({idTokenResult: null})

@@ -1,5 +1,5 @@
-import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveCreator,
-  resolveManifestId, resolveName, ResultContext, shortenTitle, Thumbnail} from 'collections-ui-common'
+import {ResultContext, Thumbnail, buildImagePreview, buildImageView, buildThumbnailReference,
+  getSchema, resolveCreator, resolveManifestId, resolveName, shortenTitle} from 'collections-ui-common'
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {DocumentViewAccessor} from '../../../core/accessors'
@@ -9,13 +9,12 @@ import {ItemProps} from './ItemProps'
 const extend = require('lodash/extend')
 
 export class SimpleGridItem extends ViewerComponent<ItemProps, any> {
-
   static defaultProps = {
     viewerUrl: process.env.REACT_APP_OSD_COMPONENT_BASE,
   }
 
   state: {
-    result: any,
+    result: any;
   }
 
   constructor(props) {
@@ -50,18 +49,18 @@ export class SimpleGridItem extends ViewerComponent<ItemProps, any> {
           <ResultContext.Provider value={result}>
             <div className={bemBlocks.item().mix(bemBlocks.container('item'))} data-qa='hit'>
               <Thumbnail
-                imageWidth={170}
-                imageSource={thumbnail}
-                imageLink={viewUrl}
                 className={'sk-hits-grid-hit__poster'}
+                imageLink={viewUrl}
+                imageSource={thumbnail}
+                imageWidth={170}
               />
               <Link to={viewUrl}>
                 <div
-                  onClick={() => this.setView('list')}
-                  title={titleString}
-                  data-qa='title'
                   className={bemBlocks.item('title')}
                   dangerouslySetInnerHTML={{__html: name}}
+                  data-qa='title'
+                  onClick={() => this.setView('list')}
+                  title={titleString}
                 />
               </Link>
               <div className='sk-hits-grid-hit__author' dangerouslySetInnerHTML={resolveCreator(schema)}/>

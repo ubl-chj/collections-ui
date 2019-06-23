@@ -8,7 +8,7 @@ import {
 } from 'collections-ui-common'
 import {FavoritesListItemDisplay} from './FavoritesListItemDisplay'
 import React from 'react'
-import {block} from 'searchkit-fork'
+import {block} from 'searchkit'
 
 const extend = require('lodash/extend')
 

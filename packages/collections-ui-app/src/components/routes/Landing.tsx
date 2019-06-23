@@ -12,7 +12,7 @@ import {
   SearchkitProvider,
   SideBar,
   ViewSwitcherHits,
-} from 'searchkit-fork'
+} from 'searchkit'
 import {CollectionsGridItem, CollectionsListItem} from '../items'
 import {HeadMeta} from '../schema'
 import {ActionBarComponent, Head} from '../ui'

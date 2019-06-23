@@ -1,6 +1,6 @@
 import {AuthProfile, LogoWrapper} from 'collections-ui-common'
 import {CloseButton, SearchIcon} from './svg'
-import {SearchBox, TopBar} from 'searchkit-fork'
+import {SearchBox, TopBar} from 'searchkit'
 import React from 'react'
 
 export class Head extends React.Component<any, any> {

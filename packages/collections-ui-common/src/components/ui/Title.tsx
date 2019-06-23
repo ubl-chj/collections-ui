@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom'
 import {ResultContext} from '../contexts'
 
 export class Title extends React.Component<any, any> {
-
   viewUrl: string
   search: string
   className: string
@@ -21,10 +20,10 @@ export class Title extends React.Component<any, any> {
       <ResultContext.Consumer>
         {(result) => result ?
           <Link to={{pathname: this.viewUrl, state: {result}}}>
-            <div  title={this.titleString} data-qa='title' className={this.className} dangerouslySetInnerHTML={{__html: this.titleString}}/>
+            <div className={this.className} dangerouslySetInnerHTML={{__html: this.titleString}} data-qa='title' title={this.titleString}/>
           </Link> :
-          <a href={this.viewUrl} title={this.titleString} target='_blank' rel='noopener noreferrer'>
-            <div data-qa='title' className={this.className} dangerouslySetInnerHTML={{__html: this.titleString}}/>
+          <a href={this.viewUrl} rel='noopener noreferrer' target='_blank' title={this.titleString}>
+            <div className={this.className} dangerouslySetInnerHTML={{__html: this.titleString}} data-qa='title'/>
           </a>}
       </ResultContext.Consumer>
     )

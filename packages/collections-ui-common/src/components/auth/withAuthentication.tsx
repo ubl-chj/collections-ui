@@ -15,7 +15,7 @@ export const withAuthentication = (Component) =>
     }
 
     componentDidMount() {
-      firebase.auth.onAuthStateChanged((authUser) => {
+      firebase.auth().onAuthStateChanged((authUser) => {
         authUser
           ? this.setState({authUser})
           : this.setState({authUser: null});
