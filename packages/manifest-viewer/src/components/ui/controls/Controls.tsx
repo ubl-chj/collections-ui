@@ -1,30 +1,29 @@
-import * as React from 'react'
+import React from 'react'
 import {HeadProvider, Meta, Title} from 'react-head'
 import {ScaleLoader} from 'react-spinners'
 import {AnnotationsAccessor, ViewerComponent} from '../../../core'
-import {buildContentUrl, buildStructuredData, buildThumbnail, HeadMeta, MetadataSchemaAdapter} from '../../schema'
+import {HeadMeta, MetadataSchemaAdapter, buildContentUrl, buildStructuredData, buildThumbnail} from '../../schema'
 import {ButtonBar} from './ButtonBar'
 import {ManifestInfoMenu} from './ManifestInfoMenu'
 const manifesto = require('manifesto-fork')
 
 export interface IMetadataProps {
-  key: any,
-  bemBlocks?: any
-  location: any
-  uuid: any
-  isMobile: boolean
+  key: any;
+  bemBlocks?: any;
+  location: any;
+  uuid: any;
+  isMobile: boolean;
 }
 
 export class Controls extends ViewerComponent<IMetadataProps, any> {
-
   annotationsAccessor: AnnotationsAccessor
   document: any
   key: any
   state: {
-    locationState: any,
-    uuid: string,
-    loading: boolean,
-    isMobile: boolean,
+    locationState: any;
+    uuid: string;
+    loading: boolean;
+    isMobile: boolean;
   }
   schema: any
 
@@ -95,7 +94,7 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
           />
           {this.buildButtonBar()}
           <div className="window-manifest-title">
-            <h2 title={title} className="window-manifest-title">{title}</h2>
+            <h2 className="window-manifest-title" title={title}>{title}</h2>
           </div>
         </div>
       )
@@ -103,6 +102,6 @@ export class Controls extends ViewerComponent<IMetadataProps, any> {
     return (
       <div className='centered'>
         <ScaleLoader color='#FFF' loading={this.state.loading}/>
-    </div>)
+      </div>)
   }
 }

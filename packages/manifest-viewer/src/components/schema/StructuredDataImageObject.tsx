@@ -1,8 +1,7 @@
-import * as React from 'react'
+import React from 'react'
 const tagManager = require('react-gtm-module')
 
 export class StructuredDataImageObject extends React.Component<any, any> {
-
   schema: any
 
   constructor(props) {

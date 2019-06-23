@@ -5,7 +5,7 @@ import {VelocityComponent} from 'velocity-react'
 
 const Div = styled('div', {
   shouldForwardProp: (prop) => ['className', 'children'].indexOf(prop) !== -1,
-})((({style}) => style))
+})((({style}): any => style))
 
 const Loading = styled(({ className }) => {
   return <div className={className}>loading...</div>;
@@ -21,7 +21,7 @@ const Toggle = ({style}) => {
   const points = `0,0 0,${height} ${width},${midHeight}`;
 
   return (
-    <Div style={style.base}/>  )
+    <Div style={style.base}/>)
 }
 
 const Header = ({node, style}) => {
@@ -35,7 +35,6 @@ const Header = ({node, style}) => {
 }
 
 class Container extends React.Component<any, any> {
-
   static propTypes = {
     animations: PropTypes.oneOfType([
       PropTypes.object,

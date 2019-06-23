@@ -3,10 +3,9 @@ import {ViewerManager} from './ViewerManager'
 const manifesto = require('manifesto-fork')
 
 export class DocumentRequest {
-
   active: boolean
   constructor(public transport: ManifestTransport,
-              public documentUri: string, public viewer: ViewerManager) {
+    public documentUri: string, public viewer: ViewerManager) {
     this.active = true
   }
 
@@ -34,5 +33,4 @@ export class DocumentRequest {
       this.viewer.setError(error)
     }
   }
-
 }

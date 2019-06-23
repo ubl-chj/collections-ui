@@ -1,5 +1,5 @@
 import * as PropTypes from 'prop-types'
-import * as React from 'react'
+import React from 'react'
 import {Accessor} from '../accessors'
 import {ViewerManager} from '../ViewerManager'
 import {block} from './block'
@@ -7,16 +7,15 @@ import {block} from './block'
 const mapValues = require('lodash/mapValues')
 
 export interface IViewerComponentProps {
-  mod?: string
-  className?: string
-  translations?: object
-  viewer?: ViewerManager
-  key?: string
-  viewerComponents?: object[]
+  mod?: string;
+  className?: string;
+  translations?: object;
+  viewer?: ViewerManager;
+  key?: string;
+  viewerComponents?: object[];
 }
 
 export class ViewerComponent<P extends IViewerComponentProps, S> extends React.Component<P, S> {
-
   get bemBlocks(): any {
     return mapValues(ViewerComponent.defineBEMBlocks(), (cssClass) => {
       return block(cssClass).el
@@ -28,8 +27,8 @@ export class ViewerComponent<P extends IViewerComponentProps, S> extends React.C
   }
 
   static propTypes: any = {
-    className : PropTypes.string,
-    mod : PropTypes.string,
+    className: PropTypes.string,
+    mod: PropTypes.string,
     translations: PropTypes.objectOf(
       PropTypes.string),
     viewer: PropTypes.instanceOf(ViewerManager),
@@ -64,7 +63,7 @@ export class ViewerComponent<P extends IViewerComponentProps, S> extends React.C
     const self = this;
     this.viewer = this._getViewer()
     if (this.viewer) {
-      this.accessor  = this.defineAccessor()
+      this.accessor = this.defineAccessor()
       if (this.accessor) {
         this.accessor = this.viewer.addAccessor(this.accessor)
       }

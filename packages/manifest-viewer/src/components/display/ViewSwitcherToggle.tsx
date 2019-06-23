@@ -1,22 +1,21 @@
 import {
   DocumentViewAccessor,
   IViewerComponentProps,
-  renderComponent,
   RenderComponentPropType,
   RenderComponentType,
   ViewerComponent,
+  renderComponent,
 } from '../../core'
 
-import {ListProps, Toggle} from 'searchkit-fork'
+import {ListProps, Toggle} from 'searchkit'
 
 const defaults = require('lodash/defaults')
 
 export interface IViewSwitcherProps extends IViewerComponentProps {
-  listComponent?: RenderComponentType<ListProps>
+  listComponent?: RenderComponentType<ListProps>;
 }
 
 export class ViewSwitcherToggle extends ViewerComponent<IViewSwitcherProps, any> {
-
   static defaultProps = {
     listComponent: Toggle,
   }

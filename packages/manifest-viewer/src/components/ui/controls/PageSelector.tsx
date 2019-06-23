@@ -1,5 +1,5 @@
 import measureText from 'measure-text'
-import * as React from 'react'
+import React from 'react'
 import {withRouter} from 'react-router'
 import Select from 'react-select'
 
@@ -39,7 +39,7 @@ export class PageSelectorComponent extends React.Component<any, any> {
     }).width.value;
   }
 
- state: any
+  state: any
 
   constructor(props) {
     super(props)
@@ -103,12 +103,12 @@ export class PageSelectorComponent extends React.Component<any, any> {
       this.setState({imageCount: this.props.imageCount})
     }
     if (prevState.currentPage !== this.state.currentPage) {
-        this.props.history.replace(window.parent.location.pathname + '#' + this.state.currentPage)
-        this.props.osd.addHandler('page', (data) => {
-          if (this.state.currentPage !== data.page) {
-            this.setState({currentPage: data.page})
-            this.setState({currentPageLabel: this.props.canvasLabels[data.page]})
-          }
+      this.props.history.replace(window.parent.location.pathname + '#' + this.state.currentPage)
+      this.props.osd.addHandler('page', (data) => {
+        if (this.state.currentPage !== data.page) {
+          this.setState({currentPage: data.page})
+          this.setState({currentPageLabel: this.props.canvasLabels[data.page]})
+        }
       })
     }
   }
@@ -121,28 +121,28 @@ export class PageSelectorComponent extends React.Component<any, any> {
     let selectedPage
     let maxTextWidth = this.state.maxTextWidth
     if (osd) {
-        if (currentPage) {
-          selectedPage = {label: currentPageLabel, value: currentPage}
-          maxTextWidth = PageSelectorComponent.calcMaxTextWidth(currentPageLabel)
-        } else {
-          selectedPage = {label: this.props.canvasLabels[0], value: 0}
-          maxTextWidth = PageSelectorComponent.calcMaxTextWidth(this.props.canvasLabels[0])
-        }
+      if (currentPage) {
+        selectedPage = {label: currentPageLabel, value: currentPage}
+        maxTextWidth = PageSelectorComponent.calcMaxTextWidth(currentPageLabel)
+      } else {
+        selectedPage = {label: this.props.canvasLabels[0], value: 0}
+        maxTextWidth = PageSelectorComponent.calcMaxTextWidth(this.props.canvasLabels[0])
+      }
     }
     // TODO get the selector padding and minWidth values programmatically
     const minWidth = 72 + 8 + maxTextWidth + 0 + 'px'
     if (this.state.imageCount > 1) {
       return (
-          <div className='selector' style={{paddingLeft: '10px', marginTop: '48px', minWidth}}>
-            <Select
-              aria-label='select page'
-              autosize={Boolean(true)}
-              value={selectedPage}
-              isSearchable={Boolean(true)}
-              onChange={this.handlePaging}
-              options={options}
-              styles={PageSelectorComponent.selectorStyles()}
-            />
+        <div className='selector' style={{paddingLeft: '10px', zIndex: 100, minWidth}}>
+          <Select
+            aria-label='select page'
+            autosize={Boolean(true)}
+            isSearchable={Boolean(true)}
+            onChange={this.handlePaging}
+            options={options}
+            styles={PageSelectorComponent.selectorStyles()}
+            value={selectedPage}
+          />
         </div>)
     } else {
       return null

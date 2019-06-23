@@ -1,5 +1,5 @@
 import * as PropTypes from 'prop-types'
-import * as React from 'react'
+import React from 'react'
 import {DocumentViewAccessor, RenderComponentPropType, RenderComponentType, ViewerComponent} from '../../core'
 import {IAnnotationItemProps} from './AnnotationItem'
 import {IAnnotationListProps} from './AnnotationList'
@@ -8,18 +8,17 @@ import {Annotations} from './Annotations'
 const defaults = require('lodash/defaults')
 
 export interface IDocumentViewSwitcherProps {
-  viewerComponents?: Array<{
-    key: string,
-    title: string,
-    itemComponent?: RenderComponentType<IAnnotationItemProps>,
-    listComponent?: RenderComponentType<IAnnotationListProps>,
-    metadataDisplayComponent?: RenderComponentType<IAnnotationListProps>,
-    defaultOption?: boolean,
-  }>
+  viewerComponents?: {
+    key: string;
+    title: string;
+    itemComponent?: RenderComponentType<IAnnotationItemProps>;
+    listComponent?: RenderComponentType<IAnnotationListProps>;
+    metadataDisplayComponent?: RenderComponentType<IAnnotationListProps>;
+    defaultOption?: boolean;
+  }[];
 }
 
 export class DocumentViewSwitcher extends ViewerComponent<IDocumentViewSwitcherProps, any> {
-
   static propTypes = defaults({
     viewerComponents: PropTypes.arrayOf(
       PropTypes.shape({
@@ -34,7 +33,7 @@ export class DocumentViewSwitcher extends ViewerComponent<IDocumentViewSwitcherP
   accessor: DocumentViewAccessor
 
   state: {
-    selectedOption: any,
+    selectedOption: any;
   }
 
   constructor(props) {

@@ -1,13 +1,12 @@
-import Checkbox from 'rc-checkbox'
+import {Checkbox} from '@material-ui/core'
 import Slider from 'rc-slider'
-import * as React from 'react'
+import React from 'react'
 import {slide as Menu} from 'react-burger-menu'
 import {BRIGHTNESS, Filtering, GREYSCALE, INVERT} from '../../filtering'
 import {FiltersIcon} from '../svg'
 import menuStylesDark from './styles/menuStylesDark'
 
 export class ImageFiltersMenu extends React.Component<any, any> {
-
   state: any
 
   constructor(props) {
@@ -51,24 +50,32 @@ export class ImageFiltersMenu extends React.Component<any, any> {
 
   filters() {
     return (
-      <div style={{width: 200}} className='xjKiLc'>
+      <div className='xjKiLc' style={{width: 200}}>
         <div className='Hj59Ib'>Brightness</div>
         <Slider
           aria-label='brightness'
-          min={-255}
           max={255}
-          value={this.state.brightness}
+          min={-255}
           onChange={this.onBrightnessChange}
+          value={this.state.brightness}
         />
         <div className='Hj59Ib'>Invert</div>
         <Checkbox
-          aria-label='invert'
+          checked={this.state.inverted}
+          inputProps={{
+            'aria-label': 'primary checkbox',
+          }}
           onChange={this.toggleInvert}
+          style={{color: "rgba(255, 255, 255, 0.54)"}}
         />
         <div className='Hj59Ib'>Greyscale</div>
         <Checkbox
-          aria-label='grayscale'
+          checked={this.state.grayscale}
+          inputProps={{
+            'aria-label': 'primary checkbox',
+          }}
           onChange={this.toggleGreyscale}
+          style={{color: "rgba(255, 255, 255, 0.54)"}}
         />
       </div>
     )
@@ -138,27 +145,27 @@ export class ImageFiltersMenu extends React.Component<any, any> {
     return (
       <div>
         <Menu
-          disableCloseOnEsc={Boolean(true)}
-          width='275px'
-          styles={menuStylesDark}
-          noOverlay={true}
-          right={false}
           customBurgerIcon={false}
+          disableCloseOnEsc={Boolean(true)}
           isOpen={this.state.menuOpen}
+          noOverlay={true}
           onStateChange={this.handleStateChange}
+          right={false}
+          styles={menuStylesDark}
+          width='275px'
         >
-        {this.filters()}
+          {this.filters()}
         </Menu>
         <button
           aria-label='toggle image filters'
-          title='Edit'
-          type="button"
           className="button-transparent"
           onClick={this.toggleFiltersMenu}
+          title='Edit'
+          type="button"
         >
           <FiltersIcon />
         </button>
       </div>
-      )
+    )
   }
 }

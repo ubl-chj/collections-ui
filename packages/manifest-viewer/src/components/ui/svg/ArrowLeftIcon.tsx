@@ -1,7 +1,6 @@
-import * as React from 'react'
+import React from 'react'
 
 export class ArrowLeftIcon extends React.Component<any, any> {
-
   static arrowLeftStyle() {
     const absolute: 'absolute' = 'absolute'
     return {
@@ -27,20 +26,20 @@ export class ArrowLeftIcon extends React.Component<any, any> {
     }
   }
 
-   render() {
+  render() {
     return (
       <button
         aria-label='previous item'
-        id="sidebar-previous"
-        type="button"
         className='paging-control'
+        id="sidebar-previous"
         style={ArrowLeftIcon.arrowLeftStyle()}
+        type="button"
       >
         <svg
-          width="36px"
           height="36px"
           style={ArrowLeftIcon.svgStyle()}
           viewBox="0 0 24 24"
+          width="36px"
         >
           <path d='M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z'/>
         </svg>

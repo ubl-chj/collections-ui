@@ -1,8 +1,15 @@
-import {buildImagePreview, buildImageView, buildThumbnailReference, firebase, getSchema, resolveManifestId,
-  ResultContext} from 'collections-ui-common'
-import * as React from 'react'
-import {block} from 'searchkit-fork'
+import {
+  buildImageView,
+  buildThumbnailReference,
+  firebase,
+  getSchema,
+  resolveManifestId,
+  ResultContext
+} from 'collections-ui-common'
 import {FavoritesListItemDisplay} from './FavoritesListItemDisplay'
+import React from 'react'
+import {block} from 'searchkit'
+
 const extend = require('lodash/extend')
 
 export class FavoriteListItem extends React.Component<any, any> {

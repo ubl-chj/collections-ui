@@ -1,6 +1,6 @@
 import {AuthProfile, LogoWrapper, NavMenu, withAuthorization, withDynamicLayout} from 'collections-ui-common'
-import * as React from 'react'
-import {Layout, LayoutBody, LayoutResults, SideBar, TopBar} from 'searchkit-fork'
+import React from 'react'
+import {Layout, LayoutBody, LayoutResults, SideBar, TopBar} from 'searchkit'
 import {IRouteProps} from './IRouteProps'
 
 export class SettingsPage extends React.Component<IRouteProps, any> {

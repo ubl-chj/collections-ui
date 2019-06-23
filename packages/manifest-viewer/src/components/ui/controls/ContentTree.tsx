@@ -7,15 +7,14 @@ import treeStyles from './styles/treeStyles'
 
 const Div = styled('div', {
   shouldForwardProp: (prop) => ['className', 'children'].indexOf(prop) !== -1,
-})(({ style }) => style)
+})(({ style }): any => style)
 
 export class ContentTree extends ViewerComponent<any, any> {
-
   state: {
-    cursor: any,
-    children: any,
-    document: any,
-    menuOpen: boolean,
+    cursor: any;
+    children: any;
+    document: any;
+    menuOpen: boolean;
   }
 
   constructor(props) {
@@ -87,12 +86,12 @@ export class ContentTree extends ViewerComponent<any, any> {
     })
     return {
       children: [
-          {
+        {
           children,
           name: 'Contents',
           toggled: true,
-          },
-        ],
+        },
+      ],
       toggled: true,
     }
   }
@@ -113,18 +112,18 @@ export class ContentTree extends ViewerComponent<any, any> {
     const styles = treeStyles
     const {children, cursor} = this.state
     if (children) {
-       return (
-         <Div>
-           <Treebeard
-             animations={false}
-             decorators={ContentTreeDecorators}
-             style={styles}
-             data={children}
-             onToggle={this.onToggle}
-           />
-           {this.goToSection(cursor)}
-         </Div>
-       )
+      return (
+        <Div>
+          <Treebeard
+            animations={false}
+            data={children}
+            decorators={ContentTreeDecorators}
+            onToggle={this.onToggle}
+            style={styles}
+          />
+          {this.goToSection(cursor)}
+        </Div>
+      )
     } else {
       return null
     }

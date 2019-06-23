@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import {push as Menu} from 'react-burger-menu'
 import {MetadataItem} from '../osd'
 import {InfoIcon} from '../svg'
@@ -7,9 +7,8 @@ import infoMenuStyle from './styles/infoMenuStyle'
 const uuidv4 = require('uuid/v4')
 
 export class ManifestInfoMenu extends React.Component<any, any> {
-
   static buildAttribution(value) {
-    return(
+    return (
       <li className='list-group-item'><div className='metadata-label'>Attribution:</div>
         <div dangerouslySetInnerHTML={{__html: value}}/>
       </li>)
@@ -27,16 +26,16 @@ export class ManifestInfoMenu extends React.Component<any, any> {
   }
 
   static buildManifestLink(value) {
-    const link =  '<a href=' + value + '>' + value + '</a>'
-    return(
+    const link = '<a href=' + value + '>' + value + '</a>'
+    return (
       <li className='list-group-item'><div className='metadata-label'>Manifest:</div>
         <div dangerouslySetInnerHTML={{__html: link}}/>
       </li>)
   }
 
   state: {
-    menuOpen: boolean,
-    uuid: string,
+    menuOpen: boolean;
+    uuid: string;
   }
 
   constructor(props) {
@@ -61,7 +60,7 @@ export class ManifestInfoMenu extends React.Component<any, any> {
   }
 
   buildItemList(items) {
-    return items.map(({data, label, value}) => <MetadataItem key={uuidv4()} data={data} label={label} value={value}/>)
+    return items.map(({data, label, value}) => <MetadataItem data={data} key={uuidv4()} label={label} value={value}/>)
   }
 
   getThumbnail() {
@@ -88,17 +87,17 @@ export class ManifestInfoMenu extends React.Component<any, any> {
     const items = this.buildMetadata(metadata)
     const itemList = this.buildItemList(items)
 
-    return(
+    return (
       <div className="btn-group">
         <Menu
-          disableCloseOnEsc={Boolean(true)}
-          width='380px'
-          styles={infoMenuStyle}
-          noOverlay={true}
-          right={true}
           customBurgerIcon={false}
+          disableCloseOnEsc={Boolean(true)}
           isOpen={this.state.menuOpen}
+          noOverlay={true}
           onStateChange={this.handleStateChange}
+          right={true}
+          styles={infoMenuStyle}
+          width='380px'
         >
           <ul className="list-group">
             {itemList}
@@ -109,10 +108,10 @@ export class ManifestInfoMenu extends React.Component<any, any> {
         </Menu>
         <button
           aria-label='toggle manifest information'
-          title='Info'
-          type="button"
           className="btn-viewer btn-xs"
           onClick={this.toggleMenu}
+          title='Info'
+          type="button"
         >
           <InfoIcon/>
         </button>

@@ -1,6 +1,6 @@
-import * as React from 'react'
+import {ActionBarRow, ItemList, RefinementListFilter} from 'searchkit'
 import {push as Menu} from 'react-burger-menu'
-import {ActionBarRow, ItemList, RefinementListFilter} from 'searchkit-fork'
+import React from 'react'
 
 export class FilterMenu extends React.Component<any, any> {
 

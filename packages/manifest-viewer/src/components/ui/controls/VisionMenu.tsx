@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {AuthTokenContext, Domain} from 'collections-ui-common'
-import Checkbox from 'rc-checkbox'
-import * as React from 'react'
+import {Checkbox} from '@material-ui/core'
+import React from 'react'
 import {push as Menu} from 'react-burger-menu'
 import ReactDOM from 'react-dom'
 import {CircleLoader} from 'react-spinners'
@@ -16,7 +16,6 @@ const openSeaDragon = require('openseadragon')
 const ReactTooltip = require('react-tooltip')
 
 export class VisionMenu extends ViewerComponent<any, any> {
-
   static defaultProps = {
     REDIS_BASE: process.env.REACT_APP_REDIS_BASE,
     VISION_API_BASE: process.env.REACT_APP_VISION_API_BASE,
@@ -44,9 +43,9 @@ export class VisionMenu extends ViewerComponent<any, any> {
 
   static resolveImage(page) {
     if (page.fullMatchingImages) {
-      return (<img alt='' width='170' src={page.fullMatchingImages[0].url}/>)
+      return (<img alt='' src={page.fullMatchingImages[0].url} width='170'/>)
     } else if (page.partialMatchingImages) {
-      return (<img alt='' width='170' src={page.partialMatchingImages[0].url}/>)
+      return (<img alt='' src={page.partialMatchingImages[0].url} width='170'/>)
     }
   }
 
@@ -143,26 +142,42 @@ export class VisionMenu extends ViewerComponent<any, any> {
 
   buildFeatureTypes() {
     return (
-      <div style={{width: 200}} className='xjKiLc'>
+      <div className='xjKiLc' style={{width: 200}}>
         <div className='Hj59Ib'>Detect Labels</div>
         <Checkbox
-          aria-label='detect label'
+          checked={this.state.detectLabels}
+          inputProps={{
+            'aria-label': 'primary checkbox',
+          }}
           onChange={this.toggleLabelDetect}
+          style={{color: "rgba(255, 255, 255, 0.54)"}}
         />
         <div className='Hj59Ib'>Detect Text</div>
         <Checkbox
-          aria-label='detect text'
+          checked={this.state.detectText}
+          inputProps={{
+            'aria-label': 'primary checkbox',
+          }}
           onChange={this.toggleTextDetect}
+          style={{color: "rgba(255, 255, 255, 0.54)"}}
         />
         <div className='Hj59Ib'>Image Properties</div>
         <Checkbox
-          aria-label='image properties'
+          checked={this.state.imageProperties}
+          inputProps={{
+            'aria-label': 'primary checkbox',
+          }}
           onChange={this.toggleImageProperties}
+          style={{color: "rgba(255, 255, 255, 0.54)"}}
         />
         <div className='Hj59Ib'>Detect Web</div>
         <Checkbox
-          aria-label='web detect'
+          checked={this.state.detectWeb}
+          inputProps={{
+            'aria-label': 'primary checkbox',
+          }}
           onChange={this.toggleWebDetect}
+          style={{color: "rgba(255, 255, 255, 0.54)"}}
         />
       </div>
     )
@@ -404,15 +419,15 @@ export class VisionMenu extends ViewerComponent<any, any> {
           this.addOverlay(xywh, eltId)
           return (
             <ReactTooltip
+              border={true}
               className='extraClass'
-              key={uuidv4()}
-              id={'tt_' + eltId}
-              effect='solid'
               delayHide={500}
               delayShow={500}
               delayUpdate={500}
+              effect='solid'
+              id={'tt_' + eltId}
+              key={uuidv4()}
               place={'top'}
-              border={true}
               type={'light'}
             >
               {desc}
@@ -451,10 +466,10 @@ export class VisionMenu extends ViewerComponent<any, any> {
           const id = index.toString().padStart(5, '0')
           return (
             <span
-              onClick={() => this.toggleHighlighter(id)}
               className='text'
-              key={uuidv4()}
               dangerouslySetInnerHTML={{__html: '&nbsp;' + desc}}
+              key={uuidv4()}
+              onClick={() => this.toggleHighlighter(id)}
               role='button'
             />)
         }))
@@ -490,8 +505,8 @@ export class VisionMenu extends ViewerComponent<any, any> {
             <ul style={{listStyle: 'none'}}>
               {visionResponse.webDetection.visuallySimilarImages ?
                 visionResponse.webDetection.visuallySimilarImages.map((page) =>
-                  <li key={uuidv4()}><a href={page.url} target='_blank' rel='noopener noreferrer'>
-                    <img alt='' width='170' src={page.url}/></a>
+                  <li key={uuidv4()}><a href={page.url} rel='noopener noreferrer' target='_blank'>
+                    <img alt='' src={page.url} width='170'/></a>
                   </li>) : null}
             </ul>
             {visionResponse.webDetection.pagesWithMatchingImages ?
@@ -499,9 +514,9 @@ export class VisionMenu extends ViewerComponent<any, any> {
             <ul style={{listStyle: 'none'}}>
               {visionResponse.webDetection.pagesWithMatchingImages ?
                 visionResponse.webDetection.pagesWithMatchingImages.map((page) =>
-                  <li key={uuidv4()}><a href={page.url} target='_blank' rel='noopener noreferrer'>
+                  <li key={uuidv4()}><a href={page.url} rel='noopener noreferrer' target='_blank'>
                     {VisionMenu.resolveImage(page)}</a>
-                    <div dangerouslySetInnerHTML={{__html: page.pageTitle}}/>
+                  <div dangerouslySetInnerHTML={{__html: page.pageTitle}}/>
                   </li>) : null}
             </ul>
           </div>)
@@ -542,14 +557,14 @@ export class VisionMenu extends ViewerComponent<any, any> {
         {(idTokenResult) => idTokenResult && idTokenResult.claims.admin ?
           <div>
             <Menu
-              disableCloseOnEsc={Boolean(true)}
-              width='380px'
-              styles={menuStylesDark}
-              noOverlay={true}
-              right={false}
               customBurgerIcon={false}
+              disableCloseOnEsc={Boolean(true)}
               isOpen={this.state.menuOpen}
+              noOverlay={true}
               onStateChange={this.handleStateChange}
+              right={false}
+              styles={menuStylesDark}
+              width='380px'
             >
               {this.buildFeatureTypes()}
               {this.buildVisionPresentation()}
@@ -557,10 +572,10 @@ export class VisionMenu extends ViewerComponent<any, any> {
             {this.buildTextAnnotationOverlays()}
             <button
               aria-label='Cloud Vision'
-              title='Cloud Vision'
-              type="button"
               className="button-transparent"
               onClick={this.toggleVisionMenu}
+              title='Cloud Vision'
+              type="button"
             >
               <EyeIcon />
             </button>

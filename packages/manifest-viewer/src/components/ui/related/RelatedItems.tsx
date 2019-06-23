@@ -1,12 +1,11 @@
 import {Domain, resolveCreator} from 'collections-ui-common'
-import * as React from 'react'
+import React from 'react'
 import {ActionBar, ActionBarRow, HitsStats, NoHits, PageSizeSelector, Pagination, SearchkitManager, SearchkitProvider,
-  Select} from 'searchkit-fork'
+  Select} from 'searchkit'
 import {RelatedHits} from './RelatedHits'
 const manifesto = require('manifesto-fork')
 
 export class RelatedItems extends React.Component<any, any> {
-
   static defaultProps = {
     host: process.env.REACT_APP_ELASTICSEARCH_HOST,
     options: {timeout: 20000, useHistory: false},
@@ -55,7 +54,7 @@ export class RelatedItems extends React.Component<any, any> {
             <ActionBar>
               <ActionBarRow>
                 <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
-                <PageSizeSelector options={[10, 20, 50]} listComponent={Select}/>
+                <PageSizeSelector listComponent={Select} options={[10, 20, 50]}/>
               </ActionBarRow>
             </ActionBar>
             <Pagination showNumbers={true}/>

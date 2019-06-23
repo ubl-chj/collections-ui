@@ -1,11 +1,10 @@
-import * as React from 'react'
+import React from 'react'
 import {push as Menu} from 'react-burger-menu'
 import {ContentTreeIcon} from '../svg'
 import {ContentTree} from './ContentTree'
 import contentTreeMenuStyle from './styles/contentTreeMenuStyle'
 
 export class ContentTreeMenu extends React.Component<any, any> {
-
   state: any
 
   constructor(props) {
@@ -39,14 +38,14 @@ export class ContentTreeMenu extends React.Component<any, any> {
     return (
       <div>
         <Menu
-          disableCloseOnEsc={Boolean(true)}
-          width='275px'
-          styles={contentTreeMenuStyle}
-          noOverlay={true}
-          right={false}
           customBurgerIcon={false}
+          disableCloseOnEsc={Boolean(true)}
           isOpen={this.state.menuOpen}
+          noOverlay={true}
           onStateChange={this.handleStateChange}
+          right={false}
+          styles={contentTreeMenuStyle}
+          width='275px'
         >
           <ContentTree
             menuOpen={this.state.menuOpen}
@@ -55,10 +54,10 @@ export class ContentTreeMenu extends React.Component<any, any> {
         </Menu>
         <button
           aria-label='toggle Content Tree'
-          title='Content Tree'
-          type="button"
           className="button-transparent"
           onClick={this.toggleContentTreeMenu}
+          title='Content Tree'
+          type="button"
         >
           <ContentTreeIcon />
         </button>

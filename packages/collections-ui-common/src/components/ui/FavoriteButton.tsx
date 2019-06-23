@@ -1,9 +1,8 @@
-import * as React from 'react'
+import React from 'react'
 import {firebase} from '../firebase'
 import {EmptyStar, Star} from './svg'
 
 export class FavoriteButton extends React.Component<any, any> {
-
   static writeFavorite(authUserUid, result) {
     result.timestamp = new Date().getTime()
     firebase.db.ref('/users/' + authUserUid + '/favorites/' + result._id).set({
@@ -15,16 +14,16 @@ export class FavoriteButton extends React.Component<any, any> {
     firebase.db.ref('/users/' + authUserUid + '/favorites/' + result._id).remove();
   }
   state: {
-    error: null
-    favorite: string
-    isFavorite: boolean
-    isLoaded: boolean,
+    error: null;
+    favorite: string;
+    isFavorite: boolean;
+    isLoaded: boolean;
   };
   authUser: {
-    uid: string,
+    uid: string;
   }
   result: {
-    _id: string,
+    _id: string;
   }
   _isMounted: boolean
 
@@ -88,35 +87,35 @@ export class FavoriteButton extends React.Component<any, any> {
     } else {
       return (
         <div className='button-right'>
-        {isFavorite && favorite ?
-          (
-            <button
-              aria-label='remove favorite'
-              title='Favorite'
-              type="button"
-              onClick={() => {
-              FavoriteButton.removeFavorite(this.authUser.uid, this.result);
-              this.unsetFavorite()
-            }}
-              className={className}
-            >
-            <Star/>
-            </button>)
-          : (
-            <button
-              aria-label='set favorite'
-              title='Favorite'
-              type="button"
-              onClick={() => {
-              FavoriteButton.writeFavorite(this.authUser.uid, this.result);
-              this.setFavorite(this.result)
-            }}
-              className={className}
-            >
-              <EmptyStar/>
-            </button>)
-        }
-      </div>)
+          {isFavorite && favorite ?
+            (
+              <button
+                aria-label='remove favorite'
+                className={className}
+                onClick={() => {
+                  FavoriteButton.removeFavorite(this.authUser.uid, this.result);
+                  this.unsetFavorite()
+                }}
+                title='Favorite'
+                type="button"
+              >
+                <Star/>
+              </button>)
+            : (
+              <button
+                aria-label='set favorite'
+                className={className}
+                onClick={() => {
+                  FavoriteButton.writeFavorite(this.authUser.uid, this.result);
+                  this.setFavorite(this.result)
+                }}
+                title='Favorite'
+                type="button"
+              >
+                <EmptyStar/>
+              </button>)
+          }
+        </div>)
     }
   }
 }

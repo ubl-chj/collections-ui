@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import {mapping} from 'schema-map'
 
 export interface IStructuredDataImageObjectProps {

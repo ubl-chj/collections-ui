@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import {ViewerManager} from '../../../core'
 import {ContentTreeMenu, ImageFiltersMenu, PageSelector, ViewSelector, VisionMenu} from '../controls'
 import {PagingControls} from '../controls/PagingControls'
@@ -7,18 +7,17 @@ import {BackArrow, FullScreenIcon} from '../svg'
 let openSeaDragon
 
 export interface IOsdComponentProps {
-  id?: string
-  currentCanvas?: number
-  images?: any
-  document?: object
-  region?: string
-  viewer?: ViewerManager
-  isMobile: boolean
-  canvasLabels: any
+  id?: string;
+  currentCanvas?: number;
+  images?: any;
+  document?: object;
+  region?: string;
+  viewer?: ViewerManager;
+  isMobile: boolean;
+  canvasLabels: any;
 }
 
 export class OsdComponent extends React.Component<IOsdComponentProps, any> {
-
   static generateView(config) {
     return openSeaDragon(config)
   }
@@ -57,7 +56,7 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
       showReferenceStrip = false
     }
     const ajaxHeaders = {
-       // "x-requested-with": "XMLHttpRequest",
+      // "x-requested-with": "XMLHttpRequest",
     }
 
     return {
@@ -113,10 +112,10 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     const {filterMenuOpen} = this.state
     if (this.osd) {
       return (
-          <ImageFiltersMenu
-            isOpen={filterMenuOpen}
-            osd={this.osd}
-          />
+        <ImageFiltersMenu
+          isOpen={filterMenuOpen}
+          osd={this.osd}
+        />
       )
     }
   }
@@ -125,13 +124,13 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
     const {currentCanvas, currentResourceURI, visionMenuOpen} = this.state
     if (this.osd) {
       return (
-          <VisionMenu
-            currentCanvas={currentCanvas}
-            currentResourceURI={currentResourceURI}
-            images={this.getImages()}
-            isOpen={visionMenuOpen}
-            osd={this.osd}
-          />
+        <VisionMenu
+          currentCanvas={currentCanvas}
+          currentResourceURI={currentResourceURI}
+          images={this.getImages()}
+          isOpen={visionMenuOpen}
+          osd={this.osd}
+        />
       )
     }
   }
@@ -156,8 +155,8 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
       if (this.osd && imageCount > 1) {
         return (
           <PageSelector
-            currentCanvas={currentCanvas}
             canvasLabels={canvasLabels}
+            currentCanvas={currentCanvas}
             imageCount={imageCount}
             osd={this.osd}
           />)
@@ -209,21 +208,21 @@ export class OsdComponent extends React.Component<IOsdComponentProps, any> {
   render() {
     return (
       <main>
-          <div style={{display: 'flex'}}>
-            <div style={OsdComponent.controlBarStyles()}>
-              <div style={{display: 'flex', flexFlow: 'row', height: '40px'}}>
-                <BackArrow/>
-                {this.buildPageSelector()}
-              </div>
-              {this.buildImageFilterMenu()}
-              {this.buildViewSelector()}
-              {this.buildContentTreeMenu()}
-              {this.buildVisionMenu()}
-              <FullScreenIcon/>
+        <div style={{display: 'flex'}}>
+          <div style={OsdComponent.controlBarStyles()}>
+            <div style={{display: 'flex', flexFlow: 'row', height: '40px'}}>
+              <BackArrow/>
+              {this.buildPageSelector()}
             </div>
-            {this.buildPagingControls()}
+            {this.buildImageFilterMenu()}
+            {this.buildViewSelector()}
+            {this.buildContentTreeMenu()}
+            {this.buildVisionMenu()}
+            <FullScreenIcon/>
           </div>
-          <div className='openseadragon' ref={this.setRef}/>
+          {this.buildPagingControls()}
+        </div>
+        <div className='openseadragon' ref={this.setRef}/>
       </main>
     )
   }

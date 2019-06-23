@@ -1,5 +1,5 @@
 import {UUIDResolver} from 'manifest-uuid'
-import * as React from 'react'
+import React from 'react'
 import {Domain} from '../../constants'
 import {SchemaAdapter} from '../schema'
 

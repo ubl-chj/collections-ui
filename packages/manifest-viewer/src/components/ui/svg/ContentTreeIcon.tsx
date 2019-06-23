@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 
 export class ContentTreeIcon extends React.Component<any, any> {
   render() {

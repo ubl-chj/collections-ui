@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import Observer from 'react-intersection-observer'
 import {Link} from 'react-router-dom'
 import {Domain} from '../../constants'

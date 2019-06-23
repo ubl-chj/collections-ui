@@ -9,10 +9,9 @@ const each = require('lodash/each')
 const without = require('lodash/without')
 const find = require('lodash/find')
 
-type StatefulAccessors = Array<StatefulAccessor<any>>
+type StatefulAccessors = StatefulAccessor<any>[]
 
 export class AccessorManager {
-
   accessors: Accessor[]
   statefulAccessors: {}
 
@@ -51,7 +50,6 @@ export class AccessorManager {
         } else {
           throw new Error(`Multiple imcompatible components with id='${accessor.key}' existing on the page`)
         }
-
       } else {
         this.statefulAccessors[accessor.key] = accessor
       }
@@ -101,5 +99,4 @@ export class AccessorManager {
   resetState() {
     each(this.getStatefulAccessors(), (a) => a.resetState())
   }
-
 }

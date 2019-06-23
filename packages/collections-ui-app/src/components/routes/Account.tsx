@@ -1,7 +1,15 @@
 import {AuthUserContext, firebase, NavMenu, withAuthorization, withDynamicLayout} from 'collections-ui-common'
-import * as React from 'react'
-import {Link, withRouter} from 'react-router-dom'
-import {ActionBar, Layout, LayoutBody, LayoutResults, SearchkitManager, SearchkitProvider, SideBar} from 'searchkit-fork'
+import React from 'react'
+import {withRouter} from 'react-router-dom'
+import {
+  ActionBar,
+  Layout,
+  LayoutBody,
+  LayoutResults,
+  SearchkitManager,
+  SearchkitProvider,
+  SideBar
+} from 'searchkit'
 import {FavoritesList, Head} from '../ui'
 import {IRouteProps} from './IRouteProps'
 
@@ -53,7 +61,7 @@ export class AccountPage extends React.Component<IRouteProps, any> {
                     <ActionBar>
                       <AuthUserContext.Consumer>
                         {(authUser) => <div>
-                          <p>Welcome {firebase.auth.currentUser.displayName}!</p>
+                          <p>Welcome {firebase.auth().currentUser.displayName}!</p>
                           <h2>My Workspace</h2>
                           <ListFavoritesWithRouter authUser={authUser}/>
                         </div>}

@@ -1,7 +1,8 @@
-import {AuthProfile, LogoWrapper, NavMenu, withDynamicLayout} from 'collections-ui-common'
-import * as React from 'react'
-import {Layout, LayoutBody, LayoutResults, SideBar, TopBar} from 'searchkit-fork'
+import {AuthProfile, LogoWrapper, NavMenu} from 'collections-ui-common'
+import React from 'react'
+import {Layout, LayoutBody, LayoutResults, SideBar, TopBar} from 'searchkit'
 import {IRouteProps} from './IRouteProps'
+
 const ReactMarkdown = require('react-markdown')
 
 export class Services extends React.Component<IRouteProps, any> {

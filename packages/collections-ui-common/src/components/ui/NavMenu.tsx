@@ -1,11 +1,10 @@
-import * as React from 'react'
+import React from 'react'
 import {push as Menu} from 'react-burger-menu'
 import {ListGroup, ListGroupItem} from 'reactstrap'
 import {API, Help, Octicon, Settings} from './svg'
 import {Link} from 'react-router-dom'
 
 export class NavMenu extends React.Component<any, any> {
-
   static styles() {
     return {
       bmBurgerBars: {
@@ -72,55 +71,55 @@ export class NavMenu extends React.Component<any, any> {
   render() {
     return (
       <Menu
-        styles={NavMenu.styles()}
         disableCloseOnEsc={Boolean(true)}
         isOpen={this.state.menuOpen}
         noOverlay={true}
         onStateChange={this.handleStateChange}
-        pageWrapId={'inner'}
         outerContainerId={'outer'}
+        pageWrapId={'inner'}
+        styles={NavMenu.styles()}
         width='280px'
       >
         <div style={{color: 'rgb(239, 239, 239)', height: '26px', lineHeight: '26px', marginLeft: '75px'}}>Navigation</div>
         <ListGroup>
           <li style={{listStyle: 'none'}}>
             <ListGroupItem
-              tag="a"
-              href="https://github.com/ubl-chj/collections-ui"
-              target='_blank'
-              rel='noopener noreferrer'
               action={true}
+              href="https://github.com/ubl-chj/collections-ui"
+              rel='noopener noreferrer'
+              tag="a"
+              target='_blank'
             >
               <div className='title-flex'>
-                  <Octicon/>
+                <Octicon/>
                 <span className='item-span'>Code Repository</span>
               </div>
             </ListGroupItem>
           </li>
-            <ListGroupItem action={true}>
-              <Link className='bmenu-list' title='Support' to='/support'>
-                <div className='title-flex'>
-                    <Help/>
-                  <div className='item-span'>Help & Feedback</div>
-                </div>
-              </Link>
-            </ListGroupItem>
-            <ListGroupItem action={true}>
-              <Link className='bmenu-list' title='Services' to='/services'>
-                <div className='title-flex'>
-                  <API/>
-                  <div className='item-span'>API & Services</div>
-                </div>
-              </Link>
-            </ListGroupItem>
-            <ListGroupItem action={true}>
-              <Link className='bmenu-list' title='Settings' to='/settings'>
-                <div className='title-flex'>
-                  <Settings/>
-                  <div className='item-span'>Settings</div>
-                </div>
-              </Link>
-            </ListGroupItem>
+          <ListGroupItem action={true}>
+            <Link className='bmenu-list' title='Support' to='/support'>
+              <div className='title-flex'>
+                <Help/>
+                <div className='item-span'>Help & Feedback</div>
+              </div>
+            </Link>
+          </ListGroupItem>
+          <ListGroupItem action={true}>
+            <Link className='bmenu-list' title='Services' to='/services'>
+              <div className='title-flex'>
+                <API/>
+                <div className='item-span'>API & Services</div>
+              </div>
+            </Link>
+          </ListGroupItem>
+          <ListGroupItem action={true}>
+            <Link className='bmenu-list' title='Settings' to='/settings'>
+              <div className='title-flex'>
+                <Settings/>
+                <div className='item-span'>Settings</div>
+              </div>
+            </Link>
+          </ListGroupItem>
         </ListGroup>
       </Menu>
     )

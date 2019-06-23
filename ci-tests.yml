@@ -1,0 +1,18 @@
+version: '3'
+services:
+  collections-ui:
+    image: collections-ui
+    build:
+      args:
+        CIRCLE_BRANCH: $CIRCLE_BRANCH
+        REACT_APP_SEARCH_API_HOST: $REACT_APP_SEARCH_API_HOST
+        REACT_APP_OSD_COMPONENT_BASE: $REACT_APP_OSD_COMPONENT_BASE
+        REACT_APP_FIREBASE_KEY: $REACT_APP_FIREBASE_KEY
+        REACT_APP_VISION_API_BASE: $REACT_APP_VISION_API_BASE
+        REACT_APP_VISION_API_KEY: $REACT_APP_VISION_API_KEY
+        REACT_APP_REDIS_BASE: $REACT_APP_REDIS_BASE
+      context: ./packages/collections-ui-app
+    container_name: collections-ui-app
+    ports:
+      - "5000:5000"
+

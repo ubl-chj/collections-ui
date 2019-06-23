@@ -1,10 +1,9 @@
-import * as React from 'react'
+import React from 'react'
 import {CanvasContext} from '../../../core/react'
 import {OsdComponent} from './OsdComponent'
 const manifesto = require('manifesto-fork')
 
 export class ManifestItem extends React.Component<any, any> {
-
   render() {
     const {document, isMobile} = this.props
     if (document) {
@@ -30,12 +29,12 @@ export class ManifestItem extends React.Component<any, any> {
         <CanvasContext.Consumer>
           {(currentCanvas) =>
             <OsdComponent
-              currentCanvas={currentCanvas}
               canvasLabels={canvasLabels}
-              isMobile={isMobile}
+              currentCanvas={currentCanvas}
               images={imageIds}
+              isMobile={isMobile}
             />}
-         </CanvasContext.Consumer>
+        </CanvasContext.Consumer>
       )
     }
     return (null)

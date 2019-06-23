@@ -1,6 +1,5 @@
 import {DynamicLayoutContext, NavMenu} from 'collections-ui-common'
-import * as React from 'react'
-import {Link, withRouter} from 'react-router-dom'
+import React from 'react'
 import {
   ItemList,
   Layout,
@@ -15,7 +14,7 @@ import {
   SearchkitProvider,
   SideBar,
   ViewSwitcherHits,
-} from 'searchkit-fork'
+} from 'searchkit'
 import {StandardGridItem, StandardListItem} from '../items'
 import {HeadMeta} from '../schema'
 import {ActionBarComponent, Head} from '../ui'

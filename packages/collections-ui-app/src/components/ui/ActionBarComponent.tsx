@@ -1,4 +1,3 @@
-import * as React from 'react'
 import {
   ActionBar,
   ActionBarRow,
@@ -7,58 +6,43 @@ import {
   ResetFilters,
   SortingSelector,
   ViewSwitcherToggle,
-} from 'searchkit-fork'
+} from 'searchkit'
 import {FilterMenu} from './FilterMenu'
+import React, {ReactElement} from 'react'
 
-export class ActionBarComponent extends React.Component<any, any> {
+export const ActionBarComponent: React.FC<any> = (props): ReactElement => {
+  const {isMobile, routeConfig} = props
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      isMobile: props.isMobile,
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.isMobile !== prevProps.isMobile) {
-      this.setState({isMobile: this.props.isMobile})
-    }
-  }
-
-  render() {
-    const {routeConfig} = this.props
-    const {isMobile} = this.state
-    if (isMobile) {
-      return (
-        <ActionBar>
-          <ActionBarRow>
-            <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
-            <ViewSwitcherToggle/>
-            <SortingSelector options={routeConfig.sortingSelectorOptions}/>
-          </ActionBarRow>
-          <FilterMenu
-            routeConfig={routeConfig}
-          />
-          <ActionBarRow>
-            <GroupedSelectedFilters/>
-            <ResetFilters/>
-          </ActionBarRow>
-        </ActionBar>
-      )
-    } else {
-      return (
-        <ActionBar>
-          <ActionBarRow>
-            <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
-            <ViewSwitcherToggle/>
-            <SortingSelector options={routeConfig.sortingSelectorOptions}/>
-          </ActionBarRow>
-          <ActionBarRow>
-            <GroupedSelectedFilters/>
-            <ResetFilters/>
-          </ActionBarRow>
-        </ActionBar>
-      )
-    }
+  if (isMobile) {
+    return (
+      <ActionBar>
+        <ActionBarRow>
+          <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
+          <ViewSwitcherToggle/>
+          <SortingSelector options={routeConfig.sortingSelectorOptions}/>
+        </ActionBarRow>
+        <FilterMenu
+          routeConfig={routeConfig}
+        />
+        <ActionBarRow>
+          <GroupedSelectedFilters/>
+          <ResetFilters/>
+        </ActionBarRow>
+      </ActionBar>
+    )
+  } else {
+    return (
+      <ActionBar>
+        <ActionBarRow>
+          <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
+          <ViewSwitcherToggle/>
+          <SortingSelector options={routeConfig.sortingSelectorOptions}/>
+        </ActionBarRow>
+        <ActionBarRow>
+          <GroupedSelectedFilters/>
+          <ResetFilters/>
+        </ActionBarRow>
+      </ActionBar>
+    )
   }
 }

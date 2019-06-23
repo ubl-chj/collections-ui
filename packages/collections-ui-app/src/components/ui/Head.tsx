@@ -1,43 +1,34 @@
 import {AuthProfile, LogoWrapper} from 'collections-ui-common'
-import * as React from 'react'
-import {Link} from 'react-router-dom'
-import {SearchBox, TopBar} from 'searchkit-fork'
 import {CloseButton, SearchIcon} from './svg'
+import {SearchBox, TopBar} from 'searchkit'
+import React, {ReactElement, useState} from 'react'
+import {useMediaQuery} from '@material-ui/core'
 
-export class Head extends React.Component<any, any> {
-  routeConfig: string
+export const Head: React.FC<any> = (props): ReactElement => {
+  const {routeConfig} = props
+  const [searchBoxVisible, setIsSearchBoxVisible] = useState(false)
+  const matches = useMediaQuery('(max-width:600px)')
 
-  constructor(props) {
-    super(props)
-    this.routeConfig = props.routeConfig
-    this.state = {
-      isMobile: props.isMobile,
-      searchBoxVisible: false,
-    }
+  const toggleSearchBox = () => {
+    setIsSearchBoxVisible(!searchBoxVisible)
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.isMobile !== prevProps.isMobile) {
-      this.setState({isMobile: this.props.isMobile})
-    }
-  }
-
-  toggleSearchBox = () => {
-    this.setState((prevState) => {
-      return {searchBoxVisible: !prevState.searchBoxVisible};
-    })
-  }
-
-  buildSearchBox() {
-    const {routeConfig} = this.props
-    const {isMobile} = this.state
-    if (isMobile) {
-      if (this.state.searchBoxVisible) {
+  const buildSearchBox = () => {
+    if (matches) {
+      if (searchBoxVisible) {
         return (
           <TopBar>
-            <SearchBox autofocus={true} searchOnChange={true} queryFields={routeConfig.queryFields}/>
+            <SearchBox
+              autofocus={true}
+              searchOnChange={true}
+              queryFields={routeConfig.queryFields}
+            />
             <div className='JUQOtc'>
-              <button aria-label='toggle search box' className='sbico-d' type='button' onClick={this.toggleSearchBox}>
+              <button
+                aria-label='toggle search box'
+                className='sbico-d'
+                type='button'
+                onClick={toggleSearchBox}>
                 <span className='z1asCe'>
                   <CloseButton/>
                 </span>
@@ -48,7 +39,11 @@ export class Head extends React.Component<any, any> {
       }
       return (
         <div className='JUQOtc'>
-          <button aria-label='toggle search box' className='sbico-c' type='button' onClick={this.toggleSearchBox}>
+          <button
+            aria-label='toggle search box'
+            className='sbico-c'
+            type='button'
+            onClick={toggleSearchBox}>
               <span className='z1asCe'>
                 <SearchIcon/>
               </span>
@@ -57,18 +52,18 @@ export class Head extends React.Component<any, any> {
       )
     } else {
       return (
-        <SearchBox autofocus={true} searchOnChange={true} queryFields={routeConfig.queryFields}/>)
+        <SearchBox
+          autofocus={true}
+          searchOnChange={true}
+          queryFields={routeConfig.queryFields}
+        />)
     }
   }
-
-  render() {
-    const {isMobile} = this.state
     return(
       <TopBar>
         <LogoWrapper/>
-        {this.buildSearchBox()}
-        <AuthProfile isMobile={isMobile}/>
+        {buildSearchBox()}
+        <AuthProfile isMobile={matches}/>
       </TopBar>
     )
-  }
 }
