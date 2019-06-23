@@ -1,5 +1,5 @@
 ## Collections UI
-[![Build Status](https://travis-ci.org/ubl-chj/collections-ui.svg?branch=master)](https://travis-ci.org/ubl-chj/collections-ui)
+[![CircleCI](https://circleci.com/gh/ubl-chj/collections-ui.svg?style=svg)](https://circleci.com/gh/ubl-chj/collections-ui)
 
 An interface that sources ElasticSearch indices and provides collections of IIIF manifests.
 

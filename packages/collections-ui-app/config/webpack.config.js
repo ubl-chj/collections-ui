@@ -146,7 +146,7 @@ module.exports = function(webpackEnv) {
           {},
           {
             inject: true,
-            template: paths.appHtml,
+            template: isEnvDevelopment ? paths.devAppHtml : paths.appHtml,
           },
           isEnvProduction
             ? {
