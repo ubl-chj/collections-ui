@@ -10,26 +10,13 @@ Also provides an image viewer (WIP).
 In conjunction with [Elastic Manifests](https://github.com/ubl-chj/elastic-manifests),
 the UI provides access to dynamic keyword sourced manifest assembly.
 
-## Install Packages
-```bash
-$ lerna init
-$ npm run bootstrap
-$ cd packages/collections-ui-common
-$ npm install
-$ cd ../manifest-viewer
-$ npm install
-$ cd ../collections-ui-app
-$ npm install
+### Build and Start React App
+ ```bash
+ $ npm install
+ $ lerna bootstrap --hoist
+ $ lerna run build
+ $ lerna run start
 ```
-* Note that if you are using Node >= v11, run npm install with the --build-from-source flag.  See Dockerfile for reference.
-
-## Build and Run (from root directory)
-
-```bash
-$ lerna run build
-$ lerna run start
-```
-
 ## Environment
 
 Create the file `packages/collections-ui-app/.env`
@@ -47,8 +34,12 @@ REACT_APP_VISION_API_BASE=https://vision.googleapis.com/v1/images:annotate?key=
 
 ## Docker Compose
 ```bash
-docker-compose up
+    $ cd deployment
+    $ docker-compose up
 ```
+
+### Continuous Deployment
+https://collections-ui.netlify.com/
 
 See [manifest-metadata-processor](https://github.com/ub-leipzig/manifest-metadata-processor) for
 the tooling to create JSON documents for elastic search from manifest metadata.

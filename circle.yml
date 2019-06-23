@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+  build:
+    machine:
+      docker_layer_caching: false
+    steps:
+      - checkout
+      - run: docker-compose -f ci-tests.yml build
+      - run: docker-compose -f ci-tests.yml up --abort-on-container-exit --exit-code-from e2e
+workflows:
+  build:
+    jobs:
+      - build
+  version: 2
+
