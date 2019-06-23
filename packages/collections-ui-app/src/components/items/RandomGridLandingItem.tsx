@@ -1,11 +1,17 @@
-import {ResultContext} from 'collections-ui-common'
-import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveCreator,
-  resolveManifestId, resolveName, Thumbnail, Title} from 'collections-ui-common'
-import * as React from 'react'
-import {Link} from 'react-router-dom'
+import {
+  buildImageView,
+  buildThumbnailReference,
+  getSchema,
+  resolveCreator,
+  resolveManifestId,
+  resolveName,
+  ResultContext,
+  Thumbnail,
+  Title
+} from 'collections-ui-common'
 import {ItemProps} from './ItemProps'
-
-const extend = require('lodash/extend')
+import React from 'react'
+import extend from 'lodash/extend'
 
 export class RandomGridLandingItem extends React.Component<ItemProps, any> {
 

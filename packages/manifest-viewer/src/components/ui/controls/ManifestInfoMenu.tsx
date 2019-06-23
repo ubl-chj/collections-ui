@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import {push as Menu} from 'react-burger-menu'
 import {MetadataItem} from '../osd'
 import {InfoIcon} from '../svg'

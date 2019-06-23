@@ -1,6 +1,6 @@
 import Checkbox from 'rc-checkbox'
 import Slider from 'rc-slider'
-import * as React from 'react'
+import React from 'react'
 import {slide as Menu} from 'react-burger-menu'
 import {BRIGHTNESS, Filtering, GREYSCALE, INVERT} from '../../filtering'
 import {FiltersIcon} from '../svg'
@@ -62,11 +62,43 @@ export class ImageFiltersMenu extends React.Component<any, any> {
         />
         <div className='Hj59Ib'>Invert</div>
         <Checkbox
+          prefixCls={null}
+          className={null}
+          style={null}
+          name=""
+          id=""
+          type=""
+          defaultChecked={null}
+          checked={null}
+          disabled={null}
+          onFocus={null}
+          onBlur={null}
+          onClick={null}
+          tabIndex=""
+          readOnly={null}
+          autoFocus={null}
+          value=""
           aria-label='invert'
           onChange={this.toggleInvert}
         />
         <div className='Hj59Ib'>Greyscale</div>
         <Checkbox
+          prefixCls={null}
+          className={null}
+          style={null}
+          name=""
+          id=""
+          type=""
+          defaultChecked={null}
+          checked={null}
+          disabled={null}
+          onFocus={null}
+          onBlur={null}
+          onClick={null}
+          tabIndex=""
+          readOnly={null}
+          autoFocus={null}
+          value=""
           aria-label='grayscale'
           onChange={this.toggleGreyscale}
         />

@@ -1,5 +1,5 @@
 import {firebase, Star} from 'collections-ui-common'
-import * as React from 'react'
+import React from 'react'
 
 export class FavoritesListButton extends React.Component<any, any> {
   state: {

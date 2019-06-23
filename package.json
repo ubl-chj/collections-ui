@@ -1,55 +1,126 @@
 {
-    "private": true,
-    "name": "collections-ui",
-    "keywords": [
-        "elasticsearch",
-        "elastic search",
-        "react",
-        "ui components",
-        "search",
-        "library",
-        "client-side",
-        "widgets",
-        "react components",
-        "react-component"
-    ],
-    "homepage": "https://github.com/ubl-chj/collections-ui",
-    "bugs": {
-        "url": "https://github.com/ubl-chj/collections-ui/issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ubl-chj/collections-ui.git"
-    },
-    "scripts": {
-        "bootstrap": "lerna bootstrap",
-        "build": "lerna run build",
-        "init": "lerna init"
-    },
-    "authors": [
-        {
-            "name": "Christopher Johnson",
-            "email": "chjohnson39@gmail.com"
-        }
-    ],
-    "contributors": [
-        {
-            "name": "",
-            "email": ""
-        }
-    ],
-    "license": "Apache-2.0",
-    "dependencies": {
-        "mocha": "^5.2.0"
-    },
-    "devDependencies": {
-        "babel-eslint": "^10.0.1",
-        "eslint": "^5.11.0",
-        "eslint-plugin-babel": "^5.3.0",
-        "eslint-plugin-jsx-a11y": "^6.1.2",
-        "eslint-plugin-react": "^7.11.1",
-        "lerna": "^3.5.1",
-        "typescript": "^3.2.2",
-        "typescript-eslint-parser": "^21.0.2"
+  "private": true,
+  "name": "collections-ui",
+  "keywords": [
+    "elasticsearch",
+    "elastic search",
+    "react",
+    "ui components",
+    "search",
+    "library",
+    "client-side",
+    "widgets",
+    "react components",
+    "react-component"
+  ],
+  "homepage": "https://github.com/ubl-chj/collections-ui",
+  "bugs": {
+    "url": "https://github.com/ubl-chj/collections-ui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ubl-chj/collections-ui.git"
+  },
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "init": "lerna init"
+  },
+  "authors": [
+    {
+      "name": "Christopher Johnson",
+      "email": "chjohnson39@gmail.com"
     }
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "bootstrap": "^4.2.1",
+    "collections-ui-common": "file:packages/collections-ui-common",
+    "firebase": "^6.2.2",
+    "fs-extra": "^8.0.1",
+    "manifest-viewer": "file:packages/manifest-viewer",
+    "object-assign": "^4.1.1",
+    "promise": "^8.0.3",
+    "react": "^16.8.6",
+    "react-burger-menu": "^2.6.10",
+    "react-dev-utils": "^9.0.1",
+    "react-dom": "^16.8.6",
+    "react-firebaseui": "^3.1.2",
+    "react-gtm-module": "^2.0.7",
+    "react-head": "^3.1.1",
+    "react-intersection-observer": "^8.23.0",
+    "react-loadable": "^5.5.0",
+    "react-markdown": "^4.0.9",
+    "react-router-dom": "^5.0.1",
+    "searchkit-fork": "^2.3.9",
+    "whatwg-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/code-frame": "^7.0.0",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-react": "^7.0.0",
+    "@types/node": "^10.12.18",
+    "@types/react": "^16.8.22",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-router": "^5.0.2",
+    "@typescript-eslint/eslint-plugin": "^1.10.2",
+    "@typescript-eslint/parser": "^1.10.2",
+    "autoprefixer": "^9.6.0",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.2",
+    "babel-loader": "^8.0.6",
+    "babel-polyfill": "^6.26.0",
+    "case-sensitive-paths-webpack-plugin": "^2.2.0",
+    "css-loader": "^3.0.0",
+    "dotenv": "^8.0.0",
+    "dotenv-expand": "^5.1.0",
+    "dotenv-webpack": "^1.7.0",
+    "eslint": "^5.16.0",
+    "eslint-config-dev": "^2.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-config-typescript": "^2.0.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-cypress": "^2.2.1",
+    "eslint-plugin-flowtype": "^3.10.5",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jest": "^22.7.1",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-react-hooks": "^1.6.0",
+    "eslint-plugin-standard": "^4.0.0",
+    "file-loader": "^2.0.0",
+    "html-webpack-plugin": "4.0.0-beta.5",
+    "interpolate-html-plugin": "^3.0.0",
+    "jest": "^23.6.0",
+    "lerna": "^3.14.1",
+    "mini-css-extract-plugin": "^0.4.5",
+    "node-sass": "^4.11.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.0",
+    "pnp-webpack-plugin": "1.2.1",
+    "react-dev-utils": "^9.0.0",
+    "react-hot-loader": "^4.9.0",
+    "postcss-flexbugs-fixes": "^4.1.0",
+    "postcss-loader": "^3.0.0",
+    "raf": "3.4.0",
+    "sass-loader": "^7.1.0",
+    "source-map-loader": "^0.2.4",
+    "source-map-support": "^0.5.12",
+    "style-loader": "^0.23.1",
+    "terser-webpack-plugin": "^1.2.0",
+    "ts-loader": "^5.3.2",
+    "tslint": "^5.12.0",
+    "tslint-react": "^3.6.0",
+    "typescript": "^3.5.2",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.3.1",
+    "webpack-manifest-plugin": "^2.0.4",
+    "webpack-stats-plugin": "^0.2.1",
+    "workbox-webpack-plugin": "4.2.0"
+  }
 }

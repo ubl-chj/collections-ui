@@ -1,6 +1,6 @@
 import {AuthUserContext, LogoWrapper} from 'collections-ui-common'
 import 'firebase/auth'
-import * as React from 'react'
+import React from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import {Layout, LayoutBody, LayoutResults, TopBar} from 'searchkit-fork'
 import '../../styles/firebaseui-styling.global.css'

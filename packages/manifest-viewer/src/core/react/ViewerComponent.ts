@@ -1,5 +1,5 @@
 import * as PropTypes from 'prop-types'
-import * as React from 'react'
+import React from 'react'
 import {Accessor} from '../accessors'
 import {ViewerManager} from '../ViewerManager'
 import {block} from './block'

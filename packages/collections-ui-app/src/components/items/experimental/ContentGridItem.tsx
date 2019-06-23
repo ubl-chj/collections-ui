@@ -1,6 +1,7 @@
 import {Domain} from 'collections-ui-common'
-import * as React from 'react'
+import React from 'react'
 import {ItemProps} from '../ItemProps'
+
 const extend = require('lodash/extend')
 
 export class ContentGridItem extends React.Component<ItemProps, any> {

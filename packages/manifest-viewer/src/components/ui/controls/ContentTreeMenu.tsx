@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import {push as Menu} from 'react-burger-menu'
 import {ContentTreeIcon} from '../svg'
 import {ContentTree} from './ContentTree'

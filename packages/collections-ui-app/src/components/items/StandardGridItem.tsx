@@ -1,11 +1,16 @@
-import {ResultContext} from 'collections-ui-common'
-import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveManifestId,
-  resolveName, shortenTitle} from 'collections-ui-common'
-import * as React from 'react'
+import {
+  buildImageView,
+  buildThumbnailReference,
+  getSchema,
+  resolveManifestId,
+  resolveName,
+  ResultContext,
+  shortenTitle
+} from 'collections-ui-common'
 import {GridItemDisplay} from '../ui/GridItemDisplay'
 import {ItemProps} from './ItemProps'
-
-const extend = require('lodash/extend')
+import React from 'react'
+import extend from 'lodash/extend'
 
 export class StandardGridItem extends React.Component<ItemProps, any> {
 

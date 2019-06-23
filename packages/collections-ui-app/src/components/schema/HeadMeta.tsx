@@ -1,5 +1,5 @@
 import {Domain} from 'collections-ui-common'
-import * as React from 'react'
+import React from 'react'
 import {HeadProvider, Meta, Title} from 'react-head'
 
 export class HeadMeta extends React.Component<any, any> {

@@ -7,7 +7,7 @@ import treeStyles from './styles/treeStyles'
 
 const Div = styled('div', {
   shouldForwardProp: (prop) => ['className', 'children'].indexOf(prop) !== -1,
-})(({ style }) => style)
+})(({ style }): any => style)
 
 export class ContentTree extends ViewerComponent<any, any> {
 

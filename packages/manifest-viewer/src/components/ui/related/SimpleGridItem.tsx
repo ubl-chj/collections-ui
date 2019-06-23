@@ -1,6 +1,6 @@
 import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveCreator,
   resolveManifestId, resolveName, ResultContext, shortenTitle, Thumbnail} from 'collections-ui-common'
-import * as React from 'react'
+import React from 'react'
 import {Link} from 'react-router-dom'
 import {DocumentViewAccessor} from '../../../core/accessors'
 import {ViewerComponent} from '../../../core/react'

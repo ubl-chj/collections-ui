@@ -1,5 +1,5 @@
-import {AuthProfile, firebase, LogoWrapper, NavMenu, withDynamicLayout} from 'collections-ui-common'
-import * as React from 'react'
+import {AuthProfile, LogoWrapper, NavMenu} from 'collections-ui-common'
+import React from 'react'
 import {Layout, LayoutBody, LayoutResults, SideBar, TopBar} from 'searchkit-fork'
 import {IRouteProps} from './IRouteProps'
 

@@ -1,6 +1,7 @@
 import {AuthUserContext, firebase} from 'collections-ui-common'
-import * as React from 'react'
 import {FavoriteListItem} from './FavoriteListItem'
+import React from 'react'
+
 const uuidv4 = require('uuid/v4')
 
 export class FavoritesList extends React.Component<any, any> {

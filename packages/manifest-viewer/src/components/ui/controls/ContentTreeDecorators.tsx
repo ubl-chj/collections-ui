@@ -5,7 +5,7 @@ import {VelocityComponent} from 'velocity-react'
 
 const Div = styled('div', {
   shouldForwardProp: (prop) => ['className', 'children'].indexOf(prop) !== -1,
-})((({style}) => style))
+})((({style}): any => style))
 
 const Loading = styled(({ className }) => {
   return <div className={className}>loading...</div>;

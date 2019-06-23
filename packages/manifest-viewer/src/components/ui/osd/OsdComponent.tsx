@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import {ViewerManager} from '../../../core'
 import {ContentTreeMenu, ImageFiltersMenu, PageSelector, ViewSelector, VisionMenu} from '../controls'
 import {PagingControls} from '../controls/PagingControls'

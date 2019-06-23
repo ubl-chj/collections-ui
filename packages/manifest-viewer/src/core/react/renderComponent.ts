@@ -1,5 +1,5 @@
 import * as PropTypes from 'prop-types'
-import * as React from 'react'
+import React from 'react'
 
 const omitBy = require('lodash/omitBy')
 const isUndefined = require('lodash/isUndefined')

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {AuthTokenContext, Domain} from 'collections-ui-common'
 import Checkbox from 'rc-checkbox'
-import * as React from 'react'
+import React from 'react'
 import {push as Menu} from 'react-burger-menu'
 import ReactDOM from 'react-dom'
 import {CircleLoader} from 'react-spinners'
@@ -146,21 +146,85 @@ export class VisionMenu extends ViewerComponent<any, any> {
       <div style={{width: 200}} className='xjKiLc'>
         <div className='Hj59Ib'>Detect Labels</div>
         <Checkbox
+          prefixCls={null}
+          className={null}
+          style={null}
+          name=""
+          id=""
+          type=""
+          defaultChecked={null}
+          checked={null}
+          disabled={null}
+          onFocus={null}
+          onBlur={null}
+          onClick={null}
+          tabIndex=""
+          readOnly={null}
+          autoFocus={null}
+          value=""
           aria-label='detect label'
           onChange={this.toggleLabelDetect}
         />
         <div className='Hj59Ib'>Detect Text</div>
         <Checkbox
+          prefixCls={null}
+          className={null}
+          style={null}
+          name=""
+          id=""
+          type=""
+          defaultChecked={null}
+          checked={null}
+          disabled={null}
+          onFocus={null}
+          onBlur={null}
+          onClick={null}
+          tabIndex=""
+          readOnly={null}
+          autoFocus={null}
+          value=""
           aria-label='detect text'
           onChange={this.toggleTextDetect}
         />
         <div className='Hj59Ib'>Image Properties</div>
         <Checkbox
+          prefixCls={null}
+          className={null}
+          style={null}
+          name=""
+          id=""
+          type=""
+          defaultChecked={null}
+          checked={null}
+          disabled={null}
+          onFocus={null}
+          onBlur={null}
+          onClick={null}
+          tabIndex=""
+          readOnly={null}
+          autoFocus={null}
+          value=""
           aria-label='image properties'
           onChange={this.toggleImageProperties}
         />
         <div className='Hj59Ib'>Detect Web</div>
         <Checkbox
+          prefixCls={null}
+          className={null}
+          style={null}
+          name=""
+          id=""
+          type=""
+          defaultChecked={null}
+          checked={null}
+          disabled={null}
+          onFocus={null}
+          onBlur={null}
+          onClick={null}
+          tabIndex=""
+          readOnly={null}
+          autoFocus={null}
+          value=""
           aria-label='web detect'
           onChange={this.toggleWebDetect}
         />

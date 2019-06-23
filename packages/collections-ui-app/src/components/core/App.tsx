@@ -1,6 +1,6 @@
 import {Routes, withAuthentication, withDynamicLayout, withIdToken} from 'collections-ui-common'
 import {Previewer, Viewer} from 'manifest-viewer'
-import * as React from 'react'
+import React from 'react'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import '../../styles/index.css'
 import {Help, Landing, Services, SignIn} from '../routes'

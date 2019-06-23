@@ -1,5 +1,5 @@
 import {Domain, resolveCreator} from 'collections-ui-common'
-import * as React from 'react'
+import React from 'react'
 import {ActionBar, ActionBarRow, HitsStats, NoHits, PageSizeSelector, Pagination, SearchkitManager, SearchkitProvider,
   Select} from 'searchkit-fork'
 import {RelatedHits} from './RelatedHits'

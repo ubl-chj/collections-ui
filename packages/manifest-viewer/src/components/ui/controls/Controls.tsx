@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import {HeadProvider, Meta, Title} from 'react-head'
 import {ScaleLoader} from 'react-spinners'
 import {AnnotationsAccessor, ViewerComponent} from '../../../core'

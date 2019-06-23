@@ -1,5 +1,5 @@
 import measureText from 'measure-text'
-import * as React from 'react'
+import React from 'react'
 import {withRouter} from 'react-router'
 import Select from 'react-select'
 

@@ -1,5 +1,5 @@
 import {resolveCreator, Thumbnail, Title} from 'collections-ui-common'
-import * as React from 'react'
+import React from 'react'
 
 export interface IGridItemDisplayProps {
   bemBlocks: any

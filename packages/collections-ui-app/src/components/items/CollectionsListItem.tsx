@@ -1,13 +1,12 @@
 import {DynamicLayoutContext, ResultContext} from 'collections-ui-common'
-import * as React from 'react'
-import Observer from 'react-intersection-observer'
-import {Link} from 'react-router-dom'
 import {Hits, SearchkitManager, SearchkitProvider} from 'searchkit-fork'
-import {RefreshIcon} from '../ui/svg'
 import {ItemProps} from './ItemProps'
+import {Link} from 'react-router-dom'
+import Observer from 'react-intersection-observer'
 import {RandomListLandingItem} from './RandomListLandingItem'
-
-const extend = require('lodash/extend')
+import React from 'react'
+import {RefreshIcon} from '../ui/svg'
+import extend from 'lodash/extend'
 
 export const makeValue = (value) => {
     return {__html: value}
@@ -90,7 +89,7 @@ export class CollectionsListItem extends React.Component<ItemProps, any> {
 
   render() {
     const {result, bemBlocks} = this.props
-    const source = extend({}, result._source, result.highlight)
+    const source: any = extend({}, result._source, result.highlight)
     const index = source.index
     const queryContext = this.host + index
     this.searchkit2 = new SearchkitManager(queryContext, this.options)

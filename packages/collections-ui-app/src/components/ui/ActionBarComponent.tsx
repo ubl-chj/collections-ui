@@ -1,4 +1,3 @@
-import * as React from 'react'
 import {
   ActionBar,
   ActionBarRow,
@@ -9,6 +8,7 @@ import {
   ViewSwitcherToggle,
 } from 'searchkit-fork'
 import {FilterMenu} from './FilterMenu'
+import React from 'react'
 
 export class ActionBarComponent extends React.Component<any, any> {
 

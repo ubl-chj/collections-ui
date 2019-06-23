@@ -1,5 +1,5 @@
 import {AuthUserContext, FavoriteButton, firebase} from 'collections-ui-common'
-import * as React from 'react'
+import React from 'react'
 import {HomeIcon, RotateLeftIcon, RotateRightIcon, ZoomInIcon, ZoomOutIcon} from '../svg'
 
 export class ButtonBar extends React.Component<any, any> {

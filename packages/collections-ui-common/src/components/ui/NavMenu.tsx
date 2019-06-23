@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import {push as Menu} from 'react-burger-menu'
 import {ListGroup, ListGroupItem} from 'reactstrap'
 import {API, Help, Octicon, Settings} from './svg'

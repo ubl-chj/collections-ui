@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import {AuthUserContext} from '../../auth/'
 import {AuthUserProfile} from './AuthUserProfile'
 import {AuthUserTooltip} from './AuthUserTooltip'

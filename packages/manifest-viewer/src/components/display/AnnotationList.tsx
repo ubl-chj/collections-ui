@@ -1,5 +1,5 @@
 import * as PropTypes from 'prop-types'
-import * as React from 'react'
+import React from 'react'
 import {block, renderComponent, RenderComponentPropType, RenderComponentType} from '../../core/react'
 import {AnnotationItem, IAnnotationItemProps} from './AnnotationItem'
 

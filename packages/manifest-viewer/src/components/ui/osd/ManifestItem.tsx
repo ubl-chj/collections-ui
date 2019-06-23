@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import {CanvasContext} from '../../../core/react'
 import {OsdComponent} from './OsdComponent'
 const manifesto = require('manifesto-fork')

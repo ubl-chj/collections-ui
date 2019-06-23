@@ -1,13 +1,19 @@
-import {DynamicLayoutContext, ResultContext} from 'collections-ui-common'
-import {buildImagePreview, buildImageView, buildThumbnailReference, getSchema, resolveManifestId,
-  resolveName, Thumbnail, Title} from 'collections-ui-common'
-import * as React from 'react'
-import {Link} from 'react-router-dom'
+import {
+  buildImageView,
+  buildThumbnailReference,
+  DynamicLayoutContext,
+  getSchema,
+  resolveManifestId,
+  resolveName,
+  ResultContext,
+  Thumbnail,
+  Title
+} from 'collections-ui-common'
 import {ListSchemaEntry} from '../ui/ListItemDisplay'
 import {ItemProps} from './ItemProps'
-
-const uuidv4 = require('uuid/v4');
-const extend = require('lodash/extend')
+import React from 'react'
+import uuidv4 from 'uuid/v4';
+import extend from 'lodash/extend'
 
 export class RandomListLandingItem extends React.Component<ItemProps, any> {
 

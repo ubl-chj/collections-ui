@@ -1,5 +1,13 @@
-import {AuthUserContext, DynamicLayoutContext, FavoriteButton, firebase, resolveName, Thumbnail, Title} from 'collections-ui-common'
-import * as React from 'react'
+import {
+  AuthUserContext,
+  DynamicLayoutContext,
+  FavoriteButton,
+  firebase,
+  resolveName,
+  Thumbnail,
+  Title
+} from 'collections-ui-common'
+import React from 'react'
 
 const uuidv4 = require('uuid/v4')
 
