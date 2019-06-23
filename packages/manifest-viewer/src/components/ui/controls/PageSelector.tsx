@@ -133,7 +133,7 @@ export class PageSelectorComponent extends React.Component<any, any> {
     const minWidth = 72 + 8 + maxTextWidth + 0 + 'px'
     if (this.state.imageCount > 1) {
       return (
-          <div className='selector' style={{paddingLeft: '10px', marginTop: '48px', minWidth}}>
+          <div className='selector' style={{paddingLeft: '10px', zIndex: 100, minWidth}}>
             <Select
               aria-label='select page'
               autosize={Boolean(true)}

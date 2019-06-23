@@ -1,4 +1,4 @@
-import Checkbox from 'rc-checkbox'
+import {Checkbox} from '@material-ui/core'
 import Slider from 'rc-slider'
 import React from 'react'
 import {slide as Menu} from 'react-burger-menu'
@@ -62,45 +62,21 @@ export class ImageFiltersMenu extends React.Component<any, any> {
         />
         <div className='Hj59Ib'>Invert</div>
         <Checkbox
-          prefixCls={null}
-          className={null}
-          style={null}
-          name=""
-          id=""
-          type=""
-          defaultChecked={null}
-          checked={null}
-          disabled={null}
-          onFocus={null}
-          onBlur={null}
-          onClick={null}
-          tabIndex=""
-          readOnly={null}
-          autoFocus={null}
-          value=""
-          aria-label='invert'
+          checked={this.state.inverted}
           onChange={this.toggleInvert}
+          inputProps={{
+            'aria-label': 'primary checkbox',
+          }}
+          style={{color: "rgba(255, 255, 255, 0.54)"}}
         />
         <div className='Hj59Ib'>Greyscale</div>
         <Checkbox
-          prefixCls={null}
-          className={null}
-          style={null}
-          name=""
-          id=""
-          type=""
-          defaultChecked={null}
-          checked={null}
-          disabled={null}
-          onFocus={null}
-          onBlur={null}
-          onClick={null}
-          tabIndex=""
-          readOnly={null}
-          autoFocus={null}
-          value=""
-          aria-label='grayscale'
+          checked={this.state.grayscale}
           onChange={this.toggleGreyscale}
+          inputProps={{
+            'aria-label': 'primary checkbox',
+          }}
+          style={{color: "rgba(255, 255, 255, 0.54)"}}
         />
       </div>
     )
