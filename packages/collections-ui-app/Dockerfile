@@ -20,12 +20,12 @@ RUN printenv
 WORKDIR /srv/collections-ui
 RUN git clone https://github.com/ubl-chj/collections-ui.git ./
 RUN git checkout ${CIRCLE_BRANCH}
+
 RUN npm i npm@latest -g
 RUN npm install --global lerna
 RUN lerna bootstrap --hoist
 RUN lerna run build
 RUN yarn global add serve
-
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod 700 /entrypoint.sh
 

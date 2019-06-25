@@ -1,5 +1,6 @@
 const fs = require('fs');
 const isWsl = require('is-wsl');
+const Dotenv = require('dotenv-webpack')
 const path = require('path');
 const webpack = require('webpack');
 const resolve = require('resolve');
@@ -141,6 +142,7 @@ module.exports = function(webpackEnv) {
     },
     performance: false,
     plugins: [
+      new Dotenv(),
       new HtmlWebpackPlugin(
         Object.assign(
           {},

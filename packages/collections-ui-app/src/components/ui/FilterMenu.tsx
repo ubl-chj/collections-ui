@@ -1,10 +1,10 @@
 import {ActionBarRow, ItemList, RefinementListFilter} from 'searchkit'
 import {push as Menu} from 'react-burger-menu'
-import React from 'react'
+import React, {ReactElement, useState} from 'react'
 
-export class FilterMenu extends React.Component<any, any> {
-
-  static styles() {
+export const FilterMenu: React.FC<any> = (props): ReactElement => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const styles = () => {
     return {
       bmBurgerBars: {
         background: 'white',
@@ -52,69 +52,56 @@ export class FilterMenu extends React.Component<any, any> {
     }
   }
 
-  routeConfig: any
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      menuOpen: false,
-    }
+  const handleStateChange = () => {
+    setIsMenuOpen(isMenuOpen)
   }
 
-  handleStateChange = (state) => {
-    this.setState({menuOpen: state.menuOpen})
+  const toggleFilterMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
   }
 
-  toggleFilterMenu = () => {
-    this.setState((prevState) => {
-      return {menuOpen: !prevState.menuOpen};
-    })
-  }
-
-  render() {
-    const {routeConfig} = this.props
-    return (
-      <ActionBarRow>
-        <Menu
-          customBurgerIcon={false}
-          styles={FilterMenu.styles()}
-          isOpen={this.state.menuOpen}
-          noOverlay={true}
-          right={true}
-          onStateChange={this.handleStateChange}
-          width='340px'
-        ><br/>
-            <RefinementListFilter
-              field={routeConfig.refinementListFilterDef1.field}
-              title={routeConfig.refinementListFilterDef1.title}
-              id={routeConfig.refinementListFilterDef1.id}
-              operator='AND'
-              listComponent={ItemList}
-            />
+  const {routeConfig} = props
+  return (
+    <ActionBarRow>
+      <Menu
+        customBurgerIcon={false}
+        styles={styles()}
+        isOpen={isMenuOpen}
+        noOverlay={true}
+        right={true}
+        onStateChange={handleStateChange}
+        width='340px'
+      ><br/>
           <RefinementListFilter
-            field={routeConfig.refinementListFilterDef2.field}
-            title={routeConfig.refinementListFilterDef2.title}
-            id={routeConfig.refinementListFilterDef2.id}
+            field={routeConfig.refinementListFilterDef1.field}
+            title={routeConfig.refinementListFilterDef1.title}
+            id={routeConfig.refinementListFilterDef1.id}
             operator='AND'
             listComponent={ItemList}
           />
-          <RefinementListFilter
-            field={routeConfig.refinementListFilterDef3.field}
-            title={routeConfig.refinementListFilterDef3.title}
-            id={routeConfig.refinementListFilterDef3.id}
-            operator='AND'
-            listComponent={ItemList}
-          />
-        </Menu>
-        <button
-          aria-label='toggle filters'
-          type="button"
-          className="btn btn-primary-outline btn-xs"
-          onClick={this.toggleFilterMenu}
-        >
-          Filter »
-        </button>
-      </ActionBarRow>
-    )
-  }
+        <RefinementListFilter
+          field={routeConfig.refinementListFilterDef2.field}
+          title={routeConfig.refinementListFilterDef2.title}
+          id={routeConfig.refinementListFilterDef2.id}
+          operator='AND'
+          listComponent={ItemList}
+        />
+        <RefinementListFilter
+          field={routeConfig.refinementListFilterDef3.field}
+          title={routeConfig.refinementListFilterDef3.title}
+          id={routeConfig.refinementListFilterDef3.id}
+          operator='AND'
+          listComponent={ItemList}
+        />
+      </Menu>
+      <button
+        aria-label='toggle filters'
+        type="button"
+        className="btn btn-primary-outline btn-xs"
+        onClick={toggleFilterMenu}
+      >
+        Filter »
+      </button>
+    </ActionBarRow>
+  )
 }

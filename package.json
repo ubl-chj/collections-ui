@@ -44,7 +44,6 @@
     "promise": "^8.0.3",
     "react": "^16.8.6",
     "react-burger-menu": "^2.6.10",
-    "react-dev-utils": "^9.0.1",
     "react-dom": "^16.8.6",
     "react-firebaseui": "^3.1.2",
     "react-gtm-module": "^2.0.7",

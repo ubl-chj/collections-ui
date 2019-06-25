@@ -1,22 +1,15 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 
-export class Footer extends React.Component<any, any> {
-  dataLayer: object[]
+export const Footer: React.FC<any> = (props): ReactElement => {
+  const {dataLayer} = props
 
-  constructor(props) {
-    super(props)
-    this.dataLayer = props.dataLayer
+  const buildDataLayerPresentation = () => {
+    return dataLayer.slice(4)
   }
 
-  buildDataLayerPresentation() {
-    return this.dataLayer.slice(4)
-  }
-
-  render() {
-    return (
-      <pre>
-        {JSON.stringify(this.buildDataLayerPresentation(), null, 2)}
-      </pre>
-    )
-  }
+  return (
+    <pre>
+      {JSON.stringify(buildDataLayerPresentation(), null, 2)}
+    </pre>
+  )
 }
