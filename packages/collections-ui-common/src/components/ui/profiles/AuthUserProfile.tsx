@@ -14,7 +14,7 @@ export class AuthUserProfile extends React.Component {
           {(authUser) => authUser ?
             <div className="gb_Ng">
               <a role="dialog">
-                {firebase.auth().currentUser.photoURL ?
+                {firebase.auth().currentUser && firebase.auth().currentUser.photoURL ?
                   <img
                     className="account-image"
                     src={firebase.auth().currentUser.photoURL}

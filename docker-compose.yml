@@ -2,7 +2,7 @@ version: "3"
 
 services:
   collections-ui:
-    image: ubl2/collections-ui:0.9.6
+    image: ubl2/collections-ui:0.9.7
     container_name: collections-ui
     ports:
       - "9002:5000"

@@ -5,19 +5,6 @@ import {IRouteProps} from './IRouteProps'
 
 export class Help extends React.Component<IRouteProps, any> {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      isMobile: props.isMobile,
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.isMobile !== prevProps.isMobile) {
-      this.setState({isMobile: this.props.isMobile})
-    }
-  }
-
   render() {
     const {isMobile} = this.state
     return(

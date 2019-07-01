@@ -1,5 +1,5 @@
 import {DynamicLayoutContext, NavMenu} from 'collections-ui-common'
-import React from 'react'
+import React, {ReactElement, useEffect, useState} from 'react'
 import {
   ItemList,
   Layout,
@@ -19,88 +19,67 @@ import {StandardGridItem, StandardListItem} from '../items'
 import {HeadMeta} from '../schema'
 import {ActionBarComponent, Head} from '../ui'
 import {asCollection} from './asCollection'
-import {IRouteProps} from './IRouteProps'
+import {CircularProgress, Theme, createStyles, makeStyles, useMediaQuery} from '@material-ui/core'
 
-class Collection extends React.Component<IRouteProps, any> {
-
-  static defaultProps = {
-    options: {
-      timeout: 20000},
+const buildHitComponents = (gridItem, listItem, listDefault) => {
+  const gridObj = {
+    itemComponent: gridItem,
+    key: 'grid',
+    title: 'Grid',
   }
-
-  static buildHitComponents(gridItem, listItem, listDefault) {
-    const gridObj = {
-      itemComponent: gridItem,
-      key: 'grid',
-      title: 'Grid',
-    }
-    const listObj = {
-      itemComponent: listItem,
-      key: 'list',
-      title: 'List',
-    }
-    if (listDefault) {
-      Object.defineProperty(listObj, 'defaultOption', {value: true});
-    } else {
-      Object.defineProperty(gridObj, 'defaultOption', {value: true});
-    }
-    return [gridObj, listObj]
+  const listObj = {
+    itemComponent: listItem,
+    key: 'list',
+    title: 'List',
   }
-
-  state: {
-    components: [any, any],
-    filterMenuVisible: boolean,
-    searchBoxVisible: boolean,
-    isMobile: boolean,
+  if (listDefault) {
+    Object.defineProperty(listObj, 'defaultOption', {value: true});
+  } else {
+    Object.defineProperty(gridObj, 'defaultOption', {value: true});
   }
-  searchkit: SearchkitManager
-  cachedHits: any
-  routeKey: string
-  routeProps: IRouteProps
-  dataLayer: object
+  return [gridObj, listObj]
+}
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      components: [StandardGridItem, StandardListItem],
-      filterMenuVisible: false,
-      isMobile: props.isMobile,
-      searchBoxVisible: false,
-    }
-    this.routeProps = props.config
-    this.routeKey = props.config.routeConfig.indexName
-    const host = process.env.REACT_APP_ELASTICSEARCH_HOST + this.routeKey
-    this.searchkit = new SearchkitManager(host, props.options)
-  }
+export const useCollectionStyles = makeStyles((theme: Theme): any =>
+  createStyles({
+    progress: {
+      margin: theme.spacing(2),
+    },
+  }),
+)
 
-  addComponent = async (type) => {
+export const Collection: React.FC<any> = (props): ReactElement => {
+  const options = {timeout: 20000}
+  const classes: any = useCollectionStyles({})
+  const [isInitialized, setIsInitialized] = useState(false)
+  const [searchkit, setSearchKit] = useState(null)
+  const [components, setComponents] = useState([StandardGridItem, StandardListItem])
+  const routeProps = props.config
+  const routeKey = props.config.routeConfig.indexName
+  const host = process.env.REACT_APP_ELASTICSEARCH_HOST + routeKey
+  const matches = useMediaQuery('(max-width:600px)')
+
+  const addComponent = async (type) => {
     import(`../items/${type}`)
       .then((component) =>
-        this.setState({
-          components: this.state.components.concat(component.default),
-        }),
+          setComponents(components.concat(component.default))
       )
       .catch((error) => {
         console.log(error);
       })
   }
 
-  componentDidMount() {
-    const {items} = this.props
-    items.map((type) => this.addComponent(type))
-  }
-
-  componentDidUpdate(prevProps) {
-    this.dataLayer = (window as any).schemaDataLayer ? (window as any).schemaDataLayer : null
-    if (this.props.isMobile !== prevProps.isMobile) {
-      this.setState({isMobile: this.props.isMobile})
+  useEffect((): void => {
+    if (!isInitialized) {
+      setSearchKit(new SearchkitManager(host, options))
+      const {items} = props
+      items.map((type) => addComponent(type))
+      setIsInitialized(true)
     }
-  }
+  })
 
-  buildSideBar() {
-    const {routeConfig} = this.routeProps
-    const {isMobile} = this.state
-    if (isMobile) {
+  const buildSideBar = () => {
+    if (matches) {
       return null
     } else {
       return (
@@ -131,65 +110,62 @@ class Collection extends React.Component<IRouteProps, any> {
           />
         </SideBar>
       )
-   }
-  }
-
-  render() {
-    const {routeConfig} = this.routeProps
-    const {components, isMobile} = this.state
-    if (components.length >= 2 && components[0] !== 'undefined') {
-      const gridItem = components[0]
-      const listItem = components[1]
-      return (
-        <SearchkitProvider searchkit={this.searchkit}>
-          <div style={{background: '#efefef'}} id='outer'>
-            <HeadMeta/>
-            <NavMenu/>
-            <div id='inner'>
-              <Layout>
-                <Head isMobile={isMobile} routeConfig={routeConfig}/>
-                <main>
-                  <LayoutBody>
-                    {this.buildSideBar()}
-                    <LayoutResults>
-                      <ActionBarComponent
-                        isMobile={isMobile}
-                        routeConfig={routeConfig}
-                      />
-                      {routeConfig.hasRangeFilter ?
-                        <div className='ex1'>
-                          <RangeFilter
-                            field={routeConfig.rangeFilter.field}
-                            id={routeConfig.rangeFilter.id}
-                            min={routeConfig.rangeFilter.min}
-                            max={routeConfig.rangeFilter.max}
-                            showHistogram={true}
-                            title='Date Selector'
-                          />
-                        </div> : null
-                      }
-                      <Pagination showNumbers={true}/>
-                      <DynamicLayoutContext.Provider value={isMobile}>
-                        <ViewSwitcherHits
-                          hitsPerPage={50}
-                          highlightFields={routeConfig.highlightFields}
-                          hitComponents={Collection.buildHitComponents(gridItem, listItem, routeConfig.listDefault)}
-                          scrollTo='body'
-                        />
-                      </DynamicLayoutContext.Provider>
-                      <NoHits suggestionsField={routeConfig.suggestionField}/>
-                      <Pagination showNumbers={true}/>
-                    </LayoutResults>
-                  </LayoutBody>
-                </main>
-              </Layout>
-            </div>
-          </div>
-        </SearchkitProvider>)
-    } else {
-      return null
     }
   }
+
+
+  const dataLayer = (window as any).schemaDataLayer ? (window as any).schemaDataLayer : null
+  const {routeConfig} = routeProps
+  const gridItem = components[0]
+  const listItem = components[1]
+  return components && searchkit ?
+    (
+      <SearchkitProvider searchkit={searchkit}>
+        <div style={{background: '#efefef'}} id='outer'>
+          <HeadMeta/>
+          <NavMenu/>
+          <div id='inner'>
+            <Layout>
+              <Head isMobile={matches} routeConfig={routeConfig}/>
+              <main>
+                <LayoutBody>
+                  {buildSideBar()}
+                  <LayoutResults>
+                    <ActionBarComponent
+                      isMobile={matches}
+                      routeConfig={routeConfig}
+                    />
+                    {routeConfig.hasRangeFilter ?
+                      <div className='ex1'>
+                        <RangeFilter
+                          field={routeConfig.rangeFilter.field}
+                          id={routeConfig.rangeFilter.id}
+                          min={routeConfig.rangeFilter.min}
+                          max={routeConfig.rangeFilter.max}
+                          showHistogram={true}
+                          title='Date Selector'
+                        />
+                      </div> : null
+                    }
+                    <Pagination showNumbers={true}/>
+                    <DynamicLayoutContext.Provider value={matches}>
+                      <ViewSwitcherHits
+                        hitsPerPage={50}
+                        highlightFields={routeConfig.highlightFields}
+                        hitComponents={buildHitComponents(gridItem, listItem, routeConfig.listDefault)}
+                        scrollTo='body'
+                      />
+                    </DynamicLayoutContext.Provider>
+                    <NoHits suggestionsField={routeConfig.suggestionField}/>
+                    <Pagination showNumbers={true}/>
+                  </LayoutResults>
+                </LayoutBody>
+              </main>
+            </Layout>
+          </div>
+        </div>
+      </SearchkitProvider>
+    ) : <CircularProgress className={classes.progress}/>
 }
 
 export default asCollection(Collection)

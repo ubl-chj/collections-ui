@@ -20,7 +20,7 @@ RUN printenv
 WORKDIR /srv/collections-ui
 RUN git clone https://github.com/ubl-chj/collections-ui.git ./
 RUN git checkout ${CIRCLE_BRANCH}
-
+COPY .env packages/collections-ui-app/.env
 RUN npm i npm@latest -g
 RUN npm install --global lerna
 RUN lerna bootstrap --hoist

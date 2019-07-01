@@ -9,12 +9,12 @@ import {
 } from 'searchkit'
 import {FilterMenu} from './FilterMenu'
 import React, {ReactElement} from 'react'
+import {useMediaQuery} from '@material-ui/core';
 
 export const ActionBarComponent: React.FC<any> = (props): ReactElement => {
-  const {isMobile, routeConfig} = props
-
-  if (isMobile) {
-    return (
+  const {routeConfig} = props
+  const matches = useMediaQuery('(max-width:600px)')
+    return matches ? (
       <ActionBar>
         <ActionBarRow>
           <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
@@ -29,9 +29,8 @@ export const ActionBarComponent: React.FC<any> = (props): ReactElement => {
           <ResetFilters/>
         </ActionBarRow>
       </ActionBar>
-    )
-  } else {
-    return (
+    ):
+    (
       <ActionBar>
         <ActionBarRow>
           <HitsStats translations={{'hitstats.results_found': '{hitCount} results found'}}/>
@@ -44,5 +43,4 @@ export const ActionBarComponent: React.FC<any> = (props): ReactElement => {
         </ActionBarRow>
       </ActionBar>
     )
-  }
 }

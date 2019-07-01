@@ -43,20 +43,16 @@ export const Landing: React.FC<IRouteProps> = (): ReactElement => {
   })
 
   const buildSideBar = () => {
-    if (matches) {
-      return null
-    } else {
-      return (
-        <SideBar>
-          <RefinementListFilter
-            id='tag1'
-            title='Collection'
-            field='name.keyword'
-            orderKey='_term'
-            operator='AND'/>
-        </SideBar>)
+    return !matches ? (
+      <SideBar>
+        <RefinementListFilter
+          id='tag1'
+          title='Collection'
+          field='name.keyword'
+          orderKey='_term'
+          operator='AND'/>
+      </SideBar>) : null
     }
-  }
 
   const gridObj = {
     defaultOption: true,
@@ -86,7 +82,6 @@ export const Landing: React.FC<IRouteProps> = (): ReactElement => {
                 {buildSideBar()}
                 <LayoutResults>
                   <ActionBarComponent
-                    isMobile={matches}
                     routeConfig={routeConfig}/>
                   <DynamicLayoutContext.Provider
                     value={matches}>
