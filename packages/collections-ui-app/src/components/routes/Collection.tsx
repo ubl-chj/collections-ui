@@ -25,7 +25,9 @@ class Collection extends React.Component<IRouteProps, any> {
 
   static defaultProps = {
     options: {
-      timeout: 20000},
+      timeout: 20000,
+      searchUrlPath : "_search?rest_total_hits_as_int=true"
+    },
   }
 
   static buildHitComponents(gridItem, listItem, listDefault) {

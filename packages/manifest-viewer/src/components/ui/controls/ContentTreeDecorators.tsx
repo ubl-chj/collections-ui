@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import {VelocityComponent} from 'velocity-react'
 
-const Div = styled('div', {
+const Div: any = styled('div', {
   shouldForwardProp: (prop) => ['className', 'children'].indexOf(prop) !== -1,
 })((({style}): any => style))
 
-const Loading = styled(({ className }) => {
+const Loading: any = styled(({ className }) => {
   return <div className={className}>loading...</div>;
 })(({ style }) => style);
 

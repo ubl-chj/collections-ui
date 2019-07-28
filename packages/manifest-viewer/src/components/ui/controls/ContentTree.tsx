@@ -5,7 +5,7 @@ import {ViewerComponent} from '../../../core/react'
 import ContentTreeDecorators from './ContentTreeDecorators'
 import treeStyles from './styles/treeStyles'
 
-const Div = styled('div', {
+const Div: any = styled('div', {
   shouldForwardProp: (prop) => ['className', 'children'].indexOf(prop) !== -1,
 })(({ style }): any => style)
 
@@ -121,7 +121,7 @@ export class ContentTree extends ViewerComponent<any, any> {
             onToggle={this.onToggle}
             style={styles}
           />
-          {this.goToSection(cursor)}
+          <>{this.goToSection(cursor)}</>
         </Div>
       )
     } else {

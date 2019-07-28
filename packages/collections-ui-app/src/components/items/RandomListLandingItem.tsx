@@ -47,7 +47,7 @@ export const RandomListLandingItem: React.FC<ItemProps> = (props): ReactElement 
                   className={bemBlocks.item('sk-hits-grid-hit__poster')}
                 />
                 <div className={bemBlocks.item('details')}>
-                  {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
+                  {schemaFilterName.map((e) => <ListSchemaEntry {...props} key={uuidv4()} entry={e}/>)}
                 </div>
               </div>
             </div>  :
@@ -64,7 +64,7 @@ export const RandomListLandingItem: React.FC<ItemProps> = (props): ReactElement 
                   className={bemBlocks.item('title')}
                   titleString={name}
                 />
-                {schemaFilterName.map((e) => <ListSchemaEntry {...this.props} key={uuidv4()} entry={e}/>)}
+                {schemaFilterName.map((e) => <ListSchemaEntry {...props} key={uuidv4()} entry={e}/>)}
               </div>
             </div>}
         </DynamicLayoutContext.Consumer>

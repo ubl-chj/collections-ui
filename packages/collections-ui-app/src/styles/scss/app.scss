@@ -1,5 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
 @import "./annotations.scss";
+@import "./theme.scss";
 
 .modal-container {
   position: relative;
@@ -106,7 +107,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #0288D1;
+  background-color: black;
   background: radial-gradient(circle, #039BE5, #01579b);
   z-index: 10000;
   display: flex;
@@ -412,7 +413,7 @@
 }
 
 .sk-layout__top-bar {
-  background: #042798;
+  background: #000000;
 }
 
 .sk-hits-list-hit {

@@ -8,7 +8,10 @@ const manifesto = require('manifesto-fork')
 export class RelatedItems extends React.Component<any, any> {
   static defaultProps = {
     host: process.env.REACT_APP_ELASTICSEARCH_HOST,
-    options: {timeout: 20000, useHistory: false},
+    options: {
+      timeout: 20000,
+      searchUrlPath : "_search?rest_total_hits_as_int=true",
+      useHistory: false},
   }
 
   static simpleQuery(terms) {

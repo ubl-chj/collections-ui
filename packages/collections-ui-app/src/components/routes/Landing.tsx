@@ -30,7 +30,10 @@ export const Landing: React.FC<IRouteProps> = (): ReactElement => {
   const classes: any = useMinimalResultViewerStyles({})
   const routeConfig = require('./config/landing.json')
   const host = process.env.REACT_APP_ELASTICSEARCH_HOST + routeConfig.indexName
-  const options = {timeout: 20000}
+  const options = {
+    timeout: 20000,
+    searchUrlPath : "_search?rest_total_hits_as_int=true"
+  }
   const [isInitialized, setIsInitialized] = useState(false)
   const [searchkit, setSearchKit] = useState(null)
   const matches = useMediaQuery('(max-width:600px)')
